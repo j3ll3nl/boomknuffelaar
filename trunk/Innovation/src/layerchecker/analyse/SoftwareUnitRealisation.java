@@ -10,7 +10,7 @@ public class SoftwareUnitRealisation {
 	private String type;
 	private ArrayList<SoftwareUnitRealisation> softwareUnits;
 	
-	public SoftwareUnitRealisation() {
+	protected SoftwareUnitRealisation() {
 		Logger.getInstance().log(this.getClass().getSimpleName());
 	}
 

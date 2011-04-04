@@ -2,15 +2,17 @@ package layerchecker.analyse;
 
 import java.util.ArrayList;
 
+import net.sourceforge.pmd.AbstractJavaRule;
+
 import layerchecker.configuration.ConfigurationService;
 import main.Logger;
 
-public abstract class AbstractDefaultRule {
+public abstract class AbstractDefaultRule extends AbstractJavaRule {
 	
 	private String name;
 	private ArrayList<SoftwareUnitRealisation> softwareUnits;
 	
-	public AbstractDefaultRule() {
+	protected AbstractDefaultRule() {
 		Logger.getInstance().log(this.getClass().getSimpleName());
 	}
 

@@ -37,11 +37,11 @@ public class Layer {
 	}
 	
 	public Layer getParentLayer() {
-		return childLayer;
+		return parentLayer;
 	}
 	
 	public void setParentLayer(Layer layer) {
-		childLayer = layer;
+		parentLayer = layer;
 	}
 	
 	public void addSoftwareUnit(SoftwareUnitDefinition unit) {
