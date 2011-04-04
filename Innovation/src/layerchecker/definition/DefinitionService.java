@@ -33,12 +33,13 @@ public class DefinitionService {
 	
 	public void addException(String layerName, String suName, String ruleName, boolean permission, String toLayer) {
 		
-		if(layerName != null) {
-			
+		if(suName == null) {
+			Layer layer = architecture.getLayer(toLayer);
+			architecture.getLayer(layerName).addRuleException(ruleName, permission, layer);
+		} else {
+			architecture.getLayer(layerName).getSoftwareUnit().addRuleException(ruleName, permission);
 		}
 		
-		Layer layer = architecture.getLayer(toLayer);
-		architecture.getLayer(layerName).addRuleException(ruleName, permission, layer);
 	}
 	
 	public ArrayList<Layer> getAllLayers() {
