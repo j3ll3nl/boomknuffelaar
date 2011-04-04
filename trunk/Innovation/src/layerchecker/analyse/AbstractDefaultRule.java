@@ -1,26 +1,17 @@
 package layerchecker.analyse;
 
+import java.util.ArrayList;
+
 import main.Logger;
 
 public abstract class AbstractDefaultRule {
 	
 	private boolean active;
 	private String name;
+	private ArrayList<SoftwareUnitRealisation> softwareUnits;
 	
 	public AbstractDefaultRule() {
 		Logger.getInstance().log(this.getClass().getSimpleName());
-	}
-
-	public void active() {
-		this.active = true;
-	}
-	
-	public void deactivate() {
-		this.active = false;
-	}
-
-	public boolean isActive() {
-		return active;
 	}
 
 	public void setName(String name) {
@@ -29,6 +20,14 @@ public abstract class AbstractDefaultRule {
 
 	public String getName() {
 		return name;
+	}
+	
+	public void checkViolation() {
+		
+	}
+	
+	public void addSoftwareUnit(SoftwareUnitRealisation sur) {
+		softwareUnits.add(sur);
 	}
 
 }
