@@ -1,21 +1,26 @@
 package layerchecker.configuration;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
 
-import layerchecker.analyse.AbstractDefaultRule;
 import main.Logger;
 
 public class RuleSet {
 	
-	private ArrayList<AbstractDefaultRule> rules;
+	private HashMap<String, Boolean> rules;
 	
-	public RuleSet() {
+	protected RuleSet() {
 		Logger.getInstance().log(this.getClass().getSimpleName());
+		
+		this.rules = new HashMap<String, Boolean>();
+	}
+	
+	public void setRuleStatus(String ruleName, boolean status) {
+		this.rules.put(ruleName, status);
+		Logger.getInstance().log("Rule set: " + ruleName + " - " + status);
 	}
 
-	@SuppressWarnings("unchecked")
-	protected ArrayList<AbstractDefaultRule> getRules() {
-		return (ArrayList<AbstractDefaultRule>) this.rules.clone();
+	public Set<String> getRules() {
+		return this.rules.keySet();
 	}
-
 }
