@@ -1,6 +1,8 @@
 package analyse.controller;
 
-public abstract class AbstractController {
+import java.awt.event.ActionListener;
+
+public abstract class AbstractController implements ActionListener {
 	
 	public abstract void initGUI();
 
