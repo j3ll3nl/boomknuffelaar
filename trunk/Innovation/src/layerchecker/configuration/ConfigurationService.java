@@ -1,8 +1,7 @@
 package layerchecker.configuration;
 
-import java.util.ArrayList;
+import java.util.Set;
 
-import layerchecker.analyse.AbstractDefaultRule;
 import main.Logger;
 
 public class ConfigurationService {
@@ -16,16 +15,20 @@ public class ConfigurationService {
 		this.configuration = new Configuration();
 	}
 	
-	public ArrayList<AbstractDefaultRule> getRules() {
+	public Set<String> getRules() {
 		return this.configuration.getRuleSet().getRules();
 	}
 	
 	public void setRuleStatus(String ruleName, boolean status){
-		
+		this.configuration.getRuleSet().setRuleStatus(ruleName, status);
 	}
 	
 	public void setOutputPath(String path) {
 		this.configuration.setSetting(Configuration.OUTPUT_PATH, path);
+	}
+	
+	public String getOutputPath() {
+		return this.configuration.getSetting(Configuration.OUTPUT_PATH);
 	}
 	
 	public void setOutputFormat(String format) {
