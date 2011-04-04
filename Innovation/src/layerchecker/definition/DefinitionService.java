@@ -1,0 +1,40 @@
+package layerchecker.definition;
+
+import java.util.ArrayList;
+
+public class DefinitionService {
+
+	private ArchitectureDefinition architecture;
+	
+	public void newArchitectureDefinition(String name, String desc) {
+		architecture = new ArchitectureDefinition(name, desc);
+	}
+	
+	public void openArchitectureDefinition() {
+		
+	}
+	
+	public void newLayer(String name, String desc) {
+		Layer layer = new Layer(name);
+		layer.setDescription(desc);
+		architecture.addLayer(layer);
+	}
+	
+	public void newSoftwareUnit(String layerName, String name, String type) {
+		SoftwareUnitDefinition sud = new SoftwareUnitDefinition(name, type);
+		architecture.getLayer(layerName).addSoftwareUnit(sud);
+	}
+	
+	public void addException(String layerName, String suName, String ruleName, String permission, String toLayer) {
+		
+	}
+	
+	public ArrayList<Layer> getAllLayers() {
+		return architecture.getAllLayers();
+	}
+	
+	public void saveArchitectureDefinition() {
+		
+	}
+	
+}
