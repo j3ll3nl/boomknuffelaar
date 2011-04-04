@@ -2,6 +2,8 @@ package layerchecker.definition;
 
 import java.util.ArrayList;
 
+import main.Logger;
+
 public class SoftwareUnitDefinition {
 
 	private String name;
@@ -10,6 +12,7 @@ public class SoftwareUnitDefinition {
 	private ArrayList<RuleException> ruleExceptions;
 	
 	public SoftwareUnitDefinition(String name, String type) {
+		Logger.getInstance().log(this.getClass().getSimpleName());
 		this.name = name;
 		this.type = type;
 	}
