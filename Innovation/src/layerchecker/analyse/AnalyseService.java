@@ -11,10 +11,15 @@ public class AnalyseService {
 	
 	public AnalyseService() {
 		Logger.getInstance().log(this.getClass().getSimpleName());
+		
+		this.rules = new ArrayList<AbstractDefaultRule>();
+		this.rules.add(new BackCallPrinciple());
 	}
 	
 	public void startAnalyse() {
-		
+		for(AbstractDefaultRule rule : rules) {
+			rule.checkViolation();
+		}
 	}
 	
 	public static AnalyseService getInstance() {

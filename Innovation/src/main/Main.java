@@ -1,6 +1,7 @@
 package main;
 
 import layerchecker.analyse.AnalyseService;
+import layerchecker.analyse.BackCallPrinciple;
 import layerchecker.configuration.Configuration;
 import layerchecker.configuration.ConfigurationService;
 import layerchecker.definition.DefinitionService;
@@ -14,12 +15,11 @@ public class Main {
 		// Gui test
 		
 		GuiController gui = new GuiController();
-		gui.notify();
 		
 		// Configuration test
 		
 		ConfigurationService conf = ConfigurationService.getInstance();
-		conf.setRuleStatus("backcall", true);
+		conf.setRuleStatus(BackCallPrinciple.class.getSimpleName(), true);
 		conf.setOutputPath("/a/path/to/the/output/");
 		conf.setOutputFormat(Configuration.OUTPUT_FORMAT_TEXT);
 		

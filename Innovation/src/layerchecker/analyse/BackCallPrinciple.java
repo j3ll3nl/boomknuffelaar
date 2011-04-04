@@ -1,17 +1,19 @@
 package layerchecker.analyse;
 
+import main.Logger;
+
 public class BackCallPrinciple extends AbstractDefaultRule {
 
 	@Override
 	public void checkViolation() {
-		// TODO Auto-generated method stub
-		
+		if(this.isActive()) {
+			Logger.getInstance().log("Active: " + this.getClass().getSimpleName());
+		} else {
+			Logger.getInstance().log("Not active: " + this.getClass().getSimpleName());
+		}
 	}
 
 	public void visit() {
-		if(this.isActive()) {
 			this.checkViolation();
-		}
-	}
-	
+	}	
 }
