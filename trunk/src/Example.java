@@ -2,7 +2,7 @@ class Example {
 	boolean bazz = false;
 	
  void bar() {
-  while (bazz)
+  while (bazz)fgg
    this.getClass();
  }
 }
