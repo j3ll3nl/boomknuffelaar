@@ -8,6 +8,10 @@ public class BackCallPrinciple extends AbstractDefaultRule {
 		
 	}
 
-	
+	public void visit() {
+		if(this.isActive()) {
+			this.checkViolation();
+		}
+	}
 	
 }

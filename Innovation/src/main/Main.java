@@ -14,6 +14,7 @@ public class Main {
 		// Gui test
 		
 		GuiController gui = new GuiController();
+		gui.notify();
 		
 		// Configuration test
 		
@@ -31,7 +32,6 @@ public class Main {
 		defintion.newLayer("UI-Layer", "Presentation logic");
 		defintion.newSoftwareUnit(
 				"UI-Layer", "JustAPackage", SoftwareUnitDefinition.PACKAGE);
-		
 		
 		// Analyse test
 		
