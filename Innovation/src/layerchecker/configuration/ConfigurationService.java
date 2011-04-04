@@ -42,4 +42,7 @@ public class ConfigurationService {
 		return instance;
 	}
 
+	public boolean ruleIsActive(String name) {
+		return this.configuration.getRuleSet().ruleIsActive(name);
+	}
 }

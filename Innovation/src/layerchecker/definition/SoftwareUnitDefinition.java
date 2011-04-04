@@ -6,6 +6,10 @@ import main.Logger;
 
 public class SoftwareUnitDefinition {
 
+	public static final String 
+		CLASS = "class",
+		PACKAGE = "package";
+	
 	private String name;
 	private String type;
 	private ArrayList<SoftwareUnitDefinition> softwareUnits;
@@ -14,7 +18,7 @@ public class SoftwareUnitDefinition {
 	public SoftwareUnitDefinition(String name, String type) {
 		Logger.getInstance().log(this.getClass().getSimpleName());
 		this.name = name;
-		this.type = type;
+		this.setType(type);
 	}
 	
 	public String getName() {
@@ -28,6 +32,14 @@ public class SoftwareUnitDefinition {
 	public void addRuleException(String name, boolean permission) {
 		RuleException re = new RuleException(name, permission);
 		ruleExceptions.add(re);
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getType() {
+		return type;
 	}
 	
 }

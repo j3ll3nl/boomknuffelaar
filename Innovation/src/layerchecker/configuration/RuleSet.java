@@ -23,4 +23,8 @@ public class RuleSet {
 	public Set<String> getRules() {
 		return this.rules.keySet();
 	}
+	
+	public boolean ruleIsActive(String name) {
+		return this.rules.get(name) != null ? this.rules.get(name) : false;
+	}
 }

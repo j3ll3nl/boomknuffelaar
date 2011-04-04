@@ -2,7 +2,6 @@ package layerchecker.definition;
 
 import java.util.ArrayList;
 
-import layerchecker.configuration.ConfigurationService;
 import main.Logger;
 
 public class DefinitionService {

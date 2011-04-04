@@ -2,11 +2,11 @@ package layerchecker.analyse;
 
 import java.util.ArrayList;
 
+import layerchecker.configuration.ConfigurationService;
 import main.Logger;
 
 public abstract class AbstractDefaultRule {
 	
-	private boolean active;
 	private String name;
 	private ArrayList<SoftwareUnitRealisation> softwareUnits;
 	
@@ -22,12 +22,13 @@ public abstract class AbstractDefaultRule {
 		return name;
 	}
 	
-	public void checkViolation() {
-		
-	}
+	public abstract void checkViolation();
 	
 	public void addSoftwareUnit(SoftwareUnitRealisation sur) {
 		softwareUnits.add(sur);
 	}
-
+	
+	protected boolean isActive() {
+		return ConfigurationService.getInstance().ruleIsActive(this.getName());
+	}
 }

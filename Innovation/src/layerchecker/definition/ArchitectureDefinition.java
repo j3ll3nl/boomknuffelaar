@@ -15,10 +15,13 @@ public class ArchitectureDefinition {
 	public ArchitectureDefinition(String name) {
 		Logger.getInstance().log(this.getClass().getSimpleName());
 		this.name = name;
+		this.description = "unkown";
+		
+		this.layers = new ArrayList<Layer>();
 	}
 	
 	public ArchitectureDefinition(String name, String desc) {
-		this.name = name;
+		this(name);
 		description = desc;
 	}
 	
