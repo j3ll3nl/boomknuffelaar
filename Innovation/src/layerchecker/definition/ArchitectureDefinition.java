@@ -29,10 +29,12 @@ public class ArchitectureDefinition {
 	public Layer getLayer(String name) {
 		
 		for(Layer layer : layers) {
-			
+			if(layer.getName() == name) {
+				return layer;
+			}
 		}
 		
-		return topLayer;
+		return null;
 	}
 	
 }
