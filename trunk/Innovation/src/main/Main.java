@@ -14,7 +14,7 @@ public class Main {
 		
 		// Gui test
 		
-		GuiController gui = new GuiController();
+		new GuiController();
 		
 		// Configuration test
 		
