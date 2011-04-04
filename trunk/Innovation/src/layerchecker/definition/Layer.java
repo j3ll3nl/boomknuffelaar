@@ -46,13 +46,25 @@ public class Layer {
 		softwareUnits.add(unit);
 	}
 	
+	public SoftwareUnitDefinition getSoftwareUnit() {
+		
+		for(SoftwareUnitDefinition sud : softwareUnits) {
+			if(sud.getName() == name) {
+				return sud;
+			}
+		}
+		
+		return null;
+		
+	}
+	
 	public void addRuleException(String name, boolean permission, Layer layer) {
 		RuleException re = new RuleException(name, permission, layer);
 		ruleExceptions.add(re);
 	}
 	
 	public String toString() {
-		return "";
+		return "Layer - toString()";
 	}
 	
 }

@@ -17,8 +17,17 @@ public class SoftwareUnitDefinition {
 		this.type = type;
 	}
 	
+	public String getName() {
+		return name;
+	}
+	
 	public void addSoftwareUnitDefinition(SoftwareUnitDefinition unit) {
 		softwareUnits.add(unit);
+	}
+	
+	public void addRuleException(String name, boolean permission) {
+		RuleException re = new RuleException(name, permission);
+		ruleExceptions.add(re);
 	}
 	
 }
