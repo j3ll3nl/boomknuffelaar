@@ -1,5 +1,5 @@
 package layerchecker.report;
 
-public class Violation {
+public class ViolationSet {
 
 }

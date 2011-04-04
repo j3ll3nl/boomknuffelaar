@@ -2,7 +2,7 @@ package layerchecker.report;
 
 public class ReportService {
 	
-	public void addViolation(Violation violation) {
+	public void addViolation(String violation) {
 		
 	}
 	
