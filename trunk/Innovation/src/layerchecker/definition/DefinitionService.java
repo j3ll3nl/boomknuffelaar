@@ -2,10 +2,12 @@ package layerchecker.definition;
 
 import java.util.ArrayList;
 
+import layerchecker.configuration.ConfigurationService;
 import main.Logger;
 
 public class DefinitionService {
 
+	private static DefinitionService instance;
 	private ArchitectureDefinition architecture;
 	
 	public DefinitionService() {
@@ -48,6 +50,13 @@ public class DefinitionService {
 	
 	public void saveArchitectureDefinition() {
 		
+	}
+	
+	public static DefinitionService getInstance() {
+		if(instance == null) {
+			instance = new DefinitionService();
+		}
+		return instance;
 	}
 	
 }

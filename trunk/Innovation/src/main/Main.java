@@ -7,6 +7,9 @@ import layerchecker.gui.GuiController;
 public class Main {
 	
 	public static void main(String[] args) {
+		
+		// Gui test
+		
 		GuiController gui = new GuiController();
 		
 		ConfigurationService conf = ConfigurationService.getInstance();
@@ -15,5 +18,8 @@ public class Main {
 		conf.setOutputFormat(Configuration.OUTPUT_FORMAT_TEXT);
 		
 		Logger.getInstance().log(conf.getOutputPath());
+		
+		
+		
 	}
 }
