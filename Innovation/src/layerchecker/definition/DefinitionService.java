@@ -2,9 +2,15 @@ package layerchecker.definition;
 
 import java.util.ArrayList;
 
+import main.Logger;
+
 public class DefinitionService {
 
 	private ArchitectureDefinition architecture;
+	
+	public DefinitionService() {
+		Logger.getInstance().log(this.getClass().getSimpleName());
+	}
 	
 	public void newArchitectureDefinition(String name, String desc) {
 		architecture = new ArchitectureDefinition(name, desc);

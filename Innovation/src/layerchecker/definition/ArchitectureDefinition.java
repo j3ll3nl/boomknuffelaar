@@ -2,6 +2,8 @@ package layerchecker.definition;
 
 import java.util.ArrayList;
 
+import main.Logger;
+
 
 public class ArchitectureDefinition {
 
@@ -11,6 +13,7 @@ public class ArchitectureDefinition {
 	private ArrayList<Layer> layers;
 	
 	public ArchitectureDefinition(String name) {
+		Logger.getInstance().log(this.getClass().getSimpleName());
 		this.name = name;
 	}
 	

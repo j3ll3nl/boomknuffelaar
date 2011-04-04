@@ -2,6 +2,8 @@ package layerchecker.definition;
 
 import java.util.ArrayList;
 
+import main.Logger;
+
 public class Layer {
 
 	private String name;
@@ -12,6 +14,7 @@ public class Layer {
 	private ArrayList<RuleException> ruleExceptions;
 	
 	public Layer(String name) {
+		Logger.getInstance().log(this.getClass().getSimpleName());
 		this.name = name;
 	}
 	
