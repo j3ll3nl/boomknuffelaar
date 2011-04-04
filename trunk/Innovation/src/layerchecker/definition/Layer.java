@@ -9,6 +9,7 @@ public class Layer {
 	private Layer parentLayer;
 	private Layer childLayer;
 	private ArrayList<SoftwareUnitDefinition> softwareUnits;
+	private ArrayList<RuleException> ruleExceptions;
 	
 	public Layer(String name) {
 		this.name = name;

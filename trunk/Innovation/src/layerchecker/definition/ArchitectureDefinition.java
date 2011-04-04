@@ -14,6 +14,11 @@ public class ArchitectureDefinition {
 		this.name = name;
 	}
 	
+	public ArchitectureDefinition(String name, String desc) {
+		this.name = name;
+		description = desc;
+	}
+	
 	public void setDescription(String desc){
 		description = desc;
 	}
@@ -35,6 +40,10 @@ public class ArchitectureDefinition {
 		}
 		
 		return null;
+	}
+	
+	public ArrayList<Layer> getAllLayers() {
+		return layers;
 	}
 	
 }
