@@ -25,8 +25,14 @@ public class DefinitionService {
 		architecture.getLayer(layerName).addSoftwareUnit(sud);
 	}
 	
-	public void addException(String layerName, String suName, String ruleName, String permission, String toLayer) {
+	public void addException(String layerName, String suName, String ruleName, boolean permission, String toLayer) {
 		
+		if(layerName != null) {
+			
+		}
+		
+		Layer layer = architecture.getLayer(toLayer);
+		architecture.getLayer(layerName).addRuleException(ruleName, permission, layer);
 	}
 	
 	public ArrayList<Layer> getAllLayers() {
