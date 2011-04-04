@@ -2,7 +2,6 @@ package layerchecker.analyse;
 
 import java.util.ArrayList;
 
-import layerchecker.configuration.ConfigurationService;
 import main.Logger;
 
 public class AnalyseService {

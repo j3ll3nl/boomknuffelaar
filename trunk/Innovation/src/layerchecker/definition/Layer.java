@@ -16,6 +16,8 @@ public class Layer {
 	public Layer(String name) {
 		Logger.getInstance().log(this.getClass().getSimpleName());
 		this.name = name;
+		
+		this.softwareUnits = new ArrayList<SoftwareUnitDefinition>();
 	}
 	
 	public String getName() {
@@ -61,11 +63,6 @@ public class Layer {
 	public void addRuleException(String name, boolean permission, Layer layer) {
 		RuleException re = new RuleException(name, permission, layer);
 		ruleExceptions.add(re);
-	}
-	
-	public String toString() {
-		return "Layer - toString()";
-	}
-	
+	}	
 }
 
