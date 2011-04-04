@@ -1,9 +1,15 @@
 package layerchecker.analyse;
 
+import main.Logger;
+
 public abstract class AbstractDefaultRule {
 	
 	private boolean active;
 	private String name;
+	
+	public AbstractDefaultRule() {
+		Logger.getInstance().log(this.getClass().getSimpleName());
+	}
 
 	public void active() {
 		this.active = true;

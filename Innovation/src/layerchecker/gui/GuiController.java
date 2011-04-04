@@ -12,6 +12,8 @@ public class GuiController {
 	private ArrayList<AbstractController> controllers;
 	
 	public GuiController() {
+		this.controllers = new ArrayList<AbstractController>();
+		
 		this.controllers.add(new AnalysisController());
 		this.controllers.add(new DefinitionController());
 		this.controllers.add(new RulesController());
