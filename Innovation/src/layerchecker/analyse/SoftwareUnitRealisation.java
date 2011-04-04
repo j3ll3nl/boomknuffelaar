@@ -17,5 +17,21 @@ public class SoftwareUnitRealisation {
 	public void addSoftwareUnit(SoftwareUnitRealisation sur) {
 		softwareUnits.add(sur);
 	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getType() {
+		return type;
+	}
 	
 }
