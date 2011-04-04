@@ -43,6 +43,11 @@ public class Layer {
 		softwareUnits.add(unit);
 	}
 	
+	public void addRuleException(String name, boolean permission, Layer layer) {
+		RuleException re = new RuleException(name, permission, layer);
+		ruleExceptions.add(re);
+	}
+	
 	public String toString() {
 		return "";
 	}
