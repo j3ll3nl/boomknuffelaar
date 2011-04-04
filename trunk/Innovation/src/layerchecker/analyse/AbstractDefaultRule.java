@@ -14,6 +14,8 @@ public abstract class AbstractDefaultRule extends AbstractJavaRule {
 	
 	protected AbstractDefaultRule() {
 		Logger.getInstance().log(this.getClass().getSimpleName());
+		
+		this.softwareUnits = new ArrayList<SoftwareUnitRealisation>();
 	}
 
 	public void setName(String name) {
@@ -31,6 +33,7 @@ public abstract class AbstractDefaultRule extends AbstractJavaRule {
 	}
 	
 	protected boolean isActive() {
-		return ConfigurationService.getInstance().ruleIsActive(this.getName());
+		return ConfigurationService.getInstance()
+			.ruleIsActive(this.getClass().getSimpleName());
 	}
 }
