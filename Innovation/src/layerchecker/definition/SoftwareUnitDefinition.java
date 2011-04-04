@@ -19,6 +19,7 @@ public class SoftwareUnitDefinition {
 		Logger.getInstance().log(this.getClass().getSimpleName());
 		this.name = name;
 		this.setType(type);
+		softwareUnits = new ArrayList<SoftwareUnitDefinition>();
 	}
 	
 	public String getName() {
@@ -40,6 +41,14 @@ public class SoftwareUnitDefinition {
 
 	public String getType() {
 		return type;
+	}
+	
+	public String toString() {
+		String s = name + " - " + type + "\n";
+		for(SoftwareUnitDefinition sud : softwareUnits) {
+			s = s + sud.toString() + "\n";
+		}
+		return s;
 	}
 	
 }

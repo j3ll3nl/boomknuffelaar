@@ -53,4 +53,14 @@ public class ArchitectureDefinition {
 		return layers;
 	}
 	
+	public String toString() {
+		
+		String s = "ArchitectureDefinition:\n- " + name + " - " + description + "\n\nLayers:\n";
+		for(Layer layer : layers) {
+			s = s + layer.toString() + "\n";
+		}
+		
+		return s;
+	}
+	
 }

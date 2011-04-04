@@ -58,4 +58,8 @@ public class DefinitionService {
 		return instance;
 	}
 	
+	public String architectureDefinitionToString() {
+		return architecture.toString();
+	}
+	
 }

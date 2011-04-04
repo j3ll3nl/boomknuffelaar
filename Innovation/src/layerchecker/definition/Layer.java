@@ -64,5 +64,14 @@ public class Layer {
 		RuleException re = new RuleException(name, permission, layer);
 		ruleExceptions.add(re);
 	}	
+	
+	public String toString() {
+		String s = "- " + name + " - " + description + "\n";
+		for(SoftwareUnitDefinition sud : softwareUnits) {
+			s = s + sud.toString() + "\n";
+		}
+		return s;
+	}
+	
 }
 
