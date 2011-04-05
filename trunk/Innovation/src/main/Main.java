@@ -32,6 +32,7 @@ public class Main {
 		defintion.newLayer("UI-Layer", "Presentation logic");
 		defintion.newSoftwareUnit(
 				"UI-Layer", "JustAPackage", SoftwareUnitDefinition.PACKAGE);
+		Logger.getInstance().log(defintion.architectureDefinitionToString());
 		
 		// Analyse test
 		
