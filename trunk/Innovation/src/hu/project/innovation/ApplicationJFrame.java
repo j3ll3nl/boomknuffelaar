@@ -1,4 +1,6 @@
 package hu.project.innovation;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 
 import javax.swing.WindowConstants;
 
@@ -19,6 +21,8 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 	}
 
 	private static final long serialVersionUID = 6858870868564931134L;
+	private JMenuBar jMenuBar1;
+	private JMenu jMenu1;
 
 	public ApplicationJFrame() {
 		super();
@@ -27,7 +31,16 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 
 	private void initGUI() {
 		try {
-			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+			setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+			{
+				jMenuBar1 = new JMenuBar();
+				setJMenuBar(jMenuBar1);
+				{
+					jMenu1 = new JMenu();
+					jMenuBar1.add(jMenu1);
+					jMenu1.setText("jMenu1");
+				}
+			}
 			pack();
 			setSize(400, 300);
 		} catch (Exception e) {
