@@ -6,10 +6,6 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 
 	private static final long serialVersionUID = 6858870868564931134L;
 
-	/**
-	 * Auto-generated main method to display this JFrame
-	 */
-
 	public ApplicationJFrame() {
 		super();
 		initGUI();
