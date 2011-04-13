@@ -6,6 +6,6 @@ public class Test {
 	public String update;
 
 	public void nieuwemethoden() {
-
+		String r = "afdasdfs";
 	}
 }
