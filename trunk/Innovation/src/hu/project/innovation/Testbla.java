@@ -1,6 +1,6 @@
 package hu.project.innovation;
 
-public class Test {
+public class Testbla {
 
 	String name;
 	public String update;
@@ -10,6 +10,6 @@ public class Test {
 	}
 	
 	public void nogiets(){
-		String asdfasdf = 'bla';
+		String asdfasdf = "bla";
 	}
 }
