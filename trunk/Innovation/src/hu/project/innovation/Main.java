@@ -12,7 +12,6 @@ public class Main {
 		// Gui test
 		
 		GuiController gui = new GuiController();
-		gui.notify();
 		
 		// Configuration test
 		
