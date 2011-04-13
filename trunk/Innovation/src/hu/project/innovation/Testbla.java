@@ -8,4 +8,8 @@ public class Test {
 	public void nieuwemethoden() {
 		String r = "afdasdfs";
 	}
+	
+	public void nogiets(){
+		return 'bla';
+	}
 }
