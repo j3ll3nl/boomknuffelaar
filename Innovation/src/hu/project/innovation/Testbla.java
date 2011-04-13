@@ -10,6 +10,6 @@ public class Test {
 	}
 	
 	public void nogiets(){
-		return 'bla';
+		String asdfasdf = 'bla';
 	}
 }
