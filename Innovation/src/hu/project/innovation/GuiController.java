@@ -10,7 +10,7 @@ public class GuiController {
 	private ArrayList<AbstractController> controllers;
 	
 	public GuiController() {
-		
+		//TODO bla
 		this.controllers = new ArrayList<AbstractController>();
 		
 		this.controllers.add(new AnalyseController());
