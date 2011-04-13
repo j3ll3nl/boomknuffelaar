@@ -1,5 +1,7 @@
 package hu.project.innovation.configuration.model;
 
-public class DefaultRule {
+import net.sourceforge.pmd.AbstractJavaRule;
+
+public class DefaultRule extends AbstractJavaRule {
 
 }
