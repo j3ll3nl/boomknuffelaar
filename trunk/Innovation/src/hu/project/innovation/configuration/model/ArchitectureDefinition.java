@@ -14,7 +14,7 @@ public class ArchitectureDefinition {
 	public ArchitectureDefinition(String name) {
 		Logger.getInstance().log(this.getClass().getSimpleName());
 		this.name = name;
-		this.description = "unkown";
+		this.description = "unknown";
 
 		this.layers = new ArrayList<Layer>();
 	}
@@ -43,7 +43,6 @@ public class ArchitectureDefinition {
 				return layer;
 			}
 		}
-
 		return null;
 
 	}

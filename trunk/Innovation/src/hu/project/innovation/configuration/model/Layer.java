@@ -11,7 +11,7 @@ public class Layer {
 	private Layer parentLayer;
 	private Layer childLayer;
 	private ArrayList<SoftwareUnitDefinition> softwareUnits;
-	private ArrayList<RuleDefinition> ruleExceptions;
+	private ArrayList<AppliedRule> appliedRules;
 
 	public Layer(String name) {
 		Logger.getInstance().log(this.getClass().getSimpleName());
@@ -51,7 +51,7 @@ public class Layer {
 	public SoftwareUnitDefinition getSoftwareUnit() {
 
 		for (SoftwareUnitDefinition sud : softwareUnits) {
-			if (sud.getName() == name) {
+			if (sud.getName().equals(name)) {
 				return sud;
 			}
 		}
@@ -59,9 +59,9 @@ public class Layer {
 		return null;
 
 	}
-
-	public void addRuleException(String name, boolean permission, Layer layer) {
-		RuleDefinition re = new RuleDefinition(name, permission, layer);
-		ruleExceptions.add(re);
+	
+	public void addAppliedRule(AbstractRuleType ruleType, Layer toLayer) {
+		AppliedRule r = new AppliedRule(ruleType, this, toLayer);
+		this.appliedRules.add(r);
 	}
 }

@@ -27,7 +27,7 @@ public class Configuration {
 	public void setSetting(String key, String value) {
 		this.settings.put(key, value);
 
-		Logger.getInstance().log("Setting set: " + key + " - " + value);
+		Logger.getInstance().log("Setting set: " + key + " -> " + value);
 	}
 
 	public String getSetting(String key) {

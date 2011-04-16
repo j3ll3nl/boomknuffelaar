@@ -1,14 +1,14 @@
 package hu.project.innovation.analyse.model;
 
 import hu.project.innovation.Logger;
-import hu.project.innovation.configuration.model.AbstractDefaultRule;
+import hu.project.innovation.configuration.model.AbstractRuleType;
 
 import java.util.ArrayList;
 
 public class AnalyseService {
 
 	private static AnalyseService instance;
-	private ArrayList<AbstractDefaultRule> rules;
+	private ArrayList<AbstractRuleType> rules;
 
 	public AnalyseService() {
 		Logger.getInstance().log(this.getClass().getSimpleName());
