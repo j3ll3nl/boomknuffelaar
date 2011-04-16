@@ -6,12 +6,12 @@ import java.util.ArrayList;
 
 import net.sourceforge.pmd.AbstractJavaRule;
 
-public abstract class AbstractDefaultRule extends AbstractJavaRule {
+public abstract class AbstractRuleType extends AbstractJavaRule {
 
 	private String name;
 	private ArrayList<SoftwareUnitRealisation> softwareUnits;
 
-	protected AbstractDefaultRule() {
+	protected AbstractRuleType() {
 		Logger.getInstance().log(this.getClass().getSimpleName());
 	}
 
