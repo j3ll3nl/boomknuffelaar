@@ -9,8 +9,12 @@ public class ArchitectureDefinition {
 	private String name;
 	private String description;
 	private Layer topLayer;
-	private ArrayList<Layer> layers;
+	private ArrayList<Layer> layers = new ArrayList<Layer>();
 
+	public ArchitectureDefinition() {
+		
+	}
+	
 	public ArchitectureDefinition(String name) {
 		Logger.getInstance().log(this.getClass().getSimpleName());
 		this.name = name;
