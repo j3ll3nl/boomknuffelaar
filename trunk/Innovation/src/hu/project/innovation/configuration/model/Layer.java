@@ -59,7 +59,7 @@ public class Layer {
 		return null;
 
 	}
-	
+
 	public void addAppliedRule(AbstractRuleType ruleType, Layer toLayer) {
 		AppliedRule r = new AppliedRule(ruleType, this, toLayer);
 		this.appliedRules.add(r);

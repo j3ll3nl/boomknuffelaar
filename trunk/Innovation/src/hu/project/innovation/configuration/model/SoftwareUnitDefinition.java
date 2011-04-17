@@ -6,10 +6,7 @@ import java.util.ArrayList;
 
 public class SoftwareUnitDefinition {
 
-	public static final String 
-		METHOD		= "method",
-		CLASS 		= "class", 
-		PACKAGE 	= "package";
+	public static final String METHOD = "method", CLASS = "class", PACKAGE = "package";
 
 	private String name;
 	private String type;
