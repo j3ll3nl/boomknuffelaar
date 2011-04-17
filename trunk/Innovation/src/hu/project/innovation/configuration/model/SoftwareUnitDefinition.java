@@ -12,6 +12,10 @@ public class SoftwareUnitDefinition {
 	private String type;
 	private ArrayList<SoftwareUnitDefinition> softwareUnits;
 
+	public SoftwareUnitDefinition() {
+		
+	}
+	
 	public SoftwareUnitDefinition(String name, String type) {
 		Logger.getInstance().log(this.getClass().getSimpleName());
 		this.name = name;
