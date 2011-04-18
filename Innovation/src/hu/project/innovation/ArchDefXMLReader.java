@@ -176,10 +176,12 @@ public class ArchDefXMLReader {
 	}
 	
 	private String getElementValue(Element element, String tagName) {
+		
 		NodeList list = element.getElementsByTagName(tagName);
 		Element valueElement = (Element) list.item(0);
-		System.out.println(valueElement.getChildNodes().item(0).getNodeValue().trim());
+		//System.out.println(valueElement.getChildNodes().item(0).getNodeValue().trim());
 		return valueElement.getChildNodes().item(0).getNodeValue().trim();
+		
 	}
 	
 }
