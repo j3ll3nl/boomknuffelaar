@@ -96,19 +96,10 @@ public class ArchDefXMLReader {
 			
 			if(layerNode.getNodeType() == Node.ELEMENT_NODE) {
 				
+				// Get Layer Info
 				Element layerElement = (Element) layerNode;
-				
-				// Get Layer ID
-				NodeList idList = layerElement.getElementsByTagName("id");
-				Element idElement = (Element) idList.item(0);
-				String layerId = idElement.getChildNodes().item(0).getNodeValue().trim();
-				System.out.println(layerId);
-				
-				// Get Layer Description
-				NodeList descList = layerElement.getElementsByTagName("description");
-				Element descElement = (Element) descList.item(0);
-				String layerDescription = descElement.getChildNodes().item(0).getNodeValue().trim();
-				System.out.println(layerDescription);
+				String layerId = getElementValue(layerElement, "id");
+				String layerDescription = getElementValue(layerElement, "description");
 				
 				// Add Layer to Architecture Definition
 				Layer layer = new Layer(layerId);
@@ -124,13 +115,9 @@ public class ArchDefXMLReader {
 					
 					if(softwareUnitNode.getNodeType() == Node.ELEMENT_NODE) {
 						
+						// Get Software Unit Info
 						Element softwareUnitElement = (Element) softwareUnitNode;
-						
-						// Get Software Unit Type
-						NodeList typeList = softwareUnitElement.getElementsByTagName("type");
-						Element typeElement = (Element) typeList.item(0);
-						String suType = typeElement.getChildNodes().item(0).getNodeValue().trim();
-						System.out.println(suType);
+						String suType = getElementValue(softwareUnitElement, "type");
 						
 						// Add Software Unit to Layer
 						SoftwareUnitDefinition sud = new SoftwareUnitDefinition();
@@ -150,19 +137,10 @@ public class ArchDefXMLReader {
 					
 					if(ruleDefinitionNode.getNodeType() == Node.ELEMENT_NODE) {
 						
+						// Get Rule Definition Info
 						Element ruleDefinitionElement = (Element) ruleDefinitionNode;
-						
-						// Get Rule Definition Rule
-						NodeList ruleList = ruleDefinitionElement.getElementsByTagName("rule");
-						Element ruleElement = (Element) ruleList.item(0);
-						String rdRule = ruleElement.getChildNodes().item(0).getNodeValue().trim();
-						System.out.println(rdRule);
-						
-						// Get Rule Definition To-Layer
-						NodeList toLayerList = ruleDefinitionElement.getElementsByTagName("toLayer");
-						Element toLayerElement = (Element) toLayerList.item(0);
-						String toLayer = toLayerElement.getChildNodes().item(0).getNodeValue().trim();
-						System.out.println(toLayer);
+						String rule = getElementValue(ruleDefinitionElement, "rule");
+						String toLayer = getElementValue(ruleDefinitionElement, "toLayer");
 						
 						// TODO Add Rule Definition to Layer
 						
@@ -174,14 +152,10 @@ public class ArchDefXMLReader {
 							Node ruleExceptionNode = listOfRuleExceptions.item(k);
 							
 							if(ruleExceptionNode.getNodeType() == Node.ELEMENT_NODE) {
-								
-								Element ruleExceptionElement = (Element) ruleExceptionNode;
-								
+											
 								// Get Software Unit
-								NodeList exceptionList = ruleExceptionElement.getElementsByTagName("softwareUnitt");
-								Element exceptionElement = (Element) exceptionList.item(0);
-								String ruleException = exceptionElement.getChildNodes().item(0).getNodeValue().trim();
-								System.out.println(ruleException);
+								Element ruleExceptionElement = (Element) ruleExceptionNode;
+								String softwareUnitt = getElementValue(ruleExceptionElement, "softwareUnitt");
 								
 								// TODO Add Exception to Rule Definition
 							
@@ -199,6 +173,13 @@ public class ArchDefXMLReader {
 		
 		return archDef;
 	
+	}
+	
+	private String getElementValue(Element element, String tagName) {
+		NodeList list = element.getElementsByTagName(tagName);
+		Element valueElement = (Element) list.item(0);
+		System.out.println(valueElement.getChildNodes().item(0).getNodeValue().trim());
+		return valueElement.getChildNodes().item(0).getNodeValue().trim();
 	}
 	
 }
