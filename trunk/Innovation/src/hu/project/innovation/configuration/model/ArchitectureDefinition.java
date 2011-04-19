@@ -1,10 +1,11 @@
 package hu.project.innovation.configuration.model;
 
 import hu.project.innovation.Logger;
+import hu.project.innovation.XMLable;
 
 import java.util.ArrayList;
 
-public class ArchitectureDefinition {
+public class ArchitectureDefinition implements XMLable {
 
 	private String name;
 	private String description;
@@ -27,6 +28,14 @@ public class ArchitectureDefinition {
 		this(name);
 		description = desc;
 	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
 
 	public void setDescription(String desc) {
 		description = desc;
@@ -36,8 +45,8 @@ public class ArchitectureDefinition {
 		return topLayer;
 	}
 
-	public void addLayer(Layer layer) {
-		layers.add(layer);
+	public boolean addLayer(Layer layer) {
+		return layers.add(layer);
 	}
 
 	public Layer getLayer(String name) {
@@ -53,6 +62,17 @@ public class ArchitectureDefinition {
 
 	public ArrayList<Layer> getAllLayers() {
 		return layers;
+	}
+
+	@Override
+	public String toXML() {
+		String xml = "<architecture>\n";
+		for (Layer layer : layers) {
+			xml += layer.toXML();
+		}
+		xml += "</architecture>\n";
+		
+		return xml;
 	}
 
 }

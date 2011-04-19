@@ -2,6 +2,7 @@ package hu.project.innovation.configuration.model;
 
 import hu.project.innovation.Logger;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Configuration {
@@ -10,27 +11,37 @@ public class Configuration {
 	public static final String OUTPUT_FORMAT = "output_format";
 	public static final String OUTPUT_FORMAT_TEXT = "text";
 
-	// private RuleSet ruleSet;
 	private HashMap<String, String> settings;
+	private HashMap<String, AbstractRuleType> rules;
 
 	protected Configuration() {
 		Logger.getInstance().log(this.getClass().getSimpleName());
 
-		// this.ruleSet = new RuleSet();
+		this.rules = new HashMap<String, AbstractRuleType>();
+		this.addRuleType(new BackCallRule());
+		
 		this.settings = new HashMap<String, String>();
 	}
-
-	public void getRuleSet() {
-		// return this.ruleSet;
+	
+	public AbstractRuleType addRuleType(AbstractRuleType ruleType) {
+		return this.rules.put(ruleType.getName(), ruleType);
+	}
+	
+	public AbstractRuleType getRuleType(String ruleName) {
+		return this.rules.get(ruleName);
 	}
 
 	public void setSetting(String key, String value) {
 		this.settings.put(key, value);
 
-		Logger.getInstance().log("Setting set: " + key + " -> " + value);
+		Logger.getInstance().log("Setting set: \"" + key + "\" -> \"" + value + "\"");
 	}
 
 	public String getSetting(String key) {
 		return this.settings.get(key);
+	}
+
+	public AbstractRuleType getRule(String ruleName) {
+		return this.rules.get(ruleName);
 	}
 }

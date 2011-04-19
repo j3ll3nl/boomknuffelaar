@@ -1,8 +1,9 @@
 package hu.project.innovation.configuration.model;
 
 import hu.project.innovation.Logger;
+import hu.project.innovation.XMLable;
 
-public class AppliedRule {
+public class AppliedRule implements XMLable {
 
 	private AbstractRuleType ruleType;
 	private Layer fromLayer, toLayer;
@@ -17,6 +18,16 @@ public class AppliedRule {
 		this.ruleType = ruleType;
 		this.fromLayer = fromLayer;
 		this.toLayer = toLayer;
+	}
+
+	@Override
+	public String toXML() {
+		String xml = "<appliedRule>\n";
+		xml += "<fromLayer>"+this.fromLayer.getName()+"</fromLayer>\n";
+		xml += "<toLayer>"+this.toLayer.getName()+"</toLayer>\n";
+		xml += "<ruleType>"+this.ruleType.getName()+"</ruleType>\n";
+		xml += "</appliedRule>\n";
+		return xml;
 	}
 
 }
