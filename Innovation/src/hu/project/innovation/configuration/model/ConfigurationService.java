@@ -4,8 +4,11 @@ import hu.project.innovation.Logger;
 
 import java.util.Set;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 public class ConfigurationService {
 
+	private ArchitectureDefinition architecture;
 	private Configuration configuration;
 	private static ConfigurationService instance;
 
@@ -13,6 +16,16 @@ public class ConfigurationService {
 		Logger.getInstance().log(this.getClass().getSimpleName());
 
 		this.configuration = new Configuration();
+	}
+	
+	public void newArchitecture(String name, String description) {
+		this.architecture = new ArchitectureDefinition(name, description);
+	}
+	
+	public boolean newLayer(String name, String description) {
+		if(null==this.architecture) return false;
+		
+		return this.architecture.addLayer(new Layer(name, description));
 	}
 
 	public Set<String> getRules() {
@@ -35,6 +48,10 @@ public class ConfigurationService {
 	public void setOutputFormat(String format) {
 		this.configuration.setSetting(Configuration.OUTPUT_FORMAT, format);
 	}
+	
+	public String getOutputFormat() {
+		return this.configuration.getSetting(Configuration.OUTPUT_FORMAT);
+	}
 
 	public static ConfigurationService getInstance() {
 		if (instance == null) {
@@ -43,8 +60,28 @@ public class ConfigurationService {
 		return instance;
 	}
 
-	public boolean ruleIsActive(String name) {
-		// return this.configuration.getRuleSet().ruleIsActive(name);
-		return true;
+	public boolean newSoftwareUnit(String layerName, String unitName, String unitType) {
+		Layer layer = this.architecture.getLayer(layerName);
+		
+		if(null!=layer) {
+			return layer.addSoftwareUnit(
+					new SoftwareUnitDefinition(unitName, unitType));
+		} else {
+			return false;
+		}
+	}
+
+	public void newAppliedRule(String fromLayerName, String toLayerName, String ruleName) {
+		Layer fromLayer = this.architecture.getLayer(fromLayerName);
+		Layer toLayer = this.architecture.getLayer(toLayerName);
+		AbstractRuleType ruleType = this.configuration.getRule(ruleName);
+		
+		if(null!=fromLayer && null!=toLayer && null!=ruleType) {
+			fromLayer.addAppliedRule(ruleType, toLayer);
+		}
+	}
+	
+	public String architectureToXML() {
+		return this.architecture.toXML();
 	}
 }

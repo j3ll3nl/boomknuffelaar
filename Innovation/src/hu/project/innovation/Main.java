@@ -23,12 +23,15 @@ public class Main {
 
 		// Definition test
 
-		// DefinitionService defintion = DefinitionService.getInstance();
-		// defintion.newArchitectureDefinition("Architecture", "A first test");
-		// defintion.newLayer("UI-Layer", "Presentation logic");
-		// defintion.newSoftwareUnit(
-		// "UI-Layer", "JustAPackage", SoftwareUnitDefinition.PACKAGE);
-
+		conf.newArchitecture("Architecture", "A first test");
+		conf.newLayer("UI-Layer", "Presentation logic");
+		conf.newLayer("Domain-Layer", "Domain logic");
+		conf.newSoftwareUnit("UI-Layer", "JustAPackage", "package");
+		conf.newSoftwareUnit("UI-Layer", "AnotherPackage", "package");
+		conf.newSoftwareUnit("Domain-Layer", "DomainPackage", "package");
+		conf.newAppliedRule("UI-Layer","Domain-Layer","BackCallRule");
+		
+		Logger.getInstance().log(conf.architectureToXML());
 		// Analyse test
 
 		AnalyseService analysis = AnalyseService.getInstance();
