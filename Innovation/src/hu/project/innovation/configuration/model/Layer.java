@@ -22,6 +22,7 @@ public class Layer implements XMLable {
 		Logger.getInstance().log(this.getClass().getSimpleName());
 		this.name = name;
 		this.description = description;
+
 		this.appliedRules = new ArrayList<AppliedRule>();
 	}
 
@@ -78,11 +79,6 @@ public class Layer implements XMLable {
 		xml += "<id>"+this.id+"</id>\n";
 		xml += "<name>"+this.name+"</name>\n";
 		xml += "<description>"+this.description+"</description>\n";
-//		if(softwareUnits != null){
-//			for(SoftwareUnitDefinition r : this.softwareUnits) {
-//				xml += r.toXML();
-//			}
-//		}	
 		if(appliedRules != null){
 			for(AppliedRule r : this.appliedRules) {
 				xml += r.toXML();
