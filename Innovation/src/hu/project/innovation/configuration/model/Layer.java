@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 public class Layer implements XMLable {
 
+	private int id;
 	private String name;
 	private String description;
 	private Layer parentLayer;
@@ -27,12 +28,28 @@ public class Layer implements XMLable {
 		this.appliedRules = new ArrayList<AppliedRule>();
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public String getName() {
 		return name;
 	}
 
-	public void setDescription(String desc) {
-		description = desc;
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public Layer getChildLayer() {
