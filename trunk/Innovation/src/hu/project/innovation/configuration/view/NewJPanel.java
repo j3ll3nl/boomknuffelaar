@@ -9,10 +9,13 @@ import java.awt.GridLayout;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.ListModel;
 
 /**
@@ -27,6 +30,11 @@ public class NewJPanel extends javax.swing.JPanel {
 	private JSplitPane jSplitPane1;
 	private JPanel jPanel1;
 	private JList jList1;
+	private JScrollPane jScrollPane2;
+	private JTextArea jTextArea1;
+	private JLabel jLabel2;
+	private JTextField jTextField1;
+	private JLabel jLabel1;
 	private JPanel jPanel8;
 	private JPanel jPanel7;
 	private JButton jButton4;
@@ -68,17 +76,18 @@ public class NewJPanel extends javax.swing.JPanel {
 			{
 				BorderLayout thisLayout = new BorderLayout();
 				this.setLayout(thisLayout);
-				this.setPreferredSize(new java.awt.Dimension(611, 269));
+				this.setPreferredSize(new java.awt.Dimension(611, 393));
 				{
 					jSplitPane1 = new JSplitPane();
 					jSplitPane1.setDividerLocation(300);
 					this.add(jSplitPane1, BorderLayout.CENTER);
+					jSplitPane1.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 					{
 						jPanel2 = new JPanel();
 						BorderLayout jPanel2Layout = new BorderLayout();
 						jPanel2.setLayout(jPanel2Layout);
 						jSplitPane1.add(jPanel2, JSplitPane.LEFT);
-						jPanel2.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
+						jPanel2.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
 						{
 							jPanel3 = new JPanel();
 							BorderLayout jPanel3Layout = new BorderLayout();
@@ -136,33 +145,56 @@ public class NewJPanel extends javax.swing.JPanel {
 					}
 					{
 						jPanel1 = new JPanel();
-						GridLayout jPanel1Layout = new GridLayout(3, 1);
+						BorderLayout jPanel1Layout = new BorderLayout();
 						jPanel1.setLayout(jPanel1Layout);
 						jSplitPane1.add(jPanel1, JSplitPane.RIGHT);
-						jPanel1.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
-						jPanel1Layout.setColumns(1);
-						jPanel1Layout.setHgap(5);
-						jPanel1Layout.setVgap(5);
-						jPanel1Layout.setRows(3);
+						jPanel1.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
 						{
 							jPanel4 = new JPanel();
-							BorderLayout jPanel4Layout = new BorderLayout();
+							GridLayout jPanel4Layout = new GridLayout(2, 2);
+							jPanel4Layout.setColumns(2);
+							jPanel4Layout.setHgap(5);
+							jPanel4Layout.setVgap(5);
+							jPanel4Layout.setRows(2);
 							jPanel4.setLayout(jPanel4Layout);
-							jPanel1.add(jPanel4);
+							jPanel1.add(jPanel4, BorderLayout.NORTH);
 							jPanel4.setBorder(BorderFactory.createTitledBorder("Layer configuration"));
+							{
+								jLabel1 = new JLabel();
+								jPanel4.add(jLabel1);
+								jLabel1.setText("Layer name");
+							}
+							{
+								jTextField1 = new JTextField();
+								jPanel4.add(jTextField1);
+							}
+							{
+								jLabel2 = new JLabel();
+								jPanel4.add(jLabel2);
+								jLabel2.setText("Description");
+							}
+							{
+								jScrollPane2 = new JScrollPane();
+								jPanel4.add(jScrollPane2);
+								jScrollPane2.setPreferredSize(new java.awt.Dimension(142, 26));
+								{
+									jTextArea1 = new JTextArea();
+									jScrollPane2.setViewportView(jTextArea1);
+								}
+							}
 						}
 						{
 							jPanel7 = new JPanel();
 							BorderLayout jPanel7Layout = new BorderLayout();
 							jPanel7.setLayout(jPanel7Layout);
-							jPanel1.add(jPanel7);
+							jPanel1.add(jPanel7, BorderLayout.CENTER);
 							jPanel7.setBorder(BorderFactory.createTitledBorder("Components which are assigned to this layer"));
 						}
 						{
 							jPanel8 = new JPanel();
 							BorderLayout jPanel8Layout = new BorderLayout();
 							jPanel8.setLayout(jPanel8Layout);
-							jPanel1.add(jPanel8);
+							jPanel1.add(jPanel8, BorderLayout.SOUTH);
 							jPanel8.setBorder(BorderFactory.createTitledBorder("Rules for this layer"));
 						}
 					}
