@@ -28,11 +28,6 @@ public class ConfigurationService implements ConfigurationServiceIF {
 		return this.architecture.addLayer(new Layer(name, description));
 	}
 
-	public Set<String> getRules() {
-		// return this.configuration.getRuleSet().getRules();
-		return null;
-	}
-
 	public void setRuleStatus(String ruleName, boolean status) {
 		// this.configuration.getRuleSet().setRuleStatus(ruleName, status);
 	}

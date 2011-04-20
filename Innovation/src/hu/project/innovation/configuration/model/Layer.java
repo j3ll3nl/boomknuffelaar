@@ -89,8 +89,11 @@ public class Layer implements XMLable {
 
 	@Override
 	public String toXML() {
-		String xml = "<layer>\n";
+		String xml = ""; 
+		
+		xml += "<layer>\n";
 		xml += "<name>"+this.name+"</name>\n";
+		xml += "<description>"+this.description+"</description>\n";
 		for(AppliedRule r : this.appliedRules) {
 			xml += r.toXML();
 		}		

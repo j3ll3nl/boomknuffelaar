@@ -22,8 +22,6 @@ public interface ConfigurationServiceIF {
 			String toLayerName, 
 			String ruleName);
 
-	public Set<String> getRules();
-
 	public void setRuleStatus(
 			String ruleName, 
 			boolean status);
