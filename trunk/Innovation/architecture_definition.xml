@@ -1,4 +1,4 @@
-<application>
+<architecture>
 	<layer>
 		<id>1</id>
 		<name>View</name>
@@ -6,13 +6,13 @@
 		<softwareUnit>
 			<type>Package</type>
 		</softwareUnit>
-		<ruleDefinition>
+		<appliedRule>
 			<rule>BackCall</rule>
 			<toLayer>2</toLayer>
 			<exceptions>
-				<softwareUnitt>com.example.class</softwareUnitt>
+				<unit>com.example.class</unit>
 			</exceptions>
-		</ruleDefinition>
+		</appliedRule>
 	</layer>
 	<layer>
 		<id>2</id>
@@ -21,13 +21,13 @@
 		<softwareUnit>
 			<type>Package</type>
 		</softwareUnit>
-		<ruleDefinition>
+		<appliedRule>
 			<rule>BackCall</rule>
 			<toLayer>3</toLayer>
 			<exceptions>
-				<softwareUnitt>com.example.class</softwareUnitt>
+				<unit>com.example.class</unit>
 			</exceptions>
-		</ruleDefinition>
+		</appliedRule>
 	</layer>
 	<layer>
 		<id>3</id>
@@ -36,12 +36,12 @@
 		<softwareUnit>
 			<type>Package</type>
 		</softwareUnit>
-		<ruleDefinition>
+		<appliedRule>
 			<rule>BackCall</rule>
 			<toLayer>1</toLayer>
 			<exceptions>
-				<softwareUnitt>com.example.class</softwareUnitt>
+				<unit>com.example.class</unit>
 			</exceptions>
-		</ruleDefinition>
+		</appliedRule>
 	</layer>
-</application>
+</architecture>
