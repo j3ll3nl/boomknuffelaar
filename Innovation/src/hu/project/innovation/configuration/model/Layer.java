@@ -50,6 +50,10 @@ public class Layer implements XMLable {
 		this.description = description;
 	}
 
+	public String getDescription() {
+		return description;
+	}
+
 	public Layer getChildLayer() {
 		return childLayer;
 	}
@@ -87,5 +91,9 @@ public class Layer implements XMLable {
 		xml += "\t</layer>\n";
 		
 		return xml;
+	}
+	
+	public String toString(){
+		return getName();
 	}
 }
