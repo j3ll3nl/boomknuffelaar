@@ -92,4 +92,9 @@ public class ConfigurationService implements ConfigurationServiceIF {
 		return null;
 
 	}
+
+	public void removeLayer(Object selectedObject) {
+		// TODO Auto-generated method stub
+		
+	}
 }
