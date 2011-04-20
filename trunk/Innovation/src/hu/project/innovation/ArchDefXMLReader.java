@@ -24,6 +24,7 @@ public class ArchDefXMLReader extends DefaultHandler {
 	private SoftwareUnitDefinition currentUnit;
 	private ArrayList<String> currentRule = new ArrayList<String>();
 	private ArrayList<ArrayList<String>> savedRules = new ArrayList<ArrayList<String>>();
+	private boolean isLayer = false;
 	
 	
 	public void startElement( String namespaceURI, String localName, String qName, Attributes attr ) throws SAXException {
@@ -38,7 +39,7 @@ public class ArchDefXMLReader extends DefaultHandler {
 		} else if ( localName.equals( "softwareUnit" ) ) {
 			
 			currentUnit = new SoftwareUnitDefinition();
-			currentLayer.addSoftwareUnit(currentUnit);	
+			ar.addSoftwareUnit(currentUnit);	
 			
 		}
 		
@@ -50,6 +51,7 @@ public class ArchDefXMLReader extends DefaultHandler {
 		if ( localName.equals( "id" ) ) {
 			
 			currentLayer.setId(Integer.parseInt(contents.toString()));
+			isLayer = true;
 			
 		} else if ( localName.equals( "name" ) ) {
 			
@@ -58,6 +60,7 @@ public class ArchDefXMLReader extends DefaultHandler {
 		} else if ( localName.equals( "description" ) ) {
 			
 			currentLayer.setDescription(contents.toString());
+			isLayer = false;
 			
 		} else if ( localName.equals( "type" ) ) {
 			
