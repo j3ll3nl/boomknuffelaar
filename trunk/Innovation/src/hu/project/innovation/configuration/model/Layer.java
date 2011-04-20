@@ -17,7 +17,7 @@ public class Layer implements XMLable {
 	public Layer() {
 		this.appliedRules = new ArrayList<AppliedRule>();
 	}
-	
+
 	public Layer(String name, String description) {
 		Logger.getInstance().log(this.getClass().getSimpleName());
 		this.name = name;
@@ -50,10 +50,6 @@ public class Layer implements XMLable {
 		this.description = description;
 	}
 
-	public String getDescription() {
-		return description;
-	}
-
 	public Layer getChildLayer() {
 		return childLayer;
 	}
@@ -77,23 +73,23 @@ public class Layer implements XMLable {
 
 	@Override
 	public String toXML() {
-		String xml = ""; 
-		
+		String xml = "";
+
 		xml += "\t<layer>\n";
-		xml += "\t\t<id>"+this.id+"</id>\n";
-		xml += "\t\t<name>"+this.name+"</name>\n";
-		xml += "\t\t<description>"+this.description+"</description>\n";
-		if(appliedRules != null){
-			for(AppliedRule r : this.appliedRules) {
+		xml += "\t\t<id>" + this.id + "</id>\n";
+		xml += "\t\t<name>" + this.name + "</name>\n";
+		xml += "\t\t<description>" + this.description + "</description>\n";
+		if (appliedRules != null) {
+			for (AppliedRule r : this.appliedRules) {
 				xml += r.toXML();
 			}
-		}	
+		}
 		xml += "\t</layer>\n";
-		
+
 		return xml;
 	}
-	
-	public String toString(){
+
+	public String toString() {
 		return getName();
 	}
 }
