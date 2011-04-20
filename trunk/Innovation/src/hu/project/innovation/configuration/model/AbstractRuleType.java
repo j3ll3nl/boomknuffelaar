@@ -1,9 +1,15 @@
 package hu.project.innovation.configuration.model;
 
+import java.util.List;
+
+import org.jaxen.JaxenException;
+
 import hu.project.innovation.Logger;
 import hu.project.innovation.XMLable;
 
 import net.sourceforge.pmd.AbstractJavaRule;
+import net.sourceforge.pmd.ast.ASTPackageDeclaration;
+import net.sourceforge.pmd.ast.SimpleNode;
 
 public abstract class AbstractRuleType 
 	extends AbstractJavaRule implements XMLable {
@@ -29,6 +35,20 @@ public abstract class AbstractRuleType
 	private String formattedName() {
 		return this.name.replaceAll("(.)([A-Z])", "$1_$2").toLowerCase();
 	}
+	
+	@SuppressWarnings("unchecked")
+	protected String getPackageName(SimpleNode node) {
+		try {			
+			List<ASTPackageDeclaration> packages = 
+				node.findChildNodesWithXPath("//PackageDeclaration");
+			String packageName = packages.get(0).getPackageNameImage();
+			
+			return packageName;
+		} catch (JaxenException e) {
+			e.printStackTrace();
+		}    	
+    	return null;
+    }
 
 	public abstract void checkViolation();
 	

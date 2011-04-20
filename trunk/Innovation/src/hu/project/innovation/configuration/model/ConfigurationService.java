@@ -2,10 +2,6 @@ package hu.project.innovation.configuration.model;
 
 import hu.project.innovation.Logger;
 
-import java.util.Set;
-
-import javax.xml.bind.annotation.XmlRootElement;
-
 public class ConfigurationService implements ConfigurationServiceIF {
 
 	private ArchitectureDefinition architecture;
@@ -59,8 +55,8 @@ public class ConfigurationService implements ConfigurationServiceIF {
 		Layer layer = this.architecture.getLayer(layerName);
 		
 		if(null!=layer) {
-			return architecture.addSoftwareUnit(
-					new SoftwareUnitDefinition(unitName, unitType));
+			return this.architecture.addSoftwareUnit(
+					new SoftwareUnitDefinition(unitName, unitType, layer));
 		} else {
 			return false;
 		}
@@ -78,5 +74,9 @@ public class ConfigurationService implements ConfigurationServiceIF {
 	
 	public String architectureToXML() {
 		return this.architecture.toXML();
+	}
+
+	public String getLayerNameBySoftwareUnitName(String name) {
+		return this.architecture.getLayerNameBySoftwareUnitName(name);
 	}
 }

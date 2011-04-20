@@ -7,20 +7,26 @@ import java.util.ArrayList;
 
 public class SoftwareUnitDefinition implements XMLable {
 
-	public static final String METHOD = "method", CLASS = "class", PACKAGE = "package";
+	public static final String 
+		METHOD 		= "method", 
+		CLASS 		= "class", 
+		PACKAGE 	= "package";
 
 	private String name;
 	private String type;
 	private ArrayList<SoftwareUnitDefinition> softwareUnits;
+	
+	private Layer layer;
 
 	public SoftwareUnitDefinition() {
 		
 	}
 	
-	public SoftwareUnitDefinition(String name, String type) {
+	public SoftwareUnitDefinition(String name, String type, Layer layer) {
 		Logger.getInstance().log(this.getClass().getSimpleName());
 		this.name = name;
 		this.setType(type);
+		this.layer = layer;
 	}
 
 	public String getName() {
@@ -45,6 +51,10 @@ public class SoftwareUnitDefinition implements XMLable {
 		xml += "<type>"+this.type+"</type>\n";
 		xml += "</softwareUnit>\n";
 		return xml;
+	}
+
+	public Layer getLayer() {
+		return this.layer;
 	}
 
 }
