@@ -2,6 +2,9 @@ package hu.project.innovation.configuration.model;
 
 import hu.project.innovation.Logger;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Set;
 public class ConfigurationService implements ConfigurationServiceIF {
 
 	private ArchitectureDefinition architecture;
@@ -16,6 +19,10 @@ public class ConfigurationService implements ConfigurationServiceIF {
 	
 	public void newArchitecture(String name, String description) {
 		this.architecture = new ArchitectureDefinition(name, description);
+	}
+	
+	public void openArchitecture(File file){
+		
 	}
 	
 	public boolean newLayer(String name, String description) {
@@ -75,8 +82,12 @@ public class ConfigurationService implements ConfigurationServiceIF {
 	public String architectureToXML() {
 		return this.architecture.toXML();
 	}
-
-	public String getLayerNameBySoftwareUnitName(String name) {
+public String getLayerNameBySoftwareUnitName(String name) {
 		return this.architecture.getLayerNameBySoftwareUnitName(name);
+	}
+	public ArrayList<Layer> getLayers() {
+		// TODO Auto-generated method stub
+		return null;
+		
 	}
 }
