@@ -22,6 +22,11 @@ public class SoftwareUnitDefinition implements XMLable {
 		
 	}
 	
+	public SoftwareUnitDefinition(Layer layer) {
+		Logger.getInstance().log(this.getClass().getSimpleName());
+		this.layer = layer;
+	}
+	
 	public SoftwareUnitDefinition(String name, String type, Layer layer) {
 		Logger.getInstance().log(this.getClass().getSimpleName());
 		this.name = name;
