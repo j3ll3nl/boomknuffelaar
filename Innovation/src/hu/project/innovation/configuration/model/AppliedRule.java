@@ -16,9 +16,11 @@ public class AppliedRule implements XMLable {
 	public AppliedRule(AbstractRuleType ruleType, Layer fromLayer, Layer toLayer) {
 		Logger.getInstance().log(this.getClass().getSimpleName());
 		this.ruleType = ruleType;
-		this.fromLayer = fromLayer;
+		this.setFromLayer(fromLayer);
 		this.toLayer = toLayer;
 	}
+	
+	
 
 	@Override
 	public String toXML() {
@@ -27,6 +29,22 @@ public class AppliedRule implements XMLable {
 		xml += "\t\t\t<toLayer>"+this.toLayer.getId()+"</toLayer>\n";
 		xml += "\t\t</appliedRule>\n";
 		return xml;
+	}
+
+	public void setFromLayer(Layer fromLayer) {
+		this.fromLayer = fromLayer;
+	}
+
+	public Layer getFromLayer() {
+		return fromLayer;
+	}
+	
+	public Layer getToLayer() {
+		return toLayer;
+	}
+
+	public AbstractRuleType getRuleType() {
+		return this.ruleType;
 	}
 
 }

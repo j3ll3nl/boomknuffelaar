@@ -33,12 +33,13 @@ public abstract class AbstractRuleType
 	}
 	
 	private String formattedName() {
-		return this.name.replaceAll("(.)([A-Z])", "$1_$2").toLowerCase();
+		String formattedName = "sjaak";
+		return formattedName.replaceAll("(.)([A-Z])", "$1_$2").toLowerCase();
 	}
 	
 	@SuppressWarnings("unchecked")
 	protected String getPackageName(SimpleNode node) {
-		try {			
+		try {
 			List<ASTPackageDeclaration> packages = 
 				node.findChildNodesWithXPath("//PackageDeclaration");
 			String packageName = packages.get(0).getPackageNameImage();

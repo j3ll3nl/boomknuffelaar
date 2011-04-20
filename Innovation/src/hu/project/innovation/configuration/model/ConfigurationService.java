@@ -97,4 +97,15 @@ public class ConfigurationService implements ConfigurationServiceIF {
 		// TODO Auto-generated method stub
 		
 	}
+
+	public boolean isRuleApplied(String fromLayerName, String toLayerName, String ruleName) {
+		Layer fromLayer = this.architecture.getLayer(fromLayerName);
+		Layer toLayer = this.architecture.getLayer(toLayerName);
+		AbstractRuleType ruleType = this.configuration.getRule(ruleName);
+
+		if(null!=fromLayer && null!=toLayer && null!=ruleType) {
+			return fromLayer.hasAppliedRule(ruleType, toLayer);
+		}
+		else return false;	
+	}
 }
