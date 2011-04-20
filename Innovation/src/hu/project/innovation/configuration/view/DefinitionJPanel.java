@@ -1,6 +1,7 @@
 package hu.project.innovation.configuration.view;
 
 import hu.project.innovation.configuration.controller.DefinitionController;
+import hu.project.innovation.configuration.model.Layer;
 
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
@@ -12,6 +13,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -119,10 +121,10 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 									jScrollPane1 = new JScrollPane();
 									jPanel5.add(jScrollPane1, BorderLayout.CENTER);
 									jScrollPane1.setPreferredSize(new java.awt.Dimension(383, 213));
-									{										
+									{
 										jListLayers = new JList();
-										jListLayers.addListSelectionListener(definitioncontroller);										
-										jScrollPane1.setViewportView(jListLayers);										
+										jListLayers.addListSelectionListener(definitioncontroller);
+										jScrollPane1.setViewportView(jListLayers);
 									}
 								}
 							}
@@ -172,8 +174,8 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 						{
 							jPanel4 = new JPanel();
 							GridBagLayout jPanel4Layout = new GridBagLayout();
-							jPanel4Layout.rowWeights = new double[] {0.0, 0.1};
-							jPanel4Layout.rowHeights = new int[] {27, 7};
+							jPanel4Layout.rowWeights = new double[] { 0.0, 0.1 };
+							jPanel4Layout.rowHeights = new int[] { 27, 7 };
 							jPanel4Layout.columnWeights = new double[] { 0.0, 0.1 };
 							jPanel4Layout.columnWidths = new int[] { 128, 7 };
 							jPanel4.setLayout(jPanel4Layout);
@@ -187,6 +189,7 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 							}
 							{
 								jTextFieldLayerName = new JTextField();
+								jTextFieldLayerName.addFocusListener(definitioncontroller);
 								jPanel4.add(jTextFieldLayerName, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 							}
 							{
@@ -314,6 +317,15 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public Layer getSelectedLayer() {
+		Object selected = jListLayers.getSelectedValue();
+		if (selected instanceof Layer) {
+			return (Layer) selected;
+		}
+		JOptionPane.showMessageDialog(null, "Please select a layer", "Error", JOptionPane.ERROR_MESSAGE);
+		return null;
 	}
 
 }
