@@ -38,7 +38,7 @@ public class ArchDefXMLReader extends DefaultHandler {
 			
 		} else if ( localName.equals( "softwareUnit" ) ) {
 			
-			currentUnit = new SoftwareUnitDefinition();
+			currentUnit = new SoftwareUnitDefinition(currentLayer);
 			ar.addSoftwareUnit(currentUnit);	
 			
 		}
@@ -53,9 +53,13 @@ public class ArchDefXMLReader extends DefaultHandler {
 			currentLayer.setId(Integer.parseInt(contents.toString()));
 			isLayer = true;
 			
-		} else if ( localName.equals( "name" ) ) {
+		} else if ( localName.equals( "name" ) && isLayer) {
 			
 			currentLayer.setName(contents.toString());
+			
+		} else if ( localName.equals( "name" ) ) {
+			
+			currentUnit.setName(contents.toString());
 			
 		} else if ( localName.equals( "description" ) ) {
 			
