@@ -4,6 +4,7 @@
 		<name>View</name>
 		<description>Datapresentatie</description>
 		<softwareUnit>
+			<name>unitje</name>
 			<type>Package</type>
 		</softwareUnit>
 		<appliedRule>
@@ -19,6 +20,7 @@
 		<name>Controller</name>
 		<description>Applicatielogica</description>
 		<softwareUnit>
+			<name>unitje</name>
 			<type>Package</type>
 		</softwareUnit>
 		<appliedRule>
@@ -34,6 +36,7 @@
 		<name>Model</name>
 		<description>Datamodel</description>
 		<softwareUnit>
+			<name>unitje</name>
 			<type>Package</type>
 		</softwareUnit>
 		<appliedRule>
