@@ -123,7 +123,7 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 									jScrollPane1.setPreferredSize(new java.awt.Dimension(383, 213));
 									{
 										jListLayers = new JList();
-										jListLayers.addListSelectionListener(definitioncontroller);
+										jListLayers.addListSelectionListener(definitioncontroller);										
 										jScrollPane1.setViewportView(jListLayers);
 									}
 								}

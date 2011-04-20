@@ -153,15 +153,16 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	private void moveLayerUp() {
 		CustomLogger.i(getClass().getSimpleName(), "moveLayerUp()");
 		// TODO Auto-generated method stub
-
 	}
 
 	public void addPackage() {
 		CustomLogger.i(getClass().getSimpleName(), "addPackage()");
+		// TODO Auto-generated method stub
 	}
 
 	public void addRuleException() {
 		CustomLogger.i(getClass().getSimpleName(), "addRuleException()");
+		// TODO Auto-generated method stub
 	}
 
 	/**
