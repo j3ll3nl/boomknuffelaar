@@ -92,11 +92,14 @@ public class Layer implements XMLable {
 		String xml = ""; 
 		
 		xml += "<layer>\n";
+		xml += "<id>"+this.id+"</id>\n";
 		xml += "<name>"+this.name+"</name>\n";
 		xml += "<description>"+this.description+"</description>\n";
-		for(AppliedRule r : this.appliedRules) {
-			xml += r.toXML();
-		}		
+		if(appliedRules != null){
+			for(AppliedRule r : this.appliedRules) {
+				xml += r.toXML();
+			}
+		}	
 		xml += "</layer>\n";
 		
 		return xml;
