@@ -1,0 +1,29 @@
+<architecture>
+	<layer>
+		<id>1</id>
+		<name>View</name>
+		<description>Datapresentatie</description>
+		<appliedRule>
+			<ruleType>BackCallRule</ruleType>
+			<toLayer>2</toLayer>
+		</appliedRule>
+	</layer>
+	<layer>
+		<id>2</id>
+		<name>Controller</name>
+		<description>Applicatielogica</description>
+		<appliedRule>
+			<ruleType>BackCallRule</ruleType>
+			<toLayer>3</toLayer>
+		</appliedRule>
+	</layer>
+	<layer>
+		<id>3</id>
+		<name>Model</name>
+		<description>Datamodel</description>
+		<appliedRule>
+			<ruleType>BackCallRule</ruleType>
+			<toLayer>1</toLayer>
+		</appliedRule>
+	</layer>
+</architecture>

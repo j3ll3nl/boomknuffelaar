@@ -17,6 +17,17 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.helpers.XMLReaderFactory;
 
+/**
+* SAMPLE HOW TO USE:
+* 
+* XMLReader xr = XMLReaderFactory.createXMLReader();			
+* ArchDefXMLReader reader = new ArchDefXMLReader();
+* xr.setContentHandler(reader);		
+* xr.parse( new InputSource(new FileReader( "architecture_definition.xml" )) );
+* 
+* reader.getArchitectureDefinition();
+*/
+
 public class ArchDefXMLReader extends DefaultHandler {
 	
 	private CharArrayWriter contents = new CharArrayWriter();
