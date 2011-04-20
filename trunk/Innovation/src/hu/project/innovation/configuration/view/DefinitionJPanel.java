@@ -9,7 +9,6 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 
 import javax.swing.BorderFactory;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -19,7 +18,6 @@ import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.ListModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -42,8 +40,8 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 	public JList jListLayers;
 	private JLabel jLabel2;
 	private JLabel jLabel1;
-	private JTextArea jTextArea1;
-	private JTextField jTextField1;
+	public JTextArea jTextAreaLayerDescription;
+	public JTextField jTextFieldLayerName;
 	public JButton jButtonAddComponentToLayer;
 	public JButton jButtonRemoveRuleFromLayer;
 	public JButton jButtonEditRuleFromLayer;
@@ -123,7 +121,7 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 									jScrollPane1.setPreferredSize(new java.awt.Dimension(383, 213));
 									{										
 										jListLayers = new JList();
-										jListLayers.addListSelectionListener(definitioncontroller);
+										jListLayers.addListSelectionListener(definitioncontroller);										
 										jScrollPane1.setViewportView(jListLayers);										
 									}
 								}
@@ -174,8 +172,8 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 						{
 							jPanel4 = new JPanel();
 							GridBagLayout jPanel4Layout = new GridBagLayout();
-							jPanel4Layout.rowWeights = new double[] { 0.0, 0.1 };
-							jPanel4Layout.rowHeights = new int[] { 19, 7 };
+							jPanel4Layout.rowWeights = new double[] {0.0, 0.1};
+							jPanel4Layout.rowHeights = new int[] {27, 7};
 							jPanel4Layout.columnWeights = new double[] { 0.0, 0.1 };
 							jPanel4Layout.columnWidths = new int[] { 128, 7 };
 							jPanel4.setLayout(jPanel4Layout);
@@ -188,8 +186,8 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 								jLabel1.setText("Layer name");
 							}
 							{
-								jTextField1 = new JTextField();
-								jPanel4.add(jTextField1, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+								jTextFieldLayerName = new JTextField();
+								jPanel4.add(jTextFieldLayerName, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 							}
 							{
 								jLabel2 = new JLabel();
@@ -201,9 +199,9 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 								jPanel4.add(jScrollPane2, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
 								jScrollPane2.setPreferredSize(new java.awt.Dimension(142, 26));
 								{
-									jTextArea1 = new JTextArea();
-									jTextArea1.setFont(new java.awt.Font("Tahoma", 0, 11));
-									jScrollPane2.setViewportView(jTextArea1);
+									jTextAreaLayerDescription = new JTextArea();
+									jTextAreaLayerDescription.setFont(new java.awt.Font("Tahoma", 0, 11));
+									jScrollPane2.setViewportView(jTextAreaLayerDescription);
 								}
 							}
 						}

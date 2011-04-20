@@ -40,19 +40,37 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		if (response != null) {
 			CustomLogger.i(getClass().getSimpleName(), "newDefinition() - value: " + response);
 			cs.newArchitecture(response, "");
-			clearUI();
+			clearJListLayers();
 		}
 	}
 
 	/**
 	 * Use this function to clear the user interface
 	 */
-	private void clearUI() {
+	private void clearJListLayers() {
 		CustomLogger.i(getClass().getSimpleName(), "clearUI()");
 		LayersListModel listmodel = new LayersListModel();
 
 		// Set the model for the layer
 		jpanel.jListLayers.setModel(listmodel);
+	}
+
+	/**
+	 * 
+	 */
+	private void loadLayerDetail() {
+		CustomLogger.i(getClass().getSimpleName(), "loadLayerDetail()");
+		JList list = jpanel.jListLayers;
+
+		Object selectedObject = list.getSelectedValue();
+		if (selectedObject instanceof Layer) {
+			CustomLogger.i(getClass().getSimpleName(), "loadLayerDetail() - selected layer: " + ((Layer) selectedObject).getName());
+
+			jpanel.jTextFieldLayerName.setText(((Layer) selectedObject).getName());
+			jpanel.jTextAreaLayerDescription.setText(((Layer) selectedObject).getDescription());
+		} else {
+			JOptionPane.showMessageDialog(null, "Please select a layer", "Error", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	/**
@@ -121,6 +139,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		Object selectedObject = list.getSelectedValue();
 		if (selectedObject instanceof Layer) {
 			CustomLogger.i(getClass().getSimpleName(), "removeLayer() - selected layer: " + ((Layer) selectedObject).getDescription());
+			cs.removeLayer(selectedObject);
 		} else {
 			JOptionPane.showMessageDialog(null, "Please select a layer", "Error", JOptionPane.ERROR_MESSAGE);
 		}
@@ -194,10 +213,20 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		}
 	}
 
+	private boolean valueChanges = true;
+
 	@Override
 	public void valueChanged(ListSelectionEvent event) {
-		CustomLogger.i(getClass().getSimpleName(), "valueChanged(" + event + ")");
-
+		if (event.getSource() == jpanel.jListLayers) {
+			if (valueChanges) {
+				loadLayerDetail();
+				valueChanges = false;
+			} else {
+				valueChanges = true;
+			}
+		} else {
+			CustomLogger.i(getClass().getSimpleName(), "valueChanged(" + event + ")");
+		}
 	}
 
 }
