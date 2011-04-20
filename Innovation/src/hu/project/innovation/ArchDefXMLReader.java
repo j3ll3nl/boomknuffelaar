@@ -84,6 +84,8 @@ public class ArchDefXMLReader {
 
 	}
 
+	
+	
 	public ArchitectureDefinition createArchitectureDefinition() {
 
 		ArchitectureDefinition archDef = new ArchitectureDefinition();
@@ -178,6 +180,28 @@ public class ArchDefXMLReader {
 
 	}
 
+	private void getElements(Element element, String tagName, String[] elementTagNames) {
+		
+		NodeList list = element.getElementsByTagName(tagName);
+		
+		for(int i=0; i<list.getLength(); i++) {
+			
+			Node node = list.item(i);
+			
+			if(node.getNodeType() == Node.ELEMENT_NODE) {
+							
+				// Get Software Unit
+				Element elementt = (Element) node;
+				
+				for (int j=0; j<elementTagNames.length; j++) {
+					String value = getElementValue(elementt, elementTagNames[j]);
+				}
+
+			}
+			
+		}
+	}
+	
 	private String getElementValue(Element element, String tagName) {
 
 		NodeList list = element.getElementsByTagName(tagName);
