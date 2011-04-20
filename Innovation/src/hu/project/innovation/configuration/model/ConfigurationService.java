@@ -59,7 +59,7 @@ public class ConfigurationService implements ConfigurationServiceIF {
 		Layer layer = this.architecture.getLayer(layerName);
 		
 		if(null!=layer) {
-			return layer.addSoftwareUnit(
+			return architecture.addSoftwareUnit(
 					new SoftwareUnitDefinition(unitName, unitType));
 		} else {
 			return false;
