@@ -1,8 +1,9 @@
 package hu.project.innovation;
 
-import hu.project.innovation.configuration.view.NewJPanel;
+import hu.project.innovation.configuration.view.DefinitionJPanel;
 
 import java.awt.BorderLayout;
+import javax.swing.ImageIcon;
 
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -53,17 +54,18 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 		try {
 			setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 			setTitle("Belastingdienst Architectuur");
-			
+			setIconImage(new ImageIcon(getClass().getClassLoader().getResource("belastingdienst.jpg")).getImage());
 			{
 				jPanelContentView = new JPanel();
 				BorderLayout jPanel1Layout = new BorderLayout();
 				jPanelContentView.setLayout(jPanel1Layout);
-				jPanelContentView.add(new NewJPanel());
+				jPanelContentView.add(new DefinitionJPanel());
 				getContentPane().add(jPanelContentView, BorderLayout.CENTER);
 			}
 			{
 				jToolBar = new JToolBar();
 				getContentPane().add(jToolBar, BorderLayout.SOUTH);
+				jToolBar.setEnabled(false);
 				{
 					jLabelStatus = new JLabel();
 					jToolBar.add(jLabelStatus);
