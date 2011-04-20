@@ -11,6 +11,7 @@ public class ArchitectureDefinition implements XMLable {
 	private String description;
 	private Layer topLayer;
 	private ArrayList<Layer> layers = new ArrayList<Layer>();
+	private ArrayList<SoftwareUnitDefinition> softwareUnits;
 
 	public ArchitectureDefinition() {
 		
@@ -73,6 +74,20 @@ public class ArchitectureDefinition implements XMLable {
 
 	public ArrayList<Layer> getAllLayers() {
 		return layers;
+	}
+	
+	public boolean addSoftwareUnit(SoftwareUnitDefinition unit) {
+		return softwareUnits.add(unit);
+	}
+	
+	public SoftwareUnitDefinition getSoftwareUnit(String name) {
+
+		for (SoftwareUnitDefinition sud : softwareUnits) {
+			if (sud.getName().equals(name)) {
+				return sud;
+			}
+		}
+		return null;
 	}
 
 	@Override
