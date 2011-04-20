@@ -6,7 +6,7 @@ import java.util.Set;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-public class ConfigurationService {
+public class ConfigurationService implements ConfigurationServiceIF {
 
 	private ArchitectureDefinition architecture;
 	private Configuration configuration;
@@ -53,7 +53,7 @@ public class ConfigurationService {
 		return this.configuration.getSetting(Configuration.OUTPUT_FORMAT);
 	}
 
-	public static ConfigurationService getInstance() {
+	public static ConfigurationServiceIF getInstance() {
 		if (instance == null) {
 			instance = new ConfigurationService();
 		}
