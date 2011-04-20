@@ -1,19 +1,15 @@
 package hu.project.innovation.analyse.controller;
 
-import hu.project.innovation.AbstractController;
+import javax.swing.JPanel;
 
-import java.awt.event.ActionEvent;
 
-public class AnalyseController extends AbstractController {
+public class AnalyseController {
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-
+	public JPanel initGUI() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	@Override
-	public void initGUI() {
 
-	}
 
 }
