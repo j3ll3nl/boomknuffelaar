@@ -1,0 +1,30 @@
+<application>
+	<layer>
+		<id>1</id>
+		<description>TopLayer</description>
+		<softwareUnit>
+			<type>typeName</type>
+		</softwareUnit>
+		<ruleDefinition>
+			<rule>BackCall</rule>
+			<toLayer>2</toLayer>
+			<exceptions>
+				<softwareUnitt>com.example.class</softwareUnitt>
+			</exceptions>
+		</ruleDefinition>
+	</layer>
+	<layer>
+		<id>1</id>
+		<description>TopLayer</description>
+		<softwareUnit>
+			<type>typeName</type>
+		</softwareUnit>
+		<ruleDefinition>
+			<rule>BackCall</rule>
+			<toLayer>2</toLayer>
+			<exceptions>
+				<softwareUnitt>com.example.class</softwareUnitt>
+			</exceptions>
+		</ruleDefinition>
+	</layer>
+</application>

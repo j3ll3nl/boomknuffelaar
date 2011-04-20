@@ -102,8 +102,7 @@ public class ArchDefXMLReader {
 				String layerDescription = getElementValue(layerElement, "description");
 				
 				// Add Layer to Architecture Definition
-				Layer layer = new Layer(layerId);
-				layer.setDescription(layerDescription);
+				Layer layer = new Layer(layerId, layerDescription);
 				archDef.addLayer(layer);
 
 				// Get Software Units
