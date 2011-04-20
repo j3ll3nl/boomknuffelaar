@@ -42,7 +42,7 @@ public class SoftwareUnitDefinition implements XMLable {
 	@Override
 	public String toXML() {
 		String xml = "<softwareUnit>\n";
-		xml += "<type>"+this.type+"</fromLayer>\n";
+		xml += "<type>"+this.type+"</type>\n";
 		xml += "</softwareUnit>\n";
 		return xml;
 	}
