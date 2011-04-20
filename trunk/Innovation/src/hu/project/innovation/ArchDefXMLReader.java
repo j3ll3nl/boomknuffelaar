@@ -17,7 +17,6 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.helpers.XMLReaderFactory;
 
-
 public class ArchDefXMLReader extends DefaultHandler {
 	
 	private CharArrayWriter contents = new CharArrayWriter();
