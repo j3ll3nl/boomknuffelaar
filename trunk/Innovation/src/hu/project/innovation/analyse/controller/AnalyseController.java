@@ -10,6 +10,11 @@ public class AnalyseController {
 		return null;
 	}
 
+	public void startAnalyse() {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 
 }
