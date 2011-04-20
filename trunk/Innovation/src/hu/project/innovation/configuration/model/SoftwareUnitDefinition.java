@@ -37,6 +37,10 @@ public class SoftwareUnitDefinition implements XMLable {
 	public String getName() {
 		return name;
 	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	public void addSoftwareUnitDefinition(SoftwareUnitDefinition unit) {
 		softwareUnits.add(unit);
