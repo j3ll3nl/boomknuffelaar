@@ -1,12 +1,18 @@
 package hu.project.innovation.configuration.controller;
 
-import hu.project.innovation.AbstractController;
+import hu.project.innovation.configuration.model.ConfigurationService;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class DefinitionController extends AbstractController {
+import javax.swing.JPanel;
+
+public class DefinitionController implements ActionListener {
 
 	public void newDefinition() {
+		ConfigurationService cs = ConfigurationService.getInstance();
+		
+
 	}
 
 	public void openDefintion() {
@@ -24,13 +30,12 @@ public class DefinitionController extends AbstractController {
 	public void addRuleException() {
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-
+	public JPanel initGUI() {
+		return null;
 	}
 
 	@Override
-	public void initGUI() {
+	public void actionPerformed(ActionEvent e) {
 
 	}
 

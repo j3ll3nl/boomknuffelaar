@@ -53,7 +53,7 @@ public class ConfigurationService implements ConfigurationServiceIF {
 		return this.configuration.getSetting(Configuration.OUTPUT_FORMAT);
 	}
 
-	public static ConfigurationServiceIF getInstance() {
+	public static ConfigurationService getInstance() {
 		if (instance == null) {
 			instance = new ConfigurationService();
 		}

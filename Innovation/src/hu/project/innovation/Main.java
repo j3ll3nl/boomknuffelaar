@@ -12,7 +12,8 @@ public class Main {
 		// Gui test
 
 		GuiController gui = new GuiController();
-
+		gui.initCommandReader();
+		
 		// Configuration test
 
 		ConfigurationServiceIF conf = ConfigurationService.getInstance();
