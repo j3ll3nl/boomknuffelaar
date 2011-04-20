@@ -14,6 +14,10 @@ public class Layer implements XMLable {
 	private ArrayList<SoftwareUnitDefinition> softwareUnits;
 	private ArrayList<AppliedRule> appliedRules;
 
+	public Layer() {
+		
+	}
+	
 	public Layer(String name, String description) {
 		Logger.getInstance().log(this.getClass().getSimpleName());
 		this.name = name;
