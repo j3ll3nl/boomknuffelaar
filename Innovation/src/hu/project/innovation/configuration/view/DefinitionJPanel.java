@@ -32,39 +32,39 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 
 	private static final long serialVersionUID = 7442552399461704491L;
 	private DefinitionController definitioncontroller;
-	private JSplitPane jSplitPane1;
-	private JPanel jPanel11;
-	private JButton jButton10;
-	private JButton jButton9;
-	private JButton jButton8;
-	private JScrollPane jScrollPane4;
-	private JPanel jPanel10;
-	private JTable jTable2;
-	private JButton jButton7;
-	private JButton jButton6;
-	private JScrollPane jScrollPane3;
-	private JPanel jPanel1;
-	private JList jList1;
+	private JSplitPane jSplitPane;
+	private JScrollPane jScrollPane1;
 	private JScrollPane jScrollPane2;
-	private JButton jButton5;
-	private JPanel jPanel9;
+	private JScrollPane jScrollPane3;
+	private JScrollPane jScrollPane4;
 	private JTable jTable1;
-	private JTextArea jTextArea1;
+	private JTable jTable2;
+	private JList jListLayers;
 	private JLabel jLabel2;
-	private JTextField jTextField1;
 	private JLabel jLabel1;
+	private JTextArea jTextArea1;
+	private JTextField jTextField1;
+	public JButton jButtonAddComponentToLayer;
+	public JButton jButtonRemoveRuleFromLayer;
+	public JButton jButtonEditRuleFromLayer;
+	public JButton jButtonAddRuleToLayer;
+	public JButton jButtonRemoveComponentFromLayer;
+	public JButton jButtonEditComponentFromLayer;
+	public JButton jButtonMoveLayerDown;
+	public JButton jButtonMoveLayerUp;
+	public JButton jButtonNewLayer;
+	public JButton jButtonRemoveLayer;
+	private JPanel jPanel9;
+	private JPanel jPanel11;
+	private JPanel jPanel10;
+	private JPanel jPanelLeft;
+	private JPanel jPanelRight;
 	private JPanel jPanel8;
 	private JPanel jPanel7;
-	private JButton jButton4;
-	private JButton jButton3;
-	private JButton jButton1;
-	private JScrollPane jScrollPane1;
-	private JButton jButton2;
 	private JPanel jPanel6;
 	private JPanel jPanel5;
 	private JPanel jPanel4;
 	private JPanel jPanel3;
-	private JPanel jPanel2;
 
 	{
 		// Set Look & Feel
@@ -96,21 +96,21 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 				this.setLayout(thisLayout);
 				this.setPreferredSize(new java.awt.Dimension(753, 476));
 				{
-					jSplitPane1 = new JSplitPane();
-					jSplitPane1.setDividerLocation(300);
-					this.add(jSplitPane1, BorderLayout.CENTER);
-					jSplitPane1.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+					jSplitPane = new JSplitPane();
+					jSplitPane.setDividerLocation(300);
+					this.add(jSplitPane, BorderLayout.CENTER);
+					jSplitPane.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 					{
-						jPanel2 = new JPanel();
+						jPanelLeft = new JPanel();
 						BorderLayout jPanel2Layout = new BorderLayout();
-						jPanel2.setLayout(jPanel2Layout);
-						jSplitPane1.add(jPanel2, JSplitPane.LEFT);
-						jPanel2.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
+						jPanelLeft.setLayout(jPanel2Layout);
+						jSplitPane.add(jPanelLeft, JSplitPane.LEFT);
+						jPanelLeft.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
 						{
 							jPanel3 = new JPanel();
 							BorderLayout jPanel3Layout = new BorderLayout();
 							jPanel3.setLayout(jPanel3Layout);
-							jPanel2.add(jPanel3, BorderLayout.CENTER);
+							jPanelLeft.add(jPanel3, BorderLayout.CENTER);
 							jPanel3.setBorder(BorderFactory.createTitledBorder("Layer hierarchy"));
 							{
 								jPanel5 = new JPanel();
@@ -123,10 +123,10 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 									jScrollPane1.setPreferredSize(new java.awt.Dimension(383, 213));
 									{
 										ListModel jList1Model = new DefaultComboBoxModel(new String[] { "Item One", "Item Two" });
-										jList1 = new JList();
-										jList1.addListSelectionListener(definitioncontroller);
-										jScrollPane1.setViewportView(jList1);
-										jList1.setModel(jList1Model);
+										jListLayers = new JList();
+										jListLayers.addListSelectionListener(definitioncontroller);
+										jScrollPane1.setViewportView(jListLayers);
+										jListLayers.setModel(jList1Model);
 									}
 								}
 							}
@@ -141,47 +141,47 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 								jPanel6Layout.setVgap(5);
 								jPanel6Layout.setRows(2);
 								{
-									jButton1 = new JButton();
-									jPanel6.add(jButton1);
-									jButton1.setText("New layer");
-									jButton1.addActionListener(definitioncontroller);
+									jButtonNewLayer = new JButton();
+									jPanel6.add(jButtonNewLayer);
+									jButtonNewLayer.setText("New layer");
+									jButtonNewLayer.addActionListener(definitioncontroller);
 								}
 								{
-									jButton2 = new JButton();
-									jPanel6.add(jButton2);
-									jButton2.setText("Remove layer");
-									jButton2.addActionListener(definitioncontroller);
+									jButtonRemoveLayer = new JButton();
+									jPanel6.add(jButtonRemoveLayer);
+									jButtonRemoveLayer.setText("Remove layer");
+									jButtonRemoveLayer.addActionListener(definitioncontroller);
 								}
 								{
-									jButton3 = new JButton();
-									jPanel6.add(jButton3);
-									jButton3.setText("Move up");
-									jButton3.addActionListener(definitioncontroller);
+									jButtonMoveLayerUp = new JButton();
+									jPanel6.add(jButtonMoveLayerUp);
+									jButtonMoveLayerUp.setText("Move up");
+									jButtonMoveLayerUp.addActionListener(definitioncontroller);
 								}
 								{
-									jButton4 = new JButton();
-									jPanel6.add(jButton4);
-									jButton4.setText("Move down");
-									jButton4.addActionListener(definitioncontroller);
+									jButtonMoveLayerDown = new JButton();
+									jPanel6.add(jButtonMoveLayerDown);
+									jButtonMoveLayerDown.setText("Move down");
+									jButtonMoveLayerDown.addActionListener(definitioncontroller);
 								}
 							}
 						}
 					}
 					{
-						jPanel1 = new JPanel();
+						jPanelRight = new JPanel();
 						BorderLayout jPanel1Layout = new BorderLayout();
-						jPanel1.setLayout(jPanel1Layout);
-						jSplitPane1.add(jPanel1, JSplitPane.RIGHT);
-						jPanel1.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
+						jPanelRight.setLayout(jPanel1Layout);
+						jSplitPane.add(jPanelRight, JSplitPane.RIGHT);
+						jPanelRight.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
 						{
 							jPanel4 = new JPanel();
 							GridBagLayout jPanel4Layout = new GridBagLayout();
-							jPanel4Layout.rowWeights = new double[] {0.0, 0.1};
-							jPanel4Layout.rowHeights = new int[] {19, 7};
-							jPanel4Layout.columnWeights = new double[] {0.0, 0.1};
-							jPanel4Layout.columnWidths = new int[] {128, 7};
+							jPanel4Layout.rowWeights = new double[] { 0.0, 0.1 };
+							jPanel4Layout.rowHeights = new int[] { 19, 7 };
+							jPanel4Layout.columnWeights = new double[] { 0.0, 0.1 };
+							jPanel4Layout.columnWidths = new int[] { 128, 7 };
 							jPanel4.setLayout(jPanel4Layout);
-							jPanel1.add(jPanel4, BorderLayout.NORTH);
+							jPanelRight.add(jPanel4, BorderLayout.NORTH);
 							jPanel4.setBorder(BorderFactory.createTitledBorder("Layer configuration"));
 							jPanel4.setPreferredSize(new java.awt.Dimension(442, 105));
 							{
@@ -216,57 +216,8 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 							jPanel11Layout.setRows(2);
 							jPanel11Layout.setHgap(5);
 							jPanel11Layout.setVgap(5);
-							jPanel1.add(jPanel11, BorderLayout.CENTER);
+							jPanelRight.add(jPanel11, BorderLayout.CENTER);
 							jPanel11.setLayout(jPanel11Layout);
-							{
-								jPanel8 = new JPanel();
-								jPanel11.add(jPanel8);
-								BorderLayout jPanel8Layout = new BorderLayout();
-								jPanel8.setLayout(jPanel8Layout);
-								jPanel8.setBorder(BorderFactory.createTitledBorder("Rules for this layer"));
-								{
-									jScrollPane4 = new JScrollPane();
-									jPanel8.add(jScrollPane4, BorderLayout.CENTER);
-									jScrollPane4.setPreferredSize(new java.awt.Dimension(278, 32));
-									{
-										TableModel jTable2Model = 
-											new DefaultTableModel(
-													new String[][] { { "One", "Two" }, { "Three", "Four" } },
-													new String[] { "Column 1", "Column 2" });
-										jTable2 = new JTable();
-										jScrollPane4.setViewportView(jTable2);
-										jTable2.setModel(jTable2Model);
-										jTable2.setFillsViewportHeight(true);
-									}
-								}
-								{
-									jPanel10 = new JPanel();
-									GridBagLayout jPanel10Layout = new GridBagLayout();
-									jPanel10Layout.rowWeights = new double[] {0.0, 0.0, 0.1};
-									jPanel10Layout.rowHeights = new int[] {0, 11, 7};
-									jPanel10Layout.columnWeights = new double[] {0.1};
-									jPanel10Layout.columnWidths = new int[] {7};
-									jPanel10.setLayout(jPanel10Layout);
-									jPanel8.add(jPanel10, BorderLayout.EAST);
-									jPanel10.setBorder(BorderFactory.createEmptyBorder(0, 3, 0, 4));
-									jPanel10.setPreferredSize(new java.awt.Dimension(78, 156));
-									{
-										jButton8 = new JButton();
-										jPanel10.add(jButton8, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-										jButton8.setText("Add");
-									}
-									{
-										jButton9 = new JButton();
-										jPanel10.add(jButton9, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-										jButton9.setText("Edit");
-									}
-									{
-										jButton10 = new JButton();
-										jPanel10.add(jButton10, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-										jButton10.setText("Remove");
-									}
-								}
-							}
 							{
 								jPanel7 = new JPanel();
 								jPanel11.add(jPanel7);
@@ -278,10 +229,7 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 									jPanel7.add(jScrollPane3, BorderLayout.CENTER);
 									jScrollPane3.setPreferredSize(new java.awt.Dimension(227, 249));
 									{
-										TableModel jTable1Model = 
-											new DefaultTableModel(
-													new String[][] { { "One", "Two" }, { "Three", "Four" } },
-													new String[] { "Column 1", "Column 2" });
+										TableModel jTable1Model = new DefaultTableModel(new String[][] { { "One", "Two" }, { "Three", "Four" } }, new String[] { "Column 1", "Column 2" });
 										jTable1 = new JTable();
 										jScrollPane3.setViewportView(jTable1);
 										jTable1.setModel(jTable1Model);
@@ -291,27 +239,73 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 								{
 									jPanel9 = new JPanel();
 									GridBagLayout jPanel9Layout = new GridBagLayout();
-									jPanel9Layout.rowWeights = new double[] {0.0, 0.0, 0.1};
-									jPanel9Layout.rowHeights = new int[] {13, 13, 7};
-									jPanel9Layout.columnWeights = new double[] {0.1};
-									jPanel9Layout.columnWidths = new int[] {7};
+									jPanel9Layout.rowWeights = new double[] { 0.0, 0.0, 0.1 };
+									jPanel9Layout.rowHeights = new int[] { 13, 13, 7 };
+									jPanel9Layout.columnWeights = new double[] { 0.1 };
+									jPanel9Layout.columnWidths = new int[] { 7 };
 									jPanel9.setLayout(jPanel9Layout);
 									jPanel7.add(jPanel9, BorderLayout.EAST);
 									jPanel9.setBorder(BorderFactory.createEmptyBorder(0, 3, 0, 3));
 									{
-										jButton5 = new JButton();
-										jPanel9.add(jButton5, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-										jButton5.setText("Add");
+										jButtonAddComponentToLayer = new JButton();
+										jPanel9.add(jButtonAddComponentToLayer, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+										jButtonAddComponentToLayer.setText("Add");
 									}
 									{
-										jButton6 = new JButton();
-										jPanel9.add(jButton6, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-										jButton6.setText("Edit");
+										jButtonEditComponentFromLayer = new JButton();
+										jPanel9.add(jButtonEditComponentFromLayer, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+										jButtonEditComponentFromLayer.setText("Edit");
 									}
 									{
-										jButton7 = new JButton();
-										jPanel9.add(jButton7, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-										jButton7.setText("Remove");
+										jButtonRemoveComponentFromLayer = new JButton();
+										jPanel9.add(jButtonRemoveComponentFromLayer, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+										jButtonRemoveComponentFromLayer.setText("Remove");
+									}
+								}
+							}
+							{
+								jPanel8 = new JPanel();
+								jPanel11.add(jPanel8);
+								BorderLayout jPanel8Layout = new BorderLayout();
+								jPanel8.setLayout(jPanel8Layout);
+								jPanel8.setBorder(BorderFactory.createTitledBorder("Rules for this layer"));
+								{
+									jScrollPane4 = new JScrollPane();
+									jPanel8.add(jScrollPane4, BorderLayout.CENTER);
+									jScrollPane4.setPreferredSize(new java.awt.Dimension(278, 32));
+									{
+										TableModel jTable2Model = new DefaultTableModel(new String[][] { { "One", "Two" }, { "Three", "Four" } }, new String[] { "Column 1", "Column 2" });
+										jTable2 = new JTable();
+										jScrollPane4.setViewportView(jTable2);
+										jTable2.setModel(jTable2Model);
+										jTable2.setFillsViewportHeight(true);
+									}
+								}
+								{
+									jPanel10 = new JPanel();
+									GridBagLayout jPanel10Layout = new GridBagLayout();
+									jPanel10Layout.rowWeights = new double[] { 0.0, 0.0, 0.1 };
+									jPanel10Layout.rowHeights = new int[] { 0, 11, 7 };
+									jPanel10Layout.columnWeights = new double[] { 0.1 };
+									jPanel10Layout.columnWidths = new int[] { 7 };
+									jPanel10.setLayout(jPanel10Layout);
+									jPanel8.add(jPanel10, BorderLayout.EAST);
+									jPanel10.setBorder(BorderFactory.createEmptyBorder(0, 3, 0, 4));
+									jPanel10.setPreferredSize(new java.awt.Dimension(78, 156));
+									{
+										jButtonAddRuleToLayer = new JButton();
+										jPanel10.add(jButtonAddRuleToLayer, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+										jButtonAddRuleToLayer.setText("Add");
+									}
+									{
+										jButtonEditRuleFromLayer = new JButton();
+										jPanel10.add(jButtonEditRuleFromLayer, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+										jButtonEditRuleFromLayer.setText("Edit");
+									}
+									{
+										jButtonRemoveRuleFromLayer = new JButton();
+										jPanel10.add(jButtonRemoveRuleFromLayer, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+										jButtonRemoveRuleFromLayer.setText("Remove");
 									}
 								}
 							}
