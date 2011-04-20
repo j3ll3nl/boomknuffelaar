@@ -13,7 +13,11 @@ public class ArchitectureDefinition implements XMLable {
 	private ArrayList<Layer> layers = new ArrayList<Layer>();
 	private ArrayList<SoftwareUnitDefinition> softwareUnits;
 
-	public ArchitectureDefinition() {}
+	public ArchitectureDefinition() {
+		
+		this.softwareUnits = new ArrayList<SoftwareUnitDefinition>();
+		
+	}
 	
 	public ArchitectureDefinition(String name) {
 		Logger.getInstance().log(this.getClass().getSimpleName());
