@@ -14,11 +14,11 @@ public class ArchitectureDefinition implements XMLable {
 	private ArrayList<SoftwareUnitDefinition> softwareUnits;
 
 	public ArchitectureDefinition() {
-		
+
 		this.softwareUnits = new ArrayList<SoftwareUnitDefinition>();
-		
+
 	}
-	
+
 	public ArchitectureDefinition(String name) {
 		Logger.getInstance().log(this.getClass().getSimpleName());
 		this.name = name;
@@ -36,7 +36,7 @@ public class ArchitectureDefinition implements XMLable {
 	public String getName() {
 		return this.name;
 	}
-	
+
 	public String getDescription() {
 		return this.description;
 	}
@@ -52,7 +52,7 @@ public class ArchitectureDefinition implements XMLable {
 	public boolean addLayer(Layer layer) {
 		return layers.add(layer);
 	}
-	
+
 	public boolean addSoftwareUnit(SoftwareUnitDefinition unit) {
 		return softwareUnits.add(unit);
 	}
@@ -68,16 +68,16 @@ public class ArchitectureDefinition implements XMLable {
 	}
 
 	public Layer getLayer(int id) {
-		
+
 		for (Layer layer : layers) {
 			if (layer.getId() == id) {
 				return layer;
 			}
 		}
-		
+
 		return null;
 	}
-	
+
 	public Layer getLayer(String name) {
 
 		for (Layer layer : layers) {
@@ -88,12 +88,12 @@ public class ArchitectureDefinition implements XMLable {
 		return null;
 
 	}
-	
+
 	public String getLayerNameBySoftwareUnitName(String name) {
 		SoftwareUnitDefinition unit = this.getSoftwareUnit(name);
-		if(unit!=null) {
+		if (unit != null) {
 			return unit.getLayer().getName();
-		}		
+		}
 		return "UNKNOWN";
 	}
 
@@ -108,7 +108,7 @@ public class ArchitectureDefinition implements XMLable {
 			xml += layer.toXML();
 		}
 		xml += "</architecture>\n";
-		
+
 		return xml;
 	}
 

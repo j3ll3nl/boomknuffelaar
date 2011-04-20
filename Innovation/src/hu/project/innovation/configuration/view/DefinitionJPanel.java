@@ -1,5 +1,6 @@
 package hu.project.innovation.configuration.view;
 
+import hu.project.innovation.Log;
 import hu.project.innovation.configuration.controller.DefinitionController;
 import hu.project.innovation.configuration.model.Layer;
 
@@ -123,7 +124,7 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 									jScrollPane1.setPreferredSize(new java.awt.Dimension(383, 213));
 									{
 										jListLayers = new JList();
-										jListLayers.addListSelectionListener(definitioncontroller);										
+										jListLayers.addListSelectionListener(definitioncontroller);
 										jScrollPane1.setViewportView(jListLayers);
 									}
 								}
@@ -326,6 +327,17 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 		}
 		JOptionPane.showMessageDialog(null, "Please select a layer", "Error", JOptionPane.ERROR_MESSAGE);
 		return null;
+	}
+
+	/**
+	 * Use this function to clear the user interface
+	 */
+	public void clearJListLayers() {
+		Log.i(getClass().getSimpleName(), "clearUI()");
+		LayersListModel listmodel = new LayersListModel();
+
+		// Set the model for the layer
+		jListLayers.setModel(listmodel);
 	}
 
 }

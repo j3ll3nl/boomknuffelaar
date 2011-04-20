@@ -1,6 +1,6 @@
 package hu.project.innovation.configuration.model;
 
-import hu.project.innovation.Logger;
+import hu.project.innovation.Log;
 import hu.project.innovation.XMLable;
 
 import java.util.ArrayList;
@@ -17,10 +17,9 @@ public class Layer implements XMLable {
 	public Layer() {
 		this.appliedRules = new ArrayList<AppliedRule>();
 	}
-	
 
 	public Layer(String name, String description) {
-		Logger.getInstance().log(this.getClass().getSimpleName());
+		Log.i(getClass().getSimpleName(), "constructor(\"" + name + "\", \"" + description + "\")");
 		this.name = name;
 		this.description = description;
 
@@ -95,14 +94,13 @@ public class Layer implements XMLable {
 	}
 
 	public boolean hasAppliedRule(AbstractRuleType ruleType, Layer toLayer) {
-		if(appliedRules != null){
-			for(AppliedRule r : this.appliedRules) {
-				if(r.getToLayer().getName().equals(toLayer.getName())
-						&& r.getRuleType().getName().equals(ruleType.getName())) {
+		if (appliedRules != null) {
+			for (AppliedRule r : this.appliedRules) {
+				if (r.getToLayer().getName().equals(toLayer.getName()) && r.getRuleType().getName().equals(ruleType.getName())) {
 					return true;
 				}
 			}
-		}		
+		}
 		return false;
 	}
 }

@@ -1,8 +1,8 @@
 package hu.project.innovation.configuration.model;
 
+import hu.project.innovation.Log;
 import hu.project.innovation.Logger;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Configuration {
@@ -15,18 +15,18 @@ public class Configuration {
 	private HashMap<String, AbstractRuleType> rules;
 
 	protected Configuration() {
-		Logger.getInstance().log(this.getClass().getSimpleName());
+		Log.i(getClass().getSimpleName(), "constructor()");		
 
 		this.rules = new HashMap<String, AbstractRuleType>();
 		this.addRuleType(new BackCallRule());
-		
+
 		this.settings = new HashMap<String, String>();
 	}
-	
+
 	public AbstractRuleType addRuleType(AbstractRuleType ruleType) {
 		return this.rules.put(ruleType.getName(), ruleType);
 	}
-	
+
 	public AbstractRuleType getRuleType(String ruleName) {
 		return this.rules.get(ruleName);
 	}

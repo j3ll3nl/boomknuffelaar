@@ -8,18 +8,17 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-import javax.swing.JPanel;
-
-public class GuiController implements ActionListener {
+public class MainController implements ActionListener {
 	private DefinitionController definitioncontroller = null;
 	private AnalyseController analysecontroller = null;
 	private ApplicationJFrame jframe;
 
 	/**
-	 * GuiController constructor. This constructor will initialize a new Definition and Analyse controller.
+	 * MainController constructor. This constructor will initialize a new Definition and Analyse controller.
 	 */
-	public GuiController() {
-		CustomLogger.i(getClass().getSimpleName(), "constructor()");
+	public MainController() {
+		Log.i(getClass().getSimpleName(), "constructor()");
+
 		definitioncontroller = new DefinitionController();
 		analysecontroller = new AnalyseController();
 	}
@@ -27,21 +26,22 @@ public class GuiController implements ActionListener {
 	/**
 	 * Start the application with GUI by calling this method.
 	 */
-	public void init() {
-		CustomLogger.i(getClass().getSimpleName(), "init()");
-		JPanel definitionjpanel = definitioncontroller.initGUI();
+	public void initUi() {
+		Log.i(getClass().getSimpleName(), "init()");
 
-		jframe = new ApplicationJFrame(this);
-		jframe.initGUI();
-		jframe.setContentView(definitionjpanel);
+		jframe = new ApplicationJFrame(this);		
+		// Setcontentview is called after initGui because the application needs to build up first.
+		jframe.setContentView(definitioncontroller.initUi());
+		// Set the visibility of the jframe to true
 		jframe.setVisible(true);
 	}
 
 	/**
 	 * Start the application without GUI by calling this method.
 	 */
-	public void initCommandReader() {
-		CustomLogger.i(getClass().getSimpleName(), "initCommandReader()");
+	public void initCommand() {
+		Log.i(getClass().getSimpleName(), "initCommand()");
+
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		String helpCommando = "Available commands are:\n" + "Help\tRequest help\n" + "Exit\tExit the application";
 		String lineseperator = "----------------------------------------------------------------------------------------";
@@ -64,27 +64,26 @@ public class GuiController implements ActionListener {
 				System.out.print(cmdLine);
 			}
 		} catch (Exception e) {
-			System.err.println("GuiController.initCommandReader() - Exception: " + e);
+			Log.e(getClass().getSimpleName(), "initCommand() - Exception: " + e);
 		}
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent action) {
-		//This class will
 		if (action.getSource() == jframe.jMenuItemNewArchitecture) {
-			CustomLogger.i(getClass().getSimpleName(), "actionPerformed() - new architecture");
-			definitioncontroller.newDefinition();
+			Log.i(getClass().getSimpleName(), "actionPerformed() - new architecture");
+			definitioncontroller.newConfiguration();
 		} else if (action.getSource() == jframe.jMenuItemOpenArchitecture) {
-			CustomLogger.i(getClass().getSimpleName(), "actionPerformed() - open architecture");
-			definitioncontroller.openDefintion();
+			Log.i(getClass().getSimpleName(), "actionPerformed() - open architecture");
+			definitioncontroller.openConfiguration();
 		} else if (action.getSource() == jframe.jMenuItemSaveArchitecture) {
-			CustomLogger.i(getClass().getSimpleName(), "actionPerformed() - save architecture");
-			definitioncontroller.saveDefintion();
+			Log.i(getClass().getSimpleName(), "actionPerformed() - save architecture");
+			definitioncontroller.saveConfiguration();
 		} else if (action.getSource() == jframe.jMenuItemStartAnalyse) {
-			CustomLogger.i(getClass().getSimpleName(), "actionPerformed() - start analyse");
-			analysecontroller.startAnalyse();
+			Log.i(getClass().getSimpleName(), "actionPerformed() - start analyse");
+			analysecontroller.initUi();
 		} else {
-			CustomLogger.i(getClass().getSimpleName(), "actionPerformed(" + action + ")");
+			Log.i(getClass().getSimpleName(), "actionPerformed(" + action + ")");
 		}
 	}
 }
