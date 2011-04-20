@@ -14,7 +14,6 @@ public abstract class AbstractRuleType
 	protected AbstractRuleType() {
 		Logger.getInstance().log(this.getClass().getSimpleName());
 		this.setName(this.getClass().getSimpleName());
-		Logger.getInstance().log(this.formattedName());
 	}
 
 	@Override
@@ -34,13 +33,15 @@ public abstract class AbstractRuleType
 	public abstract void checkViolation();
 	
 	public String toXML() {
-		String xml = ""; 
+		String xml = "";
+		
 		xml += "<rule name=\""+this.formattedName()+"\" ";
 		xml += "message=\""+this.name+"\" ";
 		xml += "class=\""+this.getClass().getPackage()+this.name+"\">";
 		xml += "<description>"+this.description+"</description>";
 		xml += "<priority>"+this.priority+"</priority>";
 		xml += "</rule>";
-		return "";
+		
+		return xml;
 	}
 }
