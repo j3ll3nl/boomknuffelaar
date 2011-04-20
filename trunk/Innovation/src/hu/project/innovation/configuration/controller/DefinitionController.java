@@ -2,11 +2,19 @@ package hu.project.innovation.configuration.controller;
 
 import hu.project.innovation.CustomLogger;
 import hu.project.innovation.configuration.model.ConfigurationService;
+import hu.project.innovation.configuration.model.Layer;
 import hu.project.innovation.configuration.view.DefinitionJPanel;
+import hu.project.innovation.configuration.view.LayersListModel;
+import hu.project.innovation.configuration.view.XmlFileFilter;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.ArrayList;
 
+import javax.swing.JFileChooser;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
@@ -28,18 +36,46 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	public void newDefinition() {
 		CustomLogger.i(getClass().getSimpleName(), "newDefinition()");
 
+		String response = inputDialog(jpanel, "Please enter the architecture name", "Please input a value", JOptionPane.QUESTION_MESSAGE);
+		if (response != null) {
+			CustomLogger.i(getClass().getSimpleName(), "newDefinition() - value: " + response);
+			cs.newArchitecture(response, "");
+			clearUI();
+		}
 	}
 
 	/**
-	 * Open a definition. This function will display an filebrowser
+	 * Use this function to clear the user interface
+	 */
+	private void clearUI() {
+		CustomLogger.i(getClass().getSimpleName(), "clearUI()");
+		LayersListModel listmodel = new LayersListModel();
+
+		// Set the model for the layer
+		jpanel.jListLayers.setModel(listmodel);
+	}
+
+	/**
+	 * Open a definition. This function will display an filebrowser and pass the result to the config service.
 	 */
 	public void openDefintion() {
 		CustomLogger.i(getClass().getSimpleName(), "openDefintion()");
 
+		// Create a file chooser
+		JFileChooser fc = new JFileChooser();
+		fc.setFileFilter(new XmlFileFilter());
+		// In response to a button click:
+		int returnVal = fc.showOpenDialog(jpanel);
+
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			File file = fc.getSelectedFile();
+			CustomLogger.i(getClass().getSimpleName(), "openDefintion() - opening file: " + file.getName());
+			cs.openArchitecture(file);
+		}
 	}
 
 	/**
-	 * Save a definition.
+	 * Save the current definition to a file.
 	 */
 	public void saveDefintion() {
 		CustomLogger.i(getClass().getSimpleName(), "saveDefintion()");
@@ -48,33 +84,46 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	/**
 	 * Create a new layer
 	 */
-	public void newLayer() {
+	private void newLayer() {
 		CustomLogger.i(getClass().getSimpleName(), "newLayer()");
 
-		String inputValue = "";
-		while (inputValue.trim().equals("")) {
-			inputValue = JOptionPane.showInputDialog(null, "Please enter layer name", "Please input a value", JOptionPane.QUESTION_MESSAGE);
-			if (inputValue == null) {
-				break;
-			} else {
-				if (!inputValue.trim().equals("")) {
-					CustomLogger.i(getClass().getSimpleName(), "newLayer() - value: " + inputValue);
-					cs.newLayer(inputValue, "");
-				} else {
-					CustomLogger.i(getClass().getSimpleName(), "newLayer() - no value" + inputValue);
-					JOptionPane.showMessageDialog(null, "No value entered", "Error", JOptionPane.ERROR_MESSAGE);
-				}
-			}
-
+		String response = inputDialog(jpanel, "Please enter layer name", "Please input a value", JOptionPane.QUESTION_MESSAGE);
+		if (response != null) {
+			CustomLogger.i(getClass().getSimpleName(), "newLayer() - value: " + response);
+			cs.newLayer(response, "");
 		}
 	}
 
+	private String inputDialog(Component component, String message, String title, int type) {
+		String inputValue = "";
+		while (inputValue.trim().equals("")) {
+			inputValue = JOptionPane.showInputDialog(component, message, title, type);
+			if (inputValue == null) {
+				return null;
+			} else {
+				if (!inputValue.trim().equals("")) {
+					return inputValue;
+				} else {
+					JOptionPane.showMessageDialog(null, "Please enter an value!", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		}
+		return inputValue;
+	}
+
 	/**
-	 * Remove a layer
+	 * Remove a layer which is selected in the JPanel.
 	 */
-	public void removeLayer() {
+	private void removeLayer() {
 		CustomLogger.i(getClass().getSimpleName(), "removeLayer()");
-		// TODO Auto-generated method stub
+		JList list = jpanel.jListLayers;
+
+		Object selectedObject = list.getSelectedValue();
+		if (selectedObject instanceof Layer) {
+			CustomLogger.i(getClass().getSimpleName(), "removeLayer() - selected layer: " + ((Layer) selectedObject).getDescription());
+		} else {
+			JOptionPane.showMessageDialog(null, "Please select a layer", "Error", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	/**
@@ -103,7 +152,30 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		CustomLogger.i(getClass().getSimpleName(), "addRuleException()");
 	}
 
+	/**
+	 * Init the
+	 * 
+	 * @return JPanel
+	 */
 	public JPanel initGUI() {
+		// Create an empty model
+		LayersListModel listmodel = new LayersListModel();
+
+		// Add layers to this model. We use a custom ID
+		int id = 0;
+		ArrayList<Layer> layers = cs.getLayers();
+		if (layers != null) {
+			for (Layer layer : layers) {
+				listmodel.add(id++, layer);
+			}
+		}
+		// Add normal
+		listmodel.add(0, new Layer("UI", "Dit is de ui description"));
+		listmodel.add(1, new Layer("Controller", "Dit is de controller description"));
+		listmodel.add(2, new Layer("Model", "Dit is de model description"));
+
+		// Set the model for the layer
+		jpanel.jListLayers.setModel(listmodel);
 		return jpanel;
 	}
 
