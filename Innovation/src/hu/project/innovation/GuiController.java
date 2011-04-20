@@ -19,6 +19,7 @@ public class GuiController implements ActionListener {
 	 * GuiController constructor. This constructor will initialize a new Definition and Analyse controller.
 	 */
 	public GuiController() {
+		CustomLogger.i(getClass().getSimpleName(), "constructor()");
 		definitioncontroller = new DefinitionController();
 		analysecontroller = new AnalyseController();
 	}
@@ -27,16 +28,20 @@ public class GuiController implements ActionListener {
 	 * Start the application with GUI by calling this method.
 	 */
 	public void init() {
+		CustomLogger.i(getClass().getSimpleName(), "init()");
 		JPanel definitionjpanel = definitioncontroller.initGUI();
+
 		jframe = new ApplicationJFrame(this);
-		jframe.setContentView(definitionjpanel);
 		jframe.initGUI();
+		jframe.setContentView(definitionjpanel);
+		jframe.setVisible(true);
 	}
 
 	/**
 	 * Start the application without GUI by calling this method.
 	 */
 	public void initCommandReader() {
+		CustomLogger.i(getClass().getSimpleName(), "initCommandReader()");
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		String helpCommando = "Available commands are:\n" + "Help\tRequest help\n" + "Exit\tExit the application";
 		String lineseperator = "----------------------------------------------------------------------------------------";
@@ -65,7 +70,21 @@ public class GuiController implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent action) {
-
+		//This class will
+		if (action.getSource() == jframe.jMenuItemNewArchitecture) {
+			CustomLogger.i(getClass().getSimpleName(), "actionPerformed() - new architecture");
+			definitioncontroller.newDefinition();
+		} else if (action.getSource() == jframe.jMenuItemOpenArchitecture) {
+			CustomLogger.i(getClass().getSimpleName(), "actionPerformed() - open architecture");
+			definitioncontroller.openDefintion();
+		} else if (action.getSource() == jframe.jMenuItemSaveArchitecture) {
+			CustomLogger.i(getClass().getSimpleName(), "actionPerformed() - save architecture");
+			definitioncontroller.saveDefintion();
+		} else if (action.getSource() == jframe.jMenuItemStartAnalyse) {
+			CustomLogger.i(getClass().getSimpleName(), "actionPerformed() - start analyse");
+			analysecontroller.startAnalyse();
+		} else {
+			CustomLogger.i(getClass().getSimpleName(), "actionPerformed(" + action + ")");
+		}
 	}
-
 }

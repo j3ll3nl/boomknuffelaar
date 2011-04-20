@@ -1,11 +1,15 @@
 package hu.project.innovation;
 
+import hu.project.innovation.configuration.view.NewJPanel;
+
 import java.awt.BorderLayout;
 
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JToolBar;
 import javax.swing.WindowConstants;
 
 /**
@@ -25,11 +29,13 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 	}
 
 	private static final long serialVersionUID = 6858870868564931134L;
-	private JMenuBar jMenuBar1;
-	private JPanel jPanel1;
-	private JMenuItem jMenuItemAbout;
-	private JMenuItem jMenuItemOnlineHelp;
-	private JMenuItem jMenuItemStartAnalyse;
+	private JMenuBar jMenuBar;
+	private JLabel jLabelStatus;
+	private JToolBar jToolBar;
+	public JPanel jPanelContentView;
+	public JMenuItem jMenuItemAbout;
+	public JMenuItem jMenuItemOnlineHelp;
+	public JMenuItem jMenuItemStartAnalyse;
 	public JMenuItem jMenuItemSaveArchitecture;
 	public JMenuItem jMenuItemOpenArchitecture;
 	public JMenuItem jMenuItemNewArchitecture;
@@ -46,50 +52,64 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 	public void initGUI() {
 		try {
 			setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-			setTitle("The app");
-			setVisible(true);
+			setTitle("Belastingdienst Architectuur");
+			
 			{
-				jPanel1 = new JPanel();
+				jPanelContentView = new JPanel();
 				BorderLayout jPanel1Layout = new BorderLayout();
-				jPanel1.setLayout(jPanel1Layout);
-				getContentPane().add(jPanel1, BorderLayout.CENTER);
+				jPanelContentView.setLayout(jPanel1Layout);
+				jPanelContentView.add(new NewJPanel());
+				getContentPane().add(jPanelContentView, BorderLayout.CENTER);
 			}
 			{
-				jMenuBar1 = new JMenuBar();
-				setJMenuBar(jMenuBar1);
+				jToolBar = new JToolBar();
+				getContentPane().add(jToolBar, BorderLayout.SOUTH);
+				{
+					jLabelStatus = new JLabel();
+					jToolBar.add(jLabelStatus);
+					jLabelStatus.setText("No status");
+				}
+			}
+			{
+				jMenuBar = new JMenuBar();
+				setJMenuBar(jMenuBar);
 				{
 					jMenu1 = new JMenu();
-					jMenuBar1.add(jMenu1);
+					jMenuBar.add(jMenu1);
 					jMenu1.setText("Architecture");
 					{
 						jMenuItemNewArchitecture = new JMenuItem();
 						jMenu1.add(jMenuItemNewArchitecture);
 						jMenuItemNewArchitecture.setText("New architecture");
+						jMenuItemNewArchitecture.addActionListener(guicontroller);
 					}
 					{
 						jMenuItemOpenArchitecture = new JMenuItem();
 						jMenu1.add(jMenuItemOpenArchitecture);
 						jMenuItemOpenArchitecture.setText("Open architecture");
+						jMenuItemOpenArchitecture.addActionListener(guicontroller);
 					}
 					{
 						jMenuItemSaveArchitecture = new JMenuItem();
 						jMenu1.add(jMenuItemSaveArchitecture);
 						jMenuItemSaveArchitecture.setText("Save architecture");
+						jMenuItemSaveArchitecture.addActionListener(guicontroller);
 					}
 				}
 				{
 					jMenu2 = new JMenu();
-					jMenuBar1.add(jMenu2);
+					jMenuBar.add(jMenu2);
 					jMenu2.setText("Analyse");
 					{
 						jMenuItemStartAnalyse = new JMenuItem();
 						jMenu2.add(jMenuItemStartAnalyse);
 						jMenuItemStartAnalyse.setText("Start analyse");
+						jMenuItemStartAnalyse.addActionListener(guicontroller);
 					}
 				}
 				{
 					jMenu3 = new JMenu();
-					jMenuBar1.add(jMenu3);
+					jMenuBar.add(jMenu3);
 					jMenu3.setText("Help");
 					{
 						jMenuItemOnlineHelp = new JMenuItem();
@@ -104,15 +124,16 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 				}
 			}
 			pack();
-			setSize(400, 300);
+			setSize(800, 600);
 		} catch (Exception e) {
 			// add your error handling code here
 			e.printStackTrace();
 		}
 	}
-	
-	public void setContentView(JPanel jp){
-		
+
+	public void setContentView(JPanel jp) {
+		jPanelContentView.removeAll();
+		jPanelContentView.add(jp);
 	}
 
 }
