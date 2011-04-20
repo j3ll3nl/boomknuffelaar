@@ -1,6 +1,6 @@
 package hu.project.innovation.configuration.model;
 
-import hu.project.innovation.Logger;
+import hu.project.innovation.Log;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ public class ConfigurationService implements ConfigurationServiceIF {
 	private static ConfigurationService instance;
 
 	private ConfigurationService() {
-		Logger.getInstance().log(this.getClass().getSimpleName());
+		Log.i(getClass().getSimpleName(), "constructor()");		
 
 		this.configuration = new Configuration();
 	}
@@ -95,7 +95,7 @@ public class ConfigurationService implements ConfigurationServiceIF {
 
 	public void removeLayer(Object selectedObject) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public boolean isRuleApplied(String fromLayerName, String toLayerName, String ruleName) {
@@ -103,9 +103,9 @@ public class ConfigurationService implements ConfigurationServiceIF {
 		Layer toLayer = this.architecture.getLayer(toLayerName);
 		AbstractRuleType ruleType = this.configuration.getRule(ruleName);
 
-		if(null!=fromLayer && null!=toLayer && null!=ruleType) {
+		if (null != fromLayer && null != toLayer && null != ruleType) {
 			return fromLayer.hasAppliedRule(ruleType, toLayer);
-		}
-		else return false;	
+		} else
+			return false;
 	}
 }

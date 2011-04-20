@@ -1,20 +1,15 @@
 package hu.project.innovation;
 
-import net.sourceforge.pmd.PMD;
 import hu.project.innovation.analyse.model.AnalyseService;
 import hu.project.innovation.configuration.model.Configuration;
 import hu.project.innovation.configuration.model.ConfigurationService;
 import hu.project.innovation.configuration.model.ConfigurationServiceIF;
+import net.sourceforge.pmd.PMD;
 
 public class MainJan {
 
 	public static void main(String[] args) {
 
-		// Gui test
-
-		GuiController gui = new GuiController();
-//		gui.initCommandReader();
-		
 		// Configuration test
 
 		ConfigurationServiceIF conf = ConfigurationService.getInstance();
@@ -27,46 +22,28 @@ public class MainJan {
 		// Definition test
 
 		conf.newArchitecture("Architecture", "A first test");
-		
+
 		// Layers
 		conf.newLayer("UI-Layer", "Presentation logic");
 		conf.newLayer("Domain-Layer", "Domain logic");
 		conf.newLayer("Task-Layer", "Domain logic");
-		
+
 		// SU
-		conf.newSoftwareUnit(
-				"UI-Layer", 
-				"hu.project.innovation.configuration.view", 
-				"package");
-		conf.newSoftwareUnit(
-				"UI-Layer", 
-				"hu.project.innovation.report.view", 
-				"package");
-		conf.newSoftwareUnit(
-				"Task-Layer", 
-				"hu.project.innovation.configuration.controller", 
-				"package");
-		conf.newSoftwareUnit(
-				"Domain-Layer", 
-				"hu.project.innovation.configuration.model", 
-				"package");
-		
+		conf.newSoftwareUnit("UI-Layer", "hu.project.innovation.configuration.view", "package");
+		conf.newSoftwareUnit("UI-Layer", "hu.project.innovation.report.view", "package");
+		conf.newSoftwareUnit("Task-Layer", "hu.project.innovation.configuration.controller", "package");
+		conf.newSoftwareUnit("Domain-Layer", "hu.project.innovation.configuration.model", "package");
+
 		// Rules
-		conf.newAppliedRule(
-				"UI-Layer",
-				"Domain-Layer",
-				"BackCallRule");
-		conf.newAppliedRule(
-				"UI-Layer",
-				"Task-Layer",
-				"BackCallRule");
-		
+		conf.newAppliedRule("UI-Layer", "Domain-Layer", "BackCallRule");
+		conf.newAppliedRule("UI-Layer", "Task-Layer", "BackCallRule");
+
 		Logger.getInstance().log(conf.architectureToXML());
 		// Analyse test
 
 		AnalyseService analysis = AnalyseService.getInstance();
 		analysis.startAnalyse();
-		
+
 		PMD.main(args);
 
 	}

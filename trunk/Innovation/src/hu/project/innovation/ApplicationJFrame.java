@@ -3,8 +3,8 @@ package hu.project.innovation;
 import hu.project.innovation.configuration.view.DefinitionJPanel;
 
 import java.awt.BorderLayout;
-import javax.swing.ImageIcon;
 
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -43,14 +43,15 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 	private JMenu jMenu3;
 	private JMenu jMenu2;
 	private JMenu jMenu1;
-	private GuiController guicontroller;
+	private MainController guicontroller;
 
-	public ApplicationJFrame(GuiController gc) {
+	public ApplicationJFrame(MainController gc) {
 		super();
 		guicontroller = gc;
+		initUi();
 	}
 
-	public void initGUI() {
+	private void initUi() {
 		try {
 			setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 			setTitle("Belastingdienst Architectuur");
