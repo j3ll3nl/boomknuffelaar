@@ -39,7 +39,7 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 	private JScrollPane jScrollPane4;
 	private JTable jTable1;
 	private JTable jTable2;
-	private JList jListLayers;
+	public JList jListLayers;
 	private JLabel jLabel2;
 	private JLabel jLabel1;
 	private JTextArea jTextArea1;
@@ -121,12 +121,10 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 									jScrollPane1 = new JScrollPane();
 									jPanel5.add(jScrollPane1, BorderLayout.CENTER);
 									jScrollPane1.setPreferredSize(new java.awt.Dimension(383, 213));
-									{
-										ListModel jList1Model = new DefaultComboBoxModel(new String[] { "Item One", "Item Two" });
+									{										
 										jListLayers = new JList();
 										jListLayers.addListSelectionListener(definitioncontroller);
-										jScrollPane1.setViewportView(jListLayers);
-										jListLayers.setModel(jList1Model);
+										jScrollPane1.setViewportView(jListLayers);										
 									}
 								}
 							}
