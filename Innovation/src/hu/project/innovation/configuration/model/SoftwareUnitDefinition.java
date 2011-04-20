@@ -1,10 +1,11 @@
 package hu.project.innovation.configuration.model;
 
 import hu.project.innovation.Logger;
+import hu.project.innovation.XMLable;
 
 import java.util.ArrayList;
 
-public class SoftwareUnitDefinition {
+public class SoftwareUnitDefinition implements XMLable {
 
 	public static final String METHOD = "method", CLASS = "class", PACKAGE = "package";
 
@@ -36,6 +37,14 @@ public class SoftwareUnitDefinition {
 
 	public String getType() {
 		return type;
+	}
+	
+	@Override
+	public String toXML() {
+		String xml = "<softwareUnit>\n";
+		xml += "<type>"+this.type+"</fromLayer>\n";
+		xml += "</softwareUnit>\n";
+		return xml;
 	}
 
 }
