@@ -49,6 +49,17 @@ public class ArchitectureDefinition implements XMLable {
 		return layers.add(layer);
 	}
 
+	public Layer getLayer(int id) {
+		
+		for (Layer layer : layers) {
+			if (layer.getId() == id) {
+				return layer;
+			}
+		}
+		
+		return null;
+	}
+	
 	public Layer getLayer(String name) {
 
 		for (Layer layer : layers) {
