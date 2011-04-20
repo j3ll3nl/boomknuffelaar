@@ -4,8 +4,10 @@ import hu.project.innovation.configuration.model.BackCallRule;
 import hu.project.innovation.configuration.model.Layer;
 import hu.project.innovation.configuration.model.SoftwareUnitDefinition;
 
+import java.io.BufferedWriter;
 import java.io.CharArrayWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.ArrayList;
 
 import org.xml.sax.Attributes;
@@ -127,8 +129,17 @@ public class ArchDefXMLReader extends DefaultHandler {
 			
 			xr.parse( new InputSource(new FileReader( "architecture_definition.xml" )) );
 			
-			ArchitectureDefinition ar = reader.getArchitectureDefinition();
-			System.out.println(ar.toXML());
+			try{
+			    
+				ArchitectureDefinition ar = reader.getArchitectureDefinition();
+			    FileWriter fstream = new FileWriter("C:\\architecture_definition_output.xml");
+			    BufferedWriter out = new BufferedWriter(fstream);
+			    out.write(ar.toXML());
+			    out.close();
+			    
+			} catch (Exception e) {
+			      System.err.println("Error: " + e.getMessage());
+			}
 		
 		} catch (Exception e) {
 			
