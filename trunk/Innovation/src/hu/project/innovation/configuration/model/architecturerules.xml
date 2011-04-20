@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="My custom rules" xmlns="http://pmd.sf.net/ruleset/1.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0 http://pmd.sf.net/ruleset_xml_schema.xsd"
+	xsi:noNamespaceSchemaLocation="http://pmd.sf.net/ruleset_xml_schema.xsd">
+	<description>test file</description>
+	<rule name="back_call_rule" 
+		message="Back call rule"
+		class="hu.project.innovation.configuration.model.BackCallRule">
+		<description>Back call rule</description>
+		<priority>3</priority>
+	</rule>
+</ruleset>

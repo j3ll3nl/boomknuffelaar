@@ -10,5 +10,4 @@ public class BackCallRule extends AbstractRuleType {
 		// TODO Auto-generated method stub
 
 	}
-
 }
