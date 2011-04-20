@@ -8,7 +8,7 @@
 			<type>Package</type>
 		</softwareUnit>
 		<appliedRule>
-			<rule>BackCall</rule>
+			<ruleType>BackCall</ruleType>
 			<toLayer>2</toLayer>
 			<exceptions>
 				<unit>com.example.class</unit>
@@ -24,7 +24,7 @@
 			<type>Package</type>
 		</softwareUnit>
 		<appliedRule>
-			<rule>BackCall</rule>
+			<ruleType>BackCall</ruleType>
 			<toLayer>3</toLayer>
 			<exceptions>
 				<unit>com.example.class</unit>
@@ -40,7 +40,7 @@
 			<type>Package</type>
 		</softwareUnit>
 		<appliedRule>
-			<rule>BackCall</rule>
+			<ruleType>BackCall</ruleType>
 			<toLayer>1</toLayer>
 			<exceptions>
 				<unit>com.example.class</unit>
