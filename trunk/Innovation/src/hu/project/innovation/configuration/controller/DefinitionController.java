@@ -10,17 +10,18 @@ import hu.project.innovation.configuration.view.XmlFileFilter;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.io.File;
 import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-public class DefinitionController implements ActionListener, ListSelectionListener {
+public class DefinitionController implements ActionListener, ListSelectionListener, FocusListener {
 
 	private DefinitionJPanel jpanel;
 	private ConfigurationService cs;
@@ -60,17 +61,13 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	 */
 	private void loadLayerDetail() {
 		CustomLogger.i(getClass().getSimpleName(), "loadLayerDetail()");
-		JList list = jpanel.jListLayers;
 
-		Object selectedObject = list.getSelectedValue();
-		if (selectedObject instanceof Layer) {
-			CustomLogger.i(getClass().getSimpleName(), "loadLayerDetail() - selected layer: " + ((Layer) selectedObject).getName());
+		Layer layer = jpanel.getSelectedLayer();
 
-			jpanel.jTextFieldLayerName.setText(((Layer) selectedObject).getName());
-			jpanel.jTextAreaLayerDescription.setText(((Layer) selectedObject).getDescription());
-		} else {
-			JOptionPane.showMessageDialog(null, "Please select a layer", "Error", JOptionPane.ERROR_MESSAGE);
-		}
+		CustomLogger.i(getClass().getSimpleName(), "loadLayerDetail() - selected layer: " + layer.getName());
+
+		jpanel.jTextFieldLayerName.setText(layer.getName());
+		jpanel.jTextAreaLayerDescription.setText(layer.getDescription());
 	}
 
 	/**
@@ -134,15 +131,11 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	 */
 	private void removeLayer() {
 		CustomLogger.i(getClass().getSimpleName(), "removeLayer()");
-		JList list = jpanel.jListLayers;
 
-		Object selectedObject = list.getSelectedValue();
-		if (selectedObject instanceof Layer) {
-			CustomLogger.i(getClass().getSimpleName(), "removeLayer() - selected layer: " + ((Layer) selectedObject).getDescription());
-			cs.removeLayer(selectedObject);
-		} else {
-			JOptionPane.showMessageDialog(null, "Please select a layer", "Error", JOptionPane.ERROR_MESSAGE);
-		}
+		Layer layer = jpanel.getSelectedLayer();
+
+		CustomLogger.i(getClass().getSimpleName(), "removeLayer() - selected layer: " + layer.getDescription());
+		cs.removeLayer(layer);
 	}
 
 	/**
@@ -226,6 +219,21 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 			}
 		} else {
 			CustomLogger.i(getClass().getSimpleName(), "valueChanged(" + event + ")");
+		}
+	}
+
+	@Override
+	public void focusGained(FocusEvent event) {
+		// Ignore
+	}
+
+	@Override
+	public void focusLost(FocusEvent event) {
+		if (event.getSource() == jpanel.jTextFieldLayerName) {
+			Layer layer = jpanel.getSelectedLayer();
+			layer.setName(jpanel.jTextFieldLayerName.getText());
+		} else {
+			CustomLogger.i(getClass().getSimpleName(), "focusLost(" + event + ")");
 		}
 	}
 
