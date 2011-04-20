@@ -16,7 +16,8 @@ public class Layer implements XMLable {
 	private ArrayList<AppliedRule> appliedRules;
 
 	public Layer() {
-		
+		this.softwareUnits = new ArrayList<SoftwareUnitDefinition>();
+		this.appliedRules = new ArrayList<AppliedRule>();
 	}
 	
 	public Layer(String name, String description) {
@@ -95,6 +96,11 @@ public class Layer implements XMLable {
 		xml += "<id>"+this.id+"</id>\n";
 		xml += "<name>"+this.name+"</name>\n";
 		xml += "<description>"+this.description+"</description>\n";
+		if(softwareUnits != null){
+			for(SoftwareUnitDefinition r : this.softwareUnits) {
+				xml += r.toXML();
+			}
+		}	
 		if(appliedRules != null){
 			for(AppliedRule r : this.appliedRules) {
 				xml += r.toXML();
