@@ -1,5 +1,6 @@
 package hu.project.innovation;
 import hu.project.innovation.configuration.model.ArchitectureDefinition;
+import hu.project.innovation.configuration.model.BackCallRule;
 import hu.project.innovation.configuration.model.Layer;
 import hu.project.innovation.configuration.model.SoftwareUnitDefinition;
 
@@ -99,6 +100,7 @@ public class ArchDefXMLReader {
 				// Get Layer Info
 				Element layerElement = (Element) layerNode;
 				String layerId = getElementValue(layerElement, "id");
+				String layerName = getElementValue(layerElement, "name");
 				String layerDescription = getElementValue(layerElement, "description");
 				
 				// Add Layer to Architecture Definition
@@ -142,6 +144,8 @@ public class ArchDefXMLReader {
 						String toLayer = getElementValue(ruleDefinitionElement, "toLayer");
 						
 						// TODO Add Rule Definition to Layer
+						BackCallRule ruleType = new BackCallRule();
+						layer.addAppliedRule(ruleType, null);
 						
 						// Get Rule Exceptions
 						NodeList listOfRuleExceptions = ruleDefinitionElement.getElementsByTagName("exceptions");
@@ -178,7 +182,7 @@ public class ArchDefXMLReader {
 		
 		NodeList list = element.getElementsByTagName(tagName);
 		Element valueElement = (Element) list.item(0);
-		//System.out.println(valueElement.getChildNodes().item(0).getNodeValue().trim());
+		System.out.println(tagName + " : " + valueElement.getChildNodes().item(0).getNodeValue().trim());
 		return valueElement.getChildNodes().item(0).getNodeValue().trim();
 		
 	}

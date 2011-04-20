@@ -1,9 +1,10 @@
 <application>
 	<layer>
 		<id>1</id>
-		<description>TopLayer</description>
+		<name>View</name>
+		<description>Datapresentatie</description>
 		<softwareUnit>
-			<type>typeName</type>
+			<type>Package</type>
 		</softwareUnit>
 		<ruleDefinition>
 			<rule>BackCall</rule>
@@ -14,14 +15,30 @@
 		</ruleDefinition>
 	</layer>
 	<layer>
-		<id>1</id>
-		<description>TopLayer</description>
+		<id>2</id>
+		<name>Controller</name>
+		<description>Applicatielogica</description>
 		<softwareUnit>
-			<type>typeName</type>
+			<type>Package</type>
 		</softwareUnit>
 		<ruleDefinition>
 			<rule>BackCall</rule>
-			<toLayer>2</toLayer>
+			<toLayer>3</toLayer>
+			<exceptions>
+				<softwareUnitt>com.example.class</softwareUnitt>
+			</exceptions>
+		</ruleDefinition>
+	</layer>
+	<layer>
+		<id>3</id>
+		<name>Model</name>
+		<description>Datamodel</description>
+		<softwareUnit>
+			<type>Package</type>
+		</softwareUnit>
+		<ruleDefinition>
+			<rule>BackCall</rule>
+			<toLayer>1</toLayer>
 			<exceptions>
 				<softwareUnitt>com.example.class</softwareUnitt>
 			</exceptions>
