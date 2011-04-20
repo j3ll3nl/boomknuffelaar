@@ -17,6 +17,7 @@ public class Layer implements XMLable {
 	public Layer() {
 		this.appliedRules = new ArrayList<AppliedRule>();
 	}
+	
 
 	public Layer(String name, String description) {
 		Logger.getInstance().log(this.getClass().getSimpleName());
@@ -91,5 +92,17 @@ public class Layer implements XMLable {
 
 	public String toString() {
 		return getName();
+	}
+
+	public boolean hasAppliedRule(AbstractRuleType ruleType, Layer toLayer) {
+		if(appliedRules != null){
+			for(AppliedRule r : this.appliedRules) {
+				if(r.getToLayer().getName().equals(toLayer.getName())
+						&& r.getRuleType().getName().equals(ruleType.getName())) {
+					return true;
+				}
+			}
+		}		
+		return false;
 	}
 }
