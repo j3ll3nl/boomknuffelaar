@@ -3,6 +3,7 @@ package hu.project.innovation;
 import hu.project.innovation.analyse.model.AnalyseService;
 import hu.project.innovation.configuration.model.Configuration;
 import hu.project.innovation.configuration.model.ConfigurationService;
+import hu.project.innovation.configuration.model.ConfigurationServiceIF;
 
 public class Main {
 
@@ -14,7 +15,7 @@ public class Main {
 
 		// Configuration test
 
-		ConfigurationService conf = ConfigurationService.getInstance();
+		ConfigurationServiceIF conf = ConfigurationService.getInstance();
 		conf.setRuleStatus("backcall", true);
 		conf.setOutputPath("/a/path/to/the/output/");
 		conf.setOutputFormat(Configuration.OUTPUT_FORMAT_TEXT);
