@@ -23,9 +23,8 @@ public class AppliedRule implements XMLable {
 	@Override
 	public String toXML() {
 		String xml = "<appliedRule>\n";
-		xml += "<fromLayer>"+this.fromLayer.getName()+"</fromLayer>\n";
-		xml += "<toLayer>"+this.toLayer.getName()+"</toLayer>\n";
 		xml += "<ruleType>"+this.ruleType.getName()+"</ruleType>\n";
+		xml += "<toLayer>"+this.toLayer.getName()+"</toLayer>\n";
 		xml += "</appliedRule>\n";
 		return xml;
 	}
