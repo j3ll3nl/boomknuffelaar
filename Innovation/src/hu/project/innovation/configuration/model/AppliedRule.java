@@ -22,10 +22,10 @@ public class AppliedRule implements XMLable {
 
 	@Override
 	public String toXML() {
-		String xml = "<appliedRule>\n";
-		xml += "<ruleType>"+this.ruleType.getName()+"</ruleType>\n";
-		xml += "<toLayer>"+this.toLayer.getName()+"</toLayer>\n";
-		xml += "</appliedRule>\n";
+		String xml = "\t\t<appliedRule>\n";
+		xml += "\t\t\t<ruleType>"+this.ruleType.getName()+"</ruleType>\n";
+		xml += "\t\t\t<toLayer>"+this.toLayer.getId()+"</toLayer>\n";
+		xml += "\t\t</appliedRule>\n";
 		return xml;
 	}
 

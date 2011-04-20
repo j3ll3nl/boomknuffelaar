@@ -70,7 +70,7 @@ public class ArchDefXMLReader extends DefaultHandler {
 			
 			currentUnit.setType(contents.toString());
 			
-		} else if ( localName.equals( "rule" )) {
+		} else if ( localName.equals( "ruleType" )) {
 			
 			currentRule.add(currentLayer.getId() + "");
 			currentRule.add(contents.toString());
