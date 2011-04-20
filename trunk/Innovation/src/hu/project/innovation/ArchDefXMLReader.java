@@ -1,9 +1,12 @@
 package hu.project.innovation;
 import hu.project.innovation.configuration.model.ArchitectureDefinition;
+import hu.project.innovation.configuration.model.BackCallRule;
 import hu.project.innovation.configuration.model.Layer;
+import hu.project.innovation.configuration.model.SoftwareUnitDefinition;
 
 import java.io.CharArrayWriter;
 import java.io.FileReader;
+import java.util.ArrayList;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
@@ -18,30 +21,63 @@ public class ArchDefXMLReader extends DefaultHandler {
 	private CharArrayWriter contents = new CharArrayWriter();
 	private ArchitectureDefinition ar = new ArchitectureDefinition();
 	private Layer currentLayer;
+	private SoftwareUnitDefinition currentUnit;
+	private ArrayList<String> currentRule = new ArrayList<String>();
+	private ArrayList<ArrayList<String>> savedRules = new ArrayList<ArrayList<String>>();
+	
 	
 	public void startElement( String namespaceURI, String localName, String qName, Attributes attr ) throws SAXException {
 		
 		contents.reset();
 		
 		if ( localName.equals( "layer" ) ) {
+			
 			currentLayer = new Layer();
 			ar.addLayer(currentLayer);	
+			
+		} else if ( localName.equals( "softwareUnit" ) ) {
+			
+			currentUnit = new SoftwareUnitDefinition();
+			currentLayer.addSoftwareUnit(currentUnit);	
+			
 		}
 		
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void endElement(String namespaceURI, String localName, String qName) {
 		
 		if ( localName.equals( "id" ) ) {
+			
 			currentLayer.setId(Integer.parseInt(contents.toString()));
-		}
-		
-		if ( localName.equals( "name" ) ) {
+			
+		} else if ( localName.equals( "name" ) ) {
+			
 			currentLayer.setName(contents.toString());
-		}
-		
-		if ( localName.equals( "description" ) ) {
+			
+		} else if ( localName.equals( "description" ) ) {
+			
 			currentLayer.setDescription(contents.toString());
+			
+		} else if ( localName.equals( "type" ) ) {
+			
+			currentUnit.setType(contents.toString());
+			
+		} else if ( localName.equals( "rule" )) {
+			
+			currentRule.add(currentLayer.getId() + "");
+			currentRule.add(contents.toString());
+			
+		} else if ( localName.equals( "toLayer" )) {
+			
+			currentRule.add(contents.toString());
+			
+		} else if ( localName.equals( "appliedRule" )) {
+			
+			ArrayList<String> temp = (ArrayList<String>) currentRule.clone();
+			savedRules.add(temp);
+			currentRule.clear();
+			
 		}
 		
 	}
@@ -52,8 +88,25 @@ public class ArchDefXMLReader extends DefaultHandler {
 		
 	}
 	
+	public void endDocument() {
+		
+		for (ArrayList<String> rule : savedRules) {
+			
+			if (rule.get(1).equals("BackCall")) {
+				
+				Layer layer = ar.getLayer(Integer.parseInt(rule.get(0)));
+				layer.addAppliedRule(new BackCallRule(), ar.getLayer(Integer.parseInt(rule.get(2))));
+				
+			}
+			
+		}
+		
+	}
+	
 	public ArchitectureDefinition getArchitectureDefinition() {
+		
 		return ar;
+		
 	}
 	
 	public static void main(String[] args) {
