@@ -27,8 +27,13 @@ public class MainJan {
 		// Definition test
 
 		conf.newArchitecture("Architecture", "A first test");
+		
+		// Layers
 		conf.newLayer("UI-Layer", "Presentation logic");
 		conf.newLayer("Domain-Layer", "Domain logic");
+		conf.newLayer("Task-Layer", "Domain logic");
+		
+		// SU
 		conf.newSoftwareUnit(
 				"UI-Layer", 
 				"hu.project.innovation.configuration.view", 
@@ -38,12 +43,22 @@ public class MainJan {
 				"hu.project.innovation.report.view", 
 				"package");
 		conf.newSoftwareUnit(
+				"Task-Layer", 
+				"hu.project.innovation.configuration.controller", 
+				"package");
+		conf.newSoftwareUnit(
 				"Domain-Layer", 
 				"hu.project.innovation.configuration.model", 
 				"package");
+		
+		// Rules
 		conf.newAppliedRule(
 				"UI-Layer",
 				"Domain-Layer",
+				"BackCallRule");
+		conf.newAppliedRule(
+				"UI-Layer",
+				"Task-Layer",
 				"BackCallRule");
 		
 		Logger.getInstance().log(conf.architectureToXML());
