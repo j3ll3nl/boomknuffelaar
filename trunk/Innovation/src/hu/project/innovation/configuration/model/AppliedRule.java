@@ -2,7 +2,7 @@ package hu.project.innovation.configuration.model;
 
 import java.util.ArrayList;
 
-import hu.project.innovation.Logger;
+import hu.project.innovation.Log;
 import hu.project.innovation.XMLable;
 
 public class AppliedRule implements XMLable {
@@ -13,7 +13,7 @@ public class AppliedRule implements XMLable {
 	private ArrayList<SoftwareUnitDefinition> exceptions;
 
 	public AppliedRule() {
-		Logger.log(this);
+		Log.i(this,this.getClass().getSimpleName()+"()");
 		this.exceptions = new ArrayList<SoftwareUnitDefinition>();
 	}
 

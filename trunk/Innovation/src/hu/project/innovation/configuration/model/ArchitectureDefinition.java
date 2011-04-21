@@ -1,6 +1,6 @@
 package hu.project.innovation.configuration.model;
 
-import hu.project.innovation.Logger;
+import hu.project.innovation.Log;
 import hu.project.innovation.XMLable;
 
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ public class ArchitectureDefinition implements XMLable {
 	private ArrayList<SoftwareUnitDefinition> softwareUnits;
 
 	public ArchitectureDefinition() {
-		Logger.log(this);
+		Log.i(this,"ArchitectureDefinition()");
 		this.softwareUnits = new ArrayList<SoftwareUnitDefinition>();
 		this.layers = new ArrayList<Layer>();
 	}

@@ -1,7 +1,6 @@
 package hu.project.innovation.configuration.model;
 
 import hu.project.innovation.Log;
-import hu.project.innovation.Logger;
 
 import java.util.HashMap;
 
@@ -34,7 +33,7 @@ public class Configuration {
 	public void setSetting(String key, String value) {
 		this.settings.put(key, value);
 
-		Logger.getInstance().log("Setting set: \"" + key + "\" -> \"" + value + "\"");
+		Log.i(this,"Setting set: \"" + key + "\" -> \"" + value + "\"");
 	}
 
 	public String getSetting(String key) {
