@@ -1,9 +1,15 @@
 package hu.project.innovation.configuration.model;
 
+import hu.project.innovation.ArchDefXMLReader;
 import hu.project.innovation.Log;
 
 import java.io.File;
+import java.io.FileReader;
 import java.util.ArrayList;
+
+import org.xml.sax.InputSource;
+import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.XMLReaderFactory;
 
 public class ConfigurationService implements ConfigurationServiceIF {
 
@@ -109,7 +115,22 @@ public class ConfigurationService implements ConfigurationServiceIF {
 			return false;
 	}
 	
-	public void loadArchDefFromXML() {
+	public void loadArchDefFromXML(File file) {
+		
+		try {
+			
+			XMLReader xr = XMLReaderFactory.createXMLReader(); 
+			ArchDefXMLReader reader = new ArchDefXMLReader(); 
+			xr.setContentHandler(reader); 
+			xr.parse( new InputSource(new FileReader( file )) );
+			
+			architecture = reader.getArchitectureDefinition();
+			
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
 		
 	}
 	
