@@ -13,26 +13,26 @@ public class AnalyseController implements ActionListener {
 	private AnalyseJFrame analyseJFrame;
 
 	public AnalyseController() {
-		Log.i(getClass().getSimpleName(), "constructor()");
+		Log.i(this, "constructor()");
 		
 		analyseService = AnalyseService.getInstance();
 		analyseJFrame = new AnalyseJFrame(this);
 	}
 
 	public void initUi() {
-		Log.i(getClass().getSimpleName(), "initUi()");
+		Log.i(this, "initUi()");
 		analyseJFrame.setVisible(true);
 		
 	}
 
 	public void startAnalyse() {
-		Log.i(getClass().getSimpleName(), "startAnalyse()");
+		Log.i(this, "startAnalyse()");
 		analyseService.startAnalyse();
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent action) {
-		Log.i(getClass().getSimpleName(), "actionPerformed()");
+		Log.i(this, "actionPerformed()");
 		// TODO Auto-generated method stub
 
 	}

@@ -17,7 +17,7 @@ public class MainController implements ActionListener {
 	 * MainController constructor. This constructor will initialize a new Definition and Analyse controller.
 	 */
 	public MainController() {
-		Log.i(getClass().getSimpleName(), "constructor()");
+		Log.i(this, "constructor()");
 
 		definitioncontroller = new DefinitionController();
 		analysecontroller = new AnalyseController();
@@ -27,7 +27,7 @@ public class MainController implements ActionListener {
 	 * Start the application with GUI by calling this method.
 	 */
 	public void initUi() {
-		Log.i(getClass().getSimpleName(), "init()");
+		Log.i(this, "init()");
 
 		jframe = new ApplicationJFrame(this);
 		
@@ -42,7 +42,7 @@ public class MainController implements ActionListener {
 	 * Start the application without GUI by calling this method.
 	 */
 	public void initCommand() {
-		Log.i(getClass().getSimpleName(), "initCommand()");
+		Log.i(this, "initCommand()");
 
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		String helpCommando = "Available commands are:\n" + "Help\tRequest help\n" + "Exit\tExit the application";
@@ -73,19 +73,19 @@ public class MainController implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent action) {
 		if (action.getSource() == jframe.jMenuItemNewArchitecture) {
-			Log.i(getClass().getSimpleName(), "actionPerformed() - new architecture");
+			Log.i(this, "actionPerformed() - new architecture");
 			definitioncontroller.newConfiguration();
 		} else if (action.getSource() == jframe.jMenuItemOpenArchitecture) {
-			Log.i(getClass().getSimpleName(), "actionPerformed() - open architecture");
+			Log.i(this, "actionPerformed() - open architecture");
 			definitioncontroller.openConfiguration();
 		} else if (action.getSource() == jframe.jMenuItemSaveArchitecture) {
-			Log.i(getClass().getSimpleName(), "actionPerformed() - save architecture");
+			Log.i(this, "actionPerformed() - save architecture");
 			definitioncontroller.saveConfiguration();
 		} else if (action.getSource() == jframe.jMenuItemStartAnalyse) {
-			Log.i(getClass().getSimpleName(), "actionPerformed() - start analyse");
+			Log.i(this, "actionPerformed() - start analyse");
 			analysecontroller.initUi();
 		} else {
-			Log.i(getClass().getSimpleName(), "actionPerformed(" + action + ")");
+			Log.i(this, "actionPerformed(" + action + ")");
 		}
 	}
 }

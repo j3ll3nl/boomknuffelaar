@@ -7,11 +7,11 @@ public class AnalyseService {
 	private static AnalyseService instance;
 
 	public AnalyseService() {
-		Log.i(getClass().getSimpleName(), "constructor()");		
+		Log.i(this, "constructor()");		
 	}
 
 	public void startAnalyse() {
-		Log.i(getClass().getSimpleName(), "startAnalyse()");
+		Log.i(this, "startAnalyse()");
 	}
 
 	public static AnalyseService getInstance() {		
