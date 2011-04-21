@@ -126,35 +126,4 @@ public class ArchDefXMLReader extends DefaultHandler {
 
 	}
 
-	public static void main(String[] args) {
-
-		try {
-
-			XMLReader xr = XMLReaderFactory.createXMLReader();
-
-			ArchDefXMLReader reader = new ArchDefXMLReader();
-			xr.setContentHandler(reader);
-
-			xr.parse(new InputSource(new FileReader("architecture_definition.xml")));
-
-			try {
-
-				ArchitectureDefinition ar = reader.getArchitectureDefinition();
-				FileWriter fstream = new FileWriter("C:\\architecture_definition_output.xml");
-				BufferedWriter out = new BufferedWriter(fstream);
-				out.write(ar.toXML());
-				out.close();
-
-			} catch (Exception e) {
-				System.err.println("Error: " + e.getMessage());
-			}
-
-		} catch (Exception e) {
-
-			e.printStackTrace();
-
-		}
-
-	}
-
 }
