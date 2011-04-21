@@ -4,7 +4,7 @@ import net.sourceforge.pmd.ast.ASTClassOrInterfaceType;
 
 public class BackCallRule extends AbstractRuleType {
 	
-	private String[] notCheckedPackages = new String[]{
+	protected final String[] notCheckedPackages = new String[]{
 			"java","javax","sun"
 	};
 
@@ -54,7 +54,7 @@ public class BackCallRule extends AbstractRuleType {
 	 * @param packageName
 	 * @return
 	 */
-	private boolean isPackageChecked(String packageName) {
+	protected boolean isPackageChecked(String packageName) {
 		for (String packageStart : this.notCheckedPackages) {
 			if(packageName.startsWith(packageStart)) {
 				return false;

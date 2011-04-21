@@ -10,4 +10,10 @@
 		<description>Back call rule</description>
 		<priority>3</priority>
 	</rule>
+	<rule name="skip_layer_rule" 
+		message="Skip layer rule"
+		class="hu.project.innovation.configuration.model.SkipLayerRule">
+		<description>Skip layer rule</description>
+		<priority>3</priority>
+	</rule>
 </ruleset>
