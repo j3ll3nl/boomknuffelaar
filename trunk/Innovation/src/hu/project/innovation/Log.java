@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class Log {
 	private static int tabsBetweenClassAndMessage = 3;
-	
+
 	/**
 	 * Print an information output.
 	 * 
@@ -15,7 +15,7 @@ public class Log {
 	 */
 	public static void i(Object className, String message) {
 		int numberOfTabs = (tabsBetweenClassAndMessage) - (className.getClass().getSimpleName().length() / 8);
-		
+
 		System.out.println(getDateTime() + "  INFO\t" + className.getClass().getSimpleName() + tabs(numberOfTabs) + " - " + message);
 	}
 
@@ -27,7 +27,7 @@ public class Log {
 	 */
 	public static void e(Object className, String message) {
 		int numberOfTabs = (tabsBetweenClassAndMessage) - (className.getClass().getSimpleName().length() / 8);
-		
+
 		System.out.println(getDateTime() + "  ERROR\t" + className.getClass().getSimpleName() + tabs(numberOfTabs) + " - " + message);
 	}
 
@@ -41,10 +41,10 @@ public class Log {
 		Date date = new Date();
 		return dateFormat.format(date);
 	}
-	
-	private static String tabs(int num){
+
+	private static String tabs(int num) {
 		String ret = "";
-		for(int i = 0; i < num; i++){
+		for (int i = 0; i < num; i++) {
 			ret += "\t";
 		}
 		return ret;

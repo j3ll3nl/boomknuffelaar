@@ -27,7 +27,7 @@ public class MainController implements ActionListener {
 	 * Start the application with GUI by calling this method.
 	 */
 	public void initUi() {
-		Log.i(this, "init()");
+		Log.i(this, "initUi()");
 
 		jframe = new ApplicationJFrame(this);
 		
