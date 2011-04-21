@@ -29,6 +29,21 @@ public class ConfigurationService implements ConfigurationServiceIF {
 
 	public void openArchitecture(File file) {
 
+		try {
+			
+			XMLReader xr = XMLReaderFactory.createXMLReader(); 
+			ArchDefXMLReader reader = new ArchDefXMLReader(); 
+			xr.setContentHandler(reader); 
+			xr.parse( new InputSource(new FileReader( file )) );
+			
+			architecture = reader.getArchitectureDefinition();
+			
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		
 	}
 
 	public boolean newLayer(String name, String description) {
@@ -113,25 +128,6 @@ public class ConfigurationService implements ConfigurationServiceIF {
 			return fromLayer.hasAppliedRule(ruleType, toLayer);
 		} else
 			return false;
-	}
-	
-	public void loadArchDefFromXML(File file) {
-		
-		try {
-			
-			XMLReader xr = XMLReaderFactory.createXMLReader(); 
-			ArchDefXMLReader reader = new ArchDefXMLReader(); 
-			xr.setContentHandler(reader); 
-			xr.parse( new InputSource(new FileReader( file )) );
-			
-			architecture = reader.getArchitectureDefinition();
-			
-		} catch (Exception e) {
-
-			e.printStackTrace();
-
-		}
-		
 	}
 	
 }
