@@ -37,6 +37,4 @@ public interface ConfigurationServiceIF {
 
 	public String architectureToXML();
 	
-	public void loadArchDefFromXML(File file);
-	
 }
