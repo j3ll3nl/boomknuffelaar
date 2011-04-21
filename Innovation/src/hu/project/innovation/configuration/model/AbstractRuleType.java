@@ -69,8 +69,6 @@ public abstract class AbstractRuleType extends AbstractJavaRule implements XMLab
 		}
 	}
 
-	public abstract void checkViolation();
-
 	public String toXML() {
 		String xml = "";
 

@@ -8,11 +8,6 @@ public class BackCallRule extends AbstractRuleType {
 			"java","javax","sun"
 	};
 
-	@Override
-	public void checkViolation() {
-
-	}
-
 	/**
 	 * Use class and interface types to find a BackRule violation
 	 * 
