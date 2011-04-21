@@ -35,8 +35,9 @@ public class MainJan {
 		conf.newSoftwareUnit("Domain-Layer", "hu.project.innovation.configuration.model", "package");
 
 		// Rules
-		conf.newAppliedRule("UI-Layer", "Domain-Layer", "BackCallRule");
+		conf.newAppliedRule("UI-Layer", "Domain-Layer", "SkipLayerRule");
 		conf.newAppliedRule("UI-Layer", "Task-Layer", "BackCallRule");
+		conf.newAppliedRule("Task-Layer", "Domain-Layer", "BackCallRule");
 
 		Logger.log(conf.architectureToXML());
 		// Analyse test
