@@ -18,7 +18,7 @@ public class ConfigurationService implements ConfigurationServiceIF {
 	private static ConfigurationService instance;
 
 	private ConfigurationService() {
-		Log.i(getClass().getSimpleName(), "constructor()");		
+		Log.i(this, "constructor()");		
 
 		this.configuration = new Configuration();
 	}

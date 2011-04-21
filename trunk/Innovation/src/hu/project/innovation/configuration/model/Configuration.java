@@ -15,7 +15,7 @@ public class Configuration {
 	private HashMap<String, AbstractRuleType> rules;
 
 	protected Configuration() {
-		Log.i(getClass().getSimpleName(), "constructor()");		
+		Log.i(this, "constructor()");		
 
 		this.rules = new HashMap<String, AbstractRuleType>();
 		this.addRuleType(new BackCallRule());
