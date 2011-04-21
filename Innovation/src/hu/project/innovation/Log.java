@@ -13,10 +13,10 @@ public class Log {
 	 * @param className Current classname: getClass().getSimpleName()
 	 * @param message The message, this is often the method name like: i() - ....
 	 */
-	public static void i(String className, String message) {
-		int numberOfTabs = (tabsBetweenClassAndMessage) - (className.length() / 8);
+	public static void i(Object className, String message) {
+		int numberOfTabs = (tabsBetweenClassAndMessage) - (className.getClass().getSimpleName().length() / 8);
 		
-		System.out.println(getDateTime() + "  INFO\t" + className + tabs(numberOfTabs) + " - " + message);
+		System.out.println(getDateTime() + "  INFO\t" + className.getClass().getSimpleName() + tabs(numberOfTabs) + " - " + message);
 	}
 
 	/**
@@ -25,10 +25,10 @@ public class Log {
 	 * @param className Current classname: getClass().getSimpleName()
 	 * @param message The message, this is often the method name like: i() - ....
 	 */
-	public static void e(String className, String message) {
-		int numberOfTabs = (tabsBetweenClassAndMessage) - (className.length() / 8);
+	public static void e(Object className, String message) {
+		int numberOfTabs = (tabsBetweenClassAndMessage) - (className.getClass().getSimpleName().length() / 8);
 		
-		System.out.println(getDateTime() + "  ERROR\t" + className + tabs(numberOfTabs) + " - " + message);
+		System.out.println(getDateTime() + "  ERROR\t" + className.getClass().getSimpleName() + tabs(numberOfTabs) + " - " + message);
 	}
 
 	/**
