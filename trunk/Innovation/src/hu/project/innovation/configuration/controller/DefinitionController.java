@@ -10,8 +10,8 @@ import hu.project.innovation.configuration.view.XmlFileFilter;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -21,16 +21,14 @@ import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-public class DefinitionController implements ActionListener, ListSelectionListener, FocusListener {
+public class DefinitionController implements ActionListener, ListSelectionListener, KeyListener {
 
 	private DefinitionJPanel definitionJPanel;
 	private ConfigurationService configurationService;
 
-	private boolean valueChanges = true;
-
 	public DefinitionController() {
 		Log.i(getClass().getSimpleName(), "constructor()");
-		definitionJPanel = new DefinitionJPanel(this);
+		definitionJPanel = new DefinitionJPanel();
 		configurationService = ConfigurationService.getInstance();
 	}
 
@@ -41,25 +39,30 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	 */
 	public JPanel initUi() {
 		Log.i(getClass().getSimpleName(), "initUi()");
-		
+
 		// Create an empty model
 		LayersListModel listmodel = new LayersListModel();
-	
-		// Add layers to this model. We use a custom ID
-		int id = 0;
+
+		// TODO: Verwijderen van deze code. Dit is alleen nodig voor het testen.
+		configurationService.newArchitecture("Test", "");
+		configurationService.newLayer("UI", "Dit is de ui description");
+		configurationService.newLayer("Controller", "Dit is de controller description");
+		configurationService.newLayer("Model", "Dit is de model description");
+
 		ArrayList<Layer> layers = configurationService.getLayers();
-		if (layers != null) {
-			for (Layer layer : layers) {
-				listmodel.add(id++, layer);
-			}
-		}
-		// Add normal
-		listmodel.add(0, new Layer("UI", "Dit is de ui description"));
-		listmodel.add(1, new Layer("Controller", "Dit is de controller description"));
-		listmodel.add(2, new Layer("Model", "Dit is de model description"));
-	
+		listmodel.setContent(layers);
+
 		// Set the model for the layer
 		definitionJPanel.jListLayers.setModel(listmodel);
+
+		// Add actionlisteners etc.
+		definitionJPanel.jListLayers.addListSelectionListener(this);
+		definitionJPanel.jButtonNewLayer.addActionListener(this);
+		definitionJPanel.jButtonRemoveLayer.addActionListener(this);
+		definitionJPanel.jButtonMoveLayerUp.addActionListener(this);
+		definitionJPanel.jButtonMoveLayerDown.addActionListener(this);
+		definitionJPanel.jTextFieldLayerName.addKeyListener(this);
+
 		return definitionJPanel;
 	}
 
@@ -82,13 +85,13 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	 */
 	public void openConfiguration() {
 		Log.i(getClass().getSimpleName(), "openDefintion()");
-	
+
 		// Create a file chooser
 		JFileChooser fc = new JFileChooser();
 		fc.setFileFilter(new XmlFileFilter());
 		// In response to a button click:
 		int returnVal = fc.showOpenDialog(definitionJPanel);
-	
+
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			File file = fc.getSelectedFile();
 			Log.i(getClass().getSimpleName(), "openDefintion() - opening file: " + file.getName());
@@ -103,8 +106,6 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		Log.i(getClass().getSimpleName(), "saveDefintion()");
 	}
 
-
-
 	/**
 	 * Create a new layer
 	 */
@@ -115,6 +116,10 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		if (response != null) {
 			Log.i(getClass().getSimpleName(), "newLayer() - value: " + response);
 			configurationService.newLayer(response, "");
+
+			ArrayList<Layer> layers = configurationService.getLayers();
+			LayersListModel llm = (LayersListModel) definitionJPanel.jListLayers.getModel();
+			llm.setContent(layers);
 		}
 	}
 
@@ -123,9 +128,9 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	 */
 	private void removeLayer() {
 		Log.i(getClass().getSimpleName(), "removeLayer()");
-	
+
 		Layer layer = definitionJPanel.getSelectedLayer();
-	
+
 		Log.i(getClass().getSimpleName(), "removeLayer() - selected layer: " + layer.getDescription());
 		configurationService.removeLayer(layer);
 	}
@@ -144,9 +149,18 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	private void moveLayerDown() {
 		Log.i(getClass().getSimpleName(), "moveLayerDown()");
 		// TODO Auto-generated method stub
-	
+
 	}
 
+	/**
+	 * Method which will show an inputdialog and keeps asking for users input
+	 * 
+	 * @param component
+	 * @param message
+	 * @param title
+	 * @param type
+	 * @return
+	 */
 	private String inputDialog(Component component, String message, String title, int type) {
 		String inputValue = "";
 		while (inputValue.trim().equals("")) {
@@ -164,16 +178,13 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		return inputValue;
 	}
 
-	/**
-	 * 
-	 */
 	private void loadLayerDetail() {
 		Log.i(getClass().getSimpleName(), "loadLayerDetail()");
-	
+
 		Layer layer = definitionJPanel.getSelectedLayer();
-	
+
 		Log.i(getClass().getSimpleName(), "loadLayerDetail() - selected layer: " + layer.getName());
-	
+
 		definitionJPanel.jTextFieldLayerName.setText(layer.getName());
 		definitionJPanel.jTextAreaLayerDescription.setText(layer.getDescription());
 	}
@@ -206,30 +217,37 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	@Override
 	public void valueChanged(ListSelectionEvent event) {
 		if (event.getSource() == definitionJPanel.jListLayers) {
-			if (valueChanges) {
-				loadLayerDetail();
-				valueChanges = false;
-			} else {
-				valueChanges = true;
-			}
+			loadLayerDetail();
 		} else {
 			Log.i(getClass().getSimpleName(), "valueChanged(" + event + ")");
 		}
 	}
 
 	@Override
-	public void focusGained(FocusEvent event) {
+	public void keyPressed(KeyEvent arg0) {
 		// Ignore
 	}
 
 	@Override
-	public void focusLost(FocusEvent event) {
-		if (event.getSource() == definitionJPanel.jTextFieldLayerName) {
+	public void keyReleased(KeyEvent arg0) {
+		Log.i(getClass().getSimpleName(), "keyReleased(" + arg0 + ")");
+
+		if (arg0.getSource() == definitionJPanel.jTextFieldLayerName) {
 			Layer layer = definitionJPanel.getSelectedLayer();
+
+			Log.i(getClass().getSimpleName(), "keyReleased() - value from name: " + definitionJPanel.jTextFieldLayerName.getText());
 			layer.setName(definitionJPanel.jTextFieldLayerName.getText());
+
+			definitionJPanel.jListLayers.updateUI();
 		} else {
-			Log.i(getClass().getSimpleName(), "focusLost(" + event + ")");
+			Log.i(getClass().getSimpleName(), "keyReleased(" + arg0 + ")");
 		}
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+
 	}
 
 }
