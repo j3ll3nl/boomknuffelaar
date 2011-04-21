@@ -30,12 +30,12 @@ public class MainController implements ActionListener {
 		Log.i(this, "initUi()");
 
 		jframe = new ApplicationJFrame(this);
-		
+
 		// Setcontentview is called after initGui because the application needs to build up first.
 		jframe.setContentView(definitioncontroller.initUi());
 
 		// Set the visibility of the jframe to true
-		jframe.setVisible(true);		
+		jframe.setVisible(true);
 	}
 
 	/**

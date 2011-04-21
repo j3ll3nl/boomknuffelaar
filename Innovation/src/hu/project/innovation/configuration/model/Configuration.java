@@ -15,7 +15,7 @@ public class Configuration {
 	private HashMap<String, AbstractRuleType> rules;
 
 	protected Configuration() {
-		Log.i(this, "constructor()");		
+		Log.i(this, "constructor()");
 
 		this.rules = new HashMap<String, AbstractRuleType>();
 		this.addRuleType(new BackCallRule());
@@ -35,7 +35,7 @@ public class Configuration {
 	public void setSetting(String key, String value) {
 		this.settings.put(key, value);
 
-		Log.i(this,"Setting set: \"" + key + "\" -> \"" + value + "\"");
+		Log.i(this, "Setting set: \"" + key + "\" -> \"" + value + "\"");
 	}
 
 	public String getSetting(String key) {

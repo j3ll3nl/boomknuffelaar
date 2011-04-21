@@ -7,14 +7,14 @@ public class AnalyseService {
 	private static AnalyseService instance;
 
 	public AnalyseService() {
-		Log.i(this, "constructor()");		
+		Log.i(this, "constructor()");
 	}
 
 	public void startAnalyse() {
 		Log.i(this, "startAnalyse()");
 	}
 
-	public static AnalyseService getInstance() {		
+	public static AnalyseService getInstance() {
 		if (instance == null) {
 			instance = new AnalyseService();
 		}

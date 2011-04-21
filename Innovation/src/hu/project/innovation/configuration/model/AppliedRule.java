@@ -1,19 +1,19 @@
 package hu.project.innovation.configuration.model;
 
-import java.util.ArrayList;
-
 import hu.project.innovation.Log;
 import hu.project.innovation.XMLable;
+
+import java.util.ArrayList;
 
 public class AppliedRule implements XMLable {
 
 	private AbstractRuleType ruleType;
 	private Layer fromLayer, toLayer;
-	
+
 	private ArrayList<SoftwareUnitDefinition> exceptions;
 
 	public AppliedRule() {
-		Log.i(this,this.getClass().getSimpleName()+"()");
+		Log.i(this, this.getClass().getSimpleName() + "()");
 		this.exceptions = new ArrayList<SoftwareUnitDefinition>();
 	}
 
@@ -48,7 +48,7 @@ public class AppliedRule implements XMLable {
 	public AbstractRuleType getRuleType() {
 		return this.ruleType;
 	}
-	
+
 	public boolean addException(SoftwareUnitDefinition sud) {
 		return this.exceptions.add(sud);
 	}

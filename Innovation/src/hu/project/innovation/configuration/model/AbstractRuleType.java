@@ -18,7 +18,7 @@ public abstract class AbstractRuleType extends AbstractJavaRule implements XMLab
 	private int priority;
 
 	protected AbstractRuleType() {
-		Log.i(this,"AbstractRuleType()");		
+		Log.i(this, "AbstractRuleType()");
 		this.setName(this.getClass().getSimpleName());
 	}
 
@@ -40,13 +40,12 @@ public abstract class AbstractRuleType extends AbstractJavaRule implements XMLab
 	private String formattedName() {
 		return this.getName().replaceAll("(.)([A-Z])", "$1_$2").toLowerCase();
 	}
-	
+
 	/**
-	 * Get the packagename from a <code>SimpleNode</code>. 
+	 * Get the packagename from a <code>SimpleNode</code>.
 	 * 
 	 * @param node
-	 * @return Returns the packagename of the node or an empty <code>String</code>
-	 * if the package could not be retrieved
+	 * @return Returns the packagename of the node or an empty <code>String</code> if the package could not be retrieved
 	 */
 	@SuppressWarnings("unchecked")
 	protected String getPackageName(SimpleNode node) {
@@ -57,13 +56,12 @@ public abstract class AbstractRuleType extends AbstractJavaRule implements XMLab
 			return "";
 		}
 	}
-	
+
 	/**
 	 * Get the classname from a <code>SimpleNode</code>
 	 * 
 	 * @param node
-	 * @return The classname of this node or an empty <code>String</code> if 
-	 * the classname could not be found
+	 * @return The classname of this node or an empty <code>String</code> if the classname could not be found
 	 */
 	protected String getClassName(SimpleNode node) {
 		if (node.getFirstParentOfType(ASTClassOrInterfaceDeclaration.class) == null) {

@@ -5,11 +5,8 @@ import hu.project.innovation.configuration.model.BackCallRule;
 import hu.project.innovation.configuration.model.Layer;
 import hu.project.innovation.configuration.model.SoftwareUnitDefinition;
 
-import java.io.BufferedWriter;
 import java.io.CharArrayWriter;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -26,11 +23,8 @@ import javax.xml.validation.Validator;
 
 import org.w3c.dom.Document;
 import org.xml.sax.Attributes;
-import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
-import org.xml.sax.helpers.XMLReaderFactory;
 
 /**
  * SAMPLE HOW TO USE:
@@ -139,28 +133,28 @@ public class ArchDefXMLReader extends DefaultHandler {
 		return ar;
 
 	}
-	
+
 	public boolean validateXML(File file) throws ParserConfigurationException, SAXException, IOException {
-		
+
 		// parse an XML document into a DOM tree
-	    DocumentBuilder parser = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-	    Document document = parser.parse(file);
+		DocumentBuilder parser = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+		Document document = parser.parse(file);
 
-	    // create a SchemaFactory capable of understanding WXS schemas
-	    SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+		// create a SchemaFactory capable of understanding WXS schemas
+		SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 
-	    // load a WXS schema, represented by a Schema instance
-	    Source schemaFile = new StreamSource(new File("C:\\schema.xml"));
-	    Schema schema = factory.newSchema(schemaFile);
+		// load a WXS schema, represented by a Schema instance
+		Source schemaFile = new StreamSource(new File("C:\\schema.xml"));
+		Schema schema = factory.newSchema(schemaFile);
 
-	    // create a Validator instance, which can be used to validate an instance document
-	    Validator validator = schema.newValidator();
+		// create a Validator instance, which can be used to validate an instance document
+		Validator validator = schema.newValidator();
 
-	    // validate the DOM tree
-	    validator.validate(new DOMSource(document));
+		// validate the DOM tree
+		validator.validate(new DOMSource(document));
 
 		return false;
-		
+
 	}
 
 }

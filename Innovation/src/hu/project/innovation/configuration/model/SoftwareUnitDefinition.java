@@ -20,7 +20,7 @@ public class SoftwareUnitDefinition implements XMLable {
 	}
 
 	public SoftwareUnitDefinition(Layer layer) {
-		Log.i(this,"SoftwareUnitDefinition()");
+		Log.i(this, "SoftwareUnitDefinition()");
 		this.layer = layer;
 	}
 
