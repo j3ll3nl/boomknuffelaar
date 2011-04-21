@@ -1,7 +1,6 @@
 package hu.project.innovation.configuration.view;
 
 import hu.project.innovation.Log;
-import hu.project.innovation.configuration.controller.DefinitionController;
 import hu.project.innovation.configuration.model.Layer;
 
 import java.awt.BorderLayout;
@@ -32,7 +31,6 @@ import javax.swing.table.TableModel;
 public class DefinitionJPanel extends javax.swing.JPanel {
 
 	private static final long serialVersionUID = 7442552399461704491L;
-	private DefinitionController definitioncontroller;
 	private JSplitPane jSplitPane;
 	private JScrollPane jScrollPane1;
 	private JScrollPane jScrollPane2;
@@ -84,12 +82,6 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 		initGUI();
 	}
 
-	public DefinitionJPanel(DefinitionController dc) {
-		super();
-		definitioncontroller = dc;
-		initGUI();
-	}
-
 	public void initGUI() {
 		try {
 			{
@@ -124,7 +116,6 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 									jScrollPane1.setPreferredSize(new java.awt.Dimension(383, 213));
 									{
 										jListLayers = new JList();
-										jListLayers.addListSelectionListener(definitioncontroller);
 										jScrollPane1.setViewportView(jListLayers);
 									}
 								}
@@ -143,25 +134,25 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 									jButtonNewLayer = new JButton();
 									jPanel6.add(jButtonNewLayer);
 									jButtonNewLayer.setText("New layer");
-									jButtonNewLayer.addActionListener(definitioncontroller);
+
 								}
 								{
 									jButtonRemoveLayer = new JButton();
 									jPanel6.add(jButtonRemoveLayer);
 									jButtonRemoveLayer.setText("Remove layer");
-									jButtonRemoveLayer.addActionListener(definitioncontroller);
+
 								}
 								{
 									jButtonMoveLayerUp = new JButton();
 									jPanel6.add(jButtonMoveLayerUp);
 									jButtonMoveLayerUp.setText("Move up");
-									jButtonMoveLayerUp.addActionListener(definitioncontroller);
+
 								}
 								{
 									jButtonMoveLayerDown = new JButton();
 									jPanel6.add(jButtonMoveLayerDown);
 									jButtonMoveLayerDown.setText("Move down");
-									jButtonMoveLayerDown.addActionListener(definitioncontroller);
+
 								}
 							}
 						}
@@ -190,7 +181,7 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 							}
 							{
 								jTextFieldLayerName = new JTextField();
-								jTextFieldLayerName.addFocusListener(definitioncontroller);
+
 								jPanel4.add(jTextFieldLayerName, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 							}
 							{
@@ -325,7 +316,7 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 		if (selected instanceof Layer) {
 			return (Layer) selected;
 		}
-		JOptionPane.showMessageDialog(null, "Please select a layer", "Error", JOptionPane.ERROR_MESSAGE);
+		//JOptionPane.showMessageDialog(null, "Please select a layer", "Error", JOptionPane.ERROR_MESSAGE);
 		return null;
 	}
 

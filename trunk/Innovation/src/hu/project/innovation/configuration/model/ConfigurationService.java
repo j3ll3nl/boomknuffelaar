@@ -91,9 +91,11 @@ public class ConfigurationService implements ConfigurationServiceIF {
 		return this.architecture.getAllLayers();
 	}
 
-	public void removeLayer(Object selectedObject) {
-		// TODO Auto-generated method stub
+	public boolean removeLayer(Layer layer) {
+		if (null == this.architecture)
+			return false;
 
+		return this.architecture.removeLayer(layer);
 	}
 
 	public boolean isRuleApplied(String fromLayerName, String toLayerName, String ruleName) {

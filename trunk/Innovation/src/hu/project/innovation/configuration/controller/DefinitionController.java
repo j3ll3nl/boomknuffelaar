@@ -130,9 +130,14 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		Log.i(getClass().getSimpleName(), "removeLayer()");
 
 		Layer layer = definitionJPanel.getSelectedLayer();
+		if (layer != null) {
+			Log.i(getClass().getSimpleName(), "removeLayer() - selected layer: " + layer.getName());
+			configurationService.removeLayer(layer);
 
-		Log.i(getClass().getSimpleName(), "removeLayer() - selected layer: " + layer.getDescription());
-		configurationService.removeLayer(layer);
+			ArrayList<Layer> layers = configurationService.getLayers();
+			LayersListModel llm = (LayersListModel) definitionJPanel.jListLayers.getModel();
+			llm.setContent(layers);
+		}
 	}
 
 	/**
@@ -182,11 +187,12 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		Log.i(getClass().getSimpleName(), "loadLayerDetail()");
 
 		Layer layer = definitionJPanel.getSelectedLayer();
+		if (layer != null) {
+			Log.i(getClass().getSimpleName(), "loadLayerDetail() - selected layer: " + layer.getName());
 
-		Log.i(getClass().getSimpleName(), "loadLayerDetail() - selected layer: " + layer.getName());
-
-		definitionJPanel.jTextFieldLayerName.setText(layer.getName());
-		definitionJPanel.jTextAreaLayerDescription.setText(layer.getDescription());
+			definitionJPanel.jTextFieldLayerName.setText(layer.getName());
+			definitionJPanel.jTextAreaLayerDescription.setText(layer.getDescription());
+		}
 	}
 
 	public void addComponent() {
