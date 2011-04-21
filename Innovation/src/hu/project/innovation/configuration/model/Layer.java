@@ -19,7 +19,7 @@ public class Layer implements XMLable {
 	}
 
 	public Layer(String name, String description) {
-		Log.i(getClass().getSimpleName(), "constructor(\"" + name + "\", \"" + description + "\")");
+		Log.i(this, "constructor(\"" + name + "\", \"" + description + "\")");
 		this.name = name;
 		this.description = description;
 
