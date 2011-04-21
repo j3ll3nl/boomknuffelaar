@@ -34,4 +34,7 @@ public interface ConfigurationServiceIF {
 	public String getOutputFormat();
 
 	public String architectureToXML();
+	
+	public void loadArchDefFromXML();
+	
 }
