@@ -84,6 +84,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	 * Open a definition. This function will display an filebrowser and pass the result to the config service.
 	 */
 	public void openConfiguration() {
+		
 		Log.i(getClass().getSimpleName(), "openDefintion()");
 
 		// Create a file chooser
@@ -95,11 +96,17 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			File file = fc.getSelectedFile();
 			Log.i(getClass().getSimpleName(), "openDefintion() - opening file: " + file.getName());
-			configurationService.openArchitecture(file);
+			try {
+				configurationService.openArchitecture(file);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
 			
 			Log.i(getClass().getSimpleName(), "openDefintion() - layers worden geupdate");
 			updateLayerList();
 		}
+		
 	}
 
 	/**
