@@ -1,9 +1,8 @@
 package hu.project.innovation.analyse.view;
 
-import hu.project.innovation.analyse.controller.AnalyseController;
 import java.awt.BorderLayout;
-import javax.swing.JPanel;
 
+import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 /**
@@ -15,7 +14,6 @@ public class AnalyseJFrame extends javax.swing.JFrame {
 
 	private static final long serialVersionUID = 404609294738834067L;
 	private JPanel jPanel1;
-	private AnalyseController analyseController;
 
 	{
 		// Set Look & Feel
@@ -26,9 +24,8 @@ public class AnalyseJFrame extends javax.swing.JFrame {
 		}
 	}
 
-	public AnalyseJFrame(AnalyseController ac) {
+	public AnalyseJFrame() {
 		super();
-		analyseController = ac;
 		initUi();
 	}
 

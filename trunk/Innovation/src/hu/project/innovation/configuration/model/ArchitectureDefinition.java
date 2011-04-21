@@ -14,7 +14,7 @@ public class ArchitectureDefinition implements XMLable {
 	private ArrayList<SoftwareUnitDefinition> softwareUnits;
 
 	public ArchitectureDefinition() {
-		Log.i(this,"ArchitectureDefinition()");
+		Log.i(this, "ArchitectureDefinition()");
 		this.softwareUnits = new ArrayList<SoftwareUnitDefinition>();
 		this.layers = new ArrayList<Layer>();
 	}

@@ -2,12 +2,12 @@ package hu.project.innovation.report.model;
 
 import hu.project.innovation.Log;
 
-public class ReportService implements ReportServiceIF{
-	
+public class ReportService implements ReportServiceIF {
+
 	private ReportService() {
-		Log.i(getClass().getSimpleName(), "constructor()");		
+		Log.i(getClass().getSimpleName(), "constructor()");
 	}
-	
+
 	@Override
 	public String getViolationtype(String ruleName, Integer ViolationType) {
 		// TODO Auto-generated method stub

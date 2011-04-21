@@ -14,15 +14,15 @@ public class AnalyseController implements ActionListener {
 
 	public AnalyseController() {
 		Log.i(this, "constructor()");
-		
+
 		analyseService = AnalyseService.getInstance();
-		analyseJFrame = new AnalyseJFrame(this);
+		analyseJFrame = new AnalyseJFrame();
 	}
 
 	public void initUi() {
 		Log.i(this, "initUi()");
 		analyseJFrame.setVisible(true);
-		
+
 	}
 
 	public void startAnalyse() {

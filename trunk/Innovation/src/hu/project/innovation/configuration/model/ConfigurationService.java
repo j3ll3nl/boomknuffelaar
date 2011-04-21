@@ -18,7 +18,7 @@ public class ConfigurationService implements ConfigurationServiceIF {
 	private static ConfigurationService instance;
 
 	private ConfigurationService() {
-		Log.i(this, "constructor()");		
+		Log.i(this, "constructor()");
 
 		this.configuration = new Configuration();
 	}
@@ -29,14 +29,14 @@ public class ConfigurationService implements ConfigurationServiceIF {
 
 	public void openArchitecture(File file) throws Exception {
 
-			XMLReader xr = XMLReaderFactory.createXMLReader(); 
-			ArchDefXMLReader reader = new ArchDefXMLReader(); 
-			//reader.validateXML(file);
-			xr.setContentHandler(reader); 
-			xr.parse( new InputSource(new FileReader( file )) );
-			
-			architecture = reader.getArchitectureDefinition();
-		
+		XMLReader xr = XMLReaderFactory.createXMLReader();
+		ArchDefXMLReader reader = new ArchDefXMLReader();
+		// reader.validateXML(file);
+		xr.setContentHandler(reader);
+		xr.parse(new InputSource(new FileReader(file)));
+
+		architecture = reader.getArchitectureDefinition();
+
 	}
 
 	public boolean newLayer(String name, String description) {
@@ -97,7 +97,7 @@ public class ConfigurationService implements ConfigurationServiceIF {
 		return this.architecture.getLayerNameBySoftwareUnitName(name);
 	}
 
-	public ArrayList<Layer> getLayers() {		
+	public ArrayList<Layer> getLayers() {
 		return this.architecture.getAllLayers();
 	}
 
@@ -118,5 +118,5 @@ public class ConfigurationService implements ConfigurationServiceIF {
 		} else
 			return false;
 	}
-	
+
 }

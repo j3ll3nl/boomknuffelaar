@@ -314,7 +314,7 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 		if (selected instanceof Layer) {
 			return (Layer) selected;
 		}
-		//JOptionPane.showMessageDialog(null, "Please select a layer", "Error", JOptionPane.ERROR_MESSAGE);
+		// JOptionPane.showMessageDialog(null, "Please select a layer", "Error", JOptionPane.ERROR_MESSAGE);
 		return null;
 	}
 }

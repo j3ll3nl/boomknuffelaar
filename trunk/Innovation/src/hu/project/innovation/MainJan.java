@@ -11,7 +11,7 @@ public class MainJan {
 
 		// Configuration
 		ConfigurationServiceIF conf = ConfigurationService.getInstance();
-		
+
 		// Output settings
 		conf.setOutputPath("/a/path/to/the/output/");
 		conf.setOutputFormat(Configuration.OUTPUT_FORMAT_TEXT);
@@ -36,7 +36,7 @@ public class MainJan {
 		conf.newAppliedRule("Task", "UI", "BackCallRule");
 		conf.newAppliedRule("Domain", "Task", "BackCallRule");
 
-//		Log.i(conf,conf.architectureToXML());
+		// Log.i(conf,conf.architectureToXML());
 
 		// Start PMD
 		PMD.main(args);
