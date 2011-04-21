@@ -1,5 +1,7 @@
 package hu.project.innovation.configuration.model;
 
+import java.io.File;
+
 
 public interface ConfigurationServiceIF {
 	
@@ -35,6 +37,6 @@ public interface ConfigurationServiceIF {
 
 	public String architectureToXML();
 	
-	public void loadArchDefFromXML();
+	public void loadArchDefFromXML(File file);
 	
 }
