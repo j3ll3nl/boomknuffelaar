@@ -11,7 +11,7 @@ public class SoftwareUnitRealisation {
 	private ArrayList<SoftwareUnitRealisation> softwareUnits;
 
 	protected SoftwareUnitRealisation() {
-		Logger.getInstance().log(this.getClass().getSimpleName());
+		Logger.log(this);
 	}
 
 	public void addSoftwareUnit(SoftwareUnitRealisation sur) {
