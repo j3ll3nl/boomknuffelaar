@@ -1,6 +1,6 @@
 package hu.project.innovation.configuration.model;
 
-import hu.project.innovation.Log;
+import hu.project.innovation.Logger;
 import hu.project.innovation.XMLable;
 
 import java.util.List;
@@ -18,7 +18,7 @@ public abstract class AbstractRuleType extends AbstractJavaRule implements XMLab
 	private int priority;
 
 	protected AbstractRuleType() {
-		Log.i(getClass().getSimpleName(), "constructor()");		
+		Logger.log(this);		
 		this.setName(this.getClass().getSimpleName());
 	}
 
@@ -32,9 +32,13 @@ public abstract class AbstractRuleType extends AbstractJavaRule implements XMLab
 		return name;
 	}
 
+	/**
+	 * The name formatted for xml. It changes AnExampleClass to an_example_class
+	 * 
+	 * @return
+	 */
 	private String formattedName() {
-		String formattedName = "sjaak";
-		return formattedName.replaceAll("(.)([A-Z])", "$1_$2").toLowerCase();
+		return this.getName().replaceAll("(.)([A-Z])", "$1_$2").toLowerCase();
 	}
 	
 	/**

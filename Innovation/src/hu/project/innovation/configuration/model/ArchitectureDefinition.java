@@ -14,23 +14,20 @@ public class ArchitectureDefinition implements XMLable {
 	private ArrayList<SoftwareUnitDefinition> softwareUnits;
 
 	public ArchitectureDefinition() {
-
+		Logger.log(this);
 		this.softwareUnits = new ArrayList<SoftwareUnitDefinition>();
-
+		this.layers = new ArrayList<Layer>();
 	}
 
 	public ArchitectureDefinition(String name) {
-		Logger.getInstance().log(this.getClass().getSimpleName());
+		this();
 		this.name = name;
 		this.description = "unknown";
-
-		this.layers = new ArrayList<Layer>();
-		this.softwareUnits = new ArrayList<SoftwareUnitDefinition>();
 	}
 
 	public ArchitectureDefinition(String name, String desc) {
 		this(name);
-		description = desc;
+		this.description = desc;
 	}
 
 	public String getName() {
