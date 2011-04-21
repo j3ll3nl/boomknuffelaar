@@ -1,6 +1,5 @@
 package hu.project.innovation;
 
-import hu.project.innovation.analyse.model.AnalyseService;
 import hu.project.innovation.configuration.model.Configuration;
 import hu.project.innovation.configuration.model.ConfigurationService;
 import hu.project.innovation.configuration.model.ConfigurationServiceIF;
@@ -10,39 +9,36 @@ public class MainJan {
 
 	public static void main(String[] args) {
 
-		// Configuration test
-
+		// Configuration
 		ConfigurationServiceIF conf = ConfigurationService.getInstance();
-		conf.setRuleStatus("backcall", true);
+		
+		// Output settings
 		conf.setOutputPath("/a/path/to/the/output/");
 		conf.setOutputFormat(Configuration.OUTPUT_FORMAT_TEXT);
 
-		// Definition test
-
-		conf.newArchitecture("Architecture", "A first test");
+		// Architecture
+		conf.newArchitecture("Test Architecture", "A first test");
 
 		// Layers
-		conf.newLayer("UI-Layer", "Presentation logic");
-		conf.newLayer("Domain-Layer", "Domain logic");
-		conf.newLayer("Task-Layer", "Domain logic");
+		conf.newLayer("UI", "Presentation logic");
+		conf.newLayer("Domain", "Domain logic");
+		conf.newLayer("Task", "Task specific logic");
 
-		// SU
-		conf.newSoftwareUnit("UI-Layer", "hu.project.innovation.configuration.view", "package");
-		conf.newSoftwareUnit("UI-Layer", "hu.project.innovation.report.view", "package");
-		conf.newSoftwareUnit("Task-Layer", "hu.project.innovation.configuration.controller", "package");
-		conf.newSoftwareUnit("Domain-Layer", "hu.project.innovation.configuration.model", "package");
+		// Software units
+		conf.newSoftwareUnit("UI", "hu.project.innovation.configuration.view", "package");
+		conf.newSoftwareUnit("UI", "hu.project.innovation.report.view", "package");
+		conf.newSoftwareUnit("Task", "hu.project.innovation.configuration.controller", "package");
+		conf.newSoftwareUnit("Domain", "hu.project.innovation.configuration.model", "package");
+		conf.newSoftwareUnit("Domain", "hu.project.report.model", "package");
 
-		// Rules
-		conf.newAppliedRule("UI-Layer", "Domain-Layer", "SkipLayerRule");
-		conf.newAppliedRule("Task-Layer", "UI-Layer", "BackCallRule");
-		conf.newAppliedRule("Domain-Layer", "Task-Layer", "BackCallRule");
+		// Applied rules
+		conf.newAppliedRule("UI", "Domain", "SkipLayerRule");
+		conf.newAppliedRule("Task", "UI", "BackCallRule");
+		conf.newAppliedRule("Domain", "Task", "BackCallRule");
 
 //		Log.i(conf,conf.architectureToXML());
-		// Analyse test
 
-//		AnalyseService analysis = AnalyseService.getInstance();
-//		analysis.startAnalyse();
-
+		// Start PMD
 		PMD.main(args);
 
 	}
