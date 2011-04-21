@@ -108,4 +108,9 @@ public class ConfigurationService implements ConfigurationServiceIF {
 		} else
 			return false;
 	}
+	
+	public void loadArchDefFromXML() {
+		
+	}
+	
 }
