@@ -1,6 +1,5 @@
 package hu.project.innovation.configuration.view;
 
-import hu.project.innovation.Log;
 import hu.project.innovation.configuration.model.Layer;
 
 import java.awt.BorderLayout;
@@ -13,7 +12,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
