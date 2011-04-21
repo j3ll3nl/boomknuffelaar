@@ -1,11 +1,12 @@
 package hu.project.innovation.configuration.model;
 
+import hu.project.innovation.Logger;
 import net.sourceforge.pmd.ast.ASTClassOrInterfaceType;
 
 public class BackCallRule extends AbstractRuleType {
 	
 	protected final String[] notCheckedPackages = new String[]{
-			"java","javax","sun"
+			"java","javax","sun","org.xml"
 	};
 
 	/**
@@ -23,13 +24,19 @@ public class BackCallRule extends AbstractRuleType {
 			// Only check certain packages
 			if (isPackageChecked(calledPackageName)) {
 				
+				Logger.log(calledPackageName);
+				
 				// Get the fromLayer using the current checked class
 				String fromLayer = ConfigurationService.getInstance()
 					.getLayerNameBySoftwareUnitName(this.getPackageName(node));
+				
+				Logger.log(this.getPackageName(node));
 
 				// Get the toLayer using the package name from the called class
 				String toLayer = ConfigurationService.getInstance()
 					.getLayerNameBySoftwareUnitName(calledPackageName);
+				
+				Logger.log(this.getClass().getSimpleName());
 				
 				// Check if the rule is applied for these two layers and this rule
 				if (ConfigurationService.getInstance().isRuleApplied(
