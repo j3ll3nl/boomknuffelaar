@@ -1,6 +1,6 @@
 package hu.project.innovation.configuration.model;
 
-import hu.project.innovation.Logger;
+import hu.project.innovation.Log;
 import hu.project.innovation.XMLable;
 
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ public class SoftwareUnitDefinition implements XMLable {
 	}
 
 	public SoftwareUnitDefinition(Layer layer) {
-		Logger.log(this);
+		Log.i(this,"SoftwareUnitDefinition()");
 		this.layer = layer;
 	}
 

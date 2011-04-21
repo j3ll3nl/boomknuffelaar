@@ -1,6 +1,6 @@
 package hu.project.innovation.configuration.model;
 
-import hu.project.innovation.Logger;
+import hu.project.innovation.Log;
 import hu.project.innovation.XMLable;
 
 import java.util.List;
@@ -18,7 +18,7 @@ public abstract class AbstractRuleType extends AbstractJavaRule implements XMLab
 	private int priority;
 
 	protected AbstractRuleType() {
-		Logger.log(this);		
+		Log.i(this,"AbstractRuleType()");		
 		this.setName(this.getClass().getSimpleName());
 	}
 

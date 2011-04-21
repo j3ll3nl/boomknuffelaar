@@ -1,6 +1,6 @@
 package hu.project.innovation.configuration.model;
 
-import hu.project.innovation.Logger;
+import hu.project.innovation.Log;
 
 import java.util.ArrayList;
 
@@ -11,7 +11,7 @@ public class SoftwareUnitRealisation {
 	private ArrayList<SoftwareUnitRealisation> softwareUnits;
 
 	protected SoftwareUnitRealisation() {
-		Logger.log(this);
+		Log.i(this,"SoftwareUnitRealisation()");
 	}
 
 	public void addSoftwareUnit(SoftwareUnitRealisation sur) {

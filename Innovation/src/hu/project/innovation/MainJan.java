@@ -17,7 +17,7 @@ public class MainJan {
 		conf.setOutputPath("/a/path/to/the/output/");
 		conf.setOutputFormat(Configuration.OUTPUT_FORMAT_TEXT);
 
-		Logger.log(conf.getOutputPath());
+		Log.i(conf,conf.getOutputPath());
 
 		// Definition test
 
@@ -39,7 +39,7 @@ public class MainJan {
 		conf.newAppliedRule("UI-Layer", "Task-Layer", "BackCallRule");
 		conf.newAppliedRule("Task-Layer", "Domain-Layer", "BackCallRule");
 
-		Logger.log(conf.architectureToXML());
+		Log.i(conf,conf.architectureToXML());
 		// Analyse test
 
 		AnalyseService analysis = AnalyseService.getInstance();
