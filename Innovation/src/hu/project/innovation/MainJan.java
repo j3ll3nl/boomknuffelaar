@@ -17,8 +17,6 @@ public class MainJan {
 		conf.setOutputPath("/a/path/to/the/output/");
 		conf.setOutputFormat(Configuration.OUTPUT_FORMAT_TEXT);
 
-		Log.i(conf,conf.getOutputPath());
-
 		// Definition test
 
 		conf.newArchitecture("Architecture", "A first test");
@@ -36,14 +34,14 @@ public class MainJan {
 
 		// Rules
 		conf.newAppliedRule("UI-Layer", "Domain-Layer", "SkipLayerRule");
-		conf.newAppliedRule("UI-Layer", "Task-Layer", "BackCallRule");
-		conf.newAppliedRule("Task-Layer", "Domain-Layer", "BackCallRule");
+		conf.newAppliedRule("Task-Layer", "UI-Layer", "BackCallRule");
+		conf.newAppliedRule("Domain-Layer", "Task-Layer", "BackCallRule");
 
-		Log.i(conf,conf.architectureToXML());
+//		Log.i(conf,conf.architectureToXML());
 		// Analyse test
 
-		AnalyseService analysis = AnalyseService.getInstance();
-		analysis.startAnalyse();
+//		AnalyseService analysis = AnalyseService.getInstance();
+//		analysis.startAnalyse();
 
 		PMD.main(args);
 
