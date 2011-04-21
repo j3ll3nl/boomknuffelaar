@@ -46,10 +46,6 @@ public class ConfigurationService implements ConfigurationServiceIF {
 		return this.architecture.addLayer(new Layer(name, description));
 	}
 
-	public void setRuleStatus(String ruleName, boolean status) {
-		// this.configuration.getRuleSet().setRuleStatus(ruleName, status);
-	}
-
 	public void setOutputPath(String path) {
 		this.configuration.setSetting(Configuration.OUTPUT_PATH, path);
 	}

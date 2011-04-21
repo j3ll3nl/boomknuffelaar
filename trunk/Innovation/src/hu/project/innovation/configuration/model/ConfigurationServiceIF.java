@@ -23,10 +23,6 @@ public interface ConfigurationServiceIF {
 			String toLayerName, 
 			String ruleName);
 
-	public void setRuleStatus(
-			String ruleName, 
-			boolean status);
-
 	public void setOutputPath(String path);
 
 	public String getOutputPath();
