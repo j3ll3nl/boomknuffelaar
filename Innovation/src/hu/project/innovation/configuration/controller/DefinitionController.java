@@ -109,6 +109,9 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 			File file = fc.getSelectedFile();
 			Log.i(getClass().getSimpleName(), "openDefintion() - opening file: " + file.getName());
 			configurationService.openArchitecture(file);
+			
+			Log.i(getClass().getSimpleName(), "openDefintion() - layers worden geupdate");
+			updateLayerList();
 		}
 	}
 
