@@ -1,57 +1,70 @@
 package hu.project.innovation.configuration.model;
 
-import net.sourceforge.pmd.ast.ASTClassOrInterfaceDeclaration;
 import net.sourceforge.pmd.ast.ASTClassOrInterfaceType;
 
 public class BackCallRule extends AbstractRuleType {
+	
+	private String[] notCheckedPackages = new String[]{
+			"java","javax","sun"
+	};
 
 	@Override
 	public void checkViolation() {
 
 	}
 
+	/**
+	 * Use class and interface types to find a BackRule violation
+	 * 
+	 * @see hu.project.innovation.configuration.model.ConfigurationService
+	 * @see net.sourceforge.pmd.AbstractJavaRule#visit(net.sourceforge.pmd.ast.ASTClassOrInterfaceType, java.lang.Object)
+	 */
 	public Object visit(ASTClassOrInterfaceType node, Object data) {
-		String packageName = this.getPackageName(node);
-
-		String className = "";
-		if (node.getFirstParentOfType(ASTClassOrInterfaceDeclaration.class) == null) {
-			className = "";
-		} else {
-			className = node.getScope().getEnclosingClassScope().getClassName() == null ? "" : node.getScope().getEnclosingClassScope().getClassName();
-		}
+		// Only check if we have a type
 		if (node.getType() != null) {
+			// Get the called package name
+			String calledPackageName = node.getType().getPackage().getName();
 
-			String[] typePieces = node.getType().toString().split(" ");
-			String type = typePieces[0];
-			String name = typePieces[1];
+			// Only check certain packages
+			if (isPackageChecked(calledPackageName)) {
+				
+				// Get the fromLayer using the current checked class
+				String fromLayer = ConfigurationService.getInstance()
+					.getLayerNameBySoftwareUnitName(this.getPackageName(node));
 
-			if (!name.startsWith("java")) {
-				String[] namePieces = name.split("(.)[A-Z]");
-				String packageCalledName = namePieces[0];
-
-				System.out.println();
-				System.out.println(className + " calls:");
-				System.out.println(name);
-
-				String fromLayer = ConfigurationService.getInstance().getLayerNameBySoftwareUnitName(packageName);
-
-				String toLayer = ConfigurationService.getInstance().getLayerNameBySoftwareUnitName(packageCalledName);
-
-				System.out.println(className + " in layer " + fromLayer);
-
-				System.out.println(name + " in layer " + toLayer);
-				if (ConfigurationService.getInstance().isRuleApplied(fromLayer, toLayer, this.getClass().getSimpleName())) {
+				// Get the toLayer using the package name from the called class
+				String toLayer = ConfigurationService.getInstance()
+					.getLayerNameBySoftwareUnitName(calledPackageName);
+				
+				// Check if the rule is applied for these two layers and this rule
+				if (ConfigurationService.getInstance().isRuleApplied(
+						fromLayer, 
+						toLayer, 
+						this.getClass().getSimpleName())) 
+				{
+					// Add a violation if the rule is applied
 					this.addViolation(data, node);
 				}
 			}
-
-			// ConfigurationService.getInstance()
-			// .getLayerNameBySoftwareUnitName(packageName);
-
-			// ConfigurationService.getInstance()
-			// .getLayerNameBySoftwareUnitName(packageName);
 		}
-
+		// Run the super function
 		return super.visit(node, data);
+	}
+	
+	/**
+	 * Check if a package needs to be checked. We have defined a number
+	 * of packages wich do not need checking. These include java and javax
+	 * packages for example.
+	 * 
+	 * @param packageName
+	 * @return
+	 */
+	private boolean isPackageChecked(String packageName) {
+		for (String packageStart : this.notCheckedPackages) {
+			if(packageName.startsWith(packageStart)) {
+				return false;
+			}
+		}
+		return true;
 	}
 }
