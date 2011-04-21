@@ -31,7 +31,7 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 
 	private static final long serialVersionUID = 6858870868564931134L;
 	private JMenuBar jMenuBar;
-	private JLabel jLabelStatus;
+	public JLabel jLabelStatus;
 	private JToolBar jToolBar;
 	public JPanel jPanelContentView;
 	public JMenuItem jMenuItemAbout;
@@ -67,11 +67,8 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 				jToolBar = new JToolBar();
 				getContentPane().add(jToolBar, BorderLayout.SOUTH);
 				jToolBar.setEnabled(false);
-				{
-					jLabelStatus = new JLabel();
-					jToolBar.add(jLabelStatus);
-					jLabelStatus.setText("No status");
-				}
+				jToolBar.setBorderPainted(false);
+				jToolBar.add(StatusTask.getInstance(""));
 			}
 			{
 				jMenuBar = new JMenuBar();
