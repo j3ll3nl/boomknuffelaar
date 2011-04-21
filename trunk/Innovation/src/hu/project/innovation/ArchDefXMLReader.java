@@ -144,25 +144,21 @@ public class ArchDefXMLReader extends DefaultHandler {
 		
 		// parse an XML document into a DOM tree
 	    DocumentBuilder parser = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-	    Document document = parser.parse(new File("instance.xml"));
+	    Document document = parser.parse(file);
 
 	    // create a SchemaFactory capable of understanding WXS schemas
 	    SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 
 	    // load a WXS schema, represented by a Schema instance
-	    Source schemaFile = new StreamSource(new File("mySchema.xsd"));
+	    Source schemaFile = new StreamSource(new File("C:\\schema.xml"));
 	    Schema schema = factory.newSchema(schemaFile);
 
 	    // create a Validator instance, which can be used to validate an instance document
 	    Validator validator = schema.newValidator();
 
 	    // validate the DOM tree
-	    try {
-	        validator.validate(new DOMSource(document));
-	    } catch (SAXException e) {
-	        // instance document is invalid!
-	    }
-		
+	    validator.validate(new DOMSource(document));
+
 		return false;
 		
 	}
