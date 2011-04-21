@@ -39,7 +39,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	 */
 	public JPanel initUi() {
 		Log.i(getClass().getSimpleName(), "initUi()");
-
+				
 		// Create an empty model
 		LayersListModel listmodel = new LayersListModel();
 		definitionJPanel.jListLayers.setModel(listmodel);
@@ -52,7 +52,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 
 		// Update the layers list with the following method
 		updateLayerList();
-
+		
 		// Add actionlisteners etc.
 		definitionJPanel.jListLayers.addListSelectionListener(this);
 		definitionJPanel.jButtonNewLayer.addActionListener(this);
@@ -61,6 +61,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		definitionJPanel.jButtonMoveLayerDown.addActionListener(this);
 		definitionJPanel.jTextFieldLayerName.addKeyListener(this);
 
+		
 		return definitionJPanel;
 	}
 
@@ -76,20 +77,6 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 			configurationService.newArchitecture(response, "");
 
 			updateLayerList();
-		}
-	}
-
-	public void updateLayerList() {
-		ArrayList<Layer> layers = configurationService.getLayers();
-
-		LayersListModel llm = (LayersListModel) definitionJPanel.jListLayers.getModel();
-		llm.removeAllElements();
-
-		if (layers != null) {
-			int id = 0;
-			for (Layer layer : layers) {
-				llm.add(id++, layer);
-			}
 		}
 	}
 
@@ -215,6 +202,20 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	public void addRuleToLayer() {
 		Log.i(getClass().getSimpleName(), "addRuleException()");
 		// TODO Auto-generated method stub
+	}
+
+	public void updateLayerList() {
+		ArrayList<Layer> layers = configurationService.getLayers();
+	
+		LayersListModel llm = (LayersListModel) definitionJPanel.jListLayers.getModel();
+		llm.removeAllElements();
+	
+		if (layers != null) {
+			int id = 0;
+			for (Layer layer : layers) {
+				llm.add(id++, layer);
+			}			
+		}
 	}
 
 	@Override
