@@ -9,6 +9,7 @@ public class Configuration {
 	public static final String OUTPUT_PATH = "output_path";
 	public static final String OUTPUT_FORMAT = "output_format";
 	public static final String OUTPUT_FORMAT_TEXT = "text";
+	public static final String OUTPUT_FORMAT_XML = "xml";
 
 	private HashMap<String, String> settings;
 	private HashMap<String, AbstractRuleType> rules;
@@ -18,6 +19,7 @@ public class Configuration {
 
 		this.rules = new HashMap<String, AbstractRuleType>();
 		this.addRuleType(new BackCallRule());
+		this.addRuleType(new SkipLayerRule());
 
 		this.settings = new HashMap<String, String>();
 	}
