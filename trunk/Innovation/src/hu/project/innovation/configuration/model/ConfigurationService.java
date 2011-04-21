@@ -87,10 +87,8 @@ public class ConfigurationService implements ConfigurationServiceIF {
 		return this.architecture.getLayerNameBySoftwareUnitName(name);
 	}
 
-	public ArrayList<Layer> getLayers() {
-		// TODO Auto-generated method stub
-		return null;
-
+	public ArrayList<Layer> getLayers() {		
+		return this.architecture.getAllLayers();
 	}
 
 	public void removeLayer(Object selectedObject) {
