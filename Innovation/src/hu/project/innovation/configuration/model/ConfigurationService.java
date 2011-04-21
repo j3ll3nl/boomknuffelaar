@@ -27,22 +27,15 @@ public class ConfigurationService implements ConfigurationServiceIF {
 		this.architecture = new ArchitectureDefinition(name, description);
 	}
 
-	public void openArchitecture(File file) {
+	public void openArchitecture(File file) throws Exception {
 
-		try {
-			
 			XMLReader xr = XMLReaderFactory.createXMLReader(); 
 			ArchDefXMLReader reader = new ArchDefXMLReader(); 
+			reader.validateXML(file);
 			xr.setContentHandler(reader); 
 			xr.parse( new InputSource(new FileReader( file )) );
 			
 			architecture = reader.getArchitectureDefinition();
-			
-		} catch (Exception e) {
-
-			e.printStackTrace();
-
-		}
 		
 	}
 
