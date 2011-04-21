@@ -78,6 +78,11 @@ public class ArchitectureDefinition implements XMLable {
 		return null;
 	}
 
+	public boolean removeLayer(Layer layer) {
+		layers.remove(layer);
+		return true;
+	}
+
 	public Layer getLayer(String name) {
 
 		for (Layer layer : layers) {
