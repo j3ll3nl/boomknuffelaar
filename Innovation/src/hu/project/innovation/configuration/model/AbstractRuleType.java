@@ -6,6 +6,7 @@ import hu.project.innovation.XMLable;
 import java.util.List;
 
 import net.sourceforge.pmd.AbstractJavaRule;
+import net.sourceforge.pmd.ast.ASTClassOrInterfaceDeclaration;
 import net.sourceforge.pmd.ast.ASTPackageDeclaration;
 import net.sourceforge.pmd.ast.SimpleNode;
 
@@ -35,18 +36,37 @@ public abstract class AbstractRuleType extends AbstractJavaRule implements XMLab
 		String formattedName = "sjaak";
 		return formattedName.replaceAll("(.)([A-Z])", "$1_$2").toLowerCase();
 	}
-
+	
+	/**
+	 * Get the packagename from a <code>SimpleNode</code>. 
+	 * 
+	 * @param node
+	 * @return Returns the packagename of the node or an empty <code>String</code>
+	 * if the package could not be retrieved
+	 */
 	@SuppressWarnings("unchecked")
 	protected String getPackageName(SimpleNode node) {
 		try {
 			List<ASTPackageDeclaration> packages = node.findChildNodesWithXPath("//PackageDeclaration");
-			String packageName = packages.get(0).getPackageNameImage();
-
-			return packageName;
+			return packages.get(0).getPackageNameImage();
 		} catch (JaxenException e) {
-			e.printStackTrace();
+			return "";
 		}
-		return null;
+	}
+	
+	/**
+	 * Get the classname from a <code>SimpleNode</code>
+	 * 
+	 * @param node
+	 * @return The classname of this node or an empty <code>String</code> if 
+	 * the classname could not be found
+	 */
+	protected String getClassName(SimpleNode node) {
+		if (node.getFirstParentOfType(ASTClassOrInterfaceDeclaration.class) == null) {
+			return "";
+		} else {
+			return node.getScope().getEnclosingClassScope().getClassName() == null ? "" : node.getScope().getEnclosingClassScope().getClassName();
+		}
 	}
 
 	public abstract void checkViolation();
