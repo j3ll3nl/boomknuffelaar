@@ -42,6 +42,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 
 		// Create an empty model
 		LayersListModel listmodel = new LayersListModel();
+		definitionJPanel.jListLayers.setModel(listmodel);
 
 		// TODO: Verwijderen van deze code. Dit is alleen nodig voor het testen.
 		configurationService.newArchitecture("Test", "");
@@ -49,11 +50,8 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		configurationService.newLayer("Controller", "Dit is de controller description");
 		configurationService.newLayer("Model", "Dit is de model description");
 
-		ArrayList<Layer> layers = configurationService.getLayers();
-		listmodel.setContent(layers);
-
-		// Set the model for the layer
-		definitionJPanel.jListLayers.setModel(listmodel);
+		// Update the layers list with the following method
+		updateLayerList();
 
 		// Add actionlisteners etc.
 		definitionJPanel.jListLayers.addListSelectionListener(this);
@@ -76,7 +74,22 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		if (response != null) {
 			Log.i(getClass().getSimpleName(), "newDefinition() - value: " + response);
 			configurationService.newArchitecture(response, "");
-			definitionJPanel.clearJListLayers();
+
+			updateLayerList();
+		}
+	}
+
+	public void updateLayerList() {
+		ArrayList<Layer> layers = configurationService.getLayers();
+
+		LayersListModel llm = (LayersListModel) definitionJPanel.jListLayers.getModel();
+		llm.removeAllElements();
+
+		if (layers != null) {
+			int id = 0;
+			for (Layer layer : layers) {
+				llm.add(id++, layer);
+			}
 		}
 	}
 
@@ -117,9 +130,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 			Log.i(getClass().getSimpleName(), "newLayer() - value: " + response);
 			configurationService.newLayer(response, "");
 
-			ArrayList<Layer> layers = configurationService.getLayers();
-			LayersListModel llm = (LayersListModel) definitionJPanel.jListLayers.getModel();
-			llm.setContent(layers);
+			updateLayerList();
 		}
 	}
 
@@ -134,9 +145,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 			Log.i(getClass().getSimpleName(), "removeLayer() - selected layer: " + layer.getName());
 			configurationService.removeLayer(layer);
 
-			ArrayList<Layer> layers = configurationService.getLayers();
-			LayersListModel llm = (LayersListModel) definitionJPanel.jListLayers.getModel();
-			llm.setContent(layers);
+			updateLayerList();
 		}
 	}
 

@@ -319,16 +319,4 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 		//JOptionPane.showMessageDialog(null, "Please select a layer", "Error", JOptionPane.ERROR_MESSAGE);
 		return null;
 	}
-
-	/**
-	 * Use this function to clear the user interface
-	 */
-	public void clearJListLayers() {
-		Log.i(getClass().getSimpleName(), "clearUI()");
-		LayersListModel listmodel = new LayersListModel();
-
-		// Set the model for the layer
-		jListLayers.setModel(listmodel);
-	}
-
 }
