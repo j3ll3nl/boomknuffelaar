@@ -127,7 +127,7 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 				}
 			}
 			pack();
-			setSize(800, 600);
+			setSize(1000, 600);
 		} catch (Exception e) {
 			// add your error handling code here
 			e.printStackTrace();
