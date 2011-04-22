@@ -1,7 +1,7 @@
 package hu.project.innovation.configuration.model;
 
-import hu.project.innovation.Log;
-import hu.project.innovation.XMLable;
+import hu.project.innovation.utils.Log;
+import hu.project.innovation.utils.XMLable;
 
 import java.util.List;
 

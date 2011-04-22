@@ -1,6 +1,6 @@
 package hu.project.innovation.configuration.model;
 
-import hu.project.innovation.Log;
+import hu.project.innovation.utils.Log;
 
 import java.util.ArrayList;
 

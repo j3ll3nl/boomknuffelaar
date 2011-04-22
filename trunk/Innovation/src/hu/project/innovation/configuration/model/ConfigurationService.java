@@ -1,7 +1,7 @@
 package hu.project.innovation.configuration.model;
 
-import hu.project.innovation.ArchDefXMLReader;
-import hu.project.innovation.Log;
+import hu.project.innovation.utils.ArchDefXMLReader;
+import hu.project.innovation.utils.Log;
 
 import java.io.File;
 import java.io.FileReader;

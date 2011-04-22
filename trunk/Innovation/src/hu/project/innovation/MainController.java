@@ -2,6 +2,7 @@ package hu.project.innovation;
 
 import hu.project.innovation.analyse.controller.AnalyseController;
 import hu.project.innovation.configuration.controller.DefinitionController;
+import hu.project.innovation.utils.Log;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

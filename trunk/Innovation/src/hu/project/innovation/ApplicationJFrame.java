@@ -1,6 +1,7 @@
 package hu.project.innovation;
 
 import hu.project.innovation.configuration.view.DefinitionJPanel;
+import hu.project.innovation.configuration.view.StatusTask;
 
 import java.awt.BorderLayout;
 
