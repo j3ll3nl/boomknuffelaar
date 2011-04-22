@@ -3,7 +3,7 @@ package hu.project.innovation.configuration.model;
 
 public interface ConfigurationServiceIF {
 
-	public void newArchitecture(String name, String description);
+	public void newConfiguration(String name, String description);
 
 	public boolean newLayer(String name, String description);
 

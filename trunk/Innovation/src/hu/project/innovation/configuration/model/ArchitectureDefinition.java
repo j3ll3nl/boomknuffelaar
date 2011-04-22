@@ -114,4 +114,8 @@ public class ArchitectureDefinition implements XMLable {
 		return xml;
 	}
 
+	public ArrayList<SoftwareUnitDefinition> getAllComponents() {
+		return softwareUnits;
+	}
+
 }

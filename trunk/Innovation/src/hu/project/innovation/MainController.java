@@ -29,12 +29,19 @@ public class MainController implements ActionListener {
 	public void initUi() {
 		Log.i(this, "initUi()");
 
-		jframe = new ApplicationJFrame(this);
+		// Create a new instance of the jframe
+		jframe = new ApplicationJFrame();
 
-		// Setcontentview is called after initGui because the application needs to build up first.
+		// Set actionlisteners for the menu
+		jframe.jMenuItemNewArchitecture.addActionListener(this);
+		jframe.jMenuItemOpenArchitecture.addActionListener(this);
+		jframe.jMenuItemSaveArchitecture.addActionListener(this);
+		jframe.jMenuItemStartAnalyse.addActionListener(this);
+				
+		// This method sets the definition jpanel in the jframe.
 		jframe.setContentView(definitioncontroller.initUi());
 
-		// Set the visibility of the jframe to true
+		// Set the visibility of the jframe to true so the jframe is now visible
 		jframe.setVisible(true);
 	}
 
@@ -85,7 +92,7 @@ public class MainController implements ActionListener {
 			Log.i(this, "actionPerformed() - start analyse");
 			analysecontroller.initUi();
 		} else {
-			Log.i(this, "actionPerformed(" + action + ")");
+			Log.i(this, "actionPerformed(" + action + ") - unknown button event");
 		}
 	}
 }

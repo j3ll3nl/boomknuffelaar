@@ -1,6 +1,7 @@
 package hu.project.innovation.configuration.view;
 
 import hu.project.innovation.configuration.model.Layer;
+import hu.project.innovation.configuration.model.SoftwareUnitDefinition;
 
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
@@ -9,6 +10,7 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -34,8 +36,8 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 	private JScrollPane jScrollPane2;
 	private JScrollPane jScrollPane3;
 	private JScrollPane jScrollPane4;
-	private JTable jTable1;
-	private JTable jTable2;
+	public JTable jTable1;
+	public JTable jTable2;
 	public JList jListLayers;
 	private JLabel jLabel2;
 	private JLabel jLabel1;
@@ -114,6 +116,7 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 									jScrollPane1.setPreferredSize(new java.awt.Dimension(383, 213));
 									{
 										jListLayers = new JList();
+										jListLayers.setModel(new DefaultListModel());
 										jScrollPane1.setViewportView(jListLayers);
 									}
 								}
@@ -218,11 +221,8 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 									jPanel7.add(jScrollPane3, BorderLayout.CENTER);
 									jScrollPane3.setPreferredSize(new java.awt.Dimension(227, 249));
 									{
-										TableModel jTable1Model = new DefaultTableModel(new String[][] { { "One", "Two" }, { "Three", "Four" } }, new String[] { "Column 1", "Column 2" });
-										jTable1 = new JTable();
+										jTable1 = new ComponentTable();
 										jScrollPane3.setViewportView(jTable1);
-										jTable1.setModel(jTable1Model);
-										jTable1.setFillsViewportHeight(true);
 									}
 								}
 								{
@@ -314,7 +314,18 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 		if (selected instanceof Layer) {
 			return (Layer) selected;
 		}
-		// JOptionPane.showMessageDialog(null, "Please select a layer", "Error", JOptionPane.ERROR_MESSAGE);
+		return null;
+	}
+
+	public SoftwareUnitDefinition getSelectedComponent() {
+		int selectedRow = jTable1.getSelectedRow();
+		if (selectedRow >= 0) {
+			AbstractTableModel c = (AbstractTableModel) jTable1.getModel();
+			Object selected = c.getValueAt(selectedRow, 0);
+			if (selected instanceof SoftwareUnitDefinition) {
+				return (SoftwareUnitDefinition) selected;
+			}
+		}
 		return null;
 	}
 }
