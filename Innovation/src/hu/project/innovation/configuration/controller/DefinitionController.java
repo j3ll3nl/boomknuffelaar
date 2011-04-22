@@ -1,13 +1,13 @@
 package hu.project.innovation.configuration.controller;
 
-import hu.project.innovation.Log;
-import hu.project.innovation.StatusTask;
 import hu.project.innovation.configuration.model.ConfigurationService;
 import hu.project.innovation.configuration.model.Layer;
 import hu.project.innovation.configuration.model.SoftwareUnitDefinition;
 import hu.project.innovation.configuration.view.AbstractTableModel;
 import hu.project.innovation.configuration.view.DefinitionJPanel;
+import hu.project.innovation.configuration.view.StatusTask;
 import hu.project.innovation.configuration.view.XmlFileFilter;
+import hu.project.innovation.utils.Log;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;

@@ -1,6 +1,6 @@
 package hu.project.innovation.analyse.model;
 
-import hu.project.innovation.Log;
+import hu.project.innovation.utils.Log;
 
 public class AnalyseService {
 

@@ -1,4 +1,6 @@
-package hu.project.innovation;
+package hu.project.innovation.configuration.view;
+
+import hu.project.innovation.utils.Log;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;

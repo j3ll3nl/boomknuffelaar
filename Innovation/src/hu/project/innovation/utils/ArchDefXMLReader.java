@@ -1,4 +1,4 @@
-package hu.project.innovation;
+package hu.project.innovation.utils;
 
 import hu.project.innovation.configuration.model.ArchitectureDefinition;
 import hu.project.innovation.configuration.model.BackCallRule;

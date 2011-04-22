@@ -1,4 +1,4 @@
-package hu.project.innovation;
+package hu.project.innovation.utils;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
