@@ -26,7 +26,6 @@ public class XmlFileFilter extends FileFilter {
 
 	@Override
 	public String getDescription() {
-
 		return "*.xml";
 	}
 

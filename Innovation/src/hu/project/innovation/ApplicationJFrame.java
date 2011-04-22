@@ -20,15 +20,6 @@ import javax.swing.WindowConstants;
  */
 public class ApplicationJFrame extends javax.swing.JFrame {
 
-	{
-		// Set Look & Feel
-		try {
-			javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	private static final long serialVersionUID = 6858870868564931134L;
 	private JMenuBar jMenuBar;
 	public JLabel jLabelStatus;
@@ -43,11 +34,18 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 	private JMenu jMenu3;
 	private JMenu jMenu2;
 	private JMenu jMenu1;
-	private MainController guicontroller;
 
-	public ApplicationJFrame(MainController gc) {
+	{
+		// Set Look & Feel
+		try {
+			javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public ApplicationJFrame() {
 		super();
-		guicontroller = gc;
 		initUi();
 	}
 
@@ -68,7 +66,7 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 				getContentPane().add(jToolBar, BorderLayout.SOUTH);
 				jToolBar.setEnabled(false);
 				jToolBar.setBorderPainted(false);
-				jToolBar.add(StatusTask.getInstance(""));
+				jToolBar.add(StatusTask.getInstance(""));				
 			}
 			{
 				jMenuBar = new JMenuBar();
@@ -81,19 +79,16 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 						jMenuItemNewArchitecture = new JMenuItem();
 						jMenu1.add(jMenuItemNewArchitecture);
 						jMenuItemNewArchitecture.setText("New architecture");
-						jMenuItemNewArchitecture.addActionListener(guicontroller);
 					}
 					{
 						jMenuItemOpenArchitecture = new JMenuItem();
 						jMenu1.add(jMenuItemOpenArchitecture);
 						jMenuItemOpenArchitecture.setText("Open architecture");
-						jMenuItemOpenArchitecture.addActionListener(guicontroller);
 					}
 					{
 						jMenuItemSaveArchitecture = new JMenuItem();
 						jMenu1.add(jMenuItemSaveArchitecture);
 						jMenuItemSaveArchitecture.setText("Save architecture");
-						jMenuItemSaveArchitecture.addActionListener(guicontroller);
 					}
 				}
 				{
@@ -104,7 +99,6 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 						jMenuItemStartAnalyse = new JMenuItem();
 						jMenu2.add(jMenuItemStartAnalyse);
 						jMenuItemStartAnalyse.setText("Start analyse");
-						jMenuItemStartAnalyse.addActionListener(guicontroller);
 					}
 				}
 				{

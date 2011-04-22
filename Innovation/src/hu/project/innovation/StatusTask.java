@@ -19,28 +19,6 @@ public class StatusTask extends JPanel {
 
 	private static StatusTask instance;
 
-	public static StatusTask getInstance() {
-		if (instance == null) {
-			instance = new StatusTask();
-		}
-		return instance;
-	}
-
-	public static StatusTask getInstance(String newMessage) {
-		instance = StatusTask.getInstance();
-
-		instance.setMessage(newMessage);
-		return instance;
-	}
-
-	private void setMessage(String newMessage) {
-		if (newMessage.trim().equals("")) {
-			message = defaultMessage;
-		} else {
-			message = newMessage;
-		}
-	}
-
 	private StatusTask() {
 		super();
 
@@ -62,13 +40,59 @@ public class StatusTask extends JPanel {
 		jProgressBar1.setPreferredSize(new java.awt.Dimension(823, 14));
 	}
 
+	/**
+	 * Because there can be only one instance of this jpanel the singleton pattern is implemented.
+	 * 
+	 * @return An StatusTask object
+	 */
+	public static StatusTask getInstance() {
+		if (instance == null) {
+			instance = new StatusTask();
+		}
+		return instance;
+	}
+
+	/**
+	 * @see <code>getInstance()</code>
+	 * @param newMessage
+	 * @return
+	 */
+	public static StatusTask getInstance(String newMessage) {
+		instance = StatusTask.getInstance();
+
+		instance.setMessage(newMessage);
+		return instance;
+	}
+
+	/**
+	 * Sets the message in an local variable
+	 * 
+	 * @param newMessage The message that needs to show when the user calls <code>start()</code>
+	 */
+	private void setMessage(String newMessage) {
+		if (newMessage.trim().equals("")) {
+			message = defaultMessage;
+		} else {
+			message = newMessage;
+		}
+	}
+
+	/**
+	 * This method shows the given message and starts the progressbar.
+	 */
 	public void start() {
+		Log.i(this, "start() - Message: " + message);
 		jLabelStatus.setText(message);
 		jProgressBar1.setIndeterminate(true);
+		repaint();
 
 	}
 
+	/**
+	 * This method will replace the message with an default message and stops the progressbar.
+	 */
 	public void stop() {
+		Log.i(this, "stop() - Message: " + defaultMessage);
 		jLabelStatus.setText(defaultMessage);
 		jProgressBar1.setIndeterminate(false);
 

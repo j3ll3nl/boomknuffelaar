@@ -1,10 +1,12 @@
 package hu.project.innovation.configuration.controller;
 
 import hu.project.innovation.Log;
+import hu.project.innovation.StatusTask;
 import hu.project.innovation.configuration.model.ConfigurationService;
 import hu.project.innovation.configuration.model.Layer;
+import hu.project.innovation.configuration.model.SoftwareUnitDefinition;
+import hu.project.innovation.configuration.view.AbstractTableModel;
 import hu.project.innovation.configuration.view.DefinitionJPanel;
-import hu.project.innovation.configuration.view.LayersListModel;
 import hu.project.innovation.configuration.view.XmlFileFilter;
 
 import java.awt.Component;
@@ -15,6 +17,7 @@ import java.awt.event.KeyListener;
 import java.io.File;
 import java.util.ArrayList;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -35,83 +38,121 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	/**
 	 * Init the user interface for creating/editting the definition.
 	 * 
-	 * @return JPanel
+	 * @return JPanel The jpanel
 	 */
 	public JPanel initUi() {
 		Log.i(this, "initUi()");
 
-		// Create an empty model
-		LayersListModel listmodel = new LayersListModel();
-		definitionJPanel.jListLayers.setModel(listmodel);
-
-		// TODO: Verwijderen van deze code. Dit is alleen nodig voor het testen.
-		configurationService.newArchitecture("Test", "");
-		configurationService.newLayer("UI", "Dit is de ui description");
-		configurationService.newLayer("Controller", "Dit is de controller description");
-		configurationService.newLayer("Model", "Dit is de model description");
-
-		// Update the layers list with the following method
 		updateLayerList();
+		updateComponentTable();
 
-		// Add actionlisteners etc.
+		// Set actionlisteners to buttons, lists etc.
 		definitionJPanel.jListLayers.addListSelectionListener(this);
 		definitionJPanel.jButtonNewLayer.addActionListener(this);
 		definitionJPanel.jButtonRemoveLayer.addActionListener(this);
 		definitionJPanel.jButtonMoveLayerUp.addActionListener(this);
 		definitionJPanel.jButtonMoveLayerDown.addActionListener(this);
+
 		definitionJPanel.jTextFieldLayerName.addKeyListener(this);
 
+		definitionJPanel.jButtonAddComponentToLayer.addActionListener(this);
+		definitionJPanel.jButtonEditComponentFromLayer.addActionListener(this);
+		definitionJPanel.jButtonRemoveComponentFromLayer.addActionListener(this);
+
+		definitionJPanel.jButtonAddRuleToLayer.addActionListener(this);
+		definitionJPanel.jButtonEditRuleFromLayer.addActionListener(this);
+		definitionJPanel.jButtonRemoveRuleFromLayer.addActionListener(this);
+
+		// Return the definition jpanel
 		return definitionJPanel;
 	}
 
 	/**
-	 * Create a new definition. This function won't ask if you want to save the current definition
+	 * Create an new definition. This function won't ask if you want to save the current definition
 	 */
 	public void newConfiguration() {
-		Log.i(this, "newDefinition()");
+		Log.i(this, "newConfiguration()");
 
 		String response = inputDialog(definitionJPanel, "Please enter the architecture name", "Please input a value", JOptionPane.QUESTION_MESSAGE);
 		if (response != null) {
-			Log.i(this, "newDefinition() - value: " + response);
-			configurationService.newArchitecture(response, "");
+			Log.i(this, "newDefinition() - response from inputdialog: " + response);
+			configurationService.newConfiguration(response, "");
 
 			updateLayerList();
 		}
 	}
 
 	/**
-	 * Open a definition. This function will display an filebrowser and pass the result to the config service.
+	 * Open an definition. This function will display an filebrowser and pass the result to the config service.
 	 */
 	public void openConfiguration() {
-		Log.i(this, "openDefintion()");
+		Log.i(this, "openConfiguration()");
 
 		// Create a file chooser
 		JFileChooser fc = new JFileChooser();
 		fc.setFileFilter(new XmlFileFilter());
+
 		// In response to a button click:
 		int returnVal = fc.showOpenDialog(definitionJPanel);
 
+		// The user did click on Open
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			File file = fc.getSelectedFile();
-			Log.i(this, "openDefintion() - opening file: " + file.getName());
-			// configurationService.openArchitecture(file);
 			try {
-				configurationService.openArchitecture(file);
+				StatusTask.getInstance("Opening configuration").start();
+
+				// Getting selected file from dialog
+				File file = fc.getSelectedFile();
+				Log.i(this, "openConfiguration() - opening file: " + file.getName());
+
+				// Pass the file to the service
+				configurationService.openConfiguration(file);
+
+				Log.i(this, "openConfiguration() - success opening configuration");
 			} catch (Exception e) {
-				e.printStackTrace();
+				Log.e(this, "openConfiguration() - exeption: " + e.getMessage());
+				errorDialog(definitionJPanel, e.getMessage(), "Error");
+			} finally {
+				StatusTask.getInstance().stop();
 			}
 
-			Log.i(this, "openDefintion() - layers worden geupdate");
+			Log.i(this, "openConfiguration() - updating layers list");
 			updateLayerList();
-		}
 
+		}
 	}
 
 	/**
 	 * Save the current definition to a file.
 	 */
 	public void saveConfiguration() {
-		Log.i(this, "saveDefintion()");
+		Log.i(this, "saveConfiguration()");
+		// Create a file chooser
+		JFileChooser fc = new JFileChooser();
+		fc.setFileFilter(new XmlFileFilter());
+
+		// In response to a button click:
+		int returnVal = fc.showSaveDialog(definitionJPanel);
+
+		// The user did click on Save
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			try {
+				StatusTask.getInstance("Saving configuration").start();
+
+				// Getting selected file from dialog
+				File file = fc.getSelectedFile();
+				Log.i(this, "saveConfiguration() - configuration needs to be saved to file: " + file.getName());
+
+				// Pass the file to the service
+				configurationService.saveConfiguration(file);
+
+				Log.i(this, "saveConfiguration() - success saving configuration");
+			} catch (Exception e) {
+				Log.e(this, "saveConfiguration() - exeption: " + e.getMessage());
+				errorDialog(definitionJPanel, e.getMessage(), "Error");
+			} finally {
+				StatusTask.getInstance().stop();
+			}
+		}
 	}
 
 	/**
@@ -145,7 +186,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	}
 
 	/**
-	 * Move a layer up
+	 * Move a layer up in hierarchy
 	 */
 	private void moveLayerUp() {
 		Log.i(this, "moveLayerUp()");
@@ -153,38 +194,11 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	}
 
 	/**
-	 * Move a layer down
+	 * Move a layer down in hierarchy
 	 */
 	private void moveLayerDown() {
 		Log.i(this, "moveLayerDown()");
 		// TODO Auto-generated method stub
-
-	}
-
-	/**
-	 * Method which will show an inputdialog and keeps asking for users input
-	 * 
-	 * @param component
-	 * @param message
-	 * @param title
-	 * @param type
-	 * @return
-	 */
-	private String inputDialog(Component component, String message, String title, int type) {
-		String inputValue = "";
-		while (inputValue.trim().equals("")) {
-			inputValue = JOptionPane.showInputDialog(component, message, title, type);
-			if (inputValue == null) {
-				return null;
-			} else {
-				if (!inputValue.trim().equals("")) {
-					return inputValue;
-				} else {
-					JOptionPane.showMessageDialog(null, "Please enter an value!", "Error", JOptionPane.ERROR_MESSAGE);
-				}
-			}
-		}
-		return inputValue;
 	}
 
 	private void loadLayerDetail() {
@@ -199,28 +213,130 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		}
 	}
 
-	public void addComponent() {
-		Log.i(this, "addPackage()");
+	private void addComponent() {
+		Log.i(this, "addComponent()");
 		// TODO Auto-generated method stub
 	}
 
-	public void addRuleToLayer() {
-		Log.i(this, "addRuleException()");
+	private void editComponent() {
+		Log.i(this, "editComponent()");
 		// TODO Auto-generated method stub
 	}
 
-	public void updateLayerList() {
+	private void removeComponent() {
+		Log.i(this, "removeComponent()");
+		// TODO Auto-generated method stub
+
+	}
+
+	private void addRuleToLayer() {
+		Log.i(this, "addRuleToLayer()");
+		// TODO Auto-generated method stub
+	}
+
+	private void editRuleToLayer() {
+		Log.i(this, "editRuleToLayer()");
+		// TODO Auto-generated method stub
+	}
+
+	private void removeRuleToLayer() {
+		Log.i(this, "removeRuleToLayer()");
+		// TODO Auto-generated method stub
+
+	}
+
+	/**
+	 * This method updates the layers list in the jpanel.
+	 */
+	private void updateLayerList() {
+		Log.i(this, "updateLayerList()");
+
+		StatusTask.getInstance("Updating layers").start();
+
+		// Get all layers from the service
 		ArrayList<Layer> layers = configurationService.getLayers();
 
-		LayersListModel llm = (LayersListModel) definitionJPanel.jListLayers.getModel();
-		llm.removeAllElements();
+		// Get ListModel from listlayers
+		DefaultListModel dlm = (DefaultListModel) definitionJPanel.jListLayers.getModel();
 
+		// Remove all items in the list
+		dlm.removeAllElements();
+
+		// Add layers to the list
 		if (layers != null) {
 			int id = 0;
 			for (Layer layer : layers) {
-				llm.add(id++, layer);
+				dlm.add(id++, layer);
 			}
 		}
+		StatusTask.getInstance().stop();
+	}
+
+	/**
+	 * This method updates the component table in the jpanel
+	 */
+	private void updateComponentTable() {
+		Log.i(this, "updateComponentTable()");
+
+		StatusTask.getInstance("Updating component table").start();
+
+		// Get all components from the service
+		ArrayList<SoftwareUnitDefinition> components = configurationService.getComponents();
+
+		// Get the tablemodel from the table
+		AbstractTableModel atm = (AbstractTableModel) definitionJPanel.jTable1.getModel();
+
+		// Remove all items in the table
+		atm.getDataVector().removeAllElements();
+
+		if (components != null) {
+			for (SoftwareUnitDefinition component : components) {
+				String rowdata[] = { component.getName(), component.getType(), "" };
+				atm.addRow(rowdata);
+			}
+		}
+		StatusTask.getInstance().stop();
+	}
+
+	/**
+	 * Method which will show an inputdialog. The dialog keeps asking for input if no input is given.
+	 * 
+	 * @param component The component where the dialog needs to hover above
+	 * @param message The message
+	 * @param title The title of the dialog
+	 * @param type Dialog type. Example: <code>JOptionPane.ERROR_MESSAGE</code>
+	 * @return
+	 */
+	private String inputDialog(Component component, String message, String title, int type) {
+		Log.i(this, "inputDialog(" + component + "," + message + "," + title + "," + type + ")");
+
+		String inputValue = "";
+		while (inputValue.trim().equals("")) {
+			inputValue = JOptionPane.showInputDialog(component, message, title, type);
+			if (inputValue == null) {
+				return null;
+			} else {
+				if (!inputValue.trim().equals("")) {
+					return inputValue;
+				} else {
+					Log.i(this, "inputDialog() - no value entered");
+					errorDialog(component, "Please enter an value!", "Error");
+				}
+			}
+		}
+		return inputValue;
+	}
+
+	/**
+	 * Method which will show an errordialog.
+	 * 
+	 * @param component
+	 * @param message
+	 * @param title
+	 */
+	private void errorDialog(Component component, String message, String title) {
+		Log.i(this, "errorDialog(" + component + "," + message + "," + title + ")");
+		JOptionPane.showMessageDialog(component, message, title, JOptionPane.ERROR_MESSAGE);
 	}
 
 	@Override
@@ -233,6 +349,18 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 			moveLayerUp();
 		} else if (action.getSource() == definitionJPanel.jButtonMoveLayerDown) {
 			moveLayerDown();
+		} else if (action.getSource() == definitionJPanel.jButtonAddComponentToLayer) {
+			addComponent();
+		} else if (action.getSource() == definitionJPanel.jButtonEditComponentFromLayer) {
+			editComponent();
+		} else if (action.getSource() == definitionJPanel.jButtonRemoveComponentFromLayer) {
+			removeComponent();
+		} else if (action.getSource() == definitionJPanel.jButtonAddRuleToLayer) {
+			addRuleToLayer();
+		} else if (action.getSource() == definitionJPanel.jButtonEditRuleFromLayer) {
+			editRuleToLayer();
+		} else if (action.getSource() == definitionJPanel.jButtonRemoveRuleFromLayer) {
+			removeRuleToLayer();
 		} else {
 			Log.i(this, "actionPerformed(" + action + ")");
 		}
@@ -270,8 +398,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-
+		// Ignore
 	}
 
 }
