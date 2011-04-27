@@ -11,11 +11,9 @@ public class ArchitectureDefinition implements XMLable {
 	private String description;
 	private Layer topLayer;
 	private ArrayList<Layer> layers = new ArrayList<Layer>();
-	private ArrayList<SoftwareUnitDefinition> softwareUnits;
 
 	public ArchitectureDefinition() {
 		Log.i(this, "ArchitectureDefinition()");
-		this.softwareUnits = new ArrayList<SoftwareUnitDefinition>();
 		this.layers = new ArrayList<Layer>();
 	}
 
@@ -50,20 +48,6 @@ public class ArchitectureDefinition implements XMLable {
 		return layers.add(layer);
 	}
 
-	public boolean addSoftwareUnit(SoftwareUnitDefinition unit) {
-		return softwareUnits.add(unit);
-	}
-
-	public SoftwareUnitDefinition getSoftwareUnit(String name) {
-
-		for (SoftwareUnitDefinition sud : softwareUnits) {
-			if (sud.getName().equals(name)) {
-				return sud;
-			}
-		}
-		return null;
-	}
-
 	public Layer getLayer(int id) {
 
 		for (Layer layer : layers) {
@@ -81,7 +65,6 @@ public class ArchitectureDefinition implements XMLable {
 	}
 
 	public Layer getLayer(String name) {
-
 		for (Layer layer : layers) {
 			if (layer.getName() == name) {
 				return layer;
@@ -91,10 +74,20 @@ public class ArchitectureDefinition implements XMLable {
 
 	}
 
+	/**
+	 * Find the layer name by a software unit name. This function will
+	 * iterate over the layers. If a layer has a software unit with the
+	 * specified name, it will return the layer name.
+	 * 
+	 * @param name
+	 * @return A string containing the name of the layer with the specified
+	 * software unit name
+	 */
 	public String getLayerNameBySoftwareUnitName(String name) {
-		SoftwareUnitDefinition unit = this.getSoftwareUnit(name);
-		if (unit != null) {
-			return unit.getLayer().getName();
+		for (Layer layer : layers) {
+			if (layer.getSoftwareUnit(name) != null) {
+				return layer.getName();
+			}
 		}
 		return "UNKNOWN";
 	}
@@ -115,7 +108,10 @@ public class ArchitectureDefinition implements XMLable {
 	}
 
 	public ArrayList<SoftwareUnitDefinition> getAllComponents() {
-		return softwareUnits;
+		ArrayList<SoftwareUnitDefinition> sudList = new ArrayList<SoftwareUnitDefinition>();
+		for (Layer layer : layers) {
+			sudList.addAll(layer.getAllSoftwareUnitDefinitions());
+		}
+		return sudList;
 	}
-
 }
