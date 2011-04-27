@@ -57,7 +57,7 @@ public class ArchDefXMLReader extends DefaultHandler {
 		} else if (localName.equals("softwareUnit")) {
 
 			currentUnit = new SoftwareUnitDefinition(currentLayer);
-			ar.addSoftwareUnit(currentUnit);
+			currentLayer.addSoftwareUnit(currentUnit);
 
 		}
 
