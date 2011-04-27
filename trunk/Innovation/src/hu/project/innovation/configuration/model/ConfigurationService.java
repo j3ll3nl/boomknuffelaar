@@ -3,8 +3,10 @@ package hu.project.innovation.configuration.model;
 import hu.project.innovation.utils.ArchDefXMLReader;
 import hu.project.innovation.utils.Log;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.ArrayList;
 
 import org.xml.sax.InputSource;
@@ -41,7 +43,18 @@ public class ConfigurationService implements ConfigurationServiceIF {
 
 	public void saveConfiguration(File file) throws Exception {
 		Log.i(this, "saveConfiguration(" + file + ")");
-		throw new Exception("Sample error message.");
+
+		try{
+		    // Create file 
+		    FileWriter fstream = new FileWriter("architecture_definition_output.xml");
+		        BufferedWriter out = new BufferedWriter(fstream);
+		    out.write(architecture.toXML());
+		    //Close the output stream
+		    out.close();
+		    }catch (Exception e){//Catch exception if any
+		      System.err.println("Error: " + e.getMessage());
+		    }
+		
 	}
 
 	public boolean newLayer(String name, String description) {
