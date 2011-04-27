@@ -18,7 +18,7 @@
                   </xs:sequence>
                 </xs:complexType>
               </xs:element>
-              <xs:element minOccurs="0" name="appliedRulee">
+              <xs:element minOccurs="0" name="appliedRule">
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element minOccurs="0" name="ruleType" type="xs:string" />
