@@ -1,6 +1,5 @@
 package hu.project.innovation.configuration.model;
 
-import hu.project.innovation.utils.Log;
 import net.sourceforge.pmd.ast.ASTClassOrInterfaceType;
 
 public class SkipLayerRule extends BackCallRule {

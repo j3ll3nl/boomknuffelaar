@@ -4,7 +4,6 @@ import hu.project.innovation.utils.Log;
 import hu.project.innovation.utils.XMLable;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
