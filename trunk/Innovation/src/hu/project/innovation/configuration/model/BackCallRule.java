@@ -1,5 +1,6 @@
 package hu.project.innovation.configuration.model;
 
+import hu.project.innovation.utils.Log;
 import net.sourceforge.pmd.ast.ASTClassOrInterfaceType;
 
 public class BackCallRule extends AbstractRuleType {
@@ -33,14 +34,36 @@ public class BackCallRule extends AbstractRuleType {
 				// Check if the rule is applied for these two layers and this rule
 				if (ConfigurationService.getInstance().isRuleApplied(fromLayer, toLayer, this.getClass().getSimpleName())) {
 					// Add a violation if the rule is applied
-					this.addViolation(data, node);
+					this.checkViolationType(data, node,this);
 				}
 			}
 		}
 		// Run the super function
 		return super.visit(node, data);
 	}
-
+	
+	/**
+	 * Checks the violation type on given information.
+	 * 
+	 * @param data
+	 * @param node
+	 * @param ast
+	 */
+	public void checkViolationType(Object data,ASTClassOrInterfaceType node,AbstractRuleType ast){
+		// Rule specific information
+		String RuleName = "Back-call Rule";
+		
+		//Variables to check on
+		String type = node.getType().getName();
+		
+		String msg = "There is no violationtype defined for "+ RuleName+".";
+		
+		//Checks with message
+		//msg =(type.equals(type))? "" : "";
+		
+		this.addViolationWithMessage(data, node, msg);
+	}
+	
 	/**
 	 * Check if a package needs to be checked. We have defined a number of packages wich do not need checking. These include java and javax packages for example.
 	 * 
