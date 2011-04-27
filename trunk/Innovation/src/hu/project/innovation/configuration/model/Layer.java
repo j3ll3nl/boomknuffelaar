@@ -154,11 +154,8 @@ public class Layer implements XMLable {
 			}
 		}
 		
-		System.out.println(appliedRules.size());
-		
 		if (appliedRules != null) {
 			for(AppliedRule rule : appliedRules) {
-				System.out.println("poplood");
 				xml += rule.toXML();
 			}
 		}
