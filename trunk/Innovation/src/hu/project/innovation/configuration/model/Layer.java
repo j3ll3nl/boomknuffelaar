@@ -18,6 +18,7 @@ public class Layer implements XMLable {
 
 	public Layer() {
 		this.appliedRules = new ArrayList<AppliedRule>();
+		this.softwareUnits = new HashMap<String, SoftwareUnitDefinition>();
 	}
 
 	public Layer(String name, String description) {
