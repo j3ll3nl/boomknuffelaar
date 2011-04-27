@@ -38,71 +38,87 @@ import org.xml.sax.helpers.DefaultHandler;
 public class ArchDefXMLReader extends DefaultHandler {
 
 	private CharArrayWriter contents = new CharArrayWriter();
-	private ArchitectureDefinition ar = new ArchitectureDefinition();
+	private ArchitectureDefinition architecture;
 	private Layer currentLayer;
 	private SoftwareUnitDefinition currentUnit;
-	private ArrayList<String> currentRule = new ArrayList<String>();
+	private ArrayList<String> currentRule;
 	private ArrayList<ArrayList<String>> savedRules = new ArrayList<ArrayList<String>>();
 	private boolean isLayer = false;
 
 	public void startElement(String namespaceURI, String localName, String qName, Attributes attr) throws SAXException {
 
+		Log.i(this, "startElement(" + localName + ")");
+		
 		contents.reset();
 
-		if (localName.equals("layer")) {
+		if (localName.equals("architecture")) {
+
+			architecture = new ArchitectureDefinition();
+
+		} else if (localName.equals("layer")) {
 
 			currentLayer = new Layer();
-			ar.addLayer(currentLayer);
 
 		} else if (localName.equals("softwareUnit")) {
 
-			currentUnit = new SoftwareUnitDefinition(currentLayer);
-			currentLayer.addSoftwareUnit(currentUnit);
+			currentUnit = new SoftwareUnitDefinition();
+
+		} else if (localName.equals("appliedRule")) {
+
+			currentRule = new ArrayList<String>();
 
 		}
 
 	}
 
-	@SuppressWarnings("unchecked")
 	public void endElement(String namespaceURI, String localName, String qName) {
-
+		
+		Log.i(this, "endElement(" + localName + ")");
+		
+		// Get layer data
 		if (localName.equals("id")) {
 
 			currentLayer.setId(Integer.parseInt(contents.toString()));
-			isLayer = true;
 
-		} else if (localName.equals("name") && isLayer) {
+		} else if (localName.equals("name") && currentUnit == null) {
 
 			currentLayer.setName(contents.toString());
-
-		} else if (localName.equals("name")) {
-
-			currentUnit.setName(contents.toString());
-
+			
 		} else if (localName.equals("description")) {
 
 			currentLayer.setDescription(contents.toString());
-			isLayer = false;
+			
+		} 
+		
+		// Get software unit data
+		if (localName.equals("name") && currentUnit != null) {
 
+			currentUnit.setName(contents.toString());
+			
 		} else if (localName.equals("type")) {
 
 			currentUnit.setType(contents.toString());
+			
+		} else if (localName.equals("softwareUnit")) {
 
-		} else if (localName.equals("ruleType")) {
+			currentLayer.addSoftwareUnit(currentUnit);
+			currentUnit = null;
+			
+		} 
+		
+		// Get rule data
+		if (localName.equals("ruleType")) {
 
-			currentRule.add(currentLayer.getId() + "");
 			currentRule.add(contents.toString());
-
+			
 		} else if (localName.equals("toLayer")) {
 
 			currentRule.add(contents.toString());
-
+			
 		} else if (localName.equals("appliedRule")) {
 
-			ArrayList<String> temp = (ArrayList<String>) currentRule.clone();
-			savedRules.add(temp);
-			currentRule.clear();
-
+			currentRule.add(contents.toString());
+			
 		}
 
 	}
@@ -114,23 +130,15 @@ public class ArchDefXMLReader extends DefaultHandler {
 	}
 
 	public void endDocument() {
+		
+		Log.i(this, " endDocument()");
 
-		for (ArrayList<String> rule : savedRules) {
-
-			if (rule.get(1).equals("BackCall")) {
-
-				Layer layer = ar.getLayer(Integer.parseInt(rule.get(0)));
-				layer.addAppliedRule(new BackCallRule(), ar.getLayer(Integer.parseInt(rule.get(2))));
-
-			}
-
-		}
 
 	}
 
 	public ArchitectureDefinition getArchitectureDefinition() {
 
-		return ar;
+		return architecture;
 
 	}
 
