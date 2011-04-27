@@ -32,7 +32,7 @@ public class ConfigurationService implements ConfigurationServiceIF {
 		Log.i(this, "openConfiguration(" + file + ")");
 		XMLReader xr = XMLReaderFactory.createXMLReader();
 		ArchDefXMLReader reader = new ArchDefXMLReader();
-		// reader.validateXML(file);
+		reader.validateXML(file);
 		xr.setContentHandler(reader);
 		xr.parse(new InputSource(new FileReader(file)));
 
