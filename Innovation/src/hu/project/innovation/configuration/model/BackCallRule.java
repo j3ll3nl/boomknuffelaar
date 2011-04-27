@@ -57,7 +57,7 @@ public class BackCallRule extends AbstractRuleType {
 		String toClass = node.getType().getSimpleName();
 		String toClassType = (node.getType().isInterface())?"Interface":"Class";
 		String toIsSuperclass = (node.getType().isMemberClass())?"Memberclass":"Superclass";
-		Log.i(this, "type ->"+toClassType);
+
 		String msg = "There is no violationtype defined for "+ RuleName+".";
 		
 		//Checks with message
