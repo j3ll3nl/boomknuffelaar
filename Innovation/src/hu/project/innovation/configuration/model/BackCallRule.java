@@ -54,12 +54,14 @@ public class BackCallRule extends AbstractRuleType {
 		String RuleName = "Back-call Rule";
 		
 		//Variables to check on
-		String type = node.getType().getName();
-		
+		String toClass = node.getType().getSimpleName();
+		String toClassType = (node.getType().isInterface())?"Interface":"Class";
+		String toIsSuperclass = (node.getType().isMemberClass())?"Memberclass":"Superclass";
+		Log.i(this, "type ->"+toClassType);
 		String msg = "There is no violationtype defined for "+ RuleName+".";
 		
 		//Checks with message
-		//msg =(type.equals(type))? "" : "";
+		msg =(toClassType.equals("Class"))? "The call to "+toClass+" violates "+RuleName : msg;
 		
 		this.addViolationWithMessage(data, node, msg);
 	}
