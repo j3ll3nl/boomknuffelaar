@@ -98,7 +98,7 @@ public class ArchitectureDefinition implements XMLable {
 
 	@Override
 	public String toXML() {
-		String xml = "<architecture>\n";
+		String xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<architecture>\n";
 		for (Layer layer : layers) {
 			xml += layer.toXML();
 		}

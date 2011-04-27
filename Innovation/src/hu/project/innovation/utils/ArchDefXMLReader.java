@@ -43,7 +43,6 @@ public class ArchDefXMLReader extends DefaultHandler {
 	private SoftwareUnitDefinition currentUnit;
 	private ArrayList<String> currentRule;
 	private ArrayList<ArrayList<String>> savedRules = new ArrayList<ArrayList<String>>();
-	private boolean isLayer = false;
 
 	public void startElement(String namespaceURI, String localName, String qName, Attributes attr) throws SAXException {
 
@@ -71,6 +70,7 @@ public class ArchDefXMLReader extends DefaultHandler {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public void endElement(String namespaceURI, String localName, String qName) {
 		
 		Log.i(this, "endElement(" + localName + ")");
@@ -87,6 +87,10 @@ public class ArchDefXMLReader extends DefaultHandler {
 		} else if (localName.equals("description")) {
 
 			currentLayer.setDescription(contents.toString());
+			
+		} else if (localName.equals("layer")) {
+
+			architecture.addLayer(currentLayer);
 			
 		} 
 		
@@ -117,7 +121,9 @@ public class ArchDefXMLReader extends DefaultHandler {
 			
 		} else if (localName.equals("appliedRule")) {
 
-			currentRule.add(contents.toString());
+			ArrayList<String> temp = (ArrayList<String>) currentRule.clone();
+			savedRules.add(temp);
+			currentRule.clear();
 			
 		}
 
@@ -133,7 +139,17 @@ public class ArchDefXMLReader extends DefaultHandler {
 		
 		Log.i(this, " endDocument()");
 
+		for (ArrayList<String> rule : savedRules) {
 
+			if (rule.get(1).equals("BackCall")) {
+
+				Layer layer = architecture.getLayer(Integer.parseInt(rule.get(0)));
+				layer.addAppliedRule(new BackCallRule(), architecture.getLayer(Integer.parseInt(rule.get(2))));
+
+			}
+
+		}
+		
 	}
 
 	public ArchitectureDefinition getArchitectureDefinition() {
