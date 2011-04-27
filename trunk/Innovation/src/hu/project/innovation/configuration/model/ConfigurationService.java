@@ -43,18 +43,10 @@ public class ConfigurationService implements ConfigurationServiceIF {
 
 	public void saveConfiguration(File file) throws Exception {
 		Log.i(this, "saveConfiguration(" + file + ")");
-
-		try{
-		    // Create file 
-		    FileWriter fstream = new FileWriter("architecture_definition_output.xml");
-		        BufferedWriter out = new BufferedWriter(fstream);
-		    out.write(architecture.toXML());
-		    //Close the output stream
-		    out.close();
-		    }catch (Exception e){//Catch exception if any
-		      System.err.println("Error: " + e.getMessage());
-		    }
-		
+		FileWriter fstream = new FileWriter(file);
+		BufferedWriter out = new BufferedWriter(fstream);
+		out.write(architecture.toXML());
+		out.close();
 	}
 
 	public boolean newLayer(String name, String description) {
