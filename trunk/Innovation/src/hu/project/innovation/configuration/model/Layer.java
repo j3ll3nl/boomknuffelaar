@@ -4,7 +4,10 @@ import hu.project.innovation.utils.Log;
 import hu.project.innovation.utils.XMLable;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 public class Layer implements XMLable {
 
@@ -142,11 +145,24 @@ public class Layer implements XMLable {
 		xml += "\t\t<id>" + this.id + "</id>\n";
 		xml += "\t\t<name>" + this.name + "</name>\n";
 		xml += "\t\t<description>" + this.description + "</description>\n";
-		if (appliedRules != null) {
-			for (AppliedRule r : this.appliedRules) {
-				xml += r.toXML();
+		
+		if (softwareUnits != null) {
+			Iterator iter = softwareUnits.entrySet().iterator();
+			while(iter.hasNext()) {
+				Map.Entry mEntry = (Map.Entry)iter.next();
+				xml += ((SoftwareUnitDefinition) mEntry.getValue()).toXML();
 			}
 		}
+		
+		System.out.println(appliedRules.size());
+		
+		if (appliedRules != null) {
+			for(AppliedRule rule : appliedRules) {
+				System.out.println("poplood");
+				xml += rule.toXML();
+			}
+		}
+	
 		xml += "\t</layer>\n";
 
 		return xml;

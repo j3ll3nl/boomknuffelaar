@@ -52,9 +52,10 @@ public class SoftwareUnitDefinition implements XMLable {
 
 	@Override
 	public String toXML() {
-		String xml = "<softwareUnit>\n";
-		xml += "<type>" + this.type + "</type>\n";
-		xml += "</softwareUnit>\n";
+		String xml = "\t\t<softwareUnit>\n";
+		xml += "\t\t\t<name>" + this.name + "</name>\n";
+		xml += "\t\t\t<type>" + this.type + "</type>\n";
+		xml += "\t\t</softwareUnit>\n";
 		return xml;
 	}
 

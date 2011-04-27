@@ -3,6 +3,7 @@ package hu.project.innovation.utils;
 import hu.project.innovation.configuration.model.ArchitectureDefinition;
 import hu.project.innovation.configuration.model.BackCallRule;
 import hu.project.innovation.configuration.model.Layer;
+import hu.project.innovation.configuration.model.SkipLayerRule;
 import hu.project.innovation.configuration.model.SoftwareUnitDefinition;
 
 import java.io.CharArrayWriter;
@@ -38,11 +39,12 @@ import org.xml.sax.helpers.DefaultHandler;
 public class ArchDefXMLReader extends DefaultHandler {
 
 	private CharArrayWriter contents = new CharArrayWriter();
-	private ArchitectureDefinition architecture;
+	private ArchitectureDefinition ar = new ArchitectureDefinition();
 	private Layer currentLayer;
 	private SoftwareUnitDefinition currentUnit;
-	private ArrayList<String> currentRule;
+	private ArrayList<String> currentRule = new ArrayList<String>();
 	private ArrayList<ArrayList<String>> savedRules = new ArrayList<ArrayList<String>>();
+	private boolean isLayer = false;
 
 	public void startElement(String namespaceURI, String localName, String qName, Attributes attr) throws SAXException {
 
@@ -50,21 +52,15 @@ public class ArchDefXMLReader extends DefaultHandler {
 		
 		contents.reset();
 
-		if (localName.equals("architecture")) {
-
-			architecture = new ArchitectureDefinition();
-
-		} else if (localName.equals("layer")) {
+		if (localName.equals("layer")) {
 
 			currentLayer = new Layer();
+			ar.addLayer(currentLayer);
 
 		} else if (localName.equals("softwareUnit")) {
 
-			currentUnit = new SoftwareUnitDefinition();
-
-		} else if (localName.equals("appliedRule")) {
-
-			currentRule = new ArrayList<String>();
+			currentUnit = new SoftwareUnitDefinition(currentLayer);
+			currentLayer.addSoftwareUnit(currentUnit);
 
 		}
 
@@ -74,57 +70,44 @@ public class ArchDefXMLReader extends DefaultHandler {
 	public void endElement(String namespaceURI, String localName, String qName) {
 		
 		Log.i(this, "endElement(" + localName + ")");
-		
-		// Get layer data
+
 		if (localName.equals("id")) {
 
 			currentLayer.setId(Integer.parseInt(contents.toString()));
+			isLayer = true;
 
-		} else if (localName.equals("name") && currentUnit == null) {
+		} else if (localName.equals("name") && isLayer) {
 
 			currentLayer.setName(contents.toString());
-			
+
+		} else if (localName.equals("name")) {
+
+			currentUnit.setName(contents.toString());
+
 		} else if (localName.equals("description")) {
 
 			currentLayer.setDescription(contents.toString());
-			
-		} else if (localName.equals("layer")) {
+			isLayer = false;
 
-			architecture.addLayer(currentLayer);
-			
-		} 
-		
-		// Get software unit data
-		if (localName.equals("name") && currentUnit != null) {
-
-			currentUnit.setName(contents.toString());
-			
 		} else if (localName.equals("type")) {
 
 			currentUnit.setType(contents.toString());
-			
-		} else if (localName.equals("softwareUnit")) {
 
-			currentLayer.addSoftwareUnit(currentUnit);
-			currentUnit = null;
-			
-		} 
-		
-		// Get rule data
-		if (localName.equals("ruleType")) {
+		} else if (localName.equals("ruleType")) {
 
+			currentRule.add(currentLayer.getId() + "");
 			currentRule.add(contents.toString());
-			
+
 		} else if (localName.equals("toLayer")) {
 
 			currentRule.add(contents.toString());
-			
+
 		} else if (localName.equals("appliedRule")) {
 
 			ArrayList<String> temp = (ArrayList<String>) currentRule.clone();
 			savedRules.add(temp);
 			currentRule.clear();
-			
+
 		}
 
 	}
@@ -140,21 +123,26 @@ public class ArchDefXMLReader extends DefaultHandler {
 		Log.i(this, " endDocument()");
 
 		for (ArrayList<String> rule : savedRules) {
+			
+			Layer layer = ar.getLayer(Integer.parseInt(rule.get(0)));
 
 			if (rule.get(1).equals("BackCall")) {
+				
+				layer.addAppliedRule(new BackCallRule(), ar.getLayer(Integer.parseInt(rule.get(2))));
 
-				Layer layer = architecture.getLayer(Integer.parseInt(rule.get(0)));
-				layer.addAppliedRule(new BackCallRule(), architecture.getLayer(Integer.parseInt(rule.get(2))));
-
+			} else if (rule.get(1).equals("SkipCall")) {
+				
+				layer.addAppliedRule(new SkipLayerRule(), ar.getLayer(Integer.parseInt(rule.get(2))));
+				
 			}
 
 		}
-		
+
 	}
 
 	public ArchitectureDefinition getArchitectureDefinition() {
 
-		return architecture;
+		return ar;
 
 	}
 
