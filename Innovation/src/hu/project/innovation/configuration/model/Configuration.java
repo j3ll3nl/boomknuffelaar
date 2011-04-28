@@ -41,6 +41,10 @@ public class Configuration {
 	public String getSetting(String key) {
 		return this.settings.get(key);
 	}
+	
+	public boolean hasRule(String ruleName) {
+		return this.rules.containsKey(ruleName);
+	}
 
 	public AbstractRuleType getRule(String ruleName) {
 		return this.rules.get(ruleName);
