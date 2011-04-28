@@ -44,7 +44,6 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		Log.i(this, "initUi()");
 
 		updateLayerList();
-		updateComponentTable();
 
 		// Set actionlisteners to buttons, lists etc.
 		definitionJPanel.jListLayers.addListSelectionListener(this);
@@ -210,6 +209,8 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 
 			definitionJPanel.jTextFieldLayerName.setText(layer.getName());
 			definitionJPanel.jTextAreaLayerDescription.setText(layer.getDescription());
+
+			updateComponentTable(layer);
 		}
 	}
 
@@ -274,14 +275,16 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 
 	/**
 	 * This method updates the component table in the jpanel
+	 * 
+	 * @param layer
 	 */
-	private void updateComponentTable() {
+	private void updateComponentTable(Layer layer) {
 		Log.i(this, "updateComponentTable()");
 
 		StatusTask.getInstance("Updating component table").start();
 
 		// Get all components from the service
-		ArrayList<SoftwareUnitDefinition> components = configurationService.getComponents();
+		ArrayList<SoftwareUnitDefinition> components = layer.getAllSoftwareUnitDefinitions();
 
 		// Get the tablemodel from the table
 		AbstractTableModel atm = (AbstractTableModel) definitionJPanel.jTable1.getModel();
