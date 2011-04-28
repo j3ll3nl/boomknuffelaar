@@ -26,7 +26,7 @@ public class TestConfiguration {
 		conf.newSoftwareUnit("UI", "hu.project.innovation.report.view", "package");
 		conf.newSoftwareUnit("Task", "hu.project.innovation.configuration.controller", "package");
 		conf.newSoftwareUnit("Domain", "hu.project.innovation.configuration.model", "package");
-		conf.newSoftwareUnit("Domain", "hu.project.report.model", "package");
+		conf.newSoftwareUnit("Domain", "hu.project.innovation.report.model", "package");
 
 		// Applied rules
 		conf.newAppliedRule("UI", "Domain", "SkipLayerRule");
