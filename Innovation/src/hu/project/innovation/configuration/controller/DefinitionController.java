@@ -371,10 +371,8 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 
 	@Override
 	public void valueChanged(ListSelectionEvent event) {
-		if (event.getSource() == definitionJPanel.jListLayers) {
+		if (event.getSource() == definitionJPanel.jListLayers && !event.getValueIsAdjusting()) {
 			loadLayerDetail();
-		} else {
-			Log.i(this, "valueChanged(" + event + ")");
 		}
 	}
 
