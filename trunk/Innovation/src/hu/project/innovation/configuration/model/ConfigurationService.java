@@ -116,21 +116,20 @@ public class ConfigurationService implements ConfigurationServiceIF {
 	}
 
 	public boolean removeLayer(Layer layer) {
-		if (null == this.architecture)
+		if (null == this.architecture) {
 			return false;
-
+		}
 		return this.architecture.removeLayer(layer);
 	}
 
 	public boolean isRuleApplied(String fromLayerName, String toLayerName, String ruleName) {
 		Layer fromLayer = this.architecture.getLayer(fromLayerName);
-		Layer toLayer = this.architecture.getLayer(toLayerName);
-		AbstractRuleType ruleType = this.configuration.getRule(ruleName);
 
-		if (null != fromLayer && null != toLayer && null != ruleType) {
-			return fromLayer.hasAppliedRule(ruleType, toLayer);
-		} else
+		if (null != fromLayer) {
+			return fromLayer.hasAppliedRule(ruleName, toLayerName);
+		} else {
 			return false;
+		}
 	}
 
 }

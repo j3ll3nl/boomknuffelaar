@@ -5,8 +5,6 @@ import hu.project.innovation.utils.XMLable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 
 public class Layer implements XMLable {
 
@@ -146,10 +144,9 @@ public class Layer implements XMLable {
 		xml += "\t\t<description>" + this.description + "</description>\n";
 		
 		if (softwareUnits != null) {
-			Iterator iter = softwareUnits.entrySet().iterator();
-			while(iter.hasNext()) {
-				Map.Entry mEntry = (Map.Entry)iter.next();
-				xml += ((SoftwareUnitDefinition) mEntry.getValue()).toXML();
+			for(SoftwareUnitDefinition sud : this.getAllSoftwareUnitDefinitions()) 
+			{
+				xml += sud.toXML();
 			}
 		}
 		
@@ -168,11 +165,11 @@ public class Layer implements XMLable {
 		return getName();
 	}
 
-	public boolean hasAppliedRule(AbstractRuleType ruleType, Layer toLayer) {
+	public boolean hasAppliedRule(String ruleName, String toLayerName) {
 		if (appliedRules != null) {
 			for (AppliedRule r : this.appliedRules) {
-				if (r.getToLayer().getName().equals(toLayer.getName()) 
-						&& r.getRuleType().getName().equals(ruleType.getName())) {
+				if (r.getToLayer().getName().equals(toLayerName) 
+						&& r.getRuleType().getName().equals(ruleName)) {
 					return true;
 				}
 			}

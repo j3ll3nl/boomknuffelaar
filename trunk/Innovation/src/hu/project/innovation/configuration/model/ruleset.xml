@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ruleset name="My custom rules" xmlns="http://pmd.sf.net/ruleset/1.0.0"
+<ruleset 
+	name="Architecture rules" 
+	xmlns="http://pmd.sf.net/ruleset/1.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0 http://pmd.sf.net/ruleset_xml_schema.xsd"
 	xsi:noNamespaceSchemaLocation="http://pmd.sf.net/ruleset_xml_schema.xsd">
-	<description>test file</description>
-	<rule name="back_call_rule" 
-		message="Back call rule"
+		
+	<description>A set of rules to check the architecture of an application</description>
+	
+	<rule name="Back-call rule" 
+		message="A lower layer is calling a higher layer"
 		class="hu.project.innovation.configuration.model.BackCallRule">
 		<description>Back call rule</description>
 		<priority>3</priority>
 	</rule>
-	<rule name="skip_layer_rule" 
-		message="Skip layer rule"
+	
+	<rule name="Skip-layer rule" 
+		message="A layer is being skipped"
 		class="hu.project.innovation.configuration.model.SkipLayerRule">
 		<description>Skip layer rule</description>
 		<priority>3</priority>
 	</rule>
+	
 </ruleset>

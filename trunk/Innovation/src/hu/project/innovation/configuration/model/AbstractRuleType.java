@@ -14,22 +14,9 @@ import org.jaxen.JaxenException;
 
 public abstract class AbstractRuleType extends AbstractJavaRule implements XMLable {
 
-	private String name, description;
-	private int priority;
-
 	protected AbstractRuleType() {
-		Log.i(this, "AbstractRuleType()");
+		Log.i(this, this.getClass().getSimpleName()+"()");
 		this.setName(this.getClass().getSimpleName());
-	}
-
-	@Override
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	@Override
-	public String getName() {
-		return name;
 	}
 
 	/**
@@ -70,15 +57,17 @@ public abstract class AbstractRuleType extends AbstractJavaRule implements XMLab
 			return node.getScope().getEnclosingClassScope().getClassName() == null ? "" : node.getScope().getEnclosingClassScope().getClassName();
 		}
 	}
+	
+	protected abstract void checkViolationType(Object data, SimpleNode node);
 
 	public String toXML() {
 		String xml = "";
 
 		xml += "<rule name=\"" + this.formattedName() + "\" ";
-		xml += "message=\"" + this.name + "\" ";
-		xml += "class=\"" + this.getClass().getPackage() + this.name + "\">";
-		xml += "<description>" + this.description + "</description>";
-		xml += "<priority>" + this.priority + "</priority>";
+		xml += "message=\"" + this.getName() + "\" ";
+		xml += "class=\"" + this.getClass().getPackage() + this.getClass().getSimpleName() + "\">";
+		xml += "<description>" + this.getDescription() + "</description>";
+		xml += "<priority>" + this.getPriority() + "</priority>";
 		xml += "</rule>";
 
 		return xml;

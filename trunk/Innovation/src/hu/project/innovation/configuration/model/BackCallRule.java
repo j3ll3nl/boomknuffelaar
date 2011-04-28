@@ -1,6 +1,7 @@
 package hu.project.innovation.configuration.model;
 
 import net.sourceforge.pmd.ast.ASTClassOrInterfaceType;
+import net.sourceforge.pmd.ast.SimpleNode;
 
 public class BackCallRule extends AbstractRuleType {
 
@@ -22,18 +23,21 @@ public class BackCallRule extends AbstractRuleType {
 			if (isPackageChecked(calledPackageName)) {
 
 				// Get the fromLayer using the current checked class
-				String fromLayer = ConfigurationService.getInstance().getLayerNameBySoftwareUnitName(this.getPackageName(node));
+				String fromLayer = ConfigurationService.getInstance()
+					.getLayerNameBySoftwareUnitName(this.getPackageName(node));
 
 				// Get the toLayer using the package name from the called class
-				String toLayer = ConfigurationService.getInstance().getLayerNameBySoftwareUnitName(calledPackageName);
+				String toLayer = ConfigurationService.getInstance()
+					.getLayerNameBySoftwareUnitName(calledPackageName);
 
 				// Log.i(this,"from: " + this.getPackageName(node) + " to: " + calledPackageName);
 				// Log.i(this,"from: " + fromLayer + " to: " + toLayer);
 
 				// Check if the rule is applied for these two layers and this rule
-				if (ConfigurationService.getInstance().isRuleApplied(fromLayer, toLayer, this.getClass().getSimpleName())) {
+				if (ConfigurationService.getInstance().isRuleApplied(
+						fromLayer, toLayer, this.getClass().getSimpleName())) {
 					// Add a violation if the rule is applied
-					this.checkViolationType(data, node,this);
+					this.checkViolationType(data, node);
 				}
 			}
 		}
@@ -41,32 +45,32 @@ public class BackCallRule extends AbstractRuleType {
 		return super.visit(node, data);
 	}
 	
-	/**
-	 * Checks the violation type on given information.
-	 * 
-	 * @param data
-	 * @param node
-	 * @param ast
-	 */
-	public void checkViolationType(Object data,ASTClassOrInterfaceType node,AbstractRuleType ast){
-		// Rule specific information
-		String RuleName = "Back-call Rule";
+	protected void checkViolationType(Object data, SimpleNode node){
+		ASTClassOrInterfaceType checkedNode = null;
 		
+		// Check if we have a classOrInterface node
+	    if(node instanceof ASTClassOrInterfaceType) {
+	    	checkedNode = (ASTClassOrInterfaceType)node;
+	    } else {
+	    	return;
+	    }
 		//Variables to check on
-		String toClass = node.getType().getSimpleName();
-		String toClassType = (node.getType().isInterface())?"Interface":"Class";
-		String toIsSuperclass = (node.getType().isMemberClass())?"Memberclass":"Superclass";
-
-		String msg = "There is no violationtype defined for "+ RuleName+".";
+		String toClass = checkedNode.getType().getSimpleName();
+		String toClassType = (checkedNode.getType().isInterface())?"Interface":"Class";
+//		String toIsSuperclass = (node.getType().isMemberClass())?"Memberclass":"Superclass";
+		
+		String msg = this.getMessage();
 		
 		//Checks with message
-		msg =(toClassType.equals("Class"))? "The call to "+toClass+" violates "+RuleName : msg;
+		msg = toClassType.equals("Class") ? "The call to "+toClass+" violates "+this.getName() : msg;
 		
-		this.addViolationWithMessage(data, node, msg);
+		this.addViolationWithMessage(data, checkedNode, this.getName()+": "+msg);
 	}
 	
 	/**
-	 * Check if a package needs to be checked. We have defined a number of packages wich do not need checking. These include java and javax packages for example.
+	 * Check if a package needs to be checked. 
+	 * We have defined a number of packages wich do not need checking. 
+	 * These include java and javax packages for example.
 	 * 
 	 * @param packageName
 	 * @return
