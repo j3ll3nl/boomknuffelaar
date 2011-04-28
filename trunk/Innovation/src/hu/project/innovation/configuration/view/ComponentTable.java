@@ -31,26 +31,6 @@ public class ComponentTable extends JTable {
 				column.setPreferredWidth(50);
 			}
 		}
-
-		Object[] data1 = { "Test", "Class", "0" };
-		Object[] data2 = { "Test2", "Class", "0" };
-		Object[] data3 = { "Test3", "Class", "0" };
-		Object[] data4 = { "Test4", "Class", "0" };
-		Object[] data5 = { "Test5", "Class", "0" };
-		Object[] data6 = { "Test6", "Class", "0" };
-		Object[] data7 = { "Test7", "Class", "0" };
-		Object[] data8 = { "Test8", "Class", "0" };
-
-		tablemodel.addRow(data1);
-		tablemodel.addRow(data2);
-		tablemodel.addRow(data3);
-		tablemodel.addRow(data4);
-		tablemodel.addRow(data5);
-		tablemodel.addRow(data6);
-		tablemodel.addRow(data7);
-		tablemodel.addRow(data8);
-		
-
 	}
 
 }
