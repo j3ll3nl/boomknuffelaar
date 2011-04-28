@@ -53,6 +53,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		definitionJPanel.jButtonMoveLayerDown.addActionListener(this);
 
 		definitionJPanel.jTextFieldLayerName.addKeyListener(this);
+		definitionJPanel.jTextAreaLayerDescription.addKeyListener(this);
 
 		definitionJPanel.jButtonAddComponentToLayer.addActionListener(this);
 		definitionJPanel.jButtonEditComponentFromLayer.addActionListener(this);
