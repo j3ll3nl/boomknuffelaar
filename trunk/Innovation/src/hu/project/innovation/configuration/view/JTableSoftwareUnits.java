@@ -3,20 +3,20 @@ package hu.project.innovation.configuration.view;
 import javax.swing.JTable;
 import javax.swing.table.TableColumn;
 
-public class ComponentTable extends JTable {
+public class JTableSoftwareUnits extends JTable {
 
 	private static final long serialVersionUID = 3535559394466714205L;
 	private AbstractTableModel tablemodel;
 
-	public ComponentTable() {
+	public JTableSoftwareUnits() {
 		super();
 		setAutoCreateRowSorter(true);
 		setFillsViewportHeight(true);
 
 		tablemodel = new AbstractTableModel();
-		tablemodel.addColumn("Component name");
+		tablemodel.addColumn("Software unit name");
 		tablemodel.addColumn("Type");
-		tablemodel.addColumn("Exceptions");
+		tablemodel.addColumn("# Exceptions");
 
 		setModel(tablemodel);
 
