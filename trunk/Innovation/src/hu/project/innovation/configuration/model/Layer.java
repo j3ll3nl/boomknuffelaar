@@ -170,7 +170,7 @@ public class Layer implements XMLable {
 		return getName();
 	}
 
-	public boolean hasAppliedRule(String ruleName, Layer toLayer) {
+	public boolean hasAppliedRule(String ruleName, Layer toLayer) {		
 		if (appliedRules != null) {
 			for (AppliedRule appliedRule : this.appliedRules) {
 				if (appliedRule.getToLayer() == toLayer && appliedRule.getRuleType().getName().equals(ruleName)) {

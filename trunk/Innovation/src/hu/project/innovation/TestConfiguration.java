@@ -4,6 +4,8 @@ import hu.project.innovation.configuration.model.Configuration;
 import hu.project.innovation.configuration.model.ConfigurationService;
 import hu.project.innovation.utils.Log;
 
+import java.io.File;
+
 public class TestConfiguration {
 	public TestConfiguration() {
 		try {
@@ -11,20 +13,18 @@ public class TestConfiguration {
 			ConfigurationService conf = ConfigurationService.getInstance();
 
 			// Output settings
-			conf.setProjectPath("C:\\Users\\Stefan Kemp\\Development\\eclipse\\SampleMavenProject");
+			File f = new File("src");
+			conf.setProjectPath(f.getAbsolutePath());
 			conf.setOutputPath("C:\\");
 			conf.setOutputType(Configuration.OUTPUT_FORMAT_TEXT);
 
 			// Architecture
-			conf.newConfiguration("Test Architecture", "A first test");
+			conf.newConfiguration("Test Architecture", "");
 
 			// Layers
-			conf.newLayer("A", "Presentation logic");
-			conf.newLayer("B", "Domain logic");
-			conf.newLayer("C", "Task specific logic");
-			conf.newLayer("D", "Task specific logic");
-			conf.newLayer("E", "Task specific logic");
-			conf.newLayer("F", "Task specific logic");
+			conf.newLayer("UI", "Presentation logic");
+			conf.newLayer("Domain", "Domain logic");
+			conf.newLayer("Task", "Task specific logic");
 			conf.getConfiguration().autoUpdateLayerSequence();
 
 			// Software units
@@ -35,9 +35,9 @@ public class TestConfiguration {
 			conf.newSoftwareUnit(conf.getLayer("Domain"), "hu.project.innovation.report.model", "package");
 
 			// Applied rules
-			conf.newAppliedRule("UI", "Domain", "SkipLayerRule");
-			conf.newAppliedRule("Task", "UI", "BackCallRule");
-			conf.newAppliedRule("Domain", "Task", "BackCallRule");
+			conf.newAppliedRule(conf.getLayer("UI"), conf.getLayer("Domain"), "SkipLayerRule");
+			conf.newAppliedRule(conf.getLayer("Task"), conf.getLayer("UI"), "BackCallRule");
+			conf.newAppliedRule(conf.getLayer("Domain"), conf.getLayer("Task"), "BackCallRule");
 		} catch (Exception e) {
 			Log.e(this, "Error: " + e.getMessage());
 
