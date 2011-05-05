@@ -83,10 +83,10 @@ public class ConfigurationService {
 	 */
 	public void saveConfiguration(File file) throws Exception {
 		Log.i(this, "saveConfiguration(" + file + ")");
-		
-		if(!isArchitectureDefinition()){
-			
-		}else{
+
+		if (!isArchitectureDefinition()) {
+
+		} else {
 			FileWriter fstream = new FileWriter(file);
 			BufferedWriter out = new BufferedWriter(fstream);
 			out.write(architectureDefinition.toXML());
@@ -96,6 +96,7 @@ public class ConfigurationService {
 
 	/**
 	 * Get the current architecture definition
+	 * 
 	 * @return
 	 */
 	public ArchitectureDefinition getConfiguration() {
@@ -146,8 +147,11 @@ public class ConfigurationService {
 	 * 
 	 * @param layer
 	 */
-	public void moveLayerUp(Layer layer) {
-		// TODO: nog te schrijven, vanuit de gui wordt de layer meegegeven die omlaag moet.
+	public void moveLayerUp(Layer layer) throws Exception {
+		Log.i(this, "moveLayerUp(" + layer + ")");
+		layer.moveUp();
+
+		architectureDefinition.autoUpdateLayerSequence(layer);
 	}
 
 	/**
@@ -155,8 +159,11 @@ public class ConfigurationService {
 	 * 
 	 * @param layer
 	 */
-	public void moveLayerDown(Layer layer) {
-		// TODO: not te schrijven, vanuit de gui wordt de layer meegegeven die omhoog moet.
+	public void moveLayerDown(Layer layer) throws Exception {
+		Log.i(this, "moveLayerDown(" + layer + ")");
+		layer.moveDown();
+				
+		architectureDefinition.autoUpdateLayerSequence(layer);
 	}
 
 	/**
@@ -259,7 +266,7 @@ public class ConfigurationService {
 
 	}
 
-	public String getLayerNameBySoftwareUnitName(String name) {
+	public Layer getLayerNameBySoftwareUnitName(String name) {
 		return this.architectureDefinition.getLayerNameBySoftwareUnitName(name);
 	}
 
@@ -270,19 +277,13 @@ public class ConfigurationService {
 		return this.architectureDefinition.getAllLayers();
 	}
 
-	public ArrayList<SoftwareUnitDefinition> getComponents() {
-		return this.architectureDefinition.getAllComponents();
-	}
-
 	public String architectureToXML() {
 		return this.architectureDefinition.toXML();
 	}
 
-	public boolean isRuleApplied(String fromLayerName, String toLayerName, String ruleName) {
-		Layer fromLayer = this.architectureDefinition.getLayer(fromLayerName);
-
+	public boolean isRuleApplied(Layer fromLayer, Layer toLayer, String ruleName) {
 		if (null != fromLayer) {
-			return fromLayer.hasAppliedRule(ruleName, toLayerName);
+			return fromLayer.hasAppliedRule(ruleName, toLayer);
 		} else {
 			return false;
 		}
