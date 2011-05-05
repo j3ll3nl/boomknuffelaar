@@ -44,8 +44,8 @@ public class ArchitectureDefinition implements XMLable {
 		return topLayer;
 	}
 
-	public boolean addLayer(Layer layer) {
-		return layers.add(layer);
+	public void addLayer(Layer layer) {
+		layers.add(layer);
 	}
 
 	public Layer getLayer(int id) {
@@ -59,9 +59,8 @@ public class ArchitectureDefinition implements XMLable {
 		return null;
 	}
 
-	public boolean removeLayer(Layer layer) {
-		layers.remove(layer);
-		return true;
+	public void removeLayer(Layer layer) {
+		layers.remove(layer);		
 	}
 
 	public Layer getLayer(String name) {

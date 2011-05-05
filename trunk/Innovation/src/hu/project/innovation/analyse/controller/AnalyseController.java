@@ -120,7 +120,7 @@ public class AnalyseController implements ActionListener, KeyListener {
 		} else if (action.getSource() == analyseJFrame.jComboBoxOutputType) {
 			Log.i(this, "actionPerformed() - output type");
 			String selected = analyseJFrame.jComboBoxOutputType.getSelectedItem().toString();
-			ConfigurationService.getInstance().setOutputFormat(selected);
+			ConfigurationService.getInstance().setOutputType(selected);
 		} else if (action.getSource() == analyseJFrame.jButtonClose) {
 			Log.i(this, "actionPerformed() - close");
 			analyseJFrame.dispose();

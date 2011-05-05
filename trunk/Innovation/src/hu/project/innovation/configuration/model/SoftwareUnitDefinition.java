@@ -1,6 +1,5 @@
 package hu.project.innovation.configuration.model;
 
-import hu.project.innovation.utils.Log;
 import hu.project.innovation.utils.XMLable;
 
 import java.util.ArrayList;
@@ -15,19 +14,13 @@ public class SoftwareUnitDefinition implements XMLable {
 
 	private Layer layer;
 
-	public SoftwareUnitDefinition() {
-
-	}
-
-	public SoftwareUnitDefinition(Layer layer) {
-		Log.i(this, "SoftwareUnitDefinition()");
-		this.layer = layer;
-	}
-
-	public SoftwareUnitDefinition(String name, String type, Layer layer) {
-		this(layer);
+	public SoftwareUnitDefinition(String name, String type) {
 		this.name = name;
 		this.setType(type);
+	}
+
+	public SoftwareUnitDefinition() {
+		
 	}
 
 	public String getName() {
@@ -61,6 +54,10 @@ public class SoftwareUnitDefinition implements XMLable {
 
 	public Layer getLayer() {
 		return this.layer;
+	}
+
+	public void setLayer(Layer layer) {
+		this.layer = layer;
 	}
 
 }

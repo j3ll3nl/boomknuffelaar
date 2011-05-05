@@ -4,7 +4,6 @@ import hu.project.innovation.utils.Log;
 import hu.project.innovation.utils.XMLable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Layer implements XMLable {
 
@@ -14,20 +13,19 @@ public class Layer implements XMLable {
 	private Layer parentLayer;
 	private Layer childLayer;
 	private ArrayList<AppliedRule> appliedRules;
-	private HashMap<String, SoftwareUnitDefinition> softwareUnits;
+	private ArrayList<SoftwareUnitDefinition> softwareUnitDefinitions;
 
 	public Layer() {
-		this.appliedRules = new ArrayList<AppliedRule>();
-		this.softwareUnits = new HashMap<String, SoftwareUnitDefinition>();
 	}
 
 	public Layer(String name, String description) {
 		Log.i(this, "constructor(\"" + name + "\", \"" + description + "\")");
-		this.name = name;
-		this.description = description;
+
+		setName(name);
+		setDescription(description);
 
 		this.appliedRules = new ArrayList<AppliedRule>();
-		this.softwareUnits = new HashMap<String, SoftwareUnitDefinition>();
+		this.softwareUnitDefinitions = new ArrayList<SoftwareUnitDefinition>();
 	}
 
 	public int getId() {
@@ -76,28 +74,18 @@ public class Layer implements XMLable {
 	}
 
 	/**
-	 * Add a new software unit with the specified name and type
+	 * Add a {@link SoftwareUnitDefinition}
 	 * 
 	 * @param name
 	 * @param type
 	 * @return Return true if the specified name was not already used for a software unit
 	 */
-	public boolean addSoftwareUnit(String name, String type) {
-		return this.addSoftwareUnit(new SoftwareUnitDefinition(name, type, this));
-	}
-
-	/**
-	 * Add a {@link SoftwareUnitDefinition}
-	 * 
-	 * @param sud
-	 * @return <code>true</code> if the software unit with that name wasn't already in this layer. Else return <code>false</code>
-	 */
-	public boolean addSoftwareUnit(SoftwareUnitDefinition sud) {
-		if (this.softwareUnits.containsKey(name)) {
-			return false;
+	public void addSoftwareUnit(SoftwareUnitDefinition unit) throws Exception {
+		if (softwareUnitDefinitions.contains(unit)) {
+			throw new Exception("Software unit is already added to this layer");
 		} else {
-			this.softwareUnits.put(sud.getName(), sud);
-			return true;
+			softwareUnitDefinitions.add(unit);
+			unit.setLayer(this);
 		}
 	}
 
@@ -107,8 +95,12 @@ public class Layer implements XMLable {
 	 * @param name
 	 * @return the previous SoftwareUnit associated with that name, or null if there was no SoftwareUnit with that name.
 	 */
-	public SoftwareUnitDefinition removeSoftwareUniteDefinition(String name) {
-		return this.softwareUnits.remove(name);
+	public void removeSoftwareUniteDefinition(SoftwareUnitDefinition unit) throws Exception {
+		if (!softwareUnitDefinitions.contains(unit)) {
+			throw new Exception("Software unit does not exist in this layer");
+		} else {
+			this.softwareUnitDefinitions.remove(unit);
+		}
 	}
 
 	/**
@@ -118,7 +110,12 @@ public class Layer implements XMLable {
 	 * @return The software unit with the specified name of null if this layer doesn't have that unit
 	 */
 	public SoftwareUnitDefinition getSoftwareUnit(String name) {
-		return this.softwareUnits.get(name);
+		for (SoftwareUnitDefinition softwareunitdefinition : softwareUnitDefinitions) {
+			if (softwareunitdefinition.getName().equals(name)) {
+				return softwareunitdefinition;
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -127,9 +124,7 @@ public class Layer implements XMLable {
 	 * @return
 	 */
 	public ArrayList<SoftwareUnitDefinition> getAllSoftwareUnitDefinitions() {
-		ArrayList<SoftwareUnitDefinition> sudList = new ArrayList<SoftwareUnitDefinition>();
-		sudList.addAll(this.softwareUnits.values());
-		return sudList;
+		return softwareUnitDefinitions;
 	}
 
 	@Override
@@ -141,7 +136,7 @@ public class Layer implements XMLable {
 		xml += "\t\t<name>" + this.name + "</name>\n";
 		xml += "\t\t<description>" + this.description + "</description>\n";
 
-		if (softwareUnits != null) {
+		if (softwareUnitDefinitions != null) {
 			for (SoftwareUnitDefinition sud : this.getAllSoftwareUnitDefinitions()) {
 				xml += sud.toXML();
 			}

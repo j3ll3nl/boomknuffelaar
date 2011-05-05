@@ -68,7 +68,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	}
 
 	/**
-	 * Create an new definition. This function won't ask if you want to save the current definition
+	 * Create an new definition.
 	 */
 	public void newConfiguration() {
 		Log.i(this, "newConfiguration()");
@@ -83,7 +83,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	}
 
 	/**
-	 * Open an definition. This function will display an filebrowser and pass the result to the config service.
+	 * Open an definition.
 	 */
 	public void openConfiguration() {
 		Log.i(this, "openConfiguration()");
@@ -161,11 +161,14 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	private void newLayer() {
 		Log.i(this, "newLayer()");
 
-		String response = Ui.inputDialog(definitionJPanel, "Please enter layer name", "Please input a value", JOptionPane.QUESTION_MESSAGE);
-		if (response != null) {
-			Log.i(this, "newLayer() - value: " + response);
-			configurationService.newLayer(response, "");
-
+		String layerName = Ui.inputDialog(definitionJPanel, "Please enter layer name", "Please input a value", JOptionPane.QUESTION_MESSAGE);
+		if (layerName != null) {
+			try {
+				Log.i(this, "newLayer() - value: " + layerName);
+				configurationService.newLayer(layerName, "");
+			} catch (Exception e) {
+				Ui.errorDialog(definitionJPanel, e.getMessage(), "Error");
+			}
 			updateLayerList();
 		}
 	}
@@ -178,8 +181,12 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 
 		Layer layer = definitionJPanel.getSelectedLayer();
 		if (layer != null) {
-			Log.i(this, "removeLayer() - selected layer: " + layer.getName());
-			configurationService.removeLayer(layer);
+			try {
+				Log.i(this, "removeLayer() - selected layer: " + layer.getName());
+				configurationService.removeLayer(layer);
+			} catch (Exception e) {
+				Ui.errorDialog(definitionJPanel, e.getMessage(), "Error");
+			}
 
 			updateLayerList();
 		}
@@ -190,11 +197,12 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	 */
 	private void moveLayerUp() {
 		Log.i(this, "moveLayerUp()");
-		
+
 		Layer layer = definitionJPanel.getSelectedLayer();
-		if(layer != null){
+		if (layer != null) {
 			Log.i(this, "loadLayerDetail() - selected layer: " + layer.getName());
-			
+
+			configurationService.moveLayerUp(layer);
 		}
 	}
 
@@ -203,7 +211,12 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	 */
 	private void moveLayerDown() {
 		Log.i(this, "moveLayerDown()");
-		// TODO Auto-generated method stub
+		Layer layer = definitionJPanel.getSelectedLayer();
+		if (layer != null) {
+			Log.i(this, "loadLayerDetail() - selected layer: " + layer.getName());
+
+			configurationService.moveLayerDown(layer);
+		}
 	}
 
 	private void loadLayerDetail() {
@@ -220,17 +233,17 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		}
 	}
 
-	private void addComponent() {
+	private void addSoftwareUnit() {
 		Log.i(this, "addComponent()");
 		// TODO Auto-generated method stub
 	}
 
-	private void editComponent() {
+	private void editSoftwareUnit() {
 		Log.i(this, "editComponent()");
 		// TODO Auto-generated method stub
 	}
 
-	private void removeComponent() {
+	private void removeSoftwareUnit() {
 		Log.i(this, "removeComponent()");
 		// TODO Auto-generated method stub
 
@@ -250,6 +263,19 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		Log.i(this, "removeRuleToLayer()");
 		// TODO Auto-generated method stub
 
+	}
+
+	/**
+	 * Function which will save the name and description changes to the layer
+	 */
+	private void updateLayer() {
+		Layer layer = definitionJPanel.getSelectedLayer();
+
+		Log.i(this, "keyReleased() - value from name: " + definitionJPanel.jTextFieldLayerName.getText());
+		layer.setName(definitionJPanel.jTextFieldLayerName.getText());
+		layer.setDescription(definitionJPanel.jTextAreaLayerDescription.getText());
+
+		definitionJPanel.jListLayers.updateUI();
 	}
 
 	/**
@@ -276,7 +302,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 				dlm.add(id++, layer);
 			}
 		}
-		
+
 		JPanelStatus.getInstance().stop();
 	}
 
@@ -305,7 +331,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 			}
 		}
 		atm.fireTableDataChanged();
-		
+
 		JPanelStatus.getInstance().stop();
 	}
 
@@ -320,11 +346,11 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		} else if (action.getSource() == definitionJPanel.jButtonMoveLayerDown) {
 			moveLayerDown();
 		} else if (action.getSource() == definitionJPanel.jButtonAddComponentToLayer) {
-			addComponent();
+			addSoftwareUnit();
 		} else if (action.getSource() == definitionJPanel.jButtonEditComponentFromLayer) {
-			editComponent();
+			editSoftwareUnit();
 		} else if (action.getSource() == definitionJPanel.jButtonRemoveComponentFromLayer) {
-			removeComponent();
+			removeSoftwareUnit();
 		} else if (action.getSource() == definitionJPanel.jButtonAddRuleToLayer) {
 			addRuleToLayer();
 		} else if (action.getSource() == definitionJPanel.jButtonEditRuleFromLayer) {
@@ -352,13 +378,8 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	public void keyReleased(KeyEvent arg0) {
 		Log.i(this, "keyReleased(" + arg0 + ")");
 
-		if (arg0.getSource() == definitionJPanel.jTextFieldLayerName) {
-			Layer layer = definitionJPanel.getSelectedLayer();
-
-			Log.i(this, "keyReleased() - value from name: " + definitionJPanel.jTextFieldLayerName.getText());
-			layer.setName(definitionJPanel.jTextFieldLayerName.getText());
-
-			definitionJPanel.jListLayers.updateUI();
+		if (arg0.getSource() == definitionJPanel.jTextFieldLayerName || arg0.getSource() == definitionJPanel.jTextAreaLayerDescription) {
+			updateLayer();
 		} else {
 			Log.i(this, "keyReleased(" + arg0 + ")");
 		}
