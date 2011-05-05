@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 public class Configuration {
 
+	public static final String PROJECT_PATH = "project_path";
 	public static final String OUTPUT_PATH = "output_path";
 	public static final String OUTPUT_FORMAT = "output_format";
 	public static final String OUTPUT_FORMAT_TEXT = "text";
@@ -41,7 +42,7 @@ public class Configuration {
 	public String getSetting(String key) {
 		return this.settings.get(key);
 	}
-	
+
 	public boolean hasRule(String ruleName) {
 		return this.rules.containsKey(ruleName);
 	}

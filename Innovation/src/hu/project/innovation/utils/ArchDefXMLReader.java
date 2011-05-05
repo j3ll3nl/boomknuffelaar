@@ -49,7 +49,7 @@ public class ArchDefXMLReader extends DefaultHandler {
 	public void startElement(String namespaceURI, String localName, String qName, Attributes attr) throws SAXException {
 
 		Log.i(this, "startElement(" + localName + ")");
-		
+
 		contents.reset();
 
 		if (localName.equals("layer")) {
@@ -68,7 +68,7 @@ public class ArchDefXMLReader extends DefaultHandler {
 
 	@SuppressWarnings("unchecked")
 	public void endElement(String namespaceURI, String localName, String qName) {
-		
+
 		Log.i(this, "endElement(" + localName + ")");
 
 		if (localName.equals("id")) {
@@ -119,21 +119,21 @@ public class ArchDefXMLReader extends DefaultHandler {
 	}
 
 	public void endDocument() {
-		
+
 		Log.i(this, " endDocument()");
 
 		for (ArrayList<String> rule : savedRules) {
-			
+
 			Layer layer = ar.getLayer(Integer.parseInt(rule.get(0)));
 
 			if (rule.get(1).equals("BackCall")) {
-				
+
 				layer.addAppliedRule(new BackCallRule(), ar.getLayer(Integer.parseInt(rule.get(2))));
 
 			} else if (rule.get(1).equals("SkipCall")) {
-				
+
 				layer.addAppliedRule(new SkipLayerRule(), ar.getLayer(Integer.parseInt(rule.get(2))));
-				
+
 			}
 
 		}

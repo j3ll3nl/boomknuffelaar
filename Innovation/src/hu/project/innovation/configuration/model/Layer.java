@@ -74,7 +74,7 @@ public class Layer implements XMLable {
 		AppliedRule r = new AppliedRule(ruleType, this, toLayer);
 		this.appliedRules.add(r);
 	}
-	
+
 	/**
 	 * Add a new software unit with the specified name and type
 	 * 
@@ -85,34 +85,32 @@ public class Layer implements XMLable {
 	public boolean addSoftwareUnit(String name, String type) {
 		return this.addSoftwareUnit(new SoftwareUnitDefinition(name, type, this));
 	}
-	
+
 	/**
 	 * Add a {@link SoftwareUnitDefinition}
 	 * 
 	 * @param sud
-	 * @return <code>true</code> if the software unit with that name wasn't already in this layer. Else
-	 * return <code>false</code>
+	 * @return <code>true</code> if the software unit with that name wasn't already in this layer. Else return <code>false</code>
 	 */
 	public boolean addSoftwareUnit(SoftwareUnitDefinition sud) {
-		if(this.softwareUnits.containsKey(name)) {
+		if (this.softwareUnits.containsKey(name)) {
 			return false;
 		} else {
 			this.softwareUnits.put(sud.getName(), sud);
 			return true;
 		}
 	}
-	
+
 	/**
 	 * Removes the SoftwareUnit with the specified name
 	 * 
 	 * @param name
-	 * @return 
-	 * the previous SoftwareUnit associated with that name, or null if there was no SoftwareUnit with that name.
+	 * @return the previous SoftwareUnit associated with that name, or null if there was no SoftwareUnit with that name.
 	 */
 	public SoftwareUnitDefinition removeSoftwareUniteDefinition(String name) {
 		return this.softwareUnits.remove(name);
 	}
-	
+
 	/**
 	 * Get a software unit by its name
 	 * 
@@ -122,7 +120,7 @@ public class Layer implements XMLable {
 	public SoftwareUnitDefinition getSoftwareUnit(String name) {
 		return this.softwareUnits.get(name);
 	}
-	
+
 	/**
 	 * This function will return all the software units in an <code>ArrayList</code>.
 	 * 
@@ -142,20 +140,19 @@ public class Layer implements XMLable {
 		xml += "\t\t<id>" + this.id + "</id>\n";
 		xml += "\t\t<name>" + this.name + "</name>\n";
 		xml += "\t\t<description>" + this.description + "</description>\n";
-		
+
 		if (softwareUnits != null) {
-			for(SoftwareUnitDefinition sud : this.getAllSoftwareUnitDefinitions()) 
-			{
+			for (SoftwareUnitDefinition sud : this.getAllSoftwareUnitDefinitions()) {
 				xml += sud.toXML();
 			}
 		}
-		
+
 		if (appliedRules != null) {
-			for(AppliedRule rule : appliedRules) {
+			for (AppliedRule rule : appliedRules) {
 				xml += rule.toXML();
 			}
 		}
-	
+
 		xml += "\t</layer>\n";
 
 		return xml;
@@ -168,8 +165,7 @@ public class Layer implements XMLable {
 	public boolean hasAppliedRule(String ruleName, String toLayerName) {
 		if (appliedRules != null) {
 			for (AppliedRule r : this.appliedRules) {
-				if (r.getToLayer().getName().equals(toLayerName) 
-						&& r.getRuleType().getName().equals(ruleName)) {
+				if (r.getToLayer().getName().equals(toLayerName) && r.getRuleType().getName().equals(ruleName)) {
 					return true;
 				}
 			}

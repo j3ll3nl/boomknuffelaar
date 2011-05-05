@@ -75,13 +75,10 @@ public class ArchitectureDefinition implements XMLable {
 	}
 
 	/**
-	 * Find the layer name by a software unit name. This function will
-	 * iterate over the layers. If a layer has a software unit with the
-	 * specified name, it will return the layer name.
+	 * Find the layer name by a software unit name. This function will iterate over the layers. If a layer has a software unit with the specified name, it will return the layer name.
 	 * 
 	 * @param name
-	 * @return A string containing the name of the layer with the specified
-	 * software unit name
+	 * @return A string containing the name of the layer with the specified software unit name
 	 */
 	public String getLayerNameBySoftwareUnitName(String name) {
 		for (Layer layer : layers) {

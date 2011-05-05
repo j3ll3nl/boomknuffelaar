@@ -3,6 +3,7 @@ package hu.project.innovation;
 import hu.project.innovation.analyse.controller.AnalyseController;
 import hu.project.innovation.configuration.controller.DefinitionController;
 import hu.project.innovation.utils.Log;
+import hu.project.innovation.utils.Ui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -38,12 +39,14 @@ public class MainController implements ActionListener {
 		jframe.jMenuItemOpenArchitecture.addActionListener(this);
 		jframe.jMenuItemSaveArchitecture.addActionListener(this);
 		jframe.jMenuItemStartAnalyse.addActionListener(this);
-				
+		jframe.jMenuItemAbout.addActionListener(this);
+
 		// This method sets the definition jpanel in the jframe.
 		jframe.setContentView(definitioncontroller.initUi());
 
 		// Set the visibility of the jframe to true so the jframe is now visible
-		jframe.setVisible(true);
+		Ui.showOnScreen(0, jframe);
+		jframe.setVisible(true);		
 	}
 
 	/**
@@ -91,7 +94,10 @@ public class MainController implements ActionListener {
 			definitioncontroller.saveConfiguration();
 		} else if (action.getSource() == jframe.jMenuItemStartAnalyse) {
 			Log.i(this, "actionPerformed() - start analyse");
-			analysecontroller.initUi();
+			analysecontroller.initUi(jframe);
+		} else if (action.getSource() == jframe.jMenuItemAbout) {
+			Log.i(this, "actionPerformed() - about");
+			Ui.messageDialog(jframe, "This application is made an project team on Hogeschool Utrecht.", "About");
 		} else {
 			Log.i(this, "actionPerformed(" + action + ") - unknown button event");
 		}

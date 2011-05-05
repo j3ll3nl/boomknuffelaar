@@ -1,7 +1,7 @@
 package hu.project.innovation;
 
 import hu.project.innovation.configuration.view.DefinitionJPanel;
-import hu.project.innovation.configuration.view.StatusTask;
+import hu.project.innovation.configuration.view.JPanelStatus;
 
 import java.awt.BorderLayout;
 
@@ -67,7 +67,7 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 				getContentPane().add(jToolBar, BorderLayout.SOUTH);
 				jToolBar.setEnabled(false);
 				jToolBar.setBorderPainted(false);
-				jToolBar.add(StatusTask.getInstance(""));				
+				jToolBar.add(JPanelStatus.getInstance(""));
 			}
 			{
 				jMenuBar = new JMenuBar();
@@ -105,12 +105,7 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 				{
 					jMenu3 = new JMenu();
 					jMenuBar.add(jMenu3);
-					jMenu3.setText("Help");
-					{
-						jMenuItemOnlineHelp = new JMenuItem();
-						jMenu3.add(jMenuItemOnlineHelp);
-						jMenuItemOnlineHelp.setText("Online help");
-					}
+					jMenu3.setText("Help");					
 					{
 						jMenuItemAbout = new JMenuItem();
 						jMenu3.add(jMenuItemAbout);
@@ -119,7 +114,7 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 				}
 			}
 			pack();
-			setSize(1000, 600);
+			setSize(1000, 700);
 		} catch (Exception e) {
 			// add your error handling code here
 			e.printStackTrace();
