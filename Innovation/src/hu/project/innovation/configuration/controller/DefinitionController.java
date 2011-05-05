@@ -406,7 +406,10 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	private void updateAppliedRulesTable(Layer layer) {
 		Log.i(this, "updateAppliedRulesTable(" + layer + ")");
 
+		JPanelStatus.getInstance("Updating rules applied table").start();
+		
 		// TODO implement this function
+		JPanelStatus.getInstance().stop();
 	}
 
 	@Override

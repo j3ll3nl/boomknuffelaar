@@ -252,9 +252,7 @@ public class ConfigurationService {
 		return this.configuration.getSetting(Configuration.OUTPUT_FORMAT);
 	}
 
-	public void newAppliedRule(String fromLayerName, String toLayerName, String ruleName) {
-		Layer fromLayer = this.architectureDefinition.getLayer(fromLayerName);
-		Layer toLayer = this.architectureDefinition.getLayer(toLayerName);
+	public void newAppliedRule(Layer fromLayer, Layer toLayer, String ruleName) {
 		AbstractRuleType ruleType = this.configuration.getRule(ruleName);
 
 		if (null != fromLayer && null != toLayer && null != ruleType) {
@@ -282,7 +280,7 @@ public class ConfigurationService {
 	}
 
 	public boolean isRuleApplied(Layer fromLayer, Layer toLayer, String ruleName) {
-		if (null != fromLayer) {
+		if (fromLayer != null) {
 			return fromLayer.hasAppliedRule(ruleName, toLayer);
 		} else {
 			return false;
