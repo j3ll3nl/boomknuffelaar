@@ -21,7 +21,7 @@ public class JTableAppliedRule extends AbstractJTable {
 				column.setPreferredWidth(75); // Component name
 			} else if (i == 1) {
 				column.setPreferredWidth(75); // To layer
-			} else if(i == 2){
+			} else if (i == 2) {
 				column.setPreferredWidth(25); // Enabled
 			} else if (i == 3) {
 				column.setPreferredWidth(50); // Exceptions

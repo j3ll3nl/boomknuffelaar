@@ -20,7 +20,7 @@ public class SoftwareUnitDefinition implements XMLable {
 	}
 
 	public SoftwareUnitDefinition() {
-		
+
 	}
 
 	public String getName() {

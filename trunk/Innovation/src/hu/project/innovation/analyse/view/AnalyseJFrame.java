@@ -169,7 +169,7 @@ public class AnalyseJFrame extends javax.swing.JFrame {
 						}
 						{
 							ComboBoxModel jComboBox1Model = new DefaultComboBoxModel(new String[] { "text", "html", "xml" });
-							jComboBoxOutputType = new JComboBox();							
+							jComboBoxOutputType = new JComboBox();
 
 							jPanel5.add(jComboBoxOutputType, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 							jComboBoxOutputType.setModel(jComboBox1Model);

@@ -121,10 +121,10 @@ public class ArchitectureDefinition implements XMLable {
 	 */
 	public void autoUpdateLayerSequence() {
 		Layer firstLayer = topLayer.getFirstLayer();
-		
+
 		topLayer = topLayer.getFirstLayer();
-		
-		//Auto update the ID numbers for the layers. Ofcourse, the first layer should be 0 etc.
+
+		// Auto update the ID numbers for the layers. Ofcourse, the first layer should be 0 etc.
 		firstLayer.updateId(0);
 	}
 }

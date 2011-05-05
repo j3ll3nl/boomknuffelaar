@@ -110,7 +110,7 @@ public class ArchDefXMLReader extends DefaultHandler {
 			}
 		}
 	}
-	
+
 	public ArchitectureDefinition getArchitectureDefinition() {
 		return ar;
 	}

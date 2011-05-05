@@ -21,7 +21,7 @@ public class JTableSoftwareUnits extends AbstractJTable {
 			} else if (i == 2) {
 				column.setPreferredWidth(25); // Exceptions
 			} else {
-				
+
 			}
 		}
 	}

@@ -64,6 +64,7 @@ public class Ui {
 
 	/**
 	 * This method is a safe way of centring the jframe on an screen if there are multiple screens.
+	 * 
 	 * @param screen
 	 * @param frame
 	 */
