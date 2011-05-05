@@ -10,5 +10,5 @@ public class Main {
 
 		// Init the Ui
 		gui.initUi();
-	} 
+	}
 }

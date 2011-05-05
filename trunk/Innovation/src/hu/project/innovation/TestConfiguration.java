@@ -2,15 +2,15 @@ package hu.project.innovation;
 
 import hu.project.innovation.configuration.model.Configuration;
 import hu.project.innovation.configuration.model.ConfigurationService;
-import hu.project.innovation.configuration.model.ConfigurationServiceIF;
 
 public class TestConfiguration {
 	public TestConfiguration() {
 		// Configuration
-		ConfigurationServiceIF conf = ConfigurationService.getInstance();
+		ConfigurationService conf = ConfigurationService.getInstance();
 
 		// Output settings
-		conf.setOutputPath("/a/path/to/the/output/");
+		conf.setProjectPath("C:\\Users\\Stefan Kemp\\Development\\eclipse\\SampleMavenProject");
+		conf.setOutputPath("C:\\");
 		conf.setOutputFormat(Configuration.OUTPUT_FORMAT_TEXT);
 
 		// Architecture
@@ -22,11 +22,11 @@ public class TestConfiguration {
 		conf.newLayer("Task", "Task specific logic");
 
 		// Software units
-		conf.newSoftwareUnit("UI", "hu.project.innovation.configuration.view", "package");
-		conf.newSoftwareUnit("UI", "hu.project.innovation.report.view", "package");
-		conf.newSoftwareUnit("Task", "hu.project.innovation.configuration.controller", "package");
-		conf.newSoftwareUnit("Domain", "hu.project.innovation.configuration.model", "package");
-		conf.newSoftwareUnit("Domain", "hu.project.innovation.report.model", "package");
+		conf.newComponent("UI", "hu.project.innovation.configuration.view", "package");
+		conf.newComponent("UI", "hu.project.innovation.report.view", "package");
+		conf.newComponent("Task", "hu.project.innovation.configuration.controller", "package");
+		conf.newComponent("Domain", "hu.project.innovation.configuration.model", "package");
+		conf.newComponent("Domain", "hu.project.innovation.report.model", "package");
 
 		// Applied rules
 		conf.newAppliedRule("UI", "Domain", "SkipLayerRule");

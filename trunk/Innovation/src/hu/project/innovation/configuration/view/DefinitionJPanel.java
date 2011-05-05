@@ -20,8 +20,6 @@ import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI Builder, which is free for non-commercial use. If Jigloo is being used commercially (ie, by a corporation, company or
@@ -257,17 +255,14 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 								jPanel11.add(jPanel8);
 								BorderLayout jPanel8Layout = new BorderLayout();
 								jPanel8.setLayout(jPanel8Layout);
-								jPanel8.setBorder(BorderFactory.createTitledBorder("Rules for this layer"));
+								jPanel8.setBorder(BorderFactory.createTitledBorder("Applied rules for this layer"));
 								{
 									jScrollPane4 = new JScrollPane();
 									jPanel8.add(jScrollPane4, BorderLayout.CENTER);
 									jScrollPane4.setPreferredSize(new java.awt.Dimension(278, 32));
 									{
-										TableModel jTable2Model = new DefaultTableModel(new String[][] { { "One", "Two" }, { "Three", "Four" } }, new String[] { "Column 1", "Column 2" });
-										jTable2 = new JTable();
+										jTable2 = new JTableAppliedRule();
 										jScrollPane4.setViewportView(jTable2);
-										jTable2.setModel(jTable2Model);
-										jTable2.setFillsViewportHeight(true);
 									}
 								}
 								{
@@ -320,7 +315,7 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 	public SoftwareUnitDefinition getSelectedComponent() {
 		int selectedRow = jTable1.getSelectedRow();
 		if (selectedRow >= 0) {
-			AbstractTableModel c = (AbstractTableModel) jTable1.getModel();
+			JTableTableModel c = (JTableTableModel) jTable1.getModel();
 			Object selected = c.getValueAt(selectedRow, 0);
 			if (selected instanceof SoftwareUnitDefinition) {
 				return (SoftwareUnitDefinition) selected;

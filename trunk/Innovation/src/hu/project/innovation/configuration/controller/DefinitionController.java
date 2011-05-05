@@ -3,13 +3,13 @@ package hu.project.innovation.configuration.controller;
 import hu.project.innovation.configuration.model.ConfigurationService;
 import hu.project.innovation.configuration.model.Layer;
 import hu.project.innovation.configuration.model.SoftwareUnitDefinition;
-import hu.project.innovation.configuration.view.AbstractTableModel;
+import hu.project.innovation.configuration.view.JTableTableModel;
 import hu.project.innovation.configuration.view.DefinitionJPanel;
-import hu.project.innovation.configuration.view.StatusTask;
+import hu.project.innovation.configuration.view.JPanelStatus;
 import hu.project.innovation.configuration.view.XmlFileFilter;
 import hu.project.innovation.utils.Log;
+import hu.project.innovation.utils.Ui;
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -73,7 +73,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	public void newConfiguration() {
 		Log.i(this, "newConfiguration()");
 
-		String response = inputDialog(definitionJPanel, "Please enter the architecture name", "Please input a value", JOptionPane.QUESTION_MESSAGE);
+		String response = Ui.inputDialog(definitionJPanel, "Please enter the architecture name", "Please input a value", JOptionPane.QUESTION_MESSAGE);
 		if (response != null) {
 			Log.i(this, "newDefinition() - response from inputdialog: " + response);
 			configurationService.newConfiguration(response, "");
@@ -98,7 +98,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		// The user did click on Open
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			try {
-				StatusTask.getInstance("Opening configuration").start();
+				JPanelStatus.getInstance("Opening configuration").start();
 
 				// Getting selected file from dialog
 				File file = fc.getSelectedFile();
@@ -110,9 +110,9 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 				Log.i(this, "openConfiguration() - success opening configuration");
 			} catch (Exception e) {
 				Log.e(this, "openConfiguration() - exeption: " + e.getMessage());
-				errorDialog(definitionJPanel, e.getMessage(), "Error");
+				Ui.errorDialog(definitionJPanel, e.getMessage(), "Error");
 			} finally {
-				StatusTask.getInstance().stop();
+				JPanelStatus.getInstance().stop();
 			}
 
 			Log.i(this, "openConfiguration() - updating layers list");
@@ -136,7 +136,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		// The user did click on Save
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			try {
-				StatusTask.getInstance("Saving configuration").start();
+				JPanelStatus.getInstance("Saving configuration").start();
 
 				// Getting selected file from dialog
 				File file = fc.getSelectedFile();
@@ -148,9 +148,9 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 				Log.i(this, "saveConfiguration() - success saving configuration");
 			} catch (Exception e) {
 				Log.e(this, "saveConfiguration() - exeption: " + e.getMessage());
-				errorDialog(definitionJPanel, e.getMessage(), "Error");
+				Ui.errorDialog(definitionJPanel, e.getMessage(), "Error");
 			} finally {
-				StatusTask.getInstance().stop();
+				JPanelStatus.getInstance().stop();
 			}
 		}
 	}
@@ -161,7 +161,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	private void newLayer() {
 		Log.i(this, "newLayer()");
 
-		String response = inputDialog(definitionJPanel, "Please enter layer name", "Please input a value", JOptionPane.QUESTION_MESSAGE);
+		String response = Ui.inputDialog(definitionJPanel, "Please enter layer name", "Please input a value", JOptionPane.QUESTION_MESSAGE);
 		if (response != null) {
 			Log.i(this, "newLayer() - value: " + response);
 			configurationService.newLayer(response, "");
@@ -190,7 +190,12 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	 */
 	private void moveLayerUp() {
 		Log.i(this, "moveLayerUp()");
-		// TODO Auto-generated method stub
+		
+		Layer layer = definitionJPanel.getSelectedLayer();
+		if(layer != null){
+			Log.i(this, "loadLayerDetail() - selected layer: " + layer.getName());
+			
+		}
 	}
 
 	/**
@@ -253,7 +258,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	private void updateLayerList() {
 		Log.i(this, "updateLayerList()");
 
-		StatusTask.getInstance("Updating layers").start();
+		JPanelStatus.getInstance("Updating layers").start();
 
 		// Get all layers from the service
 		ArrayList<Layer> layers = configurationService.getLayers();
@@ -271,7 +276,8 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 				dlm.add(id++, layer);
 			}
 		}
-		StatusTask.getInstance().stop();
+		
+		JPanelStatus.getInstance().stop();
 	}
 
 	/**
@@ -282,65 +288,25 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	private void updateComponentTable(Layer layer) {
 		Log.i(this, "updateComponentTable()");
 
-		StatusTask.getInstance("Updating component table").start();
+		JPanelStatus.getInstance("Updating component table").start();
 
 		// Get all components from the service
 		ArrayList<SoftwareUnitDefinition> components = layer.getAllSoftwareUnitDefinitions();
 
 		// Get the tablemodel from the table
-		AbstractTableModel atm = (AbstractTableModel) definitionJPanel.jTable1.getModel();
+		JTableTableModel atm = (JTableTableModel) definitionJPanel.jTable1.getModel();
 
 		// Remove all items in the table
 		atm.getDataVector().removeAllElements();
-
 		if (components != null) {
 			for (SoftwareUnitDefinition component : components) {
 				String rowdata[] = { component.getName(), component.getType(), "" };
 				atm.addRow(rowdata);
 			}
 		}
-		StatusTask.getInstance().stop();
-	}
-
-	/**
-	 * Method which will show an inputdialog. The dialog keeps asking for input if no input is given.
-	 * 
-	 * @param component The component where the dialog needs to hover above
-	 * @param message The message
-	 * @param title The title of the dialog
-	 * @param type Dialog type. Example: <code>JOptionPane.ERROR_MESSAGE</code>
-	 * @return
-	 */
-	private String inputDialog(Component component, String message, String title, int type) {
-		Log.i(this, "inputDialog(" + component + "," + message + "," + title + "," + type + ")");
-
-		String inputValue = "";
-		while (inputValue.trim().equals("")) {
-			inputValue = JOptionPane.showInputDialog(component, message, title, type);
-			if (inputValue == null) {
-				return null;
-			} else {
-				if (!inputValue.trim().equals("")) {
-					return inputValue;
-				} else {
-					Log.i(this, "inputDialog() - no value entered");
-					errorDialog(component, "Please enter an value!", "Error");
-				}
-			}
-		}
-		return inputValue;
-	}
-
-	/**
-	 * Method which will show an errordialog.
-	 * 
-	 * @param component
-	 * @param message
-	 * @param title
-	 */
-	private void errorDialog(Component component, String message, String title) {
-		Log.i(this, "errorDialog(" + component + "," + message + "," + title + ")");
-		JOptionPane.showMessageDialog(component, message, title, JOptionPane.ERROR_MESSAGE);
+		atm.fireTableDataChanged();
+		
+		JPanelStatus.getInstance().stop();
 	}
 
 	@Override

@@ -11,7 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
-public class StatusTask extends JPanel {
+public class JPanelStatus extends JPanel {
 
 	private static final long serialVersionUID = -7360960342696885795L;
 	private String defaultMessage = "Idle";
@@ -19,9 +19,9 @@ public class StatusTask extends JPanel {
 	private JLabel jLabelStatus;
 	private JProgressBar jProgressBar1;
 
-	private static StatusTask instance;
+	private static JPanelStatus instance;
 
-	private StatusTask() {
+	private JPanelStatus() {
 		super();
 
 		GridBagLayout jPanel1Layout = new GridBagLayout();
@@ -47,9 +47,9 @@ public class StatusTask extends JPanel {
 	 * 
 	 * @return An StatusTask object
 	 */
-	public static StatusTask getInstance() {
+	public static JPanelStatus getInstance() {
 		if (instance == null) {
-			instance = new StatusTask();
+			instance = new JPanelStatus();
 		}
 		return instance;
 	}
@@ -59,8 +59,8 @@ public class StatusTask extends JPanel {
 	 * @param newMessage
 	 * @return
 	 */
-	public static StatusTask getInstance(String newMessage) {
-		instance = StatusTask.getInstance();
+	public static JPanelStatus getInstance(String newMessage) {
+		instance = JPanelStatus.getInstance();
 
 		instance.setMessage(newMessage);
 		return instance;

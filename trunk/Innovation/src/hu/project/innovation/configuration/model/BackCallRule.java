@@ -23,19 +23,16 @@ public class BackCallRule extends AbstractRuleType {
 			if (isPackageChecked(calledPackageName)) {
 
 				// Get the fromLayer using the current checked class
-				String fromLayer = ConfigurationService.getInstance()
-					.getLayerNameBySoftwareUnitName(this.getPackageName(node));
+				String fromLayer = ConfigurationService.getInstance().getLayerNameBySoftwareUnitName(this.getPackageName(node));
 
 				// Get the toLayer using the package name from the called class
-				String toLayer = ConfigurationService.getInstance()
-					.getLayerNameBySoftwareUnitName(calledPackageName);
+				String toLayer = ConfigurationService.getInstance().getLayerNameBySoftwareUnitName(calledPackageName);
 
 				// Log.i(this,"from: " + this.getPackageName(node) + " to: " + calledPackageName);
 				// Log.i(this,"from: " + fromLayer + " to: " + toLayer);
 
 				// Check if the rule is applied for these two layers and this rule
-				if (ConfigurationService.getInstance().isRuleApplied(
-						fromLayer, toLayer, this.getClass().getSimpleName())) {
+				if (ConfigurationService.getInstance().isRuleApplied(fromLayer, toLayer, this.getClass().getSimpleName())) {
 					// Add a violation if the rule is applied
 					this.checkViolationType(data, node);
 				}
@@ -44,33 +41,31 @@ public class BackCallRule extends AbstractRuleType {
 		// Run the super function
 		return super.visit(node, data);
 	}
-	
-	protected void checkViolationType(Object data, SimpleNode node){
+
+	protected void checkViolationType(Object data, SimpleNode node) {
 		ASTClassOrInterfaceType checkedNode = null;
-		
+
 		// Check if we have a classOrInterface node
-	    if(node instanceof ASTClassOrInterfaceType) {
-	    	checkedNode = (ASTClassOrInterfaceType)node;
-	    } else {
-	    	return;
-	    }
-		//Variables to check on
+		if (node instanceof ASTClassOrInterfaceType) {
+			checkedNode = (ASTClassOrInterfaceType) node;
+		} else {
+			return;
+		}
+		// Variables to check on
 		String toClass = checkedNode.getType().getSimpleName();
-		String toClassType = (checkedNode.getType().isInterface())?"Interface":"Class";
-//		String toIsSuperclass = (node.getType().isMemberClass())?"Memberclass":"Superclass";
-		
+		String toClassType = (checkedNode.getType().isInterface()) ? "Interface" : "Class";
+		// String toIsSuperclass = (node.getType().isMemberClass())?"Memberclass":"Superclass";
+
 		String msg = this.getMessage();
-		
-		//Checks with message
-		msg = toClassType.equals("Class") ? "The call to "+toClass+" violates "+this.getName() : msg;
-		
-		this.addViolationWithMessage(data, checkedNode, this.getName()+": "+msg);
+
+		// Checks with message
+		msg = toClassType.equals("Class") ? "The call to " + toClass + " violates " + this.getName() : msg;
+
+		this.addViolationWithMessage(data, checkedNode, this.getName() + ": " + msg);
 	}
-	
+
 	/**
-	 * Check if a package needs to be checked. 
-	 * We have defined a number of packages wich do not need checking. 
-	 * These include java and javax packages for example.
+	 * Check if a package needs to be checked. We have defined a number of packages wich do not need checking. These include java and javax packages for example.
 	 * 
 	 * @param packageName
 	 * @return
