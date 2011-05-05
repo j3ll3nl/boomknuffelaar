@@ -47,23 +47,23 @@ public class ArchDefXMLReader extends DefaultHandler {
 	private boolean isLayer = false;
 
 	public void startElement(String namespaceURI, String localName, String qName, Attributes attr) throws SAXException {
-
 		Log.i(this, "startElement(" + localName + ")");
 
 		contents.reset();
 
 		if (localName.equals("layer")) {
-
 			currentLayer = new Layer();
 			ar.addLayer(currentLayer);
-
 		} else if (localName.equals("softwareUnit")) {
+			currentUnit = new SoftwareUnitDefinition();
+			currentUnit.setLayer(currentLayer);
 
-			currentUnit = new SoftwareUnitDefinition(currentLayer);
-			currentLayer.addSoftwareUnit(currentUnit);
-
+			try {
+				currentLayer.addSoftwareUnit(currentUnit);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
-
 	}
 
 	@SuppressWarnings("unchecked")
@@ -72,82 +72,50 @@ public class ArchDefXMLReader extends DefaultHandler {
 		Log.i(this, "endElement(" + localName + ")");
 
 		if (localName.equals("id")) {
-
 			currentLayer.setId(Integer.parseInt(contents.toString()));
 			isLayer = true;
-
 		} else if (localName.equals("name") && isLayer) {
-
 			currentLayer.setName(contents.toString());
-
 		} else if (localName.equals("name")) {
-
 			currentUnit.setName(contents.toString());
-
 		} else if (localName.equals("description")) {
-
 			currentLayer.setDescription(contents.toString());
 			isLayer = false;
-
 		} else if (localName.equals("type")) {
-
 			currentUnit.setType(contents.toString());
-
 		} else if (localName.equals("ruleType")) {
-
 			currentRule.add(currentLayer.getId() + "");
 			currentRule.add(contents.toString());
-
 		} else if (localName.equals("toLayer")) {
-
 			currentRule.add(contents.toString());
-
 		} else if (localName.equals("appliedRule")) {
-
 			ArrayList<String> temp = (ArrayList<String>) currentRule.clone();
 			savedRules.add(temp);
 			currentRule.clear();
-
 		}
-
 	}
 
 	public void characters(char[] ch, int start, int length) throws SAXException {
-
 		contents.write(ch, start, length);
-
 	}
 
 	public void endDocument() {
-
 		Log.i(this, " endDocument()");
-
 		for (ArrayList<String> rule : savedRules) {
-
 			Layer layer = ar.getLayer(Integer.parseInt(rule.get(0)));
-
 			if (rule.get(1).equals("BackCall")) {
-
 				layer.addAppliedRule(new BackCallRule(), ar.getLayer(Integer.parseInt(rule.get(2))));
-
 			} else if (rule.get(1).equals("SkipCall")) {
-
 				layer.addAppliedRule(new SkipLayerRule(), ar.getLayer(Integer.parseInt(rule.get(2))));
-
 			}
-
 		}
-
 	}
-
+	
 	public ArchitectureDefinition getArchitectureDefinition() {
-
 		return ar;
-
 	}
 
 	public boolean validateXML(File file) throws ParserConfigurationException, SAXException, IOException {
-
 		// parse an XML document into a DOM tree
 		DocumentBuilder parser = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 		Document document = parser.parse(file);
@@ -166,7 +134,5 @@ public class ArchDefXMLReader extends DefaultHandler {
 		validator.validate(new DOMSource(document));
 
 		return false;
-
 	}
-
 }
