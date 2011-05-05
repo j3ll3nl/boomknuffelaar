@@ -12,7 +12,7 @@ public class Layer implements XMLable {
 	private String description;
 	private Layer parentLayer;
 	private Layer childLayer;
-	private ArrayList<AppliedRule> appliedRules;
+	public ArrayList<AppliedRule> appliedRules;
 	private ArrayList<SoftwareUnitDefinition> softwareUnitDefinitions;
 
 	public Layer() {
