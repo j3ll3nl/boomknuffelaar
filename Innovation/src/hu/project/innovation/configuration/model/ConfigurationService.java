@@ -151,7 +151,7 @@ public class ConfigurationService {
 		Log.i(this, "moveLayerUp(" + layer + ")");
 		layer.moveUp();
 
-		architectureDefinition.autoUpdateLayerSequence(layer);
+		architectureDefinition.autoUpdateLayerSequence();
 	}
 
 	/**
@@ -163,7 +163,7 @@ public class ConfigurationService {
 		Log.i(this, "moveLayerDown(" + layer + ")");
 		layer.moveDown();
 				
-		architectureDefinition.autoUpdateLayerSequence(layer);
+		architectureDefinition.autoUpdateLayerSequence();
 	}
 
 	/**
