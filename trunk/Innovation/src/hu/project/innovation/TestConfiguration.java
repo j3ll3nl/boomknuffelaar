@@ -19,9 +19,12 @@ public class TestConfiguration {
 			conf.newConfiguration("Test Architecture", "A first test");
 
 			// Layers
-			conf.newLayer("UI", "Presentation logic");
-			conf.newLayer("Domain", "Domain logic");
-			conf.newLayer("Task", "Task specific logic");
+			conf.newLayer("A", "Presentation logic");
+			conf.newLayer("B", "Domain logic");
+			conf.newLayer("C", "Task specific logic");
+			conf.newLayer("D", "Task specific logic");
+			conf.newLayer("E", "Task specific logic");
+			conf.newLayer("F", "Task specific logic");
 
 			// Software units
 			conf.newSoftwareUnit(conf.getLayer("UI"), "hu.project.innovation.configuration.view", "package");

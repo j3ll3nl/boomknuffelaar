@@ -210,9 +210,15 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 
 		Layer layer = definitionJPanel.getSelectedLayer();
 		if (layer != null) {
-			Log.i(this, "loadLayerDetail() - selected layer: " + layer.getName());
+			try {
+				Log.i(this, "moveLayerUp() - selected layer: " + layer.getName());
 
-			configurationService.moveLayerUp(layer);
+				configurationService.moveLayerUp(layer);
+				updateLayerList();
+			} catch (Exception e) {
+				Log.e(this, "moveLayerUp() - exception: " + e.getMessage());
+				Ui.errorDialog(definitionJPanel, e.getMessage(), "Error");
+			}
 		}
 	}
 
@@ -223,9 +229,15 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		Log.i(this, "moveLayerDown()");
 		Layer layer = definitionJPanel.getSelectedLayer();
 		if (layer != null) {
-			Log.i(this, "loadLayerDetail() - selected layer: " + layer.getName());
+			try {
+				Log.i(this, "loadLayerDetail() - selected layer: " + layer.getName());
 
-			configurationService.moveLayerDown(layer);
+				configurationService.moveLayerDown(layer);
+				updateLayerList();
+			} catch (Exception e) {
+				Log.e(this, "moveLayerDown() - exception: " + e.getMessage());
+				Ui.errorDialog(definitionJPanel, e.getMessage(), "Error");
+			}
 		}
 	}
 

@@ -4,17 +4,15 @@ import hu.project.innovation.utils.Log;
 import hu.project.innovation.utils.XMLable;
 
 import java.util.ArrayList;
-import java.util.Observable;
 
-public class ArchitectureDefinition extends Observable implements XMLable {
+public class ArchitectureDefinition implements XMLable {
 
 	private String name;
 	private String description;
 	private Layer topLayer;
-	private ArrayList<Layer> layers = new ArrayList<Layer>();
 
 	public ArchitectureDefinition() {
-		Log.i(this, "ArchitectureDefinition()");	
+		Log.i(this, "ArchitectureDefinition()");
 	}
 
 	public ArchitectureDefinition(String name, String description) {
@@ -24,9 +22,6 @@ public class ArchitectureDefinition extends Observable implements XMLable {
 
 	public void setName(String name) {
 		this.name = name;
-
-		setChanged();
-		notifyObservers(name);
 	}
 
 	public String getName() {
@@ -46,37 +41,36 @@ public class ArchitectureDefinition extends Observable implements XMLable {
 	}
 
 	public void addLayer(Layer layer) {
-		if (layers.isEmpty()) {
-			layer.setId(0);
+		Log.i(this, "addLayer(" + layer + ")");
+		if (topLayer == null) {
+			topLayer = layer;
 		} else {
-			layer.setId(layers.size());
+			topLayer.addChildLayer(layer);
 		}
-		layers.add(layer);
 	}
 
 	public Layer getLayer(int id) {
-
-		for (Layer layer : layers) {
-			if (layer.getId() == id) {
-				return layer;
-			}
+		if (topLayer != null) {
+			return topLayer.getLayer(id);
 		}
+		return null;
+	}
 
+	public Layer getLayer(String name) {
+		if (topLayer != null) {
+			return topLayer.getLayer(name);
+		}
 		return null;
 	}
 
 	public void removeLayer(Layer layer) {
-		layers.remove(layer);
-	}
-
-	public Layer getLayer(String name) {
-		for (Layer layer : layers) {
-			if (layer.getName() == name) {
-				return layer;
+		if (topLayer != null) {
+			if (topLayer == layer) {
+				topLayer = layer.getChildLayer();
+			} else {
+				topLayer.removeLayer(layer);
 			}
 		}
-		return null;
-
 	}
 
 	/**
@@ -85,38 +79,49 @@ public class ArchitectureDefinition extends Observable implements XMLable {
 	 * @param name
 	 * @return A string containing the name of the layer with the specified software unit name
 	 */
-	public String getLayerNameBySoftwareUnitName(String name) {
-		for (Layer layer : layers) {
-			if (layer.getSoftwareUnit(name) != null) {
-				return layer.getName();
-			}
+	public Layer getLayerNameBySoftwareUnitName(String softwareUnitName) {
+		if (topLayer != null) {
+			return topLayer.getLayerNameBySoftwareUnitName(softwareUnitName);
 		}
-		return "UNKNOWN";
+		return null;
 	}
 
 	public ArrayList<Layer> getAllLayers() {
+		Log.i(this, "getAllLayers()");
+		ArrayList<Layer> layers = new ArrayList<Layer>();
 
+		if (topLayer != null) {
+			Layer layer = topLayer;
+			while (true) {
+				if (layer == null) {
+					break;
+				} else {
+					layers.add(layer);
+				}
+				layer = layer.getChildLayer();
+			}
+		}
+		Log.i(this, "getAllLayers() - klaar: " + layers);
 		return layers;
 	}
 
 	@Override
 	public String toXML() {
 		String xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<architecture>\n";
-		if (layers != null) {
-			for (Layer layer : layers) {
-				xml += layer.toXML();
-			}
+		if (topLayer != null) {
+			xml += topLayer.toXML();
 		}
 		xml += "</architecture>\n";
 
 		return xml;
 	}
 
-	public ArrayList<SoftwareUnitDefinition> getAllComponents() {
-		ArrayList<SoftwareUnitDefinition> sudList = new ArrayList<SoftwareUnitDefinition>();
-		for (Layer layer : layers) {
-			sudList.addAll(layer.getAllSoftwareUnitDefinitions());
+	public void autoUpdateLayerSequence(Layer l) {
+		Layer firstLayer = l.getFirstLayer();
+
+		if (l.getFirstLayer() != topLayer) {
+			topLayer = l.getFirstLayer();
 		}
-		return sudList;
+		firstLayer.updateId(0);
 	}
 }
