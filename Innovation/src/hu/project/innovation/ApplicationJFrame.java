@@ -22,6 +22,7 @@ import javax.swing.WindowConstants;
 public class ApplicationJFrame extends javax.swing.JFrame {
 
 	private static final long serialVersionUID = 6858870868564931134L;
+	private String defaultTitle = "Belastingdienst Architectuur";
 	private JMenuBar jMenuBar;
 	public JLabel jLabelStatus;
 	private JToolBar jToolBar;
@@ -53,7 +54,7 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 	private void initUi() {
 		try {
 			setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-			setTitle("Belastingdienst Architectuur");
+			super.setTitle(defaultTitle);
 			setIconImage(new ImageIcon(getClass().getClassLoader().getResource("belastingdienst.jpg")).getImage());
 			{
 				jPanelContentView = new JPanel();
@@ -124,6 +125,11 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 	public void setContentView(JPanel jp) {
 		jPanelContentView.removeAll();
 		jPanelContentView.add(jp);
+	}
+	
+	@Override
+	public void setTitle(String configuration){
+		super.setTitle(defaultTitle + " - " + configuration);		
 	}
 
 }

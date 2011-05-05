@@ -34,8 +34,8 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 	private JScrollPane jScrollPane2;
 	private JScrollPane jScrollPane3;
 	private JScrollPane jScrollPane4;
-	public JTable jTable1;
-	public JTable jTable2;
+	public JTable jTableSoftwareUnits;
+	public JTable jTableAppliedRules;
 	public JList jListLayers;
 	private JLabel jLabel2;
 	private JLabel jLabel1;
@@ -219,8 +219,8 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 									jPanel7.add(jScrollPane3, BorderLayout.CENTER);
 									jScrollPane3.setPreferredSize(new java.awt.Dimension(227, 249));
 									{
-										jTable1 = new JTableSoftwareUnits();
-										jScrollPane3.setViewportView(jTable1);
+										jTableSoftwareUnits = new JTableSoftwareUnits();
+										jScrollPane3.setViewportView(jTableSoftwareUnits);
 									}
 								}
 								{
@@ -261,8 +261,8 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 									jPanel8.add(jScrollPane4, BorderLayout.CENTER);
 									jScrollPane4.setPreferredSize(new java.awt.Dimension(278, 32));
 									{
-										jTable2 = new JTableAppliedRule();
-										jScrollPane4.setViewportView(jTable2);
+										jTableAppliedRules = new JTableAppliedRule();
+										jScrollPane4.setViewportView(jTableAppliedRules);										
 									}
 								}
 								{
@@ -313,9 +313,9 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 	}
 
 	public SoftwareUnitDefinition getSelectedComponent() {
-		int selectedRow = jTable1.getSelectedRow();
+		int selectedRow = jTableSoftwareUnits.getSelectedRow();
 		if (selectedRow >= 0) {
-			JTableTableModel c = (JTableTableModel) jTable1.getModel();
+			JTableTableModel c = (JTableTableModel) jTableSoftwareUnits.getModel();
 			Object selected = c.getValueAt(selectedRow, 0);
 			if (selected instanceof SoftwareUnitDefinition) {
 				return (SoftwareUnitDefinition) selected;

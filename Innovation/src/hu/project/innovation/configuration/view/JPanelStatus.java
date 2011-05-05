@@ -15,6 +15,7 @@ public class JPanelStatus extends JPanel {
 
 	private static final long serialVersionUID = -7360960342696885795L;
 	private String defaultMessage = "Idle";
+	//TODO: change String to a Strack with pop/flop ;)
 	private String message = "";
 	private JLabel jLabelStatus;
 	private JProgressBar jProgressBar1;

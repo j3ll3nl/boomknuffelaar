@@ -4,8 +4,9 @@ import hu.project.innovation.utils.Log;
 import hu.project.innovation.utils.XMLable;
 
 import java.util.ArrayList;
+import java.util.Observable;
 
-public class ArchitectureDefinition implements XMLable {
+public class ArchitectureDefinition extends Observable implements XMLable {
 
 	private String name;
 	private String description;
@@ -13,19 +14,19 @@ public class ArchitectureDefinition implements XMLable {
 	private ArrayList<Layer> layers = new ArrayList<Layer>();
 
 	public ArchitectureDefinition() {
-		Log.i(this, "ArchitectureDefinition()");
-		this.layers = new ArrayList<Layer>();
+		Log.i(this, "ArchitectureDefinition()");	
 	}
 
-	public ArchitectureDefinition(String name) {
-		this();
+	public ArchitectureDefinition(String name, String description) {
+		setName(name);
+		setDescription(description);
+	}
+
+	public void setName(String name) {
 		this.name = name;
-		this.description = "unknown";
-	}
 
-	public ArchitectureDefinition(String name, String desc) {
-		this(name);
-		this.description = desc;
+		setChanged();
+		notifyObservers(name);
 	}
 
 	public String getName() {
@@ -45,6 +46,11 @@ public class ArchitectureDefinition implements XMLable {
 	}
 
 	public void addLayer(Layer layer) {
+		if (layers.isEmpty()) {
+			layer.setId(0);
+		} else {
+			layer.setId(layers.size());
+		}
 		layers.add(layer);
 	}
 
@@ -60,7 +66,7 @@ public class ArchitectureDefinition implements XMLable {
 	}
 
 	public void removeLayer(Layer layer) {
-		layers.remove(layer);		
+		layers.remove(layer);
 	}
 
 	public Layer getLayer(String name) {
@@ -89,14 +95,17 @@ public class ArchitectureDefinition implements XMLable {
 	}
 
 	public ArrayList<Layer> getAllLayers() {
+
 		return layers;
 	}
 
 	@Override
 	public String toXML() {
 		String xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<architecture>\n";
-		for (Layer layer : layers) {
-			xml += layer.toXML();
+		if (layers != null) {
+			for (Layer layer : layers) {
+				xml += layer.toXML();
+			}
 		}
 		xml += "</architecture>\n";
 

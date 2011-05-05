@@ -16,7 +16,7 @@ import org.xml.sax.helpers.XMLReaderFactory;
 
 public class ConfigurationService {
 
-	private ArchitectureDefinition architecture;
+	private ArchitectureDefinition architectureDefinition;
 	private Configuration configuration;
 	private static ConfigurationService instance;
 
@@ -38,6 +38,14 @@ public class ConfigurationService {
 		return instance;
 	}
 
+	public boolean isArchitectureDefinition() {
+		if (architectureDefinition == null) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
 	/**
 	 * Create a new configuration.
 	 * 
@@ -46,7 +54,7 @@ public class ConfigurationService {
 	 */
 	public void newConfiguration(String name, String description) {
 		Log.i(this, "newConfiguration(" + name + ", " + description + ")");
-		this.architecture = new ArchitectureDefinition(name, description);
+		this.architectureDefinition = new ArchitectureDefinition(name, description);
 	}
 
 	/**
@@ -58,14 +66,13 @@ public class ConfigurationService {
 	public void openConfiguration(File file) throws Exception {
 		Log.i(this, "openConfiguration(" + file + ")");
 
-		// TODO: door: Stefan, aan: Martijn; Zie opmerking bij saveConfiguration()
 		XMLReader xr = XMLReaderFactory.createXMLReader();
 		ArchDefXMLReader reader = new ArchDefXMLReader();
 		reader.validateXML(file);
 		xr.setContentHandler(reader);
 		xr.parse(new InputSource(new FileReader(file)));
 
-		architecture = reader.getArchitectureDefinition();
+		architectureDefinition = reader.getArchitectureDefinition();
 	}
 
 	/**
@@ -76,12 +83,23 @@ public class ConfigurationService {
 	 */
 	public void saveConfiguration(File file) throws Exception {
 		Log.i(this, "saveConfiguration(" + file + ")");
+		
+		if(!isArchitectureDefinition()){
+			
+		}else{
+			FileWriter fstream = new FileWriter(file);
+			BufferedWriter out = new BufferedWriter(fstream);
+			out.write(architectureDefinition.toXML());
+			out.close();
+		}
+	}
 
-		// TODO: door: Stefan, aan: Martijn; Het wegschrijven van de architectuur mag niet in de facade gebeuren maar moet je in een andere klasse opnemen
-		FileWriter fstream = new FileWriter(file);
-		BufferedWriter out = new BufferedWriter(fstream);
-		out.write(architecture.toXML());
-		out.close();
+	/**
+	 * Get the current architecture definition
+	 * @return
+	 */
+	public ArchitectureDefinition getConfiguration() {
+		return this.architectureDefinition;
 	}
 
 	/**
@@ -92,10 +110,12 @@ public class ConfigurationService {
 	 * @throws Exception If an error occurs
 	 */
 	public void newLayer(String name, String description) throws Exception {
-		if (null == this.architecture) {
-			throw new Exception(Messages.ERROR_NEWARCHITECTURE);
+		if (null == this.architectureDefinition) {
+			throw new Exception("Please create a new architecture");
 		}
-		this.architecture.addLayer(new Layer(name, description));
+		Layer layer = new Layer(name, description);
+
+		this.architectureDefinition.addLayer(layer);
 	}
 
 	/**
@@ -105,10 +125,10 @@ public class ConfigurationService {
 	 * @throws Exception If an error occurs
 	 */
 	public void removeLayer(Layer layer) throws Exception {
-		if (null == this.architecture) {
-			throw new Exception(Messages.ERROR_NEWARCHITECTURE);
+		if (null == this.architectureDefinition) {
+			throw new Exception("Please create a new architecture");
 		}
-		this.architecture.removeLayer(layer);
+		this.architectureDefinition.removeLayer(layer);
 	}
 
 	/**
@@ -118,7 +138,7 @@ public class ConfigurationService {
 	 */
 	public Layer getLayer(String name) {
 		// TODO: Remove this method
-		return this.architecture.getLayer(name);
+		return this.architectureDefinition.getLayer(name);
 	}
 
 	/**
@@ -148,22 +168,23 @@ public class ConfigurationService {
 	 * @throws Exception
 	 */
 	public void newSoftwareUnit(Layer layer, String unitName, String unitType) throws Exception {
-		if (layer == null || (this.architecture.getLayer(layer.getName()) == null)) {
+		if (layer == null || (this.architectureDefinition.getLayer(layer.getName()) == null)) {
 			throw new Exception(Messages.ERROR_LAYERDOESNOTEXIST);
 		} else {
 			SoftwareUnitDefinition softwareunitdefinition = new SoftwareUnitDefinition(unitName, unitType);
-			layer.addSoftwareUnit(softwareunitdefinition);			
+			layer.addSoftwareUnit(softwareunitdefinition);
 		}
 	}
 
 	/**
-	 * Remove the 
+	 * Remove the
+	 * 
 	 * @param layer
 	 * @param component
 	 * @throws Exception
 	 */
 	public void removeSoftwareUnit(Layer layer, SoftwareUnitDefinition component) throws Exception {
-		if (layer == null || (this.architecture.getLayer(layer.getName()) == null)) {
+		if (layer == null || (this.architectureDefinition.getLayer(layer.getName()) == null)) {
 			throw new Exception(Messages.ERROR_LAYERDOESNOTEXIST);
 		} else {
 			layer.removeSoftwareUniteDefinition(component);
@@ -225,8 +246,8 @@ public class ConfigurationService {
 	}
 
 	public void newAppliedRule(String fromLayerName, String toLayerName, String ruleName) {
-		Layer fromLayer = this.architecture.getLayer(fromLayerName);
-		Layer toLayer = this.architecture.getLayer(toLayerName);
+		Layer fromLayer = this.architectureDefinition.getLayer(fromLayerName);
+		Layer toLayer = this.architectureDefinition.getLayer(toLayerName);
 		AbstractRuleType ruleType = this.configuration.getRule(ruleName);
 
 		if (null != fromLayer && null != toLayer && null != ruleType) {
@@ -239,23 +260,26 @@ public class ConfigurationService {
 	}
 
 	public String getLayerNameBySoftwareUnitName(String name) {
-		return this.architecture.getLayerNameBySoftwareUnitName(name);
+		return this.architectureDefinition.getLayerNameBySoftwareUnitName(name);
 	}
 
 	public ArrayList<Layer> getLayers() {
-		return this.architecture.getAllLayers();
+		if (!isArchitectureDefinition()) {
+			return null;
+		}
+		return this.architectureDefinition.getAllLayers();
 	}
 
 	public ArrayList<SoftwareUnitDefinition> getComponents() {
-		return this.architecture.getAllComponents();
+		return this.architectureDefinition.getAllComponents();
 	}
 
 	public String architectureToXML() {
-		return this.architecture.toXML();
+		return this.architectureDefinition.toXML();
 	}
 
 	public boolean isRuleApplied(String fromLayerName, String toLayerName, String ruleName) {
-		Layer fromLayer = this.architecture.getLayer(fromLayerName);
+		Layer fromLayer = this.architectureDefinition.getLayer(fromLayerName);
 
 		if (null != fromLayer) {
 			return fromLayer.hasAppliedRule(ruleName, toLayerName);
