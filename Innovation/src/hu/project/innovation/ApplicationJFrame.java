@@ -106,7 +106,7 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 				{
 					jMenu3 = new JMenu();
 					jMenuBar.add(jMenu3);
-					jMenu3.setText("Help");					
+					jMenu3.setText("Help");
 					{
 						jMenuItemAbout = new JMenuItem();
 						jMenu3.add(jMenuItemAbout);
@@ -126,10 +126,10 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 		jPanelContentView.removeAll();
 		jPanelContentView.add(jp);
 	}
-	
+
 	@Override
-	public void setTitle(String configuration){
-		super.setTitle(defaultTitle + " - " + configuration);		
+	public void setTitle(String configuration) {
+		super.setTitle(defaultTitle + " - " + configuration);
 	}
 
 }

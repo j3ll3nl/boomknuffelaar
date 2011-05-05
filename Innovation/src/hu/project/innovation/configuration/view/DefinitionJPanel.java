@@ -262,7 +262,7 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 									jScrollPane4.setPreferredSize(new java.awt.Dimension(278, 32));
 									{
 										jTableAppliedRules = new JTableAppliedRule();
-										jScrollPane4.setViewportView(jTableAppliedRules);										
+										jScrollPane4.setViewportView(jTableAppliedRules);
 									}
 								}
 								{

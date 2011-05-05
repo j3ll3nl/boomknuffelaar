@@ -1,6 +1,5 @@
 package hu.project.innovation.configuration.model;
 
-import hu.project.innovation.utils.Log;
 import net.sourceforge.pmd.ast.ASTClassOrInterfaceType;
 import net.sourceforge.pmd.ast.SimpleNode;
 
@@ -14,7 +13,7 @@ public class BackCallRule extends AbstractRuleType {
 	 * @see hu.project.innovation.configuration.model.ConfigurationService
 	 * @see net.sourceforge.pmd.AbstractJavaRule#visit(net.sourceforge.pmd.ast.ASTClassOrInterfaceType, java.lang.Object)
 	 */
-	public Object visit(ASTClassOrInterfaceType node, Object data) {		
+	public Object visit(ASTClassOrInterfaceType node, Object data) {
 		// Only check if we have a type
 		if (node.getType() != null) {
 			// Get the called package name

@@ -162,7 +162,7 @@ public class ConfigurationService {
 	public void moveLayerDown(Layer layer) throws Exception {
 		Log.i(this, "moveLayerDown(" + layer + ")");
 		layer.moveDown();
-				
+
 		architectureDefinition.autoUpdateLayerSequence();
 	}
 
