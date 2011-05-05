@@ -25,6 +25,7 @@ public class TestConfiguration {
 			conf.newLayer("D", "Task specific logic");
 			conf.newLayer("E", "Task specific logic");
 			conf.newLayer("F", "Task specific logic");
+			conf.getConfiguration().autoUpdateLayerSequence();
 
 			// Software units
 			conf.newSoftwareUnit(conf.getLayer("UI"), "hu.project.innovation.configuration.view", "package");

@@ -116,12 +116,15 @@ public class ArchitectureDefinition implements XMLable {
 		return xml;
 	}
 
-	public void autoUpdateLayerSequence(Layer l) {
-		Layer firstLayer = l.getFirstLayer();
-
-		if (l.getFirstLayer() != topLayer) {
-			topLayer = l.getFirstLayer();
-		}
+	/**
+	 * This method will reset the topLayer with the new FirstLayer. Method is NEEDED for correct move up/down sequence
+	 */
+	public void autoUpdateLayerSequence() {
+		Layer firstLayer = topLayer.getFirstLayer();
+		
+		topLayer = topLayer.getFirstLayer();
+		
+		//Auto update the ID numbers for the layers. Ofcourse, the first layer should be 0 etc.
 		firstLayer.updateId(0);
 	}
 }
