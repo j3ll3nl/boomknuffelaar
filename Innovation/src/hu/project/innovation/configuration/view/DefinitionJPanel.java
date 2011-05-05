@@ -215,13 +215,13 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 								jPanel11.add(jPanel7);
 								BorderLayout jPanel7Layout = new BorderLayout();
 								jPanel7.setLayout(jPanel7Layout);
-								jPanel7.setBorder(BorderFactory.createTitledBorder("Components which are assigned to this layer"));
+								jPanel7.setBorder(BorderFactory.createTitledBorder("Software units which are assigned to this layer"));
 								{
 									jScrollPane3 = new JScrollPane();
 									jPanel7.add(jScrollPane3, BorderLayout.CENTER);
 									jScrollPane3.setPreferredSize(new java.awt.Dimension(227, 249));
 									{
-										jTable1 = new ComponentTable();
+										jTable1 = new JTableSoftwareUnits();
 										jScrollPane3.setViewportView(jTable1);
 									}
 								}
