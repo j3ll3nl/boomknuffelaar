@@ -1,11 +1,12 @@
 package hu.project.innovation.configuration.controller;
 
+import hu.project.innovation.MainController;
 import hu.project.innovation.configuration.model.ConfigurationService;
 import hu.project.innovation.configuration.model.Layer;
 import hu.project.innovation.configuration.model.SoftwareUnitDefinition;
-import hu.project.innovation.configuration.view.JTableTableModel;
 import hu.project.innovation.configuration.view.DefinitionJPanel;
 import hu.project.innovation.configuration.view.JPanelStatus;
+import hu.project.innovation.configuration.view.JTableTableModel;
 import hu.project.innovation.configuration.view.XmlFileFilter;
 import hu.project.innovation.utils.Log;
 import hu.project.innovation.utils.Ui;
@@ -28,9 +29,11 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 
 	private DefinitionJPanel definitionJPanel;
 	private ConfigurationService configurationService;
+	private MainController mainController;
 
-	public DefinitionController() {
+	public DefinitionController(MainController mc) {
 		Log.i(this, "constructor()");
+		mainController = mc;
 		definitionJPanel = new DefinitionJPanel();
 		configurationService = ConfigurationService.getInstance();
 	}
@@ -79,6 +82,8 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 			configurationService.newConfiguration(response, "");
 
 			updateLayerList();
+
+			mainController.jframe.setTitle(response);
 		}
 	}
 
@@ -106,6 +111,8 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 
 				// Pass the file to the service
 				configurationService.openConfiguration(file);
+
+				mainController.jframe.setTitle(configurationService.getConfiguration().getName());
 
 				Log.i(this, "openConfiguration() - success opening configuration");
 			} catch (Exception e) {
@@ -148,6 +155,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 				Log.i(this, "saveConfiguration() - success saving configuration");
 			} catch (Exception e) {
 				Log.e(this, "saveConfiguration() - exeption: " + e.getMessage());
+				e.printStackTrace();
 				Ui.errorDialog(definitionJPanel, e.getMessage(), "Error");
 			} finally {
 				JPanelStatus.getInstance().stop();
@@ -167,6 +175,8 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 				Log.i(this, "newLayer() - value: " + layerName);
 				configurationService.newLayer(layerName, "");
 			} catch (Exception e) {
+				e.printStackTrace();
+				Log.e(this, "newLayer() - exception " + e.getMessage());
 				Ui.errorDialog(definitionJPanel, e.getMessage(), "Error");
 			}
 			updateLayerList();
@@ -219,20 +229,6 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		}
 	}
 
-	private void loadLayerDetail() {
-		Log.i(this, "loadLayerDetail()");
-
-		Layer layer = definitionJPanel.getSelectedLayer();
-		if (layer != null) {
-			Log.i(this, "loadLayerDetail() - selected layer: " + layer.getName());
-
-			definitionJPanel.jTextFieldLayerName.setText(layer.getName());
-			definitionJPanel.jTextAreaLayerDescription.setText(layer.getDescription());
-
-			updateComponentTable(layer);
-		}
-	}
-
 	private void addSoftwareUnit() {
 		Log.i(this, "addComponent()");
 		// TODO Auto-generated method stub
@@ -271,11 +267,16 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	private void updateLayer() {
 		Layer layer = definitionJPanel.getSelectedLayer();
 
-		Log.i(this, "keyReleased() - value from name: " + definitionJPanel.jTextFieldLayerName.getText());
-		layer.setName(definitionJPanel.jTextFieldLayerName.getText());
-		layer.setDescription(definitionJPanel.jTextAreaLayerDescription.getText());
+		JPanelStatus.getInstance("Saving layer").start();
 
-		definitionJPanel.jListLayers.updateUI();
+		if (layer != null) {
+			Log.i(this, "keyReleased() - value from name: " + definitionJPanel.jTextFieldLayerName.getText());
+			layer.setName(definitionJPanel.jTextFieldLayerName.getText());
+			layer.setDescription(definitionJPanel.jTextAreaLayerDescription.getText());
+
+			definitionJPanel.jListLayers.updateUI();
+		}
+		JPanelStatus.getInstance().stop();
 	}
 
 	/**
@@ -303,7 +304,62 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 			}
 		}
 
+		enablePanel();
+
 		JPanelStatus.getInstance().stop();
+	}
+
+	private void loadLayerDetail() {
+		Log.i(this, "loadLayerDetail()");
+
+		Layer layer = definitionJPanel.getSelectedLayer();
+		if (layer != null) {
+			Log.i(this, "loadLayerDetail() - selected layer: " + layer.getName());
+
+			definitionJPanel.jTextFieldLayerName.setText(layer.getName());
+			definitionJPanel.jTextAreaLayerDescription.setText(layer.getDescription());
+
+			updateSoftwareUnitTable(layer);
+			updateAppliedRulesTable(layer);
+		}
+		enablePanel();
+	}
+
+	private void enablePanel() {
+		Log.i(this, "enablePanel()");
+		Layer layer = definitionJPanel.getSelectedLayer();
+
+		boolean enabled;
+		if (layer == null) {
+			Log.i(this, "enablePanel() - false");
+			enabled = false;
+		} else {
+			Log.i(this, "enablePanel() - true");
+			enabled = true;
+		}
+		definitionJPanel.jTextFieldLayerName.setEnabled(enabled);
+		definitionJPanel.jTextAreaLayerDescription.setEnabled(enabled);
+		definitionJPanel.jButtonAddComponentToLayer.setEnabled(enabled);
+		definitionJPanel.jButtonEditComponentFromLayer.setEnabled(enabled);
+		definitionJPanel.jButtonRemoveComponentFromLayer.setEnabled(enabled);
+		definitionJPanel.jTableSoftwareUnits.setEnabled(enabled);
+		definitionJPanel.jTableAppliedRules.setEnabled(enabled);
+		definitionJPanel.jButtonAddRuleToLayer.setEnabled(enabled);
+		definitionJPanel.jButtonEditRuleFromLayer.setEnabled(enabled);
+		definitionJPanel.jButtonRemoveRuleFromLayer.setEnabled(enabled);
+		definitionJPanel.jButtonMoveLayerUp.setEnabled(enabled);
+		definitionJPanel.jButtonMoveLayerDown.setEnabled(enabled);
+		definitionJPanel.jButtonRemoveLayer.setEnabled(enabled);
+
+		if (!configurationService.isArchitectureDefinition()) {
+			definitionJPanel.jButtonNewLayer.setEnabled(false);
+			mainController.jframe.jMenuItemSaveArchitecture.setEnabled(false);
+			mainController.jframe.jMenuItemStartAnalyse.setEnabled(false);
+		} else {
+			definitionJPanel.jButtonNewLayer.setEnabled(true);
+			mainController.jframe.jMenuItemSaveArchitecture.setEnabled(true);
+			mainController.jframe.jMenuItemStartAnalyse.setEnabled(true);
+		}
 	}
 
 	/**
@@ -311,16 +367,16 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	 * 
 	 * @param layer
 	 */
-	private void updateComponentTable(Layer layer) {
-		Log.i(this, "updateComponentTable()");
+	private void updateSoftwareUnitTable(Layer layer) {
+		Log.i(this, "updateSoftwareUnitTable(" + layer + ")");
 
-		JPanelStatus.getInstance("Updating component table").start();
+		JPanelStatus.getInstance("Updating software unit table").start();
 
 		// Get all components from the service
 		ArrayList<SoftwareUnitDefinition> components = layer.getAllSoftwareUnitDefinitions();
 
 		// Get the tablemodel from the table
-		JTableTableModel atm = (JTableTableModel) definitionJPanel.jTable1.getModel();
+		JTableTableModel atm = (JTableTableModel) definitionJPanel.jTableSoftwareUnits.getModel();
 
 		// Remove all items in the table
 		atm.getDataVector().removeAllElements();
@@ -333,6 +389,12 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		atm.fireTableDataChanged();
 
 		JPanelStatus.getInstance().stop();
+	}
+
+	private void updateAppliedRulesTable(Layer layer) {
+		Log.i(this, "updateAppliedRulesTable(" + layer + ")");
+
+		// TODO implement this function
 	}
 
 	@Override

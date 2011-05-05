@@ -13,7 +13,7 @@ import java.io.InputStreamReader;
 public class MainController implements ActionListener {
 	private DefinitionController definitioncontroller = null;
 	private AnalyseController analysecontroller = null;
-	private ApplicationJFrame jframe;
+	public ApplicationJFrame jframe;
 
 	/**
 	 * MainController constructor. This constructor will initialize a new Definition and Analyse controller.
@@ -21,7 +21,7 @@ public class MainController implements ActionListener {
 	public MainController() {
 		Log.i(this, "constructor()");
 
-		definitioncontroller = new DefinitionController();
+		definitioncontroller = new DefinitionController(this);
 		analysecontroller = new AnalyseController();
 	}
 
@@ -46,7 +46,7 @@ public class MainController implements ActionListener {
 
 		// Set the visibility of the jframe to true so the jframe is now visible
 		Ui.showOnScreen(0, jframe);
-		jframe.setVisible(true);		
+		jframe.setVisible(true);
 	}
 
 	/**
@@ -102,4 +102,5 @@ public class MainController implements ActionListener {
 			Log.i(this, "actionPerformed(" + action + ") - unknown button event");
 		}
 	}
+
 }
