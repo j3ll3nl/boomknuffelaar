@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rules>
-	<rule key="back_call_rule">
-		<name>Back call principle -1-</name>
-		<configKey>hu/project/innovation/configuration/model/ruleset.xml/back_call_rule</configKey>
-	</rule>	
-	<rule key="skip_call_rule">
-		<name>Skip call principle -2-</name>
-		<configKey>hu/project/innovation/configuration/model/ruleset.xml/skip_call_rule</configKey>
-	</rule>	
-	<rule key="interfaces_only_rule">
-		<name>Interfaces only -3-</name>
-		<configKey>hu/project/innovation/configuration/model/ruleset.xml/interfaces_only_rule</configKey>
-	</rule>	
+	<rule key="Back-call rule">
+		<name>Back call principle</name>
+		<description>A lower layer is calling a higher layer</description>
+		<configKey>hu/project/innovation/configuration/model/ruleset.xml/Back-call rule</configKey>
+	</rule>
+	<rule key="Skip-layer rule">
+		<name>Skip call principle</name>
+		<description>A layer is being skipped</description>
+		<configKey>hu/project/innovation/configuration/model/ruleset.xml/Skip-layer rule</configKey>
+	</rule>
+	<rule key="Interfaces only rule">
+		<name>Interfaces only</name>
+		<description>The called layer is only accesable through interfaces</description>
+		<configKey>hu/project/innovation/configuration/model/ruleset.xml/Interfaces only rule</configKey>
+	</rule>
 </rules>
