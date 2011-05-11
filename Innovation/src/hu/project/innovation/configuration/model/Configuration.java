@@ -2,6 +2,7 @@ package hu.project.innovation.configuration.model;
 
 import hu.project.innovation.utils.Log;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Configuration {
@@ -21,6 +22,7 @@ public class Configuration {
 		this.rules = new HashMap<String, AbstractRuleType>();
 		this.addRuleType(new BackCallRule());
 		this.addRuleType(new SkipLayerRule());
+		this.addRuleType(new InterfacesOnlyRule());
 
 		this.settings = new HashMap<String, String>();
 	}
@@ -31,6 +33,12 @@ public class Configuration {
 
 	public AbstractRuleType getRuleType(String ruleName) {
 		return this.rules.get(ruleName);
+	}
+	
+	public ArrayList<AbstractRuleType> getRuleTypes() {
+		ArrayList<AbstractRuleType> rules = new ArrayList<AbstractRuleType>();
+		rules.addAll(this.rules.values());
+		return rules;
 	}
 
 	public void setSetting(String key, String value) {
