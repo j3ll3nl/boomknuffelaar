@@ -16,24 +16,22 @@ public class SoftwareUnitDefinition implements XMLable {
 	private Layer layer;
 
 	public SoftwareUnitDefinition(String name, String type) {
-		this.name = name;
-		this.setType(type);
+		setName(name);
+		setType(type);
+
+		exceptions = new ArrayList<SoftwareUnitDefinition>();
 	}
 
 	public SoftwareUnitDefinition() {
 
 	}
 
-	public String getName() {
-		return name;
-	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	public void addSoftwareUnitDefinition(SoftwareUnitDefinition unit) {
-		softwareUnits.add(unit);
+	public String getName() {
+		return name;
 	}
 
 	public void setType(String type) {
@@ -44,21 +42,16 @@ public class SoftwareUnitDefinition implements XMLable {
 		return type;
 	}
 
-	@Override
-	public String toXML() {
-		String xml = "\t\t<softwareUnit>\n";
-		xml += "\t\t\t<name>" + this.name + "</name>\n";
-		xml += "\t\t\t<type>" + this.type + "</type>\n";
-		xml += "\t\t</softwareUnit>\n";
-		return xml;
+	public void setLayer(Layer layer) {
+		this.layer = layer;
 	}
 
 	public Layer getLayer() {
 		return this.layer;
 	}
 
-	public void setLayer(Layer layer) {
-		this.layer = layer;
+	public void addSoftwareUnitDefinition(SoftwareUnitDefinition unit) {
+		softwareUnits.add(unit);
 	}
 
 	public void addException(SoftwareUnitDefinition softwareunit) {
@@ -76,6 +69,19 @@ public class SoftwareUnitDefinition implements XMLable {
 			return 0;
 		}
 
+	}
+
+	public void removeAllExceptions() {
+		exceptions.clear();
+	}
+
+	@Override
+	public String toXML() {
+		String xml = "\t\t<softwareUnit>\n";
+		xml += "\t\t\t<name>" + this.name + "</name>\n";
+		xml += "\t\t\t<type>" + this.type + "</type>\n";
+		xml += "\t\t</softwareUnit>\n";
+		return xml;
 	}
 
 }
