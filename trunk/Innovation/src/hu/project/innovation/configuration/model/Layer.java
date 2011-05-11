@@ -12,22 +12,22 @@ public class Layer implements XMLable {
 	private String description;
 	private Layer parentLayer;
 	private Layer childLayer;
-	public ArrayList<AppliedRule> appliedRules;
+	private ArrayList<AppliedRule> appliedRules;
 	private ArrayList<SoftwareUnitDefinition> softwareUnitDefinitions;
+	private boolean interfaceAccessOnly;
 
 	public Layer() {
 		this.appliedRules = new ArrayList<AppliedRule>();
 		this.softwareUnitDefinitions = new ArrayList<SoftwareUnitDefinition>();
+		this.interfaceAccessOnly = false;
 	}
 
 	public Layer(String name, String description) {
+		this();
 		Log.i(this, "constructor(\"" + name + "\", \"" + description + "\")");
 
 		setName(name);
 		setDescription(description);
-
-		this.appliedRules = new ArrayList<AppliedRule>();
-		this.softwareUnitDefinitions = new ArrayList<SoftwareUnitDefinition>();
 	}
 
 	public int getId() {
@@ -76,6 +76,14 @@ public class Layer implements XMLable {
 
 	public void setParentLayer(Layer layer) {
 		parentLayer = layer;
+	}
+	
+	public boolean isInterfaceAccessOnly() {
+		return this.interfaceAccessOnly;
+	}
+	
+	public void setInterfaceAccesOnly(boolean bool) {
+		this.interfaceAccessOnly = bool;
 	}
 
 	public void addAppliedRule(AbstractRuleType ruleType, Layer toLayer) {

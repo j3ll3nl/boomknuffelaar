@@ -1,6 +1,6 @@
 package hu.project.innovation.configuration.model;
 
-import hu.project.innovation.utils.Log;
+//import hu.project.innovation.utils.Log;
 import net.sourceforge.pmd.ast.ASTClassOrInterfaceType;
 import net.sourceforge.pmd.ast.SimpleNode;
 
@@ -29,8 +29,8 @@ public class BackCallRule extends AbstractRuleType {
 				// Get the toLayer using the package name from the called class
 				Layer toLayer = ConfigurationService.getInstance().getLayerNameBySoftwareUnitName(calledPackageName);
 
-				 Log.i(this,"from: " + this.getPackageName(node) + " to: " + calledPackageName);
-				 Log.i(this,"from: " + fromLayer + " to: " + toLayer);
+//				 Log.i(this,"from: " + this.getPackageName(node) + " to: " + calledPackageName);
+//				 Log.i(this,"from: " + fromLayer + " to: " + toLayer);
 
 				// Check if the rule is applied for these two layers and this rule
 				if (ConfigurationService.getInstance().isRuleApplied(fromLayer, toLayer, this.getClass().getSimpleName())) {
