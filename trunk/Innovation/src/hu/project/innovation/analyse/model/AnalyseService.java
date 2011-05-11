@@ -49,7 +49,6 @@ public class AnalyseService {
 		PMD.main(pmdArgs);
 
 		setRunning(false);
-
 	}
 
 	public void setRunning(boolean running) {
