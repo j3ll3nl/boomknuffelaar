@@ -117,6 +117,7 @@ public class ConfigurationService {
 		Layer layer = new Layer(name, description);
 
 		this.architectureDefinition.addLayer(layer);
+		architectureDefinition.autoUpdateLayerSequence();
 	}
 
 	/**
@@ -130,6 +131,7 @@ public class ConfigurationService {
 			throw new Exception("Please create a new architecture");
 		}
 		this.architectureDefinition.removeLayer(layer);
+		architectureDefinition.autoUpdateLayerSequence();
 	}
 
 	/**
