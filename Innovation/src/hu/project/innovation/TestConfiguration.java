@@ -27,8 +27,8 @@ public class TestConfiguration {
 
 			// Layers
 			conf.newLayer("UI", "Presentation logic");
-			conf.newLayer("Domain", "Domain logic").setInterfaceAccesOnly(true);
 			conf.newLayer("Task", "Task specific logic");
+			conf.newLayer("Domain", "Domain logic").setInterfaceAccesOnly(true);
 			conf.getConfiguration().autoUpdateLayerSequence();
 
 			// Software units
