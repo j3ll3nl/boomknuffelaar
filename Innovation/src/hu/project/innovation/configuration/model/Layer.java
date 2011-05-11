@@ -175,7 +175,8 @@ public class Layer implements XMLable {
 	public boolean hasAppliedRule(String ruleName, Layer toLayer) {
 		if (appliedRules != null) {
 			for (AppliedRule appliedRule : this.appliedRules) {
-				if (appliedRule.getToLayer() == toLayer && appliedRule.getRuleType().getName().equals(ruleName)) {
+				if (appliedRule.getToLayer().getId() == toLayer.getId() 
+						&& appliedRule.getRuleType().getName().equals(ruleName)) {
 					return true;
 				}
 			}
@@ -292,13 +293,25 @@ public class Layer implements XMLable {
 		return null;
 	}
 
-	public Layer getLayerNameBySoftwareUnitName(String softwareUnitName) {
-		for (SoftwareUnitDefinition softwareunitdefinition : softwareUnitDefinitions) {
-			if (softwareunitdefinition.getName().equals(softwareUnitName)) {
+	/**
+	 * Find the layer containing the software unit
+	 * 
+	 * @param softwareUnitName
+	 * @return
+	 */
+	public Layer getLayerBySoftwareUnitName(String softwareUnitName) {
+		// First look in this layer
+		for (SoftwareUnitDefinition sud : softwareUnitDefinitions) {
+			if (sud.getName().equals(softwareUnitName)) {
 				return this;
 			}
 		}
-		return null;
+		// If you didn't find it, look in the child layer
+		if (childLayer != null) {
+			return childLayer.getLayerBySoftwareUnitName(softwareUnitName);
+		}
+		// Else return null
+		else return null;
 	}
 
 	public void printVolgorde() {

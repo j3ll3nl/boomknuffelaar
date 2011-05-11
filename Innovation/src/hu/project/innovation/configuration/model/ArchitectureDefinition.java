@@ -79,9 +79,9 @@ public class ArchitectureDefinition implements XMLable {
 	 * @param name
 	 * @return A string containing the name of the layer with the specified software unit name
 	 */
-	public Layer getLayerNameBySoftwareUnitName(String softwareUnitName) {
+	public Layer getLayerBySoftwareUnitName(String softwareUnitName) {
 		if (topLayer != null) {
-			return topLayer.getLayerNameBySoftwareUnitName(softwareUnitName);
+			return topLayer.getLayerBySoftwareUnitName(softwareUnitName);
 		}
 		return null;
 	}

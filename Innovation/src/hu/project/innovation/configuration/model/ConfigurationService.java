@@ -265,7 +265,7 @@ public class ConfigurationService {
 	}
 
 	public Layer getLayerNameBySoftwareUnitName(String name) {
-		return this.architectureDefinition.getLayerNameBySoftwareUnitName(name);
+		return this.architectureDefinition.getLayerBySoftwareUnitName(name);
 	}
 
 	public ArrayList<Layer> getLayers() {
