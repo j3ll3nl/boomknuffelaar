@@ -11,6 +11,7 @@ public class SoftwareUnitDefinition implements XMLable {
 	private String name;
 	private String type;
 	private ArrayList<SoftwareUnitDefinition> softwareUnits;
+	private ArrayList<SoftwareUnitDefinition> exceptions;
 
 	private Layer layer;
 
@@ -58,6 +59,14 @@ public class SoftwareUnitDefinition implements XMLable {
 
 	public void setLayer(Layer layer) {
 		this.layer = layer;
+	}
+
+	public void addException(SoftwareUnitDefinition softwareunit) {
+		exceptions.add(softwareunit);
+	}
+
+	public ArrayList<SoftwareUnitDefinition> getExceptions() {
+		return exceptions;
 	}
 
 }
