@@ -116,6 +116,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 
 				Log.i(this, "openConfiguration() - success opening configuration");
 			} catch (Exception e) {
+				e.printStackTrace();
 				Log.e(this, "openConfiguration() - exeption: " + e.getMessage());
 				Ui.errorDialog(definitionJPanel, e.getMessage(), "Error");
 			} finally {
