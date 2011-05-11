@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rules>
+	<rule key="back_call_pinciple_v1">
+		<name>Back call principle versie 123</name>
+		<configKey>hu/project/innovation/configuration/model/ruleset.xml/back_call_pinciple_v1</configKey>
+	</rule>	
+</rules>
