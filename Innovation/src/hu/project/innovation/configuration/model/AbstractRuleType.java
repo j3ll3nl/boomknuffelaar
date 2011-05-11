@@ -15,7 +15,7 @@ import org.jaxen.JaxenException;
 public abstract class AbstractRuleType extends AbstractJavaRule implements XMLable {
 
 	protected AbstractRuleType() {
-		Log.i(this, this.getClass().getSimpleName() + "()");
+//		Log.i(this, this.getClass().getSimpleName() + "()");
 		this.setName(this.getClass().getSimpleName());
 	}
 
@@ -57,8 +57,6 @@ public abstract class AbstractRuleType extends AbstractJavaRule implements XMLab
 			return node.getScope().getEnclosingClassScope().getClassName() == null ? "" : node.getScope().getEnclosingClassScope().getClassName();
 		}
 	}
-
-	protected abstract void checkViolationType(Object data, SimpleNode node);
 
 	public String toXML() {
 		String xml = "";
