@@ -148,7 +148,17 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 				JPanelStatus.getInstance("Saving configuration").start();
 
 				// Getting selected file from dialog
-				File file = fc.getSelectedFile();
+				File file;
+
+				if (fc.getSelectedFile().getName().endsWith(".xml")) {
+					
+					file = fc.getSelectedFile();
+					
+				} else {
+					
+					file = new File(fc.getSelectedFile().getAbsolutePath()+".xml");
+					
+				}
 				Log.i(this, "saveConfiguration() - configuration needs to be saved to file: " + file.getName());
 
 				// Pass the file to the service

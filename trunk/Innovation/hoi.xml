@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<architecture>
+	<layer>
+		<id>0</id>
+		<name>UI</name>
+		<description>Presentation logic</description>
+		<softwareUnit>
+			<name>hu.project.innovation.configuration.view</name>
+			<type>package</type>
+		</softwareUnit>
+		<softwareUnit>
+			<name>hu.project.innovation.report.view</name>
+			<type>package</type>
+		</softwareUnit>
+		<appliedRule>
+			<ruleType>SkipLayerRule</ruleType>
+			<toLayer>1</toLayer>
+		</appliedRule>
+	</layer>
+	<layer>
+		<id>1</id>
+		<name>Domain</name>
+		<description>Domain logic</description>
+		<softwareUnit>
+			<name>hu.project.innovation.configuration.model</name>
+			<type>package</type>
+		</softwareUnit>
+		<softwareUnit>
+			<name>hu.project.innovation.report.model</name>
+			<type>package</type>
+		</softwareUnit>
+		<appliedRule>
+			<ruleType>BackCallRule</ruleType>
+			<toLayer>2</toLayer>
+		</appliedRule>
+	</layer>
+	<layer>
+		<id>2</id>
+		<name>Task</name>
+		<description>Task specific logic</description>
+		<softwareUnit>
+			<name>hu.project.innovation.configuration.controller</name>
+			<type>package</type>
+		</softwareUnit>
+		<appliedRule>
+			<ruleType>BackCallRule</ruleType>
+			<toLayer>0</toLayer>
+		</appliedRule>
+	</layer>
+</architecture>
