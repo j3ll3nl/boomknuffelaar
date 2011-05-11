@@ -1,7 +1,9 @@
 package hu.project.innovation;
 
+import hu.project.innovation.configuration.model.BackCallRule;
 import hu.project.innovation.configuration.model.Configuration;
 import hu.project.innovation.configuration.model.ConfigurationService;
+import hu.project.innovation.configuration.model.SkipLayerRule;
 import hu.project.innovation.utils.Log;
 
 import java.io.File;
@@ -23,7 +25,7 @@ public class TestConfiguration {
 
 			// Layers
 			conf.newLayer("UI", "Presentation logic");
-			conf.newLayer("Domain", "Domain logic");
+			conf.newLayer("Domain", "Domain logic").setInterfaceAccesOnly(true);
 			conf.newLayer("Task", "Task specific logic");
 			conf.getConfiguration().autoUpdateLayerSequence();
 
@@ -35,9 +37,9 @@ public class TestConfiguration {
 			conf.newSoftwareUnit(conf.getLayer("Domain"), "hu.project.innovation.report.model", "package");
 
 			// Applied rules
-			conf.newAppliedRule(conf.getLayer("UI"), conf.getLayer("Domain"), "SkipLayerRule");
-			conf.newAppliedRule(conf.getLayer("Task"), conf.getLayer("UI"), "BackCallRule");
-			conf.newAppliedRule(conf.getLayer("Domain"), conf.getLayer("Task"), "BackCallRule");
+			conf.newAppliedRule(conf.getLayer("UI"), conf.getLayer("Domain"), new SkipLayerRule());
+			conf.newAppliedRule(conf.getLayer("Task"), conf.getLayer("UI"), new BackCallRule());
+			conf.newAppliedRule(conf.getLayer("Domain"), conf.getLayer("Task"), new BackCallRule());
 		} catch (Exception e) {
 			Log.e(this, "Error: " + e.getMessage());
 
