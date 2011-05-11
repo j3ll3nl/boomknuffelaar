@@ -108,9 +108,10 @@ public class ConfigurationService {
 	 * 
 	 * @param name The layer name
 	 * @param description The layer description
+	 * @return 
 	 * @throws Exception If an error occurs
 	 */
-	public void newLayer(String name, String description) throws Exception {
+	public Layer newLayer(String name, String description) throws Exception {
 		if (null == this.architectureDefinition) {
 			throw new Exception("Please create a new architecture");
 		}
@@ -118,6 +119,7 @@ public class ConfigurationService {
 
 		this.architectureDefinition.addLayer(layer);
 		architectureDefinition.autoUpdateLayerSequence();
+		return layer;
 	}
 
 	/**
