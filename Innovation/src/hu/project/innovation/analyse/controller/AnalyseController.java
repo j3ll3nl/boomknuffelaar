@@ -2,7 +2,7 @@ package hu.project.innovation.analyse.controller;
 
 import hu.project.innovation.ApplicationJFrame;
 import hu.project.innovation.analyse.model.AnalyseService;
-import hu.project.innovation.analyse.view.AnalyseJFrame;
+import hu.project.innovation.analyse.view.JFrameAnalyse;
 import hu.project.innovation.configuration.model.ConfigurationService;
 import hu.project.innovation.utils.Log;
 import hu.project.innovation.utils.Ui;
@@ -18,7 +18,7 @@ import javax.swing.JFileChooser;
 public class AnalyseController implements ActionListener, KeyListener {
 
 	private AnalyseService analyseService;
-	private AnalyseJFrame analyseJFrame = null;
+	private JFrameAnalyse analyseJFrame = null;
 
 	public AnalyseController() {
 		Log.i(this, "constructor()");
@@ -31,7 +31,7 @@ public class AnalyseController implements ActionListener, KeyListener {
 		Log.i(this, "initUi()");
 
 		if (analyseJFrame == null) {
-			analyseJFrame = new AnalyseJFrame(jframe);
+			analyseJFrame = new JFrameAnalyse(jframe);
 
 			analyseJFrame.jTextFieldProjectPath.addKeyListener(this);
 			analyseJFrame.jTextFieldOutputPath.addKeyListener(this);

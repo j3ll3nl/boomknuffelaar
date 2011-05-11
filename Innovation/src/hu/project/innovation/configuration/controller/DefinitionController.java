@@ -17,6 +17,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
@@ -25,7 +27,7 @@ import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-public class DefinitionController implements ActionListener, ListSelectionListener, KeyListener {
+public class DefinitionController implements ActionListener, ListSelectionListener, KeyListener, Observer {
 
 	private DefinitionJPanel definitionJPanel;
 	private ConfigurationService configurationService;
@@ -241,18 +243,38 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		}
 	}
 
+	/**
+	 * Add a new software unit to the selected layer. This method will pop-up a new jframe who will handle everything for creating a new sotware unit.
+	 */
 	private void addSoftwareUnit() {
-		Log.i(this, "addComponent()");
-		// TODO Auto-generated method stub
+		Log.i(this, "addSoftwareUnit()");
+		Layer layer = definitionJPanel.getSelectedLayer();
+		if (layer != null) {
+			SoftwareUnitController c = new SoftwareUnitController();
+			c.setParameters(layer, null);
+			c.setAction(SoftwareUnitController.ACTION_NEW);
+			c.addObserver(this);
+			c.initUi();
+		}
 	}
 
 	private void editSoftwareUnit() {
-		Log.i(this, "editComponent()");
-		// TODO Auto-generated method stub
+		Log.i(this, "editSoftwareUnit()");
+		Layer layer = definitionJPanel.getSelectedLayer();
+		SoftwareUnitDefinition softwareunit = definitionJPanel.getSelectedSoftwareUnit();
+		if (layer != null && softwareunit != null) {
+			SoftwareUnitController c = new SoftwareUnitController();
+			c.setParameters(layer, softwareunit);
+			c.setAction(SoftwareUnitController.ACTION_NEW);
+			c.addObserver(this);
+			c.initUi();
+		} else {
+			Ui.errorDialog(definitionJPanel, "Select a software unit", "Error");
+		}
 	}
 
 	private void removeSoftwareUnit() {
-		Log.i(this, "removeComponent()");
+		Log.i(this, "removeSoftwareUnit()");
 		// TODO Auto-generated method stub
 
 	}
@@ -331,8 +353,8 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 			definitionJPanel.jTextFieldLayerName.setText(layer.getName());
 			definitionJPanel.jTextAreaLayerDescription.setText(layer.getDescription());
 
-			updateSoftwareUnitTable(layer);
-			updateAppliedRulesTable(layer);
+			updateSoftwareUnitTable();
+			updateAppliedRulesTable();
 		}
 		enablePanel();
 	}
@@ -379,37 +401,43 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	 * 
 	 * @param layer
 	 */
-	private void updateSoftwareUnitTable(Layer layer) {
-		Log.i(this, "updateSoftwareUnitTable(" + layer + ")");
+	private void updateSoftwareUnitTable() {
+		Log.i(this, "updateSoftwareUnitTable()");
 
-		JPanelStatus.getInstance("Updating software unit table").start();
+		Layer layer = definitionJPanel.getSelectedLayer();
+		if (layer != null) {
+			JPanelStatus.getInstance("Updating software unit table").start();
 
-		// Get all components from the service
-		ArrayList<SoftwareUnitDefinition> components = layer.getAllSoftwareUnitDefinitions();
+			// Get all components from the service
+			ArrayList<SoftwareUnitDefinition> components = layer.getAllSoftwareUnitDefinitions();
 
-		// Get the tablemodel from the table
-		JTableTableModel atm = (JTableTableModel) definitionJPanel.jTableSoftwareUnits.getModel();
+			// Get the tablemodel from the table
+			JTableTableModel atm = (JTableTableModel) definitionJPanel.jTableSoftwareUnits.getModel();
 
-		// Remove all items in the table
-		atm.getDataVector().removeAllElements();
-		if (components != null) {
-			for (SoftwareUnitDefinition component : components) {
-				String rowdata[] = { component.getName(), component.getType(), "" };
-				atm.addRow(rowdata);
+			// Remove all items in the table
+			atm.getDataVector().removeAllElements();
+			if (components != null) {
+				for (SoftwareUnitDefinition component : components) {
+					String rowdata[] = { component.getName(), component.getType(), "" };
+					atm.addRow(rowdata);
+				}
 			}
-		}
-		atm.fireTableDataChanged();
+			atm.fireTableDataChanged();
 
-		JPanelStatus.getInstance().stop();
+			JPanelStatus.getInstance().stop();
+		}
 	}
 
-	private void updateAppliedRulesTable(Layer layer) {
-		Log.i(this, "updateAppliedRulesTable(" + layer + ")");
+	private void updateAppliedRulesTable() {
+		Log.i(this, "updateAppliedRulesTable()");
 
-		JPanelStatus.getInstance("Updating rules applied table").start();
+		Layer layer = definitionJPanel.getSelectedLayer();
+		if (layer != null) {
+			JPanelStatus.getInstance("Updating rules applied table").start();
 
-		// TODO implement this function
-		JPanelStatus.getInstance().stop();
+			// TODO implement this function
+			JPanelStatus.getInstance().stop();
+		}
 	}
 
 	@Override
@@ -465,6 +493,13 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	@Override
 	public void keyTyped(KeyEvent arg0) {
 		// Ignore
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		Log.i(this, "update(" + o + ", " + arg + ")");
+		updateAppliedRulesTable();
+		updateSoftwareUnitTable();
 	}
 
 }

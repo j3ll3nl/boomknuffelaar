@@ -24,7 +24,7 @@ import javax.swing.WindowConstants;
  * business for any purpose whatever) then you should purchase a license for each developer using Jigloo. Please visit www.cloudgarden.com for details. Use of Jigloo implies acceptance of these
  * licensing terms. A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
  */
-public class AnalyseJFrame extends javax.swing.JFrame {
+public class JFrameAnalyse extends javax.swing.JFrame {
 
 	private static final long serialVersionUID = 404609294738834067L;
 	private JPanel jPanel1;
@@ -57,7 +57,7 @@ public class AnalyseJFrame extends javax.swing.JFrame {
 		}
 	}
 
-	public AnalyseJFrame(ApplicationJFrame ajframe) {
+	public JFrameAnalyse(ApplicationJFrame ajframe) {
 		super();
 		applicationjframe = ajframe;
 		initUi();
