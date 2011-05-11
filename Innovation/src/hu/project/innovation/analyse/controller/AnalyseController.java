@@ -49,6 +49,7 @@ public class AnalyseController implements ActionListener, KeyListener {
 		// Try to load the pom.xml file
 		updateProjectName();
 
+		//Enable or disable the analyse button when the scan is already running
 		updateAnalyseButton();
 
 		analyseJFrame.setVisible(true);
