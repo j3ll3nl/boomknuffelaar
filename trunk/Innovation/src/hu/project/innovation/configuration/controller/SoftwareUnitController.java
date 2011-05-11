@@ -48,22 +48,6 @@ public class SoftwareUnitController extends Observable implements ActionListener
 		jframe.setVisible(true);
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent action) {
-		Log.i(this, "actionPerformed()");
-		if (action.getSource() == jframe.jButtonAddExceptionRow) {
-			addExceptionRow();
-		} else if (action.getSource() == jframe.jButtonRemoveExceptionRow) {
-			removeExceptionRow();
-		} else if (action.getSource() == jframe.jButtonSave) {
-			saveSoftwareUnit();
-		} else if (action.getSource() == jframe.jButtonCancel) {
-			jframe.dispose();
-		} else {
-			Log.i(this, "actionPerformed(" + action + ") - unknown button event");
-		}
-	}
-
 	private void saveSoftwareUnit() {
 		ConfigurationService service = ConfigurationService.getInstance();
 
@@ -110,6 +94,9 @@ public class SoftwareUnitController extends Observable implements ActionListener
 		tablemodel.addRow(emptyrow);
 	}
 
+	/**
+	 * Remove the selected row from the exception table
+	 */
 	private void removeExceptionRow() {
 		JTableException table = jframe.jTableException;
 		int selectedrow = table.getSelectedRow();
@@ -121,7 +108,10 @@ public class SoftwareUnitController extends Observable implements ActionListener
 		}
 	}
 
-	public void pokeObservers() {
+	/**
+	 * Use this function to notify the definitioncontroller that there is a change
+	 */
+	private void pokeObservers() {
 		setChanged();
 		notifyObservers();
 	}
@@ -132,20 +122,32 @@ public class SoftwareUnitController extends Observable implements ActionListener
 		}
 	}
 
+	private String getAction() {
+		return action;
+	}
+
 	public void setParameters(Layer layer, SoftwareUnitDefinition softwareunit) {
 		this.layer = layer;
 		this.softwareunit = softwareunit;
 	}
 
-	public String getAction() {
-		return action;
-	}
-
-	public SoftwareUnitDefinition getSoftwareunit() {
-		return softwareunit;
-	}
-
-	public Layer getLayer() {
+	private Layer getLayer() {
 		return layer;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent action) {
+		Log.i(this, "actionPerformed()");
+		if (action.getSource() == jframe.jButtonAddExceptionRow) {
+			addExceptionRow();
+		} else if (action.getSource() == jframe.jButtonRemoveExceptionRow) {
+			removeExceptionRow();
+		} else if (action.getSource() == jframe.jButtonSave) {
+			saveSoftwareUnit();
+		} else if (action.getSource() == jframe.jButtonCancel) {
+			jframe.dispose();
+		} else {
+			Log.i(this, "actionPerformed(" + action + ") - unknown button event");
+		}
 	}
 }

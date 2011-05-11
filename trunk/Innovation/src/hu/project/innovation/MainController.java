@@ -35,6 +35,7 @@ public class MainController implements ActionListener {
 		jframe = new ApplicationJFrame();
 
 		// Set actionlisteners for the menu
+		jframe.jMenuItemExit.addActionListener(this);
 		jframe.jMenuItemNewArchitecture.addActionListener(this);
 		jframe.jMenuItemOpenArchitecture.addActionListener(this);
 		jframe.jMenuItemSaveArchitecture.addActionListener(this);
@@ -98,6 +99,8 @@ public class MainController implements ActionListener {
 		} else if (action.getSource() == jframe.jMenuItemAbout) {
 			Log.i(this, "actionPerformed() - about");
 			Ui.messageDialog(jframe, "This application is made an project team on Hogeschool Utrecht.", "About");
+		} else if (action.getSource() == jframe.jMenuItemExit) {
+			System.exit(0);
 		} else {
 			Log.i(this, "actionPerformed(" + action + ") - unknown button event");
 		}

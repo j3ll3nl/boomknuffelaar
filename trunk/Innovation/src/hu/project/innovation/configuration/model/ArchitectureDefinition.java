@@ -15,12 +15,15 @@ public class ArchitectureDefinition implements XMLable {
 		Log.i(this, "ArchitectureDefinition()");
 	}
 
-	public ArchitectureDefinition(String name, String description) {
+	public ArchitectureDefinition(String name, String description) throws Exception {
 		setName(name);
 		setDescription(description);
 	}
 
-	public void setName(String name) {
+	public void setName(String name) throws Exception {
+		if (name.equals("")) {
+			throw new Exception("Architecture name cannot be empty");
+		}
 		this.name = name;
 	}
 

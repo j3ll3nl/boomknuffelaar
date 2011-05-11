@@ -51,8 +51,9 @@ public class ConfigurationService {
 	 * 
 	 * @param name The configuration name
 	 * @param description The description of the configuration
+	 * @throws Exception If an error occurs
 	 */
-	public void newConfiguration(String name, String description) {
+	public void newConfiguration(String name, String description) throws Exception {
 		Log.i(this, "newConfiguration(" + name + ", " + description + ")");
 		this.architectureDefinition = new ArchitectureDefinition(name, description);
 	}
@@ -108,7 +109,7 @@ public class ConfigurationService {
 	 * 
 	 * @param name The layer name
 	 * @param description The layer description
-	 * @return 
+	 * @return
 	 * @throws Exception If an error occurs
 	 */
 	public Layer newLayer(String name, String description) throws Exception {
