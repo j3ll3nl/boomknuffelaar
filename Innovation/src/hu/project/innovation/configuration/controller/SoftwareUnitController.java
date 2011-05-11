@@ -64,6 +64,9 @@ public class SoftwareUnitController extends Observable implements ActionListener
 		jframe.jButtonSave.addActionListener(this);
 		jframe.jButtonCancel.addActionListener(this);
 
+		// Set the visibility of the jframe to true so the jframe is now visible
+		Ui.showOnScreen(0, jframe);
+		
 		jframe.setVisible(true);
 	}
 
