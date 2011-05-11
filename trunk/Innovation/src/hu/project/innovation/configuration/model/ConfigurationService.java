@@ -263,9 +263,7 @@ public class ConfigurationService {
 		return this.configuration.getSetting(Configuration.OUTPUT_FORMAT);
 	}
 
-	public void newAppliedRule(Layer fromLayer, Layer toLayer, String ruleName) {
-		AbstractRuleType ruleType = this.configuration.getRule(ruleName);
-
+	public void newAppliedRule(Layer fromLayer, Layer toLayer, AbstractRuleType ruleType) {
 		if (null != fromLayer && null != toLayer && null != ruleType) {
 			fromLayer.addAppliedRule(ruleType, toLayer);
 		}
