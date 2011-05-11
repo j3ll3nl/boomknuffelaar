@@ -1,5 +1,6 @@
 package hu.project.innovation.configuration.controller;
 
+import hu.project.innovation.configuration.model.ConfigurationService;
 import hu.project.innovation.configuration.model.Layer;
 import hu.project.innovation.configuration.model.SoftwareUnitDefinition;
 import hu.project.innovation.configuration.view.JFrameSoftwareUnit;
@@ -53,11 +54,46 @@ public class SoftwareUnitController extends Observable implements ActionListener
 		} else if (action.getSource() == jframe.jButtonRemoveExceptionRow) {
 			removeExceptionRow();
 		} else if (action.getSource() == jframe.jButtonSave) {
-			pokeObservers();
+			saveSoftwareUnit();
 		} else if (action.getSource() == jframe.jButtonCancel) {
 			jframe.dispose();
 		} else {
 			Log.i(this, "actionPerformed(" + action + ") - unknown button event");
+		}
+	}
+
+	private void saveSoftwareUnit() {
+		ConfigurationService service = ConfigurationService.getInstance();
+
+		try {
+			if (getAction().equals(SoftwareUnitController.ACTION_NEW)) {
+				softwareunit = service.newSoftwareUnit(getLayer(), jframe.jTextFieldSoftwareUnitName.getText(), jframe.jComboBoxSoftwareUnitType.getSelectedItem().toString());
+
+				JTableException table = jframe.jTableException;
+				JTableTableModel tablemodel = (JTableTableModel) table.getModel();
+
+				int tablerows = tablemodel.getRowCount();
+				for (int i = 0; i < tablerows; i++) {
+					service.addException(softwareunit, tablemodel.getValueAt(i, 0).toString(), tablemodel.getValueAt(i, 0).toString());
+				}
+			} else if (getAction().equals(SoftwareUnitController.ACTION_EDIT)) {
+				softwareunit.setName(jframe.jTextFieldSoftwareUnitName.getText());
+				softwareunit.setType(jframe.jComboBoxSoftwareUnitType.getSelectedItem().toString());
+
+				softwareunit.removeAllExceptions();
+
+				JTableException table = jframe.jTableException;
+				JTableTableModel tablemodel = (JTableTableModel) table.getModel();
+
+				int tablerows = tablemodel.getRowCount();
+				for (int i = 0; i < tablerows; i++) {
+					service.addException(softwareunit, tablemodel.getValueAt(i, 0).toString(), tablemodel.getValueAt(i, 0).toString());
+				}
+			}
+			jframe.dispose();
+			pokeObservers();
+		} catch (Exception e) {
+			Ui.errorDialog(jframe, e.getMessage(), "Error");
 		}
 	}
 
