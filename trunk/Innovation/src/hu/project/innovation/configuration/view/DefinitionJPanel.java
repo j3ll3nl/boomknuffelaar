@@ -312,7 +312,7 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 		return null;
 	}
 
-	public SoftwareUnitDefinition getSelectedComponent() {
+	public SoftwareUnitDefinition getSelectedSoftwareUnit() {
 		int selectedRow = jTableSoftwareUnits.getSelectedRow();
 		if (selectedRow >= 0) {
 			JTableTableModel c = (JTableTableModel) jTableSoftwareUnits.getModel();

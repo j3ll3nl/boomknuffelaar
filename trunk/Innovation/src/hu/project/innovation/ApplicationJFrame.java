@@ -54,7 +54,7 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 	private void initUi() {
 		try {
 			setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-			super.setTitle(defaultTitle);
+			setTitle(defaultTitle);
 			setIconImage(new ImageIcon(getClass().getClassLoader().getResource("belastingdienst.jpg")).getImage());
 			{
 				jPanelContentView = new JPanel();
