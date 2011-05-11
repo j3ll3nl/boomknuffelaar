@@ -12,6 +12,7 @@ import java.awt.Insets;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -35,6 +36,8 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 	private JScrollPane jScrollPane3;
 	private JScrollPane jScrollPane4;
 	public JTable jTableSoftwareUnits;
+	private JLabel jLabel3;
+	private JCheckBox jCheckBox1;
 	public JTable jTableAppliedRules;
 	public JList jListLayers;
 	private JLabel jLabel2;
@@ -165,10 +168,10 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 						{
 							jPanel4 = new JPanel();
 							GridBagLayout jPanel4Layout = new GridBagLayout();
-							jPanel4Layout.rowWeights = new double[] { 0.0, 0.1 };
-							jPanel4Layout.rowHeights = new int[] { 27, 7 };
-							jPanel4Layout.columnWeights = new double[] { 0.0, 0.1 };
-							jPanel4Layout.columnWidths = new int[] { 128, 7 };
+							jPanel4Layout.rowWeights = new double[] {0.0, 0.1, 0.1};
+							jPanel4Layout.rowHeights = new int[] {27, 7, 7};
+							jPanel4Layout.columnWeights = new double[] {0.0, 0.1};
+							jPanel4Layout.columnWidths = new int[] {118, 7};
 							jPanel4.setLayout(jPanel4Layout);
 							jPanelRight.add(jPanel4, BorderLayout.NORTH);
 							jPanel4.setBorder(BorderFactory.createTitledBorder("Layer configuration"));
@@ -191,6 +194,8 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 							{
 								jScrollPane2 = new JScrollPane();
 								jPanel4.add(jScrollPane2, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+								jPanel4.add(getJCheckBox1(), new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+								jPanel4.add(getJLabel3(), new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 								jScrollPane2.setPreferredSize(new java.awt.Dimension(142, 26));
 								{
 									jTextAreaLayerDescription = new JTextArea();
@@ -322,5 +327,21 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 			}
 		}
 		return null;
+	}
+	
+	private JCheckBox getJCheckBox1() {
+		if(jCheckBox1 == null) {
+			jCheckBox1 = new JCheckBox();	
+			jCheckBox1.setText("Only accessible by interface");
+		}
+		return jCheckBox1;
+	}
+	
+	private JLabel getJLabel3() {
+		if(jLabel3 == null) {
+			jLabel3 = new JLabel();
+			jLabel3.setText("Access:");
+		}
+		return jLabel3;
 	}
 }

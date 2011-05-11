@@ -178,17 +178,19 @@ public class ConfigurationService {
 	 * @param unitType
 	 * @throws Exception
 	 */
-	public void newSoftwareUnit(Layer layer, String unitName, String unitType) throws Exception {
+	public SoftwareUnitDefinition newSoftwareUnit(Layer layer, String unitName, String unitType) throws Exception {
 		if (layer == null || (this.architectureDefinition.getLayer(layer.getName()) == null)) {
 			throw new Exception(Messages.ERROR_LAYERDOESNOTEXIST);
 		} else {
 			SoftwareUnitDefinition softwareunitdefinition = new SoftwareUnitDefinition(unitName, unitType);
 			layer.addSoftwareUnit(softwareunitdefinition);
+
+			return softwareunitdefinition;
 		}
 	}
 
 	/**
-	 * Remove the
+	 * Remove the software unit from the layer
 	 * 
 	 * @param layer
 	 * @param component
@@ -200,6 +202,11 @@ public class ConfigurationService {
 		} else {
 			layer.removeSoftwareUniteDefinition(component);
 		}
+	}
+
+	public void addException(SoftwareUnitDefinition softwareunit, String unitName, String unitType) {
+		SoftwareUnitDefinition exception = new SoftwareUnitDefinition(unitName, unitType);
+		softwareunit.addException(exception);
 	}
 
 	/**
