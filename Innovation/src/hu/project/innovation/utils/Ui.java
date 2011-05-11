@@ -63,6 +63,24 @@ public class Ui {
 	}
 
 	/**
+	 * Method which will show an confirm message dialog to the user
+	 * 
+	 * @param component The component where the dialog needs to hover above
+	 * @param message The message
+	 * @param title The title of the dialog
+	 */
+	public static boolean confirmDialog(Component component, String message, String title) {
+		Log.i(component, "confirmDialog(" + component + "," + message + "," + title + ")");
+		int result = JOptionPane.showConfirmDialog(component, message, title, JOptionPane.OK_CANCEL_OPTION);
+
+		if (result == JOptionPane.OK_OPTION) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
 	 * This method is a safe way of centring the jframe on an screen if there are multiple screens.
 	 * 
 	 * @param screen

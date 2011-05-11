@@ -84,4 +84,8 @@ public class SoftwareUnitDefinition implements XMLable {
 		return xml;
 	}
 
+	public String toString() {
+		return getName();
+	}
+
 }

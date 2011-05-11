@@ -23,6 +23,8 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 
 	private static final long serialVersionUID = 6858870868564931134L;
 	private String defaultTitle = "Belastingdienst Architectuur";
+	public JMenuItem jMenuItemExit;
+	private JMenu jMenu4;
 	private JMenuBar jMenuBar;
 	public JLabel jLabelStatus;
 	private JToolBar jToolBar;
@@ -73,6 +75,16 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 			{
 				jMenuBar = new JMenuBar();
 				setJMenuBar(jMenuBar);
+				{
+					jMenu4 = new JMenu();
+					jMenuBar.add(jMenu4);
+					jMenu4.setText("Application");
+					{
+						jMenuItemExit = new JMenuItem();
+						jMenu4.add(jMenuItemExit);
+						jMenuItemExit.setText("Exit");
+					}
+				}
 				{
 					jMenu1 = new JMenu();
 					jMenuBar.add(jMenu1);

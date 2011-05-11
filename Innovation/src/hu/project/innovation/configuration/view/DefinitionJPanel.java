@@ -37,7 +37,7 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 	private JScrollPane jScrollPane4;
 	public JTable jTableSoftwareUnits;
 	private JLabel jLabel3;
-	private JCheckBox jCheckBox1;
+	public JCheckBox jCheckBoxAccess;
 	public JTable jTableAppliedRules;
 	public JList jListLayers;
 	private JLabel jLabel2;
@@ -330,11 +330,11 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 	}
 	
 	private JCheckBox getJCheckBox1() {
-		if(jCheckBox1 == null) {
-			jCheckBox1 = new JCheckBox();	
-			jCheckBox1.setText("Only accessible by interface");
+		if(jCheckBoxAccess == null) {
+			jCheckBoxAccess = new JCheckBox();	
+			jCheckBoxAccess.setText("Only accessible by interface");
 		}
-		return jCheckBox1;
+		return jCheckBoxAccess;
 	}
 	
 	private JLabel getJLabel3() {

@@ -73,38 +73,50 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	}
 
 	/**
-	 * Create an new definition.
+	 * Create an new configuration.
 	 */
 	public void newConfiguration() {
 		Log.i(this, "newConfiguration()");
+		try {
+			// Ask the user for the architecture name
+			String response = Ui.inputDialog(definitionJPanel, "Please enter the architecture name", "Please input a value", JOptionPane.QUESTION_MESSAGE);
+			if (response != null) {
+				Log.i(this, "newDefinition() - response from inputdialog: " + response);
+				JPanelStatus.getInstance("Creating new configuration").start();
 
-		String response = Ui.inputDialog(definitionJPanel, "Please enter the architecture name", "Please input a value", JOptionPane.QUESTION_MESSAGE);
-		if (response != null) {
-			Log.i(this, "newDefinition() - response from inputdialog: " + response);
-			configurationService.newConfiguration(response, "");
+				// Create a new configuration
+				configurationService.newConfiguration(response, "");
 
-			updateLayerList();
+				// Update the layer list, this method is called because it will also clear the existing layers
+				updateLayerList();
 
-			mainController.jframe.setTitle(response);
+				// Set the architecture name in the jframe title
+				mainController.jframe.setTitle(response);
+			}
+		} catch (Exception e) {
+			Log.e(this, "newConfiguration() - exception: " + e.getMessage());
+			Ui.errorDialog(definitionJPanel, e.getMessage(), "Error");
+		} finally {
+			JPanelStatus.getInstance().stop();
 		}
 	}
 
 	/**
-	 * Open an definition.
+	 * Open an configuration.
 	 */
 	public void openConfiguration() {
 		Log.i(this, "openConfiguration()");
+		try {
+			// Create a file chooser
+			JFileChooser fc = new JFileChooser();
+			fc.setFileFilter(new XmlFileFilter());
 
-		// Create a file chooser
-		JFileChooser fc = new JFileChooser();
-		fc.setFileFilter(new XmlFileFilter());
+			// In response to a button click:
+			int returnVal = fc.showOpenDialog(definitionJPanel);
 
-		// In response to a button click:
-		int returnVal = fc.showOpenDialog(definitionJPanel);
+			// The user did click on Open
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
 
-		// The user did click on Open
-		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			try {
 				JPanelStatus.getInstance("Opening configuration").start();
 
 				// Getting selected file from dialog
@@ -114,50 +126,46 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 				// Pass the file to the service
 				configurationService.openConfiguration(file);
 
+				// Set the architecture name in the jframe title
 				mainController.jframe.setTitle(configurationService.getConfiguration().getName());
 
+				Log.i(this, "openConfiguration() - updating layers list");
+				updateLayerList();
+
 				Log.i(this, "openConfiguration() - success opening configuration");
-			} catch (Exception e) {
-				Log.e(this, "openConfiguration() - exeption: " + e.getMessage());
-				Ui.errorDialog(definitionJPanel, e.getMessage(), "Error");
-			} finally {
-				JPanelStatus.getInstance().stop();
 			}
-
-			Log.i(this, "openConfiguration() - updating layers list");
-			updateLayerList();
-
+		} catch (Exception e) {
+			Log.e(this, "openConfiguration() - exeption: " + e.getMessage());
+			Ui.errorDialog(definitionJPanel, e.getMessage(), "Error");
+		} finally {
+			JPanelStatus.getInstance().stop();
 		}
 	}
 
 	/**
-	 * Save the current definition to a file.
+	 * Save the current configuration to a file.
 	 */
 	public void saveConfiguration() {
 		Log.i(this, "saveConfiguration()");
-		// Create a file chooser
-		JFileChooser fc = new JFileChooser();
-		fc.setFileFilter(new XmlFileFilter());
+		try {
+			// Create a file chooser
+			JFileChooser fc = new JFileChooser();
+			fc.setFileFilter(new XmlFileFilter());
 
-		// In response to a button click:
-		int returnVal = fc.showSaveDialog(definitionJPanel);
+			// In response to a button click:
+			int returnVal = fc.showSaveDialog(definitionJPanel);
 
-		// The user did click on Save
-		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			try {
+			// The user did click on Save
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
+
 				JPanelStatus.getInstance("Saving configuration").start();
 
 				// Getting selected file from dialog
 				File file;
-
 				if (fc.getSelectedFile().getName().endsWith(".xml")) {
-
 					file = fc.getSelectedFile();
-
 				} else {
-
 					file = new File(fc.getSelectedFile().getAbsolutePath() + ".xml");
-
 				}
 				Log.i(this, "saveConfiguration() - configuration needs to be saved to file: " + file.getName());
 
@@ -165,13 +173,12 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 				configurationService.saveConfiguration(file);
 
 				Log.i(this, "saveConfiguration() - success saving configuration");
-			} catch (Exception e) {
-				Log.e(this, "saveConfiguration() - exeption: " + e.getMessage());
-				e.printStackTrace();
-				Ui.errorDialog(definitionJPanel, e.getMessage(), "Error");
-			} finally {
-				JPanelStatus.getInstance().stop();
 			}
+		} catch (Exception e) {
+			Log.e(this, "saveConfiguration() - exeption: " + e.getMessage());
+			Ui.errorDialog(definitionJPanel, e.getMessage(), "Error");
+		} finally {
+			JPanelStatus.getInstance().stop();
 		}
 	}
 
@@ -180,18 +187,24 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	 */
 	private void newLayer() {
 		Log.i(this, "newLayer()");
+		try {
+			// Ask the user for the layer name
+			String layerName = Ui.inputDialog(definitionJPanel, "Please enter layer name", "Please input a value", JOptionPane.QUESTION_MESSAGE);
+			if (layerName != null) {
+				JPanelStatus.getInstance("Creating new layer").start();
 
-		String layerName = Ui.inputDialog(definitionJPanel, "Please enter layer name", "Please input a value", JOptionPane.QUESTION_MESSAGE);
-		if (layerName != null) {
-			try {
 				Log.i(this, "newLayer() - value: " + layerName);
+				// Create the layer
 				configurationService.newLayer(layerName, "");
-			} catch (Exception e) {
-				e.printStackTrace();
-				Log.e(this, "newLayer() - exception " + e.getMessage());
-				Ui.errorDialog(definitionJPanel, e.getMessage(), "Error");
+
+				// Update the layer list
+				updateLayerList();
 			}
-			updateLayerList();
+		} catch (Exception e) {
+			Log.e(this, "newLayer() - exception: " + e.getMessage());
+			Ui.errorDialog(definitionJPanel, e.getMessage(), "Error");
+		} finally {
+			JPanelStatus.getInstance().stop();
 		}
 	}
 
@@ -200,100 +213,151 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	 */
 	private void removeLayer() {
 		Log.i(this, "removeLayer()");
-
-		Layer layer = definitionJPanel.getSelectedLayer();
-		if (layer != null) {
-			try {
+		try {
+			Layer layer = definitionJPanel.getSelectedLayer();
+			if (layer != null) {
 				Log.i(this, "removeLayer() - selected layer: " + layer.getName());
-				configurationService.removeLayer(layer);
-			} catch (Exception e) {
-				Ui.errorDialog(definitionJPanel, e.getMessage(), "Error");
-			}
+				boolean confirm = Ui.confirmDialog(definitionJPanel, "Are you sure you want to remove layer: \"" + layer.getName() + "\"", "Remove?");
+				if (confirm) {
+					JPanelStatus.getInstance("Removing layer").start();
 
-			updateLayerList();
+					Log.i(this, "removeLayer() - removing layer");
+					configurationService.removeLayer(layer);
+
+					// Update the layer list
+					updateLayerList();
+				}
+
+			}
+		} catch (Exception e) {
+			Log.e(this, "removeLayer() - exception: " + e.getMessage());
+			Ui.errorDialog(definitionJPanel, e.getMessage(), "Error");
+		} finally {
+			JPanelStatus.getInstance().stop();
 		}
 	}
 
 	/**
-	 * Move a layer up in hierarchy
+	 * Move a layer 1 up in hierarchy
 	 */
 	private void moveLayerUp() {
 		Log.i(this, "moveLayerUp()");
+		try {
+			Layer layer = definitionJPanel.getSelectedLayer();
+			if (layer != null) {
+				JPanelStatus.getInstance("Moving layer up").start();
 
-		Layer layer = definitionJPanel.getSelectedLayer();
-		if (layer != null) {
-			try {
 				Log.i(this, "moveLayerUp() - selected layer: " + layer.getName());
 
 				configurationService.moveLayerUp(layer);
 				updateLayerList();
-			} catch (Exception e) {
-				Log.e(this, "moveLayerUp() - exception: " + e.getMessage());
-				Ui.errorDialog(definitionJPanel, e.getMessage(), "Error");
+
 			}
+		} catch (Exception e) {
+			Log.e(this, "moveLayerUp() - exception: " + e.getMessage());
+			Ui.errorDialog(definitionJPanel, e.getMessage(), "Error");
+		} finally {
+			JPanelStatus.getInstance().stop();
 		}
 	}
 
 	/**
-	 * Move a layer down in hierarchy
+	 * Move a layer 1 down in hierarchy
 	 */
 	private void moveLayerDown() {
 		Log.i(this, "moveLayerDown()");
-		Layer layer = definitionJPanel.getSelectedLayer();
-		if (layer != null) {
-			try {
-				Log.i(this, "loadLayerDetail() - selected layer: " + layer.getName());
+		try {
+			Layer layer = definitionJPanel.getSelectedLayer();
+			if (layer != null) {
+				JPanelStatus.getInstance("Moving layer down").start();
+
+				Log.i(this, "moveLayerDown() - selected layer: " + layer.getName());
 
 				configurationService.moveLayerDown(layer);
 				updateLayerList();
-			} catch (Exception e) {
-				Log.e(this, "moveLayerDown() - exception: " + e.getMessage());
-				Ui.errorDialog(definitionJPanel, e.getMessage(), "Error");
+
 			}
+		} catch (Exception e) {
+			Log.e(this, "moveLayerDown() - exception: " + e.getMessage());
+			Ui.errorDialog(definitionJPanel, e.getMessage(), "Error");
+		} finally {
+			JPanelStatus.getInstance().stop();
 		}
 	}
 
 	/**
-	 * Add a new software unit to the selected layer. This method will pop-up a new jframe who will handle everything for creating a new sotware unit.
+	 * Add a new software unit to the selected layer. This method will make pop-up a new jframe who will handle everything for creating a new sotware unit.
 	 */
 	private void addSoftwareUnit() {
 		Log.i(this, "addSoftwareUnit()");
+		// Get the current selected layer
 		Layer layer = definitionJPanel.getSelectedLayer();
 		if (layer != null) {
+			Log.i(this, "addSoftwareUnit() - selected layer: " + layer.getName());
+
+			// Create a new software unit controller
 			SoftwareUnitController c = new SoftwareUnitController();
+			// Set the parameters
 			c.setParameters(layer, null);
+			// Set the action of the view
 			c.setAction(SoftwareUnitController.ACTION_NEW);
 			c.addObserver(this);
+			// Build and show the ui
 			c.initUi();
 		}
 	}
 
+	/**
+	 * Edit the selected software unit. This method will make a new jframe who will handle everything for editing a new software unit
+	 */
 	private void editSoftwareUnit() {
 		Log.i(this, "editSoftwareUnit()");
 		Layer layer = definitionJPanel.getSelectedLayer();
 		SoftwareUnitDefinition softwareunit = definitionJPanel.getSelectedSoftwareUnit();
 		if (layer != null && softwareunit != null) {
+			Log.i(this, "editSoftwareUnit() - selected layer: " + layer.getName());
+			Log.i(this, "editSoftwareUnit() - selected software unit: " + softwareunit.getName());
+
+			// Create a new software unit controller
 			SoftwareUnitController c = new SoftwareUnitController();
+			// Set the parameters
 			c.setParameters(layer, softwareunit);
-			c.setAction(SoftwareUnitController.ACTION_NEW);
+			// Set the action of the view
+			c.setAction(SoftwareUnitController.ACTION_EDIT);
 			c.addObserver(this);
+			// Build and show the ui
 			c.initUi();
 		} else {
+			Log.e(this, "editSoftwareUnit() - no software unit selected");
 			Ui.errorDialog(definitionJPanel, "Select a software unit", "Error");
 		}
 	}
 
+	/**
+	 * Remove the selected software unit from the table
+	 */
 	private void removeSoftwareUnit() {
 		Log.i(this, "removeSoftwareUnit()");
-		Layer layer = definitionJPanel.getSelectedLayer();
-		SoftwareUnitDefinition softwareunit = definitionJPanel.getSelectedSoftwareUnit();
-		if (layer != null && softwareunit != null) {
-			try {
-				configurationService.removeSoftwareUnit(layer, softwareunit);
-				updateSoftwareUnitTable();
-			} catch (Exception e) {
-				Ui.errorDialog(definitionJPanel, e.getMessage(), "Error");
+		try {
+			// Get the selected layer & software unit
+			Layer layer = definitionJPanel.getSelectedLayer();
+			SoftwareUnitDefinition softwareunit = definitionJPanel.getSelectedSoftwareUnit();
+			if (layer != null && softwareunit != null) {
+				// Ask the user if he is sure to remove the software unit
+				boolean confirm = Ui.confirmDialog(definitionJPanel, "Are you sure you want to remove software unit: \"" + softwareunit.getName() + "\"", "Remove?");
+				if (confirm) {
+					// Remove the software unit
+					JPanelStatus.getInstance("Removing software unit").start();
+					configurationService.removeSoftwareUnit(layer, softwareunit);
+					// Update the software unit table
+					updateSoftwareUnitTable();
+				}
 			}
+		} catch (Exception e) {
+			Log.e(this, "removeSoftwareUnit() - exception: " + e.getMessage());
+			Ui.errorDialog(definitionJPanel, e.getMessage(), "Error");
+		} finally {
+			JPanelStatus.getInstance().stop();
 		}
 	}
 
@@ -325,6 +389,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 			Log.i(this, "keyReleased() - value from name: " + definitionJPanel.jTextFieldLayerName.getText());
 			layer.setName(definitionJPanel.jTextFieldLayerName.getText());
 			layer.setDescription(definitionJPanel.jTextAreaLayerDescription.getText());
+			layer.setInterfaceAccesOnly(definitionJPanel.jCheckBoxAccess.isSelected());
 
 			definitionJPanel.jListLayers.updateUI();
 		}
@@ -361,6 +426,9 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		JPanelStatus.getInstance().stop();
 	}
 
+	/**
+	 * This function will load the layer name, descriptin and interface acces only checkbox. Next it will call two methods which will load the two tables.
+	 */
 	private void loadLayerDetail() {
 		Log.i(this, "loadLayerDetail()");
 
@@ -368,15 +436,23 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		if (layer != null) {
 			Log.i(this, "loadLayerDetail() - selected layer: " + layer.getName());
 
+			// Set the values
 			definitionJPanel.jTextFieldLayerName.setText(layer.getName());
 			definitionJPanel.jTextAreaLayerDescription.setText(layer.getDescription());
+			definitionJPanel.jCheckBoxAccess.setSelected(layer.isInterfaceAccessOnly());
 
+			// Update the tables
 			updateSoftwareUnitTable();
 			updateAppliedRulesTable();
+
+			// Enable or disable the ui elements
+			enablePanel();
 		}
-		enablePanel();
 	}
 
+	/**
+	 * This method will check if the ui elements should be enabled or disabled
+	 */
 	private void enablePanel() {
 		Log.i(this, "enablePanel()");
 		Layer layer = definitionJPanel.getSelectedLayer();
@@ -389,8 +465,10 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 			Log.i(this, "enablePanel() - true");
 			enabled = true;
 		}
+		// Buttons, textfields, tables etc.
 		definitionJPanel.jTextFieldLayerName.setEnabled(enabled);
 		definitionJPanel.jTextAreaLayerDescription.setEnabled(enabled);
+		definitionJPanel.jCheckBoxAccess.setEnabled(enabled);
 		definitionJPanel.jButtonAddComponentToLayer.setEnabled(enabled);
 		definitionJPanel.jButtonEditComponentFromLayer.setEnabled(enabled);
 		definitionJPanel.jButtonRemoveComponentFromLayer.setEnabled(enabled);
@@ -403,6 +481,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		definitionJPanel.jButtonMoveLayerDown.setEnabled(enabled);
 		definitionJPanel.jButtonRemoveLayer.setEnabled(enabled);
 
+		// Enable or disable menu items
 		if (!configurationService.isArchitectureDefinition()) {
 			definitionJPanel.jButtonNewLayer.setEnabled(false);
 			mainController.jframe.jMenuItemSaveArchitecture.setEnabled(false);
@@ -436,7 +515,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 			atm.getDataVector().removeAllElements();
 			if (components != null) {
 				for (SoftwareUnitDefinition component : components) {
-					String rowdata[] = { component.getName(), component.getType(), component.getNumberOfExceptions() + "" };
+					Object rowdata[] = { component, component.getType(), component.getNumberOfExceptions() + "" };
 					atm.addRow(rowdata);
 				}
 			}
