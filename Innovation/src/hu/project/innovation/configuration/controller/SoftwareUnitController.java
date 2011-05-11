@@ -6,6 +6,7 @@ import hu.project.innovation.configuration.view.JFrameSoftwareUnit;
 import hu.project.innovation.configuration.view.JTableException;
 import hu.project.innovation.configuration.view.JTableTableModel;
 import hu.project.innovation.utils.Log;
+import hu.project.innovation.utils.Ui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -41,7 +42,6 @@ public class SoftwareUnitController extends Observable implements ActionListener
 		jframe.jButtonSave.addActionListener(this);
 		jframe.jButtonCancel.addActionListener(this);
 
-		
 		jframe.setVisible(true);
 	}
 
@@ -61,17 +61,26 @@ public class SoftwareUnitController extends Observable implements ActionListener
 		}
 	}
 
-	private void removeExceptionRow() {
-		
-
-	}
-
+	/**
+	 * Add a new empty row to the exception table
+	 */
 	private void addExceptionRow() {
 		JTableException table = jframe.jTableException;
 		JTableTableModel tablemodel = (JTableTableModel) table.getModel();
 
 		Object[] emptyrow = { "", "" };
 		tablemodel.addRow(emptyrow);
+	}
+
+	private void removeExceptionRow() {
+		JTableException table = jframe.jTableException;
+		int selectedrow = table.getSelectedRow();
+		if (selectedrow == -1) {
+			Ui.errorDialog(jframe, "Select a table row", "Error");
+		} else {
+			JTableTableModel tablemodel = (JTableTableModel) table.getModel();
+			tablemodel.removeRow(selectedrow);
+		}
 	}
 
 	public void pokeObservers() {

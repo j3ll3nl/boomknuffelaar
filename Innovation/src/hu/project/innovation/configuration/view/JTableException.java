@@ -1,5 +1,8 @@
 package hu.project.innovation.configuration.view;
 
+import hu.project.innovation.configuration.model.SoftwareUnitDefinition;
+import hu.project.innovation.configuration.view.anders.MyComboBoxEditor;
+
 import javax.swing.table.TableColumn;
 
 public class JTableException extends AbstractJTable {
@@ -26,6 +29,10 @@ public class JTableException extends AbstractJTable {
 
 			}
 		}
-	}
 
+		String[] values = new String[] { SoftwareUnitDefinition.PACKAGE, SoftwareUnitDefinition.CLASS, SoftwareUnitDefinition.METHOD };
+		// Set the combobox editor on the 1st visible column
+		TableColumn col = getColumnModel().getColumn(1);
+		col.setCellEditor(new MyComboBoxEditor(values));
+	}
 }

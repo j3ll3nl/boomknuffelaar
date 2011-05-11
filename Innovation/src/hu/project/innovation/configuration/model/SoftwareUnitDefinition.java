@@ -69,4 +69,13 @@ public class SoftwareUnitDefinition implements XMLable {
 		return exceptions;
 	}
 
+	public int getNumberOfExceptions() {
+		if (getExceptions() != null) {
+			return getExceptions().size();
+		} else {
+			return 0;
+		}
+
+	}
+
 }

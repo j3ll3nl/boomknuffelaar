@@ -418,7 +418,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 			atm.getDataVector().removeAllElements();
 			if (components != null) {
 				for (SoftwareUnitDefinition component : components) {
-					String rowdata[] = { component.getName(), component.getType(), "" };
+					String rowdata[] = { component.getName(), component.getType(), component.getNumberOfExceptions() + "" };
 					atm.addRow(rowdata);
 				}
 			}
