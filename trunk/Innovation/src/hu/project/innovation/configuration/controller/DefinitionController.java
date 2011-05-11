@@ -151,13 +151,13 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 				File file;
 
 				if (fc.getSelectedFile().getName().endsWith(".xml")) {
-					
+
 					file = fc.getSelectedFile();
-					
+
 				} else {
-					
-					file = new File(fc.getSelectedFile().getAbsolutePath()+".xml");
-					
+
+					file = new File(fc.getSelectedFile().getAbsolutePath() + ".xml");
+
 				}
 				Log.i(this, "saveConfiguration() - configuration needs to be saved to file: " + file.getName());
 
@@ -285,8 +285,16 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 
 	private void removeSoftwareUnit() {
 		Log.i(this, "removeSoftwareUnit()");
-		// TODO Auto-generated method stub
-
+		Layer layer = definitionJPanel.getSelectedLayer();
+		SoftwareUnitDefinition softwareunit = definitionJPanel.getSelectedSoftwareUnit();
+		if (layer != null && softwareunit != null) {
+			try {
+				configurationService.removeSoftwareUnit(layer, softwareunit);
+				updateSoftwareUnitTable();
+			} catch (Exception e) {
+				Ui.errorDialog(definitionJPanel, e.getMessage(), "Error");
+			}
+		}
 	}
 
 	private void addRuleToLayer() {

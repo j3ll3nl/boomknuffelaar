@@ -129,12 +129,12 @@ public class JFrameSoftwareUnit extends JFrame {
 						{
 							jButtonAddExceptionRow = new JButton();
 							jPanel4.add(jButtonAddExceptionRow, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-							jButtonAddExceptionRow.setText("Add");
+							jButtonAddExceptionRow.setText("Add row");
 						}
 						{
 							jButtonRemoveExceptionRow = new JButton();
 							jPanel4.add(jButtonRemoveExceptionRow, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-							jButtonRemoveExceptionRow.setText("Remove");
+							jButtonRemoveExceptionRow.setText("Remove row");
 						}
 					}
 				}

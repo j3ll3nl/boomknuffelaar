@@ -34,8 +34,10 @@ public class SoftwareUnitController extends Observable implements ActionListener
 		// Change view of jframe conforms the action
 		if (getAction().equals(SoftwareUnitController.ACTION_NEW)) {
 			jframe.jButtonSave.setText("Create");
+			jframe.setTitle("New software unit");
 		} else if (getAction().equals(SoftwareUnitController.ACTION_EDIT)) {
 			jframe.jButtonSave.setText("Save");
+			jframe.setTitle("Edit software unit");
 		}
 
 		jframe.jButtonAddExceptionRow.addActionListener(this);
