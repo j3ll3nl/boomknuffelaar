@@ -296,9 +296,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 			Log.i(this, "addSoftwareUnit() - selected layer: " + layer.getName());
 
 			// Create a new software unit controller
-			SoftwareUnitController c = new SoftwareUnitController();
-			// Set the parameters
-			c.setParameters(layer, null);
+			SoftwareUnitController c = new SoftwareUnitController(layer, null);
 			// Set the action of the view
 			c.setAction(SoftwareUnitController.ACTION_NEW);
 			c.addObserver(this);
@@ -319,9 +317,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 			Log.i(this, "editSoftwareUnit() - selected software unit: " + softwareunit.getName());
 
 			// Create a new software unit controller
-			SoftwareUnitController c = new SoftwareUnitController();
-			// Set the parameters
-			c.setParameters(layer, softwareunit);
+			SoftwareUnitController c = new SoftwareUnitController(layer, softwareunit);
 			// Set the action of the view
 			c.setAction(SoftwareUnitController.ACTION_EDIT);
 			c.addObserver(this);

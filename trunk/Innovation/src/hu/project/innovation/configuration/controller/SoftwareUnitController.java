@@ -11,6 +11,7 @@ import hu.project.innovation.utils.Ui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Observable;
 
 public class SoftwareUnitController extends Observable implements ActionListener {
@@ -23,8 +24,10 @@ public class SoftwareUnitController extends Observable implements ActionListener
 	private SoftwareUnitDefinition softwareunit;
 	private Layer layer;
 
-	public SoftwareUnitController() {
-		Log.i(this, "constructor()");
+	public SoftwareUnitController(Layer layer, SoftwareUnitDefinition softwareunit) {
+		Log.i(this, "constructor(" + layer + ", " + softwareunit + ")");
+		this.layer = layer;
+		this.softwareunit = softwareunit;
 	}
 
 	public void initUi() {
@@ -38,6 +41,22 @@ public class SoftwareUnitController extends Observable implements ActionListener
 		} else if (getAction().equals(SoftwareUnitController.ACTION_EDIT)) {
 			jframe.jButtonSave.setText("Save");
 			jframe.setTitle("Edit software unit");
+			if (softwareunit != null) {
+				// Load name & type
+				jframe.jTextFieldSoftwareUnitName.setText(softwareunit.getName());
+				jframe.jComboBoxSoftwareUnitType.setSelectedItem(softwareunit.getType());
+
+				// Load table with exceptions
+				JTableException table = jframe.jTableException;
+				JTableTableModel tablemodel = (JTableTableModel) table.getModel();
+
+				ArrayList<SoftwareUnitDefinition> exceptions = softwareunit.getExceptions();
+				for (SoftwareUnitDefinition exception : exceptions) {
+					Object[] row = { exception.getName(), exception.getType() };
+					tablemodel.addRow(row);
+				}
+
+			}
 		}
 
 		jframe.jButtonAddExceptionRow.addActionListener(this);
@@ -124,11 +143,6 @@ public class SoftwareUnitController extends Observable implements ActionListener
 
 	private String getAction() {
 		return action;
-	}
-
-	public void setParameters(Layer layer, SoftwareUnitDefinition softwareunit) {
-		this.layer = layer;
-		this.softwareunit = softwareunit;
 	}
 
 	private Layer getLayer() {

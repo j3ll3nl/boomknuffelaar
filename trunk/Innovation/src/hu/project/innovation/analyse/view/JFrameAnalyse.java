@@ -67,7 +67,7 @@ public class JFrameAnalyse extends javax.swing.JFrame {
 		try {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			pack();
-			setTitle("Belastingdienst Architectuur - analyse");
+			setTitle("Analyse");
 			setIconImage(new ImageIcon(getClass().getClassLoader().getResource("belastingdienst.jpg")).getImage());
 			setResizable(false);
 			setLocationRelativeTo(applicationjframe);
