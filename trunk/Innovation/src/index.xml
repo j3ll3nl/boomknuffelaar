@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rules>
-	<rule key="back_call_pinciple_v1">
-		<name>Back call principle versie 123</name>
-		<configKey>hu/project/innovation/configuration/model/ruleset.xml/back_call_pinciple_v1</configKey>
+	<rule key="back_call_rule">
+		<name>Back call principle -1-</name>
+		<configKey>hu/project/innovation/configuration/model/ruleset.xml/back_call_rule</configKey>
+	</rule>	
+	<rule key="skip_call_rule">
+		<name>Skip call principle -2-</name>
+		<configKey>hu/project/innovation/configuration/model/ruleset.xml/skip_call_rule</configKey>
+	</rule>	
+	<rule key="interfaces_only_rule">
+		<name>Interfaces only -3-</name>
+		<configKey>hu/project/innovation/configuration/model/ruleset.xml/interfaces_only_rule</configKey>
 	</rule>	
 </rules>

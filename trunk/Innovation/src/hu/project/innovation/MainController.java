@@ -95,7 +95,7 @@ public class MainController implements ActionListener {
 			definitioncontroller.saveConfiguration();
 		} else if (action.getSource() == jframe.jMenuItemStartAnalyse) {
 			Log.i(this, "actionPerformed() - start analyse");
-			analysecontroller.initUi(jframe);
+			analysecontroller.initUi();
 		} else if (action.getSource() == jframe.jMenuItemAbout) {
 			Log.i(this, "actionPerformed() - about");
 			Ui.messageDialog(jframe, "This application is made an project team on Hogeschool Utrecht.", "About");

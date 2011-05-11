@@ -59,10 +59,10 @@ public class JFrameSoftwareUnit extends JFrame {
 
 	public JFrameSoftwareUnit() {
 		super();
-		initGUI();
+		initUI();
 	}
 
-	private void initGUI() {
+	private void initUI() {
 		try {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			setTitle("New Software Unit");

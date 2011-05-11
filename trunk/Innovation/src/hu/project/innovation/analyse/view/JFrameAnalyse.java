@@ -1,7 +1,5 @@
 package hu.project.innovation.analyse.view;
 
-import hu.project.innovation.ApplicationJFrame;
-
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -46,7 +44,6 @@ public class JFrameAnalyse extends javax.swing.JFrame {
 	public JTextField jTextFieldProjectPath;
 	public JTextField jTextFieldOutputPath;
 	public JComboBox jComboBoxOutputType;
-	private ApplicationJFrame applicationjframe;
 
 	{
 		// Set Look & Feel
@@ -57,9 +54,8 @@ public class JFrameAnalyse extends javax.swing.JFrame {
 		}
 	}
 
-	public JFrameAnalyse(ApplicationJFrame ajframe) {
+	public JFrameAnalyse() {
 		super();
-		applicationjframe = ajframe;
 		initUi();
 	}
 
@@ -70,7 +66,6 @@ public class JFrameAnalyse extends javax.swing.JFrame {
 			setTitle("Analyse");
 			setIconImage(new ImageIcon(getClass().getClassLoader().getResource("belastingdienst.jpg")).getImage());
 			setResizable(false);
-			setLocationRelativeTo(applicationjframe);
 			{
 				jPanel1 = new JPanel();
 				BorderLayout jPanel1Layout = new BorderLayout();

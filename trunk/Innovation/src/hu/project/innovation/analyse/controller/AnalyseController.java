@@ -1,6 +1,5 @@
 package hu.project.innovation.analyse.controller;
 
-import hu.project.innovation.ApplicationJFrame;
 import hu.project.innovation.analyse.model.AnalyseService;
 import hu.project.innovation.analyse.view.JFrameAnalyse;
 import hu.project.innovation.configuration.model.ConfigurationService;
@@ -27,11 +26,11 @@ public class AnalyseController implements ActionListener, KeyListener {
 
 	}
 
-	public void initUi(ApplicationJFrame jframe) {
+	public void initUi() {
 		Log.i(this, "initUi()");
 
 		if (analyseJFrame == null) {
-			analyseJFrame = new JFrameAnalyse(jframe);
+			analyseJFrame = new JFrameAnalyse();
 
 			analyseJFrame.jTextFieldProjectPath.addKeyListener(this);
 			analyseJFrame.jTextFieldOutputPath.addKeyListener(this);
@@ -52,6 +51,9 @@ public class AnalyseController implements ActionListener, KeyListener {
 		//Enable or disable the analyse button when the scan is already running
 		updateAnalyseButton();
 
+		// Set the visibility of the jframe to true so the jframe is now visible
+		Ui.showOnScreen(0, analyseJFrame);
+		
 		analyseJFrame.setVisible(true);
 	}
 
