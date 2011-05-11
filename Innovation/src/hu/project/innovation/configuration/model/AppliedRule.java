@@ -29,6 +29,12 @@ public class AppliedRule implements XMLable {
 		String xml = "\t\t<appliedRule>\n";
 		xml += "\t\t\t<ruleType>" + this.ruleType.getName() + "</ruleType>\n";
 		xml += "\t\t\t<toLayer>" + this.toLayer.getId() + "</toLayer>\n";
+		for (SoftwareUnitDefinition unit : exceptions) {
+			xml += "\t\t\t<exception>\n";
+			xml += "\t\t\t\t<name>" + unit.getName() + "</name>\n";
+			xml += "\t\t\t\t<type>" + unit.getType() + "</type>\n";
+			xml += "\t\t\t</exception>\n";
+		}
 		xml += "\t\t</appliedRule>\n";
 		return xml;
 	}

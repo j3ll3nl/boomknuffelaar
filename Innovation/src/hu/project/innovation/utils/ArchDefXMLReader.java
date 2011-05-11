@@ -10,6 +10,9 @@ import java.io.CharArrayWriter;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
@@ -44,7 +47,8 @@ public class ArchDefXMLReader extends DefaultHandler {
 	private SoftwareUnitDefinition currentUnit;
 	private ArrayList<String> currentRule = new ArrayList<String>();
 	private ArrayList<ArrayList<String>> savedRules = new ArrayList<ArrayList<String>>();
-	private boolean isLayer = false;
+	private HashMap<SoftwareUnitDefinition, String> savedUnitExceptions = new HashMap<SoftwareUnitDefinition, String>();
+	private boolean isSoftwareUnit = false;
 
 	public void startElement(String namespaceURI, String localName, String qName, Attributes attr) throws SAXException {
 		Log.i(this, "startElement(" + localName + ")");
@@ -57,7 +61,7 @@ public class ArchDefXMLReader extends DefaultHandler {
 		} else if (localName.equals("softwareUnit")) {
 			currentUnit = new SoftwareUnitDefinition();
 			currentUnit.setLayer(currentLayer);
-
+			isSoftwareUnit = true;
 			try {
 				currentLayer.addSoftwareUnit(currentUnit);
 			} catch (Exception e) {
@@ -73,14 +77,12 @@ public class ArchDefXMLReader extends DefaultHandler {
 
 		if (localName.equals("id")) {
 			currentLayer.setId(Integer.parseInt(contents.toString()));
-			isLayer = true;
-		} else if (localName.equals("name") && isLayer) {
+		} else if (localName.equals("name") && !isSoftwareUnit) {
 			currentLayer.setName(contents.toString());
 		} else if (localName.equals("name")) {
 			currentUnit.setName(contents.toString());
 		} else if (localName.equals("description")) {
 			currentLayer.setDescription(contents.toString());
-			isLayer = false;
 		} else if (localName.equals("type")) {
 			currentUnit.setType(contents.toString());
 		} else if (localName.equals("ruleType")) {
@@ -92,6 +94,10 @@ public class ArchDefXMLReader extends DefaultHandler {
 			ArrayList<String> temp = (ArrayList<String>) currentRule.clone();
 			savedRules.add(temp);
 			currentRule.clear();
+		} else if (localName.equals("softwareUnit")) {
+			isSoftwareUnit = false;
+		} else if (localName.equals("unit")) {
+			savedUnitExceptions.put(currentUnit, contents.toString());
 		}
 	}
 
@@ -109,6 +115,11 @@ public class ArchDefXMLReader extends DefaultHandler {
 				layer.addAppliedRule(new SkipLayerRule(), ar.getLayer(Integer.parseInt(rule.get(2))));
 			}
 		}
+		Iterator it = savedUnitExceptions.entrySet().iterator();
+	    while (it.hasNext()) {
+	        Map.Entry pairs = (Map.Entry)it.next();
+	        System.out.println(pairs.getKey() + " = " + pairs.getValue());
+	    }
 	}
 
 	public ArchitectureDefinition getArchitectureDefinition() {

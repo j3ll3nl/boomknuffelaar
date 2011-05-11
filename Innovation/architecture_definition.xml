@@ -39,6 +39,10 @@
 		<softwareUnit>
 			<name>unitje</name>
 			<type>Package</type>
+			<exception>
+				<unit>com.example.class</unit>
+				<type>package</type>
+			</exception>
 		</softwareUnit>
 		<appliedRule>
 			<ruleType>BackCall</ruleType>
