@@ -1,7 +1,9 @@
 package hu.project.innovation.configuration.model;
 
-//import hu.project.innovation.utils.Log;
+import hu.project.innovation.utils.Log;
+import net.sourceforge.pmd.ast.ASTClassOrInterfaceDeclaration;
 import net.sourceforge.pmd.ast.ASTClassOrInterfaceType;
+import net.sourceforge.pmd.ast.ASTMethodDeclaration;
 import net.sourceforge.pmd.ast.SimpleNode;
 
 public class BackCallRule extends AbstractRuleType {
@@ -18,51 +20,50 @@ public class BackCallRule extends AbstractRuleType {
 		// Only check if we have a type
 		if (node.getType() != null) {
 			// Get the called package name
-			String calledPackageName = node.getType().getPackage().getName();
-
-			// Only check certain packages
-			if (isPackageChecked(calledPackageName)) {
-
-				// Get the fromLayer using the current checked class
-				Layer fromLayer = ConfigurationService.getInstance().getLayerNameBySoftwareUnitName(this.getPackageName(node));
-
-				// Get the toLayer using the package name from the called class
-				Layer toLayer = ConfigurationService.getInstance().getLayerNameBySoftwareUnitName(calledPackageName);
-
-//				 Log.i(this,"from: " + this.getPackageName(node) + " to: " + calledPackageName);
-//				 Log.i(this,"from: " + fromLayer + " to: " + toLayer);
-
-				// Check if the rule is applied for these two layers and this rule
-				if (ConfigurationService.getInstance().isRuleApplied(fromLayer, toLayer, this.getClass().getSimpleName())) {
-					// Add a violation if the rule is applied
-					this.checkViolationType(data, node);
-				}
-			}
+			String calledName = node.getType().getCanonicalName();
+			
+			this.checkViolation(calledName, data, node, node.getType().isInterface());
 		}
 		// Run the super function
 		return super.visit(node, data);
 	}
-
-	protected void checkViolationType(Object data, SimpleNode node) {
-		ASTClassOrInterfaceType checkedNode = null;
-
-		// Check if we have a classOrInterface node
-		if (node instanceof ASTClassOrInterfaceType) {
-			checkedNode = (ASTClassOrInterfaceType) node;
-		} else {
-			return;
+	
+	public Object visit(ASTMethodDeclaration node, Object data) {
+		try {
+			Class<?> c = node.getFirstParentOfType(ASTClassOrInterfaceDeclaration.class).getType();
+			// Package and class name:
+			String calledName = c.getCanonicalName();
+			// Plus method name
+			calledName += "."+node.getMethodName();
+			
+			checkViolation(calledName, data, node, c.isInterface());
+		} catch(Exception e) {}		
+		
+		return super.visit(node, data);
+	}
+	
+	public void checkViolation(String calledName, Object data, SimpleNode node) {
+		this.checkViolation(calledName, data, node, false);
+	}
+	
+	public void checkViolation(String calledName, Object data, SimpleNode node, boolean isInterface) {
+		if (isPackageChecked(calledName)) {
+	
+			// Get the fromLayer using the current checked class
+			Layer fromLayer = ConfigurationService.getInstance().getLayerBySoftwareUnitName(this.getPackageName(node));
+	
+			// Get the toLayer using the package name from the called class
+			Layer toLayer = ConfigurationService.getInstance().getLayerBySoftwareUnitName(calledName);
+			
+//			Log.i(this,"from: " + this.getPackageName(node) + " to: " + calledName);
+//			Log.i(this,"from: " + fromLayer + " to: " + toLayer);
+			if(fromLayer == null || toLayer == null) return;
+			
+			// Check if the rule is applied for these two layers and this rule
+			if (fromLayer.hasAppliedRule(this.getClass().getSimpleName(), toLayer)) {
+				this.addViolation(data, node);
+			}
 		}
-		// Variables to check on
-		String toClass = checkedNode.getType().getSimpleName();
-		String toClassType = (checkedNode.getType().isInterface()) ? "Interface" : "Class";
-		// String toIsSuperclass = (node.getType().isMemberClass())?"Memberclass":"Superclass";
-
-		String msg = this.getMessage();
-
-		// Checks with message
-		msg = toClassType.equals("Class") ? "The call to " + toClass + " violates " + this.getName() : msg;
-
-		this.addViolationWithMessage(data, checkedNode, this.getName() + ": " + msg);
 	}
 
 	/**

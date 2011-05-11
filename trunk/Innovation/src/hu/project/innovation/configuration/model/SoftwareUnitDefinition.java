@@ -1,5 +1,6 @@
 package hu.project.innovation.configuration.model;
 
+import hu.project.innovation.utils.Log;
 import hu.project.innovation.utils.XMLable;
 
 import java.util.ArrayList;
@@ -92,6 +93,27 @@ public class SoftwareUnitDefinition implements XMLable {
 
 	public String toString() {
 		return getName();
+	}
+
+	public boolean contains(String softwareUnitName) {
+//		Log.i(this, this.getName()+" vs "+softwareUnitName);
+		// Equals
+		if(this.getName().equals(softwareUnitName) || 
+				this.getName().equals(softwareUnitName + ".*")) {
+			return true;
+		} 
+		// Wildcard
+		else if(this.getName().endsWith(".*") 
+				&& softwareUnitName.startsWith(this.getName().substring(0, this.getName().length()-1))) {
+			// Exceptions
+			for(SoftwareUnitDefinition exception : this.exceptions) {
+				if(exception.contains(softwareUnitName)) {
+					return false;
+				}
+			}			
+			return true;
+		}
+		return false;
 	}
 
 }

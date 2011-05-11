@@ -86,9 +86,10 @@ public class Layer implements XMLable {
 		this.interfaceAccessOnly = bool;
 	}
 
-	public void addAppliedRule(AbstractRuleType ruleType, Layer toLayer) {
+	public AppliedRule addAppliedRule(AbstractRuleType ruleType, Layer toLayer) {
 		AppliedRule r = new AppliedRule(ruleType, this, toLayer);
 		this.appliedRules.add(r);
+		return r;
 	}
 
 	/**
@@ -181,6 +182,8 @@ public class Layer implements XMLable {
 	}
 
 	public boolean hasAppliedRule(String ruleName, Layer toLayer) {
+		if(toLayer == null) return false;
+		
 		if (appliedRules != null) {
 			for (AppliedRule appliedRule : this.appliedRules) {
 				if (appliedRule.getToLayer().getId() == toLayer.getId() 
@@ -310,7 +313,7 @@ public class Layer implements XMLable {
 	public Layer getLayerBySoftwareUnitName(String softwareUnitName) {
 		// First look in this layer
 		for (SoftwareUnitDefinition sud : softwareUnitDefinitions) {
-			if (sud.getName().equals(softwareUnitName)) {
+			if (sud.contains(softwareUnitName)) {
 				return this;
 			}
 		}

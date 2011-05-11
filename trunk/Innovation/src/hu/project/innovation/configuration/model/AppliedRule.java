@@ -58,5 +58,15 @@ public class AppliedRule implements XMLable {
 	public boolean addException(SoftwareUnitDefinition sud) {
 		return this.exceptions.add(sud);
 	}
+	
+	public boolean hasException(SoftwareUnitDefinition sud) {
+		for(SoftwareUnitDefinition exception : this.exceptions ) {
+			if(sud.getName().equals(exception.getName()) 
+					&& sud.getType().equals(exception.getType())) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 }

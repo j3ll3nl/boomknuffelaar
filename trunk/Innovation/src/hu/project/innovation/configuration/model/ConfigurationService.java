@@ -264,17 +264,18 @@ public class ConfigurationService {
 		return this.configuration.getSetting(Configuration.OUTPUT_FORMAT);
 	}
 
-	public void newAppliedRule(Layer fromLayer, Layer toLayer, AbstractRuleType ruleType) {
+	public AppliedRule newAppliedRule(Layer fromLayer, Layer toLayer, AbstractRuleType ruleType) {
 		if (null != fromLayer && null != toLayer && null != ruleType) {
-			fromLayer.addAppliedRule(ruleType, toLayer);
+			return fromLayer.addAppliedRule(ruleType, toLayer);
 		}
+		return null;
 	}
 
 	public void removeAppliedRule() {
 
 	}
 
-	public Layer getLayerNameBySoftwareUnitName(String name) {
+	public Layer getLayerBySoftwareUnitName(String name) {
 		return this.architectureDefinition.getLayerBySoftwareUnitName(name);
 	}
 
