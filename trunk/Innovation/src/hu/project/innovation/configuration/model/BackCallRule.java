@@ -49,7 +49,7 @@ public class BackCallRule extends AbstractRuleType {
 		if (isPackageChecked(calledName)) {
 	
 			// Get the fromLayer using the current checked class
-			Layer fromLayer = ConfigurationService.getInstance().getLayerBySoftwareUnitName(this.getPackageName(node));
+			Layer fromLayer = ConfigurationService.getInstance().getLayerBySoftwareUnitName(this.getClassName(node));
 	
 			// Get the toLayer using the package name from the called class
 			Layer toLayer = ConfigurationService.getInstance().getLayerBySoftwareUnitName(calledName);

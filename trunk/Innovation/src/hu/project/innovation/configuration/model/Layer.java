@@ -30,15 +30,15 @@ public class Layer implements XMLable {
 		setDescription(description);
 	}
 
-	public int getId() {
+	public final int getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public final void setId(int id) {
 		this.id = id;
 	}
 
-	public void updateId(int i) {
+	public final void updateId(int i) {
 		Log.i(this, "updateId(" + i + ")");
 		setId(i);
 		if (childLayer != null) {
@@ -46,47 +46,47 @@ public class Layer implements XMLable {
 		}
 	}
 
-	public String getName() {
+	public final String getName() {
 		return name;
 	}
 
-	public void setName(String name) {
+	public final void setName(String name) {
 		this.name = name;
 	}
 
-	public String getDescription() {
+	public final String getDescription() {
 		return description;
 	}
 
-	public void setDescription(String description) {
+	public final void setDescription(String description) {
 		this.description = description;
 	}
 
-	public Layer getChildLayer() {
+	public final Layer getChildLayer() {
 		return childLayer;
 	}
 
-	public void setChildLayer(Layer layer) {
+	public final void setChildLayer(Layer layer) {
 		childLayer = layer;
 	}
 
-	public Layer getParentLayer() {
+	public final Layer getParentLayer() {
 		return parentLayer;
 	}
 
-	public void setParentLayer(Layer layer) {
+	public final void setParentLayer(Layer layer) {
 		parentLayer = layer;
 	}
 	
-	public boolean isInterfaceAccessOnly() {
+	public final boolean isInterfaceAccessOnly() {
 		return this.interfaceAccessOnly;
 	}
 	
-	public void setInterfaceAccesOnly(boolean bool) {
+	public final void setInterfaceAccesOnly(boolean bool) {
 		this.interfaceAccessOnly = bool;
 	}
 
-	public AppliedRule addAppliedRule(AbstractRuleType ruleType, Layer toLayer) {
+	public final AppliedRule addAppliedRule(AbstractRuleType ruleType, Layer toLayer) {
 		AppliedRule r = new AppliedRule(ruleType, this, toLayer);
 		this.appliedRules.add(r);
 		return r;
@@ -99,7 +99,7 @@ public class Layer implements XMLable {
 	 * @param type
 	 * @return Return true if the specified name was not already used for a software unit
 	 */
-	public void addSoftwareUnit(SoftwareUnitDefinition unit) throws Exception {
+	public final void addSoftwareUnit(SoftwareUnitDefinition unit) throws Exception {
 		if (softwareUnitDefinitions.contains(unit)) {
 			throw new Exception("Software unit is already added to this layer");
 		} else {
@@ -114,7 +114,7 @@ public class Layer implements XMLable {
 	 * @param name
 	 * @return the previous SoftwareUnit associated with that name, or null if there was no SoftwareUnit with that name.
 	 */
-	public void removeSoftwareUniteDefinition(SoftwareUnitDefinition unit) throws Exception {
+	public final void removeSoftwareUniteDefinition(SoftwareUnitDefinition unit) throws Exception {
 		if (!softwareUnitDefinitions.contains(unit)) {
 			throw new Exception("Software unit does not exist in this layer");
 		} else {
@@ -128,7 +128,7 @@ public class Layer implements XMLable {
 	 * @param name
 	 * @return The software unit with the specified name of null if this layer doesn't have that unit
 	 */
-	public SoftwareUnitDefinition getSoftwareUnit(String name) {
+	public final SoftwareUnitDefinition getSoftwareUnit(String name) {
 		for (SoftwareUnitDefinition softwareunitdefinition : softwareUnitDefinitions) {
 			if (softwareunitdefinition.getName().equals(name)) {
 				return softwareunitdefinition;
@@ -142,11 +142,11 @@ public class Layer implements XMLable {
 	 * 
 	 * @return
 	 */
-	public ArrayList<SoftwareUnitDefinition> getAllSoftwareUnitDefinitions() {
+	public final ArrayList<SoftwareUnitDefinition> getAllSoftwareUnitDefinitions() {
 		return softwareUnitDefinitions;
 	}
 
-	public String toXML() {
+	public final String toXML() {
 		String xml = "";
 
 		// Current layer
@@ -176,11 +176,11 @@ public class Layer implements XMLable {
 		return xml;
 	}
 
-	public String toString() {
+	public final String toString() {
 		return getName();
 	}
 
-	public boolean hasAppliedRule(String ruleName, Layer toLayer) {
+	public final boolean hasAppliedRule(String ruleName, Layer toLayer) {
 		if(toLayer == null) return false;
 		
 		if (appliedRules != null) {
@@ -194,32 +194,34 @@ public class Layer implements XMLable {
 		return false;
 	}
 
-	public void moveUp() throws Exception {
+	public final void moveUp() throws Exception {
 		Log.i(this, "moveUp()");
 		if (getParentLayer() == null) {
 			throw new Exception("Layer is already at the top");
 		} else {
-			// Imagine that the current layer is D
-			Layer c = getParentLayer();
-			Layer b = c.getParentLayer();
-			Layer e = getChildLayer();
+			Layer parent = getParentLayer();
+			Layer superParent = parent.getParentLayer();
+			Layer child = getChildLayer();
 
-			setParentLayer(b);
-			setChildLayer(c);
-			if (b != null) {
-				b.setChildLayer(this);
+			setParentLayer(superParent);
+			setChildLayer(parent);
+			// Make this the child of the superParent
+			if (superParent != null) {
+				superParent.setChildLayer(this);
 			}
-			if (c != null) {
-				c.setChildLayer(e);
-				c.setParentLayer(this);
+			// Make this the parent of the current parent
+			if (parent != null) {
+				parent.setChildLayer(child);
+				parent.setParentLayer(this);
 			}
-			if (e != null) {
-				e.setParentLayer(c);
+			// Make the parent of this child this currents parent
+			if (child != null) {
+				child.setParentLayer(parent);
 			}
 		}
 	}
 
-	public void moveDown() throws Exception {
+	public final void moveDown() throws Exception {
 		Log.i(this, "moveDown()");
 		if (getChildLayer() == null) {
 			throw new Exception("Layer is already at the bottom");
@@ -245,7 +247,7 @@ public class Layer implements XMLable {
 		}
 	}
 
-	public void addChildLayer(Layer layer) {
+	public final void addChildLayer(Layer layer) {
 		Log.i(this, "addChildLayer(" + layer + ") [" + this + "]");
 		if (childLayer != null) {
 			Log.i(this, "addChildLayer(" + layer + ") - asking child to add this layer");
@@ -257,7 +259,7 @@ public class Layer implements XMLable {
 		}
 	}
 
-	public Layer getFirstLayer() {
+	public final Layer getFirstLayer() {
 		if (parentLayer != null) {
 			return parentLayer.getFirstLayer();
 		} else {
@@ -265,18 +267,17 @@ public class Layer implements XMLable {
 		}
 	}
 
-	public Layer getLayer(int id) {
+	public final Layer getLayer(int id) {
 		if (getId() == id) {
 			return this;
+		} else if (childLayer != null) {
+			return childLayer.getLayer(id);
 		} else {
-			if (childLayer != null) {
-				return childLayer.getLayer(id);
-			}
+			return null;
 		}
-		return null;
 	}
 
-	public void removeLayer(Layer layer) {
+	public final void removeLayer(Layer layer) {
 		if (this == layer) {
 			if (getParentLayer() != null) {
 				getParentLayer().setChildLayer(getChildLayer());
@@ -289,15 +290,14 @@ public class Layer implements XMLable {
 		}
 	}
 
-	public Layer getLayer(String name) {
+	public final Layer getLayer(String name) {
 		if (getName().equals(name)) {
 			return this;
+		} else if (childLayer != null) {
+			return childLayer.getLayer(name);
 		} else {
-			if (childLayer != null) {
-				return childLayer.getLayer(name);
-			}
+			return null;
 		}
-		return null;
 	}
 
 	/**
@@ -306,7 +306,7 @@ public class Layer implements XMLable {
 	 * @param softwareUnitName
 	 * @return
 	 */
-	public Layer getLayerBySoftwareUnitName(String softwareUnitName) {
+	public final Layer getLayerBySoftwareUnitName(String softwareUnitName) {
 		// First look in this layer
 		for (SoftwareUnitDefinition sud : softwareUnitDefinitions) {
 			if (sud.contains(softwareUnitName)) {
@@ -321,8 +321,8 @@ public class Layer implements XMLable {
 		else return null;
 	}
 
-	public void printVolgorde() {
-		String message = "Ik ben nummer " + getId() + ", mijn naam is: " + getName() + ", mijn parent is: ";
+	public final void printOrder() {
+		String message = "I am " + getId() + ", my name is: " + getName() + ", my parent is: ";
 		Layer p = getParentLayer();
 		Layer c = getChildLayer();
 
@@ -331,7 +331,7 @@ public class Layer implements XMLable {
 		} else {
 			message += "-";
 		}
-		message += ", mijn child is: ";
+		message += ", my child is: ";
 		if (c != null) {
 			message += getChildLayer().getName();
 		} else {
@@ -341,7 +341,7 @@ public class Layer implements XMLable {
 		Log.i(this, message);
 
 		if (childLayer != null) {
-			childLayer.printVolgorde();
+			childLayer.printOrder();
 		}
 	}
 }

@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 
 public class Log {
 	private static final int tabsBetweenClassAndMessage = 3;
-	public static final String INFO = "info", ERROR = "error";
+	public static final String INFO = "INFO", ERROR = "ERROR";
 	
 	private Log() {}
 
@@ -39,7 +39,7 @@ public class Log {
 			+ o.getClass().getSimpleName() 
 			+ tabs(numberOfTabs) 
 			+ " - " + message;
-		Logger.getLogger("default").warning(fullMessage);
+		System.out.println(fullMessage);
 	}
 
 	/**
