@@ -54,6 +54,7 @@ public abstract class AbstractRuleType extends AbstractJavaRule implements XMLab
 		if (node.getFirstParentOfType(ASTClassOrInterfaceDeclaration.class) == null) {
 			return "";
 		} else {
+			Log.i(this, node.getFirstParentOfType(ASTClassOrInterfaceDeclaration.class).getType().getCanonicalName()); System.exit(0);
 			return node.getScope().getEnclosingClassScope().getClassName() == null ? "" : node.getScope().getEnclosingClassScope().getClassName();
 		}
 	}

@@ -95,12 +95,12 @@ public class SoftwareUnitDefinition implements XMLable {
 
 	public boolean contains(String softwareUnitName) {
 //		Log.i(this, this.getName()+" vs "+softwareUnitName);
-		// Equals
+		// The called name equals the name of this unit
 		if(this.getName().equals(softwareUnitName) || 
 				this.getName().equals(softwareUnitName + ".*")) {
 			return true;
 		} 
-		// Wildcard
+		// This is a package
 		else if(this.getName().endsWith(".*") 
 				&& softwareUnitName.startsWith(this.getName().substring(0, this.getName().length()-1))) {
 			// Exceptions
