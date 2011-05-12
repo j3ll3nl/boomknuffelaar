@@ -37,9 +37,9 @@ public class Configuration {
 	}
 	
 	public ArrayList<AbstractRuleType> getRuleTypes() {
-		ArrayList<AbstractRuleType> rules = new ArrayList<AbstractRuleType>();
-		rules.addAll(this.rules.values());
-		return rules;
+		ArrayList<AbstractRuleType> ruleTypes = new ArrayList<AbstractRuleType>();
+		ruleTypes.addAll(this.rules.values());
+		return ruleTypes;
 	}
 
 	public void setSetting(String key, String value) {

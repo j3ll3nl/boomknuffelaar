@@ -16,8 +16,8 @@ import java.util.Observable;
 
 public class SoftwareUnitController extends Observable implements ActionListener {
 
-	public static String ACTION_NEW = "NEW";
-	public static String ACTION_EDIT = "EDIT";
+	public static final String ACTION_NEW = "NEW";
+	public static final String ACTION_EDIT = "EDIT";
 
 	private JFrameSoftwareUnit jframe;
 	private String action = SoftwareUnitController.ACTION_NEW;
@@ -152,7 +152,6 @@ public class SoftwareUnitController extends Observable implements ActionListener
 		return layer;
 	}
 
-	@Override
 	public void actionPerformed(ActionEvent action) {
 		Log.i(this, "actionPerformed()");
 		if (action.getSource() == jframe.jButtonAddExceptionRow) {

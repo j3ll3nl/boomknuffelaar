@@ -3,7 +3,9 @@ package hu.project.innovation;
 import hu.project.innovation.configuration.model.ConfigurationService;
 import net.sourceforge.pmd.PMD;
 
-public class MainJan {
+class MainJan {
+	
+	private MainJan(){};
 
 	public static void main(String[] args) {
 		new TestConfiguration();

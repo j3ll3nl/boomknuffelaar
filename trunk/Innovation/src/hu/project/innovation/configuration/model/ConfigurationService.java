@@ -14,7 +14,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
-public class ConfigurationService {
+public final class ConfigurationService {
 
 	private ArchitectureDefinition architectureDefinition;
 	private Configuration configuration;
@@ -38,12 +38,8 @@ public class ConfigurationService {
 		return instance;
 	}
 
-	public boolean isArchitectureDefinition() {
-		if (architectureDefinition == null) {
-			return false;
-		} else {
-			return true;
-		}
+	public boolean hasArchitectureDefinition() {
+		return this.architectureDefinition != null;
 	}
 
 	/**
@@ -85,7 +81,7 @@ public class ConfigurationService {
 	public void saveConfiguration(File file) throws Exception {
 		Log.i(this, "saveConfiguration(" + file + ")");
 
-		if (!isArchitectureDefinition()) {
+		if (!hasArchitectureDefinition()) {
 
 		} else {
 			FileWriter fstream = new FileWriter(file);
@@ -280,7 +276,7 @@ public class ConfigurationService {
 	}
 
 	public ArrayList<Layer> getLayers() {
-		if (!isArchitectureDefinition()) {
+		if (!hasArchitectureDefinition()) {
 			return null;
 		}
 		return this.architectureDefinition.getAllLayers();

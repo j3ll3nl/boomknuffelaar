@@ -9,6 +9,9 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class Ui {
+	
+	private Ui(){}
+	
 	/**
 	 * Method which will show an inputdialog. The dialog keeps asking for input if no input is given.
 	 * 
@@ -73,11 +76,7 @@ public class Ui {
 		Log.i(component, "confirmDialog(" + component + "," + message + "," + title + ")");
 		int result = JOptionPane.showConfirmDialog(component, message, title, JOptionPane.OK_CANCEL_OPTION);
 
-		if (result == JOptionPane.OK_OPTION) {
-			return true;
-		} else {
-			return false;
-		}
+		return result == JOptionPane.OK_OPTION;
 	}
 
 	/**
@@ -98,9 +97,7 @@ public class Ui {
 			int frameHeigh = (int) frame.getHeight();
 
 			frame.setLocation((windowWidth - frameWidth) / 2, (windowHeigh - frameHeigh) / 2);
-		} else if (gs.length > 0) {
-
-		} else {
+		} else if (gs.length <= 0) {
 			throw new RuntimeException("No Screens Found");
 		}
 	}

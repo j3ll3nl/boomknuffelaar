@@ -25,31 +25,33 @@ public class TestConfiguration {
 			// Architecture
 			conf.newConfiguration("Test Architecture", "");
 
+			String ui = "UI";
+			String task = "Task";
+			String domain = "Domain";
+
 			// Layers
-			conf.newLayer("UI", "Presentation logic");
-			conf.newLayer("Task", "Task specific logic");
-			conf.newLayer("Domain", "Domain logic").setInterfaceAccesOnly(true);
+			conf.newLayer(ui, "Presentation logic");
+			conf.newLayer(task, "Task specific logic");
+			conf.newLayer(domain, "Domain logic").setInterfaceAccesOnly(true);
 			conf.getConfiguration().autoUpdateLayerSequence();
 
 			// Software units
-			conf.newSoftwareUnit(conf.getLayer("UI"), "hu.project.innovation.configuration.view.*", "package");			
-			conf.newSoftwareUnit(conf.getLayer("UI"), "hu.project.innovation.report.view.*", "package");			
-			conf.newSoftwareUnit(conf.getLayer("UI"), "hu.project.innovation.analyse.view.*", "package");			
-			conf.newSoftwareUnit(conf.getLayer("Task"), "hu.project.innovation.configuration.controller.*", "package");
-			conf.newSoftwareUnit(conf.getLayer("Task"), "hu.project.innovation.analyse.controller.*", "package");
-			conf.newSoftwareUnit(conf.getLayer("Domain"), "hu.project.innovation.configuration.model.*", "package");			
-			conf.newSoftwareUnit(conf.getLayer("Domain"), "hu.project.innovation.report.model.*", "package");
-			conf.newSoftwareUnit(conf.getLayer("Domain"), "hu.project.innovation.analyse.model.*", "package");
+			conf.newSoftwareUnit(conf.getLayer(ui), "hu.project.innovation.configuration.view.*", "package");			
+			conf.newSoftwareUnit(conf.getLayer(ui), "hu.project.innovation.report.view.*", "package");			
+			conf.newSoftwareUnit(conf.getLayer(ui), "hu.project.innovation.analyse.view.*", "package");			
+			conf.newSoftwareUnit(conf.getLayer(task), "hu.project.innovation.configuration.controller.*", "package");
+			conf.newSoftwareUnit(conf.getLayer(task), "hu.project.innovation.analyse.controller.*", "package");
+			conf.newSoftwareUnit(conf.getLayer(domain), "hu.project.innovation.configuration.model.*", "package");			
+			conf.newSoftwareUnit(conf.getLayer(domain), "hu.project.innovation.report.model.*", "package");
+			conf.newSoftwareUnit(conf.getLayer(domain), "hu.project.innovation.analyse.model.*", "package");
 
 			// Applied rules
-			AppliedRule rule = conf.newAppliedRule(conf.getLayer("UI"), conf.getLayer("Domain"), new SkipLayerRule());
+			AppliedRule rule = conf.newAppliedRule(conf.getLayer(ui), conf.getLayer(domain), new SkipLayerRule());
 			rule.addException(new SoftwareUnitDefinition("hu.project.innovation.configuration.model.Layer", "class"));
-			conf.newAppliedRule(conf.getLayer("Task"), conf.getLayer("UI"), new BackCallRule());
-			conf.newAppliedRule(conf.getLayer("Domain"), conf.getLayer("Task"), new BackCallRule());
+			conf.newAppliedRule(conf.getLayer(task), conf.getLayer(ui), new BackCallRule());
+			conf.newAppliedRule(conf.getLayer(domain), conf.getLayer(task), new BackCallRule());
 		} catch (Exception e) {
-			Log.e(this, "Error: " + e.getMessage());
-
+			Log.e(this, e.getMessage());
 		}
-
 	}
 }

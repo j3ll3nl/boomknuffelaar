@@ -12,7 +12,9 @@ public class InterfacesOnlyRule extends BackCallRule {
 			// Get the toLayer using the package name from the called class
 			Layer toLayer = ConfigurationService.getInstance().getLayerBySoftwareUnitName(calledName);
 			
-			if(fromLayer == null || toLayer == null) return;
+			if(fromLayer == null || toLayer == null) {
+				return;
+			}
 
 			if (fromLayer.getId() != toLayer.getId() 
 					&& toLayer.isInterfaceAccessOnly() 

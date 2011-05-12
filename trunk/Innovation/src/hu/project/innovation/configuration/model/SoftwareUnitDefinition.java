@@ -1,6 +1,5 @@
 package hu.project.innovation.configuration.model;
 
-import hu.project.innovation.utils.Log;
 import hu.project.innovation.utils.XMLable;
 
 import java.util.ArrayList;
@@ -76,7 +75,6 @@ public class SoftwareUnitDefinition implements XMLable {
 		exceptions.clear();
 	}
 
-	@Override
 	public String toXML() {
 		String xml = "\t\t<softwareUnit>\n";
 		xml += "\t\t\t<name>" + this.name + "</name>\n";

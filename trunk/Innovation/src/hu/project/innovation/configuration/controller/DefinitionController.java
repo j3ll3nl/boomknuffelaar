@@ -478,7 +478,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		definitionJPanel.jButtonRemoveLayer.setEnabled(enabled);
 
 		// Enable or disable menu items
-		if (!configurationService.isArchitectureDefinition()) {
+		if (!configurationService.hasArchitectureDefinition()) {
 			definitionJPanel.jButtonNewLayer.setEnabled(false);
 			mainController.jframe.jMenuItemSaveArchitecture.setEnabled(false);
 			mainController.jframe.jMenuItemStartAnalyse.setEnabled(false);
@@ -533,7 +533,6 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		}
 	}
 
-	@Override
 	public void actionPerformed(ActionEvent action) {
 		if (action.getSource() == definitionJPanel.jButtonNewLayer) {
 			newLayer();
@@ -560,19 +559,16 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		}
 	}
 
-	@Override
 	public void valueChanged(ListSelectionEvent event) {
 		if (event.getSource() == definitionJPanel.jListLayers && !event.getValueIsAdjusting()) {
 			loadLayerDetail();
 		}
 	}
 
-	@Override
 	public void keyPressed(KeyEvent arg0) {
 		// Ignore
 	}
 
-	@Override
 	public void keyReleased(KeyEvent arg0) {
 		Log.i(this, "keyReleased(" + arg0 + ")");
 
@@ -583,12 +579,10 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		}
 	}
 
-	@Override
 	public void keyTyped(KeyEvent arg0) {
 		// Ignore
 	}
 
-	@Override
 	public void update(Observable o, Object arg) {
 		Log.i(this, "update(" + o + ", " + arg + ")");
 		updateAppliedRulesTable();

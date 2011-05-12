@@ -24,7 +24,7 @@ public class AnalyseService {
 		return instance;
 	}
 
-	public void startAnalyse() throws Exception {
+	public void startAnalyse() {
 		Log.i(this, "startAnalyse()");
 
 		Log.i(this, "startAnalyse() - configuration settings:");
@@ -38,12 +38,17 @@ public class AnalyseService {
 		Log.i(this, "startAnalyse() - Output type: " + outputType);
 
 		setRunning(true);
-
-		// String[] arg = { "project_path", "output_type", "rulseset xml", "-reportfile", "output_path" };
+		
 		Calendar cal = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy H-mm-ss");
 
-		String[] pmdArgs = { projectPath, outputType, ruleset, "-reportfile", outputPath + "/" + sdf.format(cal.getTime()) + "." + outputType };
+		String[] pmdArgs = { 
+				projectPath, 
+				outputType, 
+				ruleset, 
+				"-reportfile", 
+				outputPath + "/Report " + sdf.format(cal.getTime()) + "." + outputType 
+		};
 
 		// Start PMD
 		PMD.main(pmdArgs);

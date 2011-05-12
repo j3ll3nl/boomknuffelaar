@@ -20,8 +20,6 @@ public class JTableSoftwareUnits extends AbstractJTable {
 				column.setPreferredWidth(275); // Software unit name
 			} else if (i == 2) {
 				column.setPreferredWidth(25); // Exceptions
-			} else {
-
 			}
 		}
 	}

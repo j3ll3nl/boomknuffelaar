@@ -106,7 +106,6 @@ public class AnalyseController implements ActionListener, KeyListener {
 		}
 	}
 
-	@Override
 	public void actionPerformed(ActionEvent action) {
 		Log.i(this, "actionPerformed()");
 		if (action.getSource() == analyseJFrame.jButtonProjectBrowse) {
@@ -142,14 +141,12 @@ public class AnalyseController implements ActionListener, KeyListener {
 		}
 	}
 
-	@Override
 	public void keyPressed(KeyEvent arg0) {
 		// Ignore
 		analyseJFrame.jTextFieldOutputPath.addKeyListener(this);
 		analyseJFrame.jTextFieldProjectPath.addKeyListener(this);
 	}
 
-	@Override
 	public void keyReleased(KeyEvent arg0) {
 		if (arg0.getSource() == analyseJFrame.jTextFieldOutputPath) {
 			String text = analyseJFrame.jTextFieldOutputPath.getText();
@@ -158,12 +155,9 @@ public class AnalyseController implements ActionListener, KeyListener {
 			String text = analyseJFrame.jTextFieldProjectPath.getText();
 			ConfigurationService.getInstance().setProjectPath(text);
 			updateProjectName();
-		} else {
-
 		}
 	}
 
-	@Override
 	public void keyTyped(KeyEvent arg0) {
 		// Ignore
 	}
