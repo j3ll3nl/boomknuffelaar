@@ -5,7 +5,7 @@ import java.io.File;
 import javax.swing.filechooser.FileFilter;
 
 public class XmlFileFilter extends FileFilter {
-	public String xml = "xml";
+	public static final String XML = "xml";
 
 	@Override
 	public boolean accept(File f) {
@@ -15,18 +15,14 @@ public class XmlFileFilter extends FileFilter {
 
 		String extension = getExtension(f);
 		if (extension != null) {
-			if (extension.equals(xml)) {
-				return true;
-			} else {
-				return false;
-			}
+			return extension.equals(XML);
 		}
 		return false;
 	}
 
 	@Override
 	public String getDescription() {
-		return "*.xml";
+		return "*." + XML;
 	}
 
 	public String getExtension(File f) {

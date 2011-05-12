@@ -24,7 +24,6 @@ public class AppliedRule implements XMLable {
 		this.toLayer = toLayer;
 	}
 
-	@Override
 	public String toXML() {
 		String xml = "\t\t<appliedRule>\n";
 		xml += "\t\t\t<ruleType>" + this.ruleType.getName() + "</ruleType>\n";

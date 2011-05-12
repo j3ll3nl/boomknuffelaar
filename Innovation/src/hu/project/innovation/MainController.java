@@ -61,28 +61,27 @@ public class MainController implements ActionListener {
 		String lineseperator = "----------------------------------------------------------------------------------------";
 		String cmdLine = "Enter command: ";
 		try {
-			System.out.println(helpCommando);
-			System.out.println(lineseperator);
-			System.out.print(cmdLine);
+			Log.i(this,helpCommando);
+			Log.i(this,lineseperator);
+			Log.i(this,cmdLine);
 
 			String line = "";
 			while ((line = in.readLine()) != null) {
 				if (line.startsWith("help")) {
-					System.out.println(helpCommando);
+					Log.i(this,helpCommando);
 				} else if (line.startsWith("exit")) {
 					System.exit(0);
 				} else {
-					System.out.println("Sorry, unknown commando");
+					Log.i(this,"Sorry, unknown commando");
 				}
-				System.out.println(lineseperator);
-				System.out.print(cmdLine);
+				Log.i(this,lineseperator);
+				Log.i(this,cmdLine);
 			}
 		} catch (Exception e) {
 			Log.e(getClass().getSimpleName(), "initCommand() - Exception: " + e);
 		}
 	}
 
-	@Override
 	public void actionPerformed(ActionEvent action) {
 		if (action.getSource() == jframe.jMenuItemNewArchitecture) {
 			Log.i(this, "actionPerformed() - new architecture");

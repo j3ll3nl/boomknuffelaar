@@ -1,6 +1,5 @@
 package hu.project.innovation.configuration.model;
 
-import hu.project.innovation.utils.Log;
 import net.sourceforge.pmd.ast.ASTClassOrInterfaceDeclaration;
 import net.sourceforge.pmd.ast.ASTClassOrInterfaceType;
 import net.sourceforge.pmd.ast.ASTMethodDeclaration;
@@ -8,7 +7,7 @@ import net.sourceforge.pmd.ast.SimpleNode;
 
 public class BackCallRule extends AbstractRuleType {
 
-	protected final String[] notCheckedPackages = new String[] { "java", "javax", "sun", "org.xml" };
+	private final String[] notCheckedPackages = new String[] { "java", "javax", "sun", "org.xml" };
 
 	/**
 	 * Use class and interface types to find a BackRule violation

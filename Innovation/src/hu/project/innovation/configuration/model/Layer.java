@@ -146,7 +146,6 @@ public class Layer implements XMLable {
 		return softwareUnitDefinitions;
 	}
 
-	@Override
 	public String toXML() {
 		String xml = "";
 
@@ -279,14 +278,11 @@ public class Layer implements XMLable {
 
 	public void removeLayer(Layer layer) {
 		if (this == layer) {
-			Layer topLayer = getParentLayer();
-			Layer childLayer = getChildLayer();
-
-			if (topLayer != null) {
-				topLayer.setChildLayer(childLayer);
+			if (getParentLayer() != null) {
+				getParentLayer().setChildLayer(getChildLayer());
 			}
-			if (childLayer != null) {
-				childLayer.setParentLayer(topLayer);
+			if (getChildLayer() != null) {
+				getChildLayer().setParentLayer(getParentLayer());
 			}
 		} else {
 			layer.removeLayer(layer);

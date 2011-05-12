@@ -25,8 +25,6 @@ public class JTableException extends AbstractJTable {
 				column.setPreferredWidth(275); // Software unit name
 			} else if (i == 1) {
 				column.setPreferredWidth(25); // Type
-			} else {
-
 			}
 		}
 

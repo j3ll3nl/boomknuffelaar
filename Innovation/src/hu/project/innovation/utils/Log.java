@@ -3,9 +3,13 @@ package hu.project.innovation.utils;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Logger;
 
 public class Log {
-	private static int tabsBetweenClassAndMessage = 3;
+	private static final int tabsBetweenClassAndMessage = 3;
+	public static final String INFO = "info", ERROR = "error";
+	
+	private Log() {}
 
 	/**
 	 * Print an information output.
@@ -13,10 +17,8 @@ public class Log {
 	 * @param className Current classname: getClass().getSimpleName()
 	 * @param message The message, this is often the method name like: i() - ....
 	 */
-	public static void i(Object className, String message) {
-		int numberOfTabs = (tabsBetweenClassAndMessage) - (className.getClass().getSimpleName().length() / 8);
-
-		System.out.println(getDateTime() + "  INFO\t" + className.getClass().getSimpleName() + tabs(numberOfTabs) + " - " + message);
+	public static void i(Object o, String message) {
+		log(o, message, INFO);
 	}
 
 	/**
@@ -25,10 +27,19 @@ public class Log {
 	 * @param className Current classname: getClass().getSimpleName()
 	 * @param message The message, this is often the method name like: i() - ....
 	 */
-	public static void e(Object className, String message) {
-		int numberOfTabs = (tabsBetweenClassAndMessage) - (className.getClass().getSimpleName().length() / 8);
-
-		System.out.println(getDateTime() + "  ERROR\t" + className.getClass().getSimpleName() + tabs(numberOfTabs) + " - " + message);
+	public static void e(Object o, String message) {
+		log(o, message, ERROR);
+	}
+	
+	public static void log(Object o, String message, String type) {
+		int numberOfTabs = (tabsBetweenClassAndMessage) - (o.getClass().getSimpleName().length() / 8);
+		String fullMessage = 
+			getDateTime() + "  " 
+			+ type + "\t" 
+			+ o.getClass().getSimpleName() 
+			+ tabs(numberOfTabs) 
+			+ " - " + message;
+		Logger.getLogger("default").warning(fullMessage);
 	}
 
 	/**
