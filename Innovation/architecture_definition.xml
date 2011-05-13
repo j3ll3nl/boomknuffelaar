@@ -7,13 +7,16 @@
 		<softwareUnit>
 			<name>unitje</name>
 			<type>Package</type>
+			<exception>
+				<unit>com.example.class</unit>
+			</exception>
 		</softwareUnit>
 		<appliedRule>
 			<ruleType>BackCall</ruleType>
 			<toLayer>2</toLayer>
-			<exceptions>
+			<exception>
 				<unit>com.example.class</unit>
-			</exceptions>
+			</exception>
 		</appliedRule>
 	</layer>
 	<layer>
@@ -23,13 +26,16 @@
 		<softwareUnit>
 			<name>unitje</name>
 			<type>Package</type>
+			<exception>
+				<unit>com.example.class</unit>
+			</exception>
 		</softwareUnit>
 		<appliedRule>
 			<ruleType>BackCall</ruleType>
 			<toLayer>3</toLayer>
-			<exceptions>
+			<exception>
 				<unit>com.example.class</unit>
-			</exceptions>
+			</exception>
 		</appliedRule>
 	</layer>
 	<layer>
@@ -47,9 +53,9 @@
 		<appliedRule>
 			<ruleType>BackCall</ruleType>
 			<toLayer>1</toLayer>
-			<exceptions>
+			<exception>
 				<unit>com.example.class</unit>
-			</exceptions>
+			</exception>
 		</appliedRule>
 	</layer>
 </architecture>

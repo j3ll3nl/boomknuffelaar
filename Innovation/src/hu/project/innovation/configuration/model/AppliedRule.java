@@ -49,9 +49,17 @@ public class AppliedRule implements XMLable {
 	public Layer getToLayer() {
 		return toLayer;
 	}
+	
+	public void setToLayer(Layer layer) {
+		this.toLayer = layer;
+	}
 
 	public AbstractRuleType getRuleType() {
 		return this.ruleType;
+	}
+	
+	public void setRuleType(AbstractRuleType type) {
+		this.ruleType = type;
 	}
 
 	public boolean addException(SoftwareUnitDefinition sud) {
