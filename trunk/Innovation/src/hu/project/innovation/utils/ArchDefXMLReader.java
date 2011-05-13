@@ -1,5 +1,6 @@
 package hu.project.innovation.utils;
 
+import hu.project.innovation.configuration.model.AppliedRule;
 import hu.project.innovation.configuration.model.ArchitectureDefinition;
 import hu.project.innovation.configuration.model.BackCallRule;
 import hu.project.innovation.configuration.model.Layer;
@@ -9,10 +10,6 @@ import hu.project.innovation.configuration.model.SoftwareUnitDefinition;
 import java.io.CharArrayWriter;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
@@ -44,60 +41,93 @@ public class ArchDefXMLReader extends DefaultHandler {
 	private CharArrayWriter contents = new CharArrayWriter();
 	private ArchitectureDefinition ar = new ArchitectureDefinition();
 	private Layer currentLayer;
-	private SoftwareUnitDefinition currentUnit;
-	private ArrayList<String> currentRule = new ArrayList<String>();
-	private ArrayList<ArrayList<String>> savedRules = new ArrayList<ArrayList<String>>();
-	private HashMap<SoftwareUnitDefinition, String> savedUnitExceptions = new HashMap<SoftwareUnitDefinition, String>();
+	private SoftwareUnitDefinition currentSoftwareUnit;
+	private AppliedRule currentAppliedRule;
 	private boolean isSoftwareUnit = false;
+	private boolean isAppliedRule = false;
 
 	public void startElement(String namespaceURI, String localName, String qName, Attributes attr) throws SAXException {
 		Log.i(this, "startElement(" + localName + ")");
-
 		contents.reset();
-
-		if (localName.equals("layer")) {
-			currentLayer = new Layer();
-			ar.addLayer(currentLayer);
-		} else if (localName.equals("softwareUnit")) {
-			currentUnit = new SoftwareUnitDefinition();
-			currentUnit.setLayer(currentLayer);
+		
+		// Set booleans true
+		if (localName.equals("softwareUnit")) {
 			isSoftwareUnit = true;
+		} else if (localName.equals("appliedRule")) {
+			isAppliedRule = true;
+		} 
+	}
+
+	public void endElement(String namespaceURI, String localName, String qName) {
+		Log.i(this, "endElement(" + localName + ")");
+		
+		// Get and set layer information
+		if (localName.equals("id")) {
+			
+			if (ar.getLayer(Integer.parseInt(contents.toString())) == null) {
+				currentLayer = new Layer();
+				currentLayer.setId(Integer.parseInt(contents.toString()));
+				ar.addLayer(currentLayer);
+			} else {
+				currentLayer = ar.getLayer(Integer.parseInt(contents.toString()));
+			}
+
+		} else if (localName.equals("name") && !isSoftwareUnit) {
+			currentLayer.setName(contents.toString());
+		} else if (localName.equals("description")) {
+			currentLayer.setDescription(contents.toString());
+		} 
+		
+		// Get and set software unit information
+		if (localName.equals("name") && isSoftwareUnit) {
 			try {
-				currentLayer.addSoftwareUnit(currentUnit);
+				currentSoftwareUnit = new SoftwareUnitDefinition();
+				currentLayer.addSoftwareUnit(currentSoftwareUnit);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}
-	}
-
-	@SuppressWarnings("unchecked")
-	public void endElement(String namespaceURI, String localName, String qName) {
-
-		Log.i(this, "endElement(" + localName + ")");
-
-		if (localName.equals("id")) {
-			currentLayer.setId(Integer.parseInt(contents.toString()));
-		} else if (localName.equals("name") && !isSoftwareUnit) {
-			currentLayer.setName(contents.toString());
-		} else if (localName.equals("name")) {
-			currentUnit.setName(contents.toString());
-		} else if (localName.equals("description")) {
-			currentLayer.setDescription(contents.toString());
+			currentSoftwareUnit.setName(contents.toString());
 		} else if (localName.equals("type")) {
-			currentUnit.setType(contents.toString());
-		} else if (localName.equals("ruleType")) {
-			currentRule.add(currentLayer.getId() + "");
-			currentRule.add(contents.toString());
+			currentSoftwareUnit.setType(contents.toString());
+		}
+		
+		// Get and set applied rule information
+		if (localName.equals("ruleType")) {
+			
+			currentAppliedRule = new AppliedRule();
+			currentAppliedRule.setFromLayer(currentLayer);
+					
+			if (contents.toString().equals("BackCall")) {
+				currentAppliedRule.setRuleType(new BackCallRule());
+			} else if (contents.toString().equals("SkipCall")) {
+				currentAppliedRule.setRuleType(new SkipLayerRule());
+			}
+			
 		} else if (localName.equals("toLayer")) {
-			currentRule.add(contents.toString());
+			
+			if (ar.getLayer(Integer.parseInt(contents.toString())) == null) {
+				Layer toLayer = new Layer();
+				toLayer.setId(Integer.parseInt(contents.toString()));
+				currentAppliedRule.setToLayer(toLayer);
+			} else {
+				currentAppliedRule.setToLayer(ar.getLayer(Integer.parseInt(contents.toString())));
+			}
 		} else if (localName.equals("appliedRule")) {
-			ArrayList<String> temp = (ArrayList<String>) currentRule.clone();
-			savedRules.add(temp);
-			currentRule.clear();
-		} else if (localName.equals("softwareUnit")) {
+			currentLayer.addAppliedRule(currentAppliedRule);
+		}
+		
+		// Exceptions toevoegen
+		if (localName.equals("unit") && isSoftwareUnit) {
+			//currentSoftwareUnit.addException(getSoftwareUnitDefinition(contents.toString()));
+		} else if (localName.equals("unit") && isAppliedRule) {
+			//currentAppliedRule.addException(getSoftwareUnitDefinition(contents.toString()));
+		}
+		
+		// Set booleans false
+		if (localName.equals("softwareUnit")) {
 			isSoftwareUnit = false;
-		} else if (localName.equals("unit")) {
-			savedUnitExceptions.put(currentUnit, contents.toString());
+		} else if (localName.equals("appliedRule")) {
+			isAppliedRule = false;
 		}
 	}
 
@@ -107,23 +137,22 @@ public class ArchDefXMLReader extends DefaultHandler {
 
 	public void endDocument() {
 		Log.i(this, " endDocument()");
-		for (ArrayList<String> rule : savedRules) {
-			Layer layer = ar.getLayer(Integer.parseInt(rule.get(0)));
-			if (rule.get(1).equals("BackCall")) {
-				layer.addAppliedRule(new BackCallRule(), ar.getLayer(Integer.parseInt(rule.get(2))));
-			} else if (rule.get(1).equals("SkipCall")) {
-				layer.addAppliedRule(new SkipLayerRule(), ar.getLayer(Integer.parseInt(rule.get(2))));
-			}
-		}
-		Iterator it = savedUnitExceptions.entrySet().iterator();
-	    while (it.hasNext()) {
-	        Map.Entry pairs = (Map.Entry)it.next();
-	        System.out.println(pairs.getKey() + " = " + pairs.getValue());
-	    }
+
 	}
 
 	public ArchitectureDefinition getArchitectureDefinition() {
 		return ar;
+	}
+	
+	private SoftwareUnitDefinition getSoftwareUnitDefinition(String name) {
+		for (Layer layer : ar.getAllLayers()) {
+			for (SoftwareUnitDefinition unit : layer.getAllSoftwareUnitDefinitions()) {
+				if (unit.getName().equals(name)) {
+					return unit;
+				}
+			}
+		}
+		return null;
 	}
 
 	public boolean validateXML(File file) throws ParserConfigurationException, SAXException, IOException {

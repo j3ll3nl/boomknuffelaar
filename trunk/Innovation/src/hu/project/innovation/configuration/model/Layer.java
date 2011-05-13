@@ -91,6 +91,10 @@ public class Layer implements XMLable {
 		this.appliedRules.add(r);
 		return r;
 	}
+	
+	public void addAppliedRule(AppliedRule rule) {
+		this.appliedRules.add(rule);
+	}
 
 	/**
 	 * Add a {@link SoftwareUnitDefinition}

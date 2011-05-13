@@ -23,7 +23,7 @@ public class SoftwareUnitDefinition implements XMLable {
 	}
 
 	public SoftwareUnitDefinition() {
-
+		exceptions = new ArrayList<SoftwareUnitDefinition>();
 	}
 
 	public void setName(String name) {
@@ -79,11 +79,13 @@ public class SoftwareUnitDefinition implements XMLable {
 		String xml = "\t\t<softwareUnit>\n";
 		xml += "\t\t\t<name>" + this.name + "</name>\n";
 		xml += "\t\t\t<type>" + this.type + "</type>\n";
-		for (SoftwareUnitDefinition unit : exceptions) {
-			xml += "\t\t\t<exception>\n";
-			xml += "\t\t\t\t<name>" + unit.getName() + "</name>\n";
-			xml += "\t\t\t\t<type>" + unit.getType() + "</type>\n";
-			xml += "\t\t\t</exception>\n";
+		if (exceptions != null) {
+			for (SoftwareUnitDefinition unit : exceptions) {
+				xml += "\t\t\t<exception>\n";
+				xml += "\t\t\t\t<name>" + unit.getName() + "</name>\n";
+				xml += "\t\t\t\t<type>" + unit.getType() + "</type>\n";
+				xml += "\t\t\t</exception>\n";
+			}
 		}
 		xml += "\t\t</softwareUnit>\n";
 		return xml;
