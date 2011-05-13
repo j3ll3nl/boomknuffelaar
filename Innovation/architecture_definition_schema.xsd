@@ -4,7 +4,7 @@
     <xs:element name="architecture">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="layer" minOccurs="1" maxOccurs="unbounded">
+                <xs:element name="layer" minOccurs="0" maxOccurs="unbounded">
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="id" type="xs:unsignedByte" minOccurs="1" maxOccurs="1" />
@@ -15,10 +15,11 @@
                                     <xs:sequence>
                                         <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1" />
                                         <xs:element name="type" type="xs:string" minOccurs="1" maxOccurs="1" />
-                                        <xs:element name="exceptions" minOccurs="0" maxOccurs="unbounded">
+                                        <xs:element name="exception" minOccurs="0" maxOccurs="unbounded">
                                             <xs:complexType>
                                                 <xs:sequence>
                                                     <xs:element name="unit" type="xs:string" minOccurs="1" maxOccurs="1" />
+                                                    <xs:element name="type" type="xs:string" minOccurs="1" maxOccurs="1" />
                                                 </xs:sequence>
                                             </xs:complexType>
                                         </xs:element>
@@ -30,10 +31,11 @@
                                     <xs:sequence>
                                         <xs:element name="ruleType" type="xs:string" minOccurs="1" maxOccurs="1" />
                                         <xs:element name="toLayer" type="xs:unsignedByte" minOccurs="1" maxOccurs="1" />
-                                        <xs:element name="exceptions" minOccurs="0" maxOccurs="unbounded">
+                                        <xs:element name="exception" minOccurs="0" maxOccurs="unbounded">
                                             <xs:complexType>
                                                 <xs:sequence>
                                                     <xs:element name="unit" type="xs:string" minOccurs="1" maxOccurs="1" />
+                                                    <xs:element name="type" type="xs:string" minOccurs="1" maxOccurs="1" />
                                                 </xs:sequence>
                                             </xs:complexType>
                                         </xs:element>

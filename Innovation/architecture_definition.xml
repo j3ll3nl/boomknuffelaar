@@ -9,6 +9,7 @@
 			<type>Package</type>
 			<exception>
 				<unit>com.example.class</unit>
+				<type>package</type>
 			</exception>
 		</softwareUnit>
 		<appliedRule>
@@ -16,6 +17,7 @@
 			<toLayer>2</toLayer>
 			<exception>
 				<unit>com.example.class</unit>
+				<type>package</type>
 			</exception>
 		</appliedRule>
 	</layer>
@@ -28,6 +30,7 @@
 			<type>Package</type>
 			<exception>
 				<unit>com.example.class</unit>
+				<type>package</type>
 			</exception>
 		</softwareUnit>
 		<appliedRule>
@@ -35,6 +38,7 @@
 			<toLayer>3</toLayer>
 			<exception>
 				<unit>com.example.class</unit>
+				<type>package</type>
 			</exception>
 		</appliedRule>
 	</layer>
@@ -55,6 +59,7 @@
 			<toLayer>1</toLayer>
 			<exception>
 				<unit>com.example.class</unit>
+				<type>package</type>
 			</exception>
 		</appliedRule>
 	</layer>
