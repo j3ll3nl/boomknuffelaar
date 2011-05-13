@@ -30,8 +30,8 @@ import org.xml.sax.helpers.DefaultHandler;
 /**
  * SAMPLE HOW TO USE:
  * 
- * XMLReader xr = XMLReaderFactory.createXMLReader(); ArchDefXMLReader reader = new ArchDefXMLReader(); xr.setContentHandler(reader); xr.parse( new InputSource(new FileReader(
- * "architecture_definition.xml" )) );
+ * XMLReader xr = XMLReaderFactory.createXMLReader(); ArchDefXMLReader reader = new ArchDefXMLReader(); 
+ * xr.setContentHandler(reader); xr.parse(new InputSource(new FileReader("architecture_definition.xml")));
  * 
  * reader.getArchitectureDefinition();
  */
@@ -43,8 +43,37 @@ public class ArchDefXMLReader extends DefaultHandler {
 	private Layer currentLayer;
 	private SoftwareUnitDefinition currentSoftwareUnit;
 	private AppliedRule currentAppliedRule;
+	private SoftwareUnitDefinition currentSoftwareUnitException;
 	private boolean isSoftwareUnit = false;
 	private boolean isAppliedRule = false;
+	private boolean isException = false;
+	
+	public ArchitectureDefinition getArchitectureDefinition() {
+		return ar;
+	}
+	
+	public boolean validateXML(File file) throws ParserConfigurationException, SAXException, IOException {
+		// parse an XML document into a DOM tree
+		DocumentBuilder parser = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+		Document document = parser.parse(file);
+
+		// create a SchemaFactory capable of understanding WXS schemas
+		SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+
+		// load a WXS schema, represented by a Schema instance
+		Source schemaFile = new StreamSource(new File("architecture_definition_schema.xsd"));
+		Schema schema = factory.newSchema(schemaFile);
+
+		// create a Validator instance, which can be used to validate an instance document
+		Validator validator = schema.newValidator();
+
+		// validate the DOM tree
+		validator.validate(new DOMSource(document));
+
+		return false;
+	}
+	
+	// Extended methods ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public void startElement(String namespaceURI, String localName, String qName, Attributes attr) throws SAXException {
 		Log.i(this, "startElement(" + localName + ")");
@@ -55,7 +84,9 @@ public class ArchDefXMLReader extends DefaultHandler {
 			isSoftwareUnit = true;
 		} else if (localName.equals("appliedRule")) {
 			isAppliedRule = true;
-		} 
+		} else if (localName.equals("exception")) {
+			isException = true;
+		}
 	}
 
 	public void endElement(String namespaceURI, String localName, String qName) {
@@ -116,11 +147,19 @@ public class ArchDefXMLReader extends DefaultHandler {
 			currentLayer.addAppliedRule(currentAppliedRule);
 		}
 		
-		// Exceptions toevoegen
-		if (localName.equals("unit") && isSoftwareUnit) {
-			//currentSoftwareUnit.addException(getSoftwareUnitDefinition(contents.toString()));
-		} else if (localName.equals("unit") && isAppliedRule) {
-			//currentAppliedRule.addException(getSoftwareUnitDefinition(contents.toString()));
+		// Add exceptions
+		if (localName.equals("unit") && isSoftwareUnit && isException) {
+			currentSoftwareUnitException = new SoftwareUnitDefinition();
+			currentSoftwareUnitException.setName(contents.toString());
+			currentSoftwareUnit.addException(currentSoftwareUnitException);
+		} else if (localName.equals("type") && isSoftwareUnit && isException) {
+			currentSoftwareUnitException.setType(contents.toString());
+		} else if (localName.equals("unit") && isAppliedRule && isException) {
+			currentSoftwareUnitException = new SoftwareUnitDefinition();
+			currentSoftwareUnitException.setName(contents.toString());
+			currentAppliedRule.addException(currentSoftwareUnitException);
+		} else if (localName.equals("type") && isAppliedRule && isException) {
+			currentSoftwareUnitException.setType(contents.toString());
 		}
 		
 		// Set booleans false
@@ -128,6 +167,8 @@ public class ArchDefXMLReader extends DefaultHandler {
 			isSoftwareUnit = false;
 		} else if (localName.equals("appliedRule")) {
 			isAppliedRule = false;
+		} else if (localName.equals("exception")) {
+			isException = false;
 		}
 	}
 
@@ -138,41 +179,5 @@ public class ArchDefXMLReader extends DefaultHandler {
 	public void endDocument() {
 		Log.i(this, " endDocument()");
 
-	}
-
-	public ArchitectureDefinition getArchitectureDefinition() {
-		return ar;
-	}
-	
-	private SoftwareUnitDefinition getSoftwareUnitDefinition(String name) {
-		for (Layer layer : ar.getAllLayers()) {
-			for (SoftwareUnitDefinition unit : layer.getAllSoftwareUnitDefinitions()) {
-				if (unit.getName().equals(name)) {
-					return unit;
-				}
-			}
-		}
-		return null;
-	}
-
-	public boolean validateXML(File file) throws ParserConfigurationException, SAXException, IOException {
-		// parse an XML document into a DOM tree
-		DocumentBuilder parser = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-		Document document = parser.parse(file);
-
-		// create a SchemaFactory capable of understanding WXS schemas
-		SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-
-		// load a WXS schema, represented by a Schema instance
-		Source schemaFile = new StreamSource(new File("architecture_definition_schema.xsd"));
-		Schema schema = factory.newSchema(schemaFile);
-
-		// create a Validator instance, which can be used to validate an instance document
-		Validator validator = schema.newValidator();
-
-		// validate the DOM tree
-		validator.validate(new DOMSource(document));
-
-		return false;
 	}
 }
