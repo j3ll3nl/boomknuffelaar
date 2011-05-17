@@ -40,6 +40,7 @@ public class MainController implements ActionListener {
 		jframe.jMenuItemOpenArchitecture.addActionListener(this);
 		jframe.jMenuItemSaveArchitecture.addActionListener(this);
 		jframe.jMenuItemStartAnalyse.addActionListener(this);
+		jframe.jMenuItemCheckDependencies.addActionListener(this);
 		jframe.jMenuItemAbout.addActionListener(this);
 
 		// This method sets the definition jpanel in the jframe.
@@ -95,6 +96,10 @@ public class MainController implements ActionListener {
 		} else if (action.getSource() == jframe.jMenuItemStartAnalyse) {
 			Log.i(this, "actionPerformed() - start analyse");
 			analysecontroller.initUi();
+		} else if(action.getSource() == jframe.jMenuItemCheckDependencies) {
+			//todo daan
+			Log.i(this, "actionPerformed() - check dependensies");
+			Ui.messageDialog(jframe, "todo", "Check dependencies");
 		} else if (action.getSource() == jframe.jMenuItemAbout) {
 			Log.i(this, "actionPerformed() - about");
 			Ui.messageDialog(jframe, "This application is made an project team on Hogeschool Utrecht.", "About");
