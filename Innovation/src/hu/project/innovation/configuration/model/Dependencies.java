@@ -5,9 +5,7 @@ import java.util.HashMap;
 
 public interface Dependencies {
 	
-	/**
-	 * Add a dependency / software component
-	 */
+	/** Add a dependency / software component */
 	public void addSoftwareComponent(String groupId, String artifactId, String version, String scope);
 	
 	/**
@@ -22,19 +20,16 @@ public interface Dependencies {
 	 */
 	public SoftwareComponent getSoftwareComponent(String groupId);
 	
-	/**
-	 * @return all dependencies / software components
-	 */
+	/** @return all dependencies / software components */
 	public SoftwareComponent[] getSoftwareComponents();
 	
 	public class Dependency extends HashMap<String, SoftwareComponent> implements Dependencies {
 		private static final long serialVersionUID = 1L;
 
 		protected class SoftwareComponent {
-			private String groupId;
-			private String artifactId;
-			private String version;
-			private String scope;
+			/** pom.xml attributes */
+			private String groupId, artifactId, version, scope;
+			
 			public SoftwareComponent() {}
 			public SoftwareComponent(String groupId, String artifactId, String version, String scope) {
 				this.groupId = groupId;
@@ -43,9 +38,7 @@ public interface Dependencies {
 				this.scope = scope;
 			}
 
-			/**
-			 * getter/setters
-			 */
+			/** getter/setters */
 			public String getGroupId() { return this.groupId; }
 			public String getArtifactId() { return this.artifactId; }
 			public String getVersion() { return this.version; }
@@ -54,16 +47,12 @@ public interface Dependencies {
 		
 		public Dependency() {}
 		
-		/**
-		 * add a dependency
-		 */
+		/** add a dependency */
 		public void addSoftwareComponent(String groupId, String artifactId, String version, String scope) {
 			super.put(groupId, new SoftwareComponent(groupId, artifactId, version, scope));
 		}
 		
-		/**
-		 * @param groupId the dependency to remove
-		 */
+		/** @param groupId the dependency to remove */
 		public String removeSoftwareComponent(String groupId) {
 			if(super.containsKey(groupId)) {
 				super.remove(groupId);
@@ -84,9 +73,7 @@ public interface Dependencies {
 			}
 		}
 		
-		/**
-		 * @return all dependencies
-		 */
+		/** @return all dependencies */
 		public SoftwareComponent[] getSoftwareComponents() {
 			if(super.size() > 0) {
 				SoftwareComponent[] components = new SoftwareComponent[super.size()];
