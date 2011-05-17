@@ -1,37 +1,38 @@
 package hu.project.innovation.configuration.model;
 
-import hu.project.innovation.configuration.model.Dependencies.Dependency.SoftwareComponent;
+import hu.project.innovation.configuration.model.Dependencies.Dependency.DepSoftwareComponent;
+
 import java.util.HashMap;
 
 public interface Dependencies {
 	
 	/** Add a dependency / software component */
-	public void addSoftwareComponent(String groupId, String artifactId, String version, String scope);
+	public void addDepSoftwareComponent(String groupId, String artifactId, String version, String scope);
 	
 	/**
 	 * @param groupId the id for the dependency to remove
 	 * @return if the remove was successful (or not)
 	 */
-	public String removeSoftwareComponent(String groupId);
+	public String removeDepSoftwareComponent(String groupId);
 	
 	/**
 	 * @param groupId
 	 * @return the dependency
 	 */
-	public SoftwareComponent getSoftwareComponent(String groupId);
+	public DepSoftwareComponent getDepSoftwareComponent(String groupId);
 	
 	/** @return all dependencies / software components */
-	public SoftwareComponent[] getSoftwareComponents();
+	public DepSoftwareComponent[] getDepSoftwareComponents();
 	
-	public class Dependency extends HashMap<String, SoftwareComponent> implements Dependencies {
+	public class Dependency extends HashMap<String, DepSoftwareComponent> implements Dependencies {
 		private static final long serialVersionUID = 1L;
 
-		protected class SoftwareComponent {
+		public class DepSoftwareComponent {
 			/** pom.xml attributes */
 			private String groupId, artifactId, version, scope;
 			
-			public SoftwareComponent() {}
-			public SoftwareComponent(String groupId, String artifactId, String version, String scope) {
+			public DepSoftwareComponent() {}
+			public DepSoftwareComponent(String groupId, String artifactId, String version, String scope) {
 				this.groupId = groupId;
 				this.artifactId = artifactId;
 				this.version = version;
@@ -48,12 +49,12 @@ public interface Dependencies {
 		public Dependency() {}
 		
 		/** add a dependency */
-		public void addSoftwareComponent(String groupId, String artifactId, String version, String scope) {
-			super.put(groupId, new SoftwareComponent(groupId, artifactId, version, scope));
+		public void addDepSoftwareComponent(String groupId, String artifactId, String version, String scope) {
+			super.put(groupId, new DepSoftwareComponent(groupId, artifactId, version, scope));
 		}
 		
 		/** @param groupId the dependency to remove */
-		public String removeSoftwareComponent(String groupId) {
+		public String removeDepSoftwareComponent(String groupId) {
 			if(super.containsKey(groupId)) {
 				super.remove(groupId);
 				return "Dependency: " + groupId + " removed.";
@@ -65,7 +66,7 @@ public interface Dependencies {
 		 * @param groupId the identifier for the dependency to return
 		 * @return a single dependency
 		 */
-		public SoftwareComponent getSoftwareComponent(String groupId) {
+		public DepSoftwareComponent getDepSoftwareComponent(String groupId) {
 			if(super.containsKey(groupId)) return super.get(groupId);
 			else {
 				System.err.println("Dependency: " + groupId + " doesnt' exist.");
@@ -74,11 +75,11 @@ public interface Dependencies {
 		}
 		
 		/** @return all dependencies */
-		public SoftwareComponent[] getSoftwareComponents() {
+		public DepSoftwareComponent[] getDepSoftwareComponents() {
 			if(super.size() > 0) {
-				SoftwareComponent[] components = new SoftwareComponent[super.size()];
+				DepSoftwareComponent[] components = new DepSoftwareComponent[super.size()];
 				int i = 0;
-				for(SoftwareComponent component : super.values()) {
+				for(DepSoftwareComponent component : super.values()) {
 					components[i] = component;
 					i++;
 				}

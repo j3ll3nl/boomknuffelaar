@@ -14,6 +14,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 public class DependencyController {
+	private String xmlFile = "pom.xml";
 	private ConfigurationService configurationService;
 	
 	public static void main(String[] args) {
@@ -23,7 +24,12 @@ public class DependencyController {
 	public DependencyController() {
 		configurationService = ConfigurationService.getInstance();
 		configurationService.setProjectPath(System.getProperty("user.dir"));
-		File pomFile = new File(configurationService.getProjectPath()+"/pom.xml");
+		
+		File pomFile = new File(configurationService.getProjectPath()+"/"+xmlFile);
+		
+		configurationService.addDependency("junit", "junit", "3.8.1", "test");
+		System.out.println(configurationService.getDependency("junit").getVersion());
+		
 		parseXML(pomFile);
 //		if(pomFile.exists()) {
 //			try {
@@ -43,13 +49,11 @@ public class DependencyController {
 			SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
 			try {
 				saxParser.parse(pomFile, new DefaultHandler() {
-					
-					
 					public void startElement(String uri, String qName, String localName, Attributes attrs) {
 						
 					}
 					public void characters(char[] ch, int start, int length) {
-						System.out.println(new String(ch, start, length).trim());
+//						System.out.println(new String(ch, start, length).trim());
 					}
 				});
 			} catch (IOException e) {
