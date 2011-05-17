@@ -32,6 +32,7 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 	public JMenuItem jMenuItemAbout;
 	public JMenuItem jMenuItemOnlineHelp;
 	public JMenuItem jMenuItemStartAnalyse;
+	public JMenuItem jMenuItemCheckDependencies;
 	public JMenuItem jMenuItemSaveArchitecture;
 	public JMenuItem jMenuItemOpenArchitecture;
 	public JMenuItem jMenuItemNewArchitecture;
@@ -113,6 +114,9 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 						jMenuItemStartAnalyse = new JMenuItem();
 						jMenu2.add(jMenuItemStartAnalyse);
 						jMenuItemStartAnalyse.setText("Start analyse");
+						jMenuItemCheckDependencies = new JMenuItem();
+						jMenu2.add(jMenuItemCheckDependencies);
+						jMenuItemCheckDependencies.setText("Check dependencies");
 					}
 				}
 				{
