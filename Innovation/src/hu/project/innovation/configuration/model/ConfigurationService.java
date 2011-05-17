@@ -1,5 +1,7 @@
 package hu.project.innovation.configuration.model;
 
+import hu.project.innovation.configuration.model.Dependencies.Dependency;
+import hu.project.innovation.configuration.model.Dependencies.Dependency.DepSoftwareComponent;
 import hu.project.innovation.utils.ArchDefXMLReader;
 import hu.project.innovation.utils.Log;
 import hu.project.innovation.utils.Messages;
@@ -25,6 +27,7 @@ public final class ConfigurationService {
 		Log.i(this, "constructor()");
 
 		this.configuration = new Configuration();
+		this.dependencies = new Dependency();
 	}
 
 	/**
@@ -299,7 +302,7 @@ public final class ConfigurationService {
 	 * Add a dependency
 	 */
 	public void addDependency(String groupId, String artifactId, String version, String scope) {
-		this.dependencies.addSoftwareComponent(groupId, artifactId, version, scope);
+		this.dependencies.addDepSoftwareComponent(groupId, artifactId, version, scope);
 	}
 	
 	/**
@@ -308,24 +311,23 @@ public final class ConfigurationService {
 	 * @param groupId the component name to remove
 	 */
 	public void removeDependency(String groupId) {
-		//TODO
+		dependencies.removeDepSoftwareComponent(groupId);
 	}
 	
 	/**
 	 * return a dependency (if exists)
-	 * 
 	 * @param groupId the component to return
 	 */
-	public Dependencies getDependency(String groupId) {
-		return null;
+	public DepSoftwareComponent getDependency(String groupId) {
+		return dependencies.getDepSoftwareComponent(groupId);
 	}
 	
 	/**
 	 * 
 	 * @return all dependencies
 	 */
-	public Dependencies getDependencies() {
-		return null;
+	public DepSoftwareComponent[] getDependencies() {
+		return dependencies.getDepSoftwareComponents();
 	}
 	
 }
