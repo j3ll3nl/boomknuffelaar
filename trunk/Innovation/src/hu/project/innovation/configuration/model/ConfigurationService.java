@@ -299,7 +299,7 @@ public final class ConfigurationService {
 	 * Add a dependency
 	 */
 	public void addDependency(String groupId, String artifactId, String version, String scope) {
-		this.dependencies.addComponent(groupId, artifactId, version, scope);
+		this.dependencies.addSoftwareComponent(groupId, artifactId, version, scope);
 	}
 	
 	/**
