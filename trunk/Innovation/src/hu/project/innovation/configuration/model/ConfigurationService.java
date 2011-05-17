@@ -19,12 +19,12 @@ public final class ConfigurationService {
 	private ArchitectureDefinition architectureDefinition;
 	private Configuration configuration;
 	private static ConfigurationService instance;
+	private Dependencies dependencies;
 
 	private ConfigurationService() {
 		Log.i(this, "constructor()");
 
 		this.configuration = new Configuration();
-		// this.dependencies = new dependencies();
 	}
 
 	/**
@@ -298,8 +298,8 @@ public final class ConfigurationService {
 	/**
 	 * Add a dependency
 	 */
-	public void addDependency() {
-		//TODO
+	public void addDependency(String groupId, String artifactId, String version, String scope) {
+		this.dependencies.addComponent(groupId, artifactId, version, scope);
 	}
 	
 	/**
@@ -316,7 +316,7 @@ public final class ConfigurationService {
 	 * 
 	 * @param groupId the component to return
 	 */
-	public Dependency getDependency(String groupId) {
+	public Dependencies getDependency(String groupId) {
 		return null;
 	}
 	
@@ -324,7 +324,7 @@ public final class ConfigurationService {
 	 * 
 	 * @return all dependencies
 	 */
-	public Dependency getDependencies() {
+	public Dependencies getDependencies() {
 		return null;
 	}
 	
