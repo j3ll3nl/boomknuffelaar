@@ -24,6 +24,7 @@ public final class ConfigurationService {
 		Log.i(this, "constructor()");
 
 		this.configuration = new Configuration();
+		// this.dependencies = new dependencies();
 	}
 
 	/**
@@ -294,4 +295,37 @@ public final class ConfigurationService {
 		}
 	}
 
+	/**
+	 * Add a dependency
+	 */
+	public void addDependency() {
+		//TODO
+	}
+	
+	/**
+	 * Remove a dependency
+	 * 
+	 * @param groupId the component name to remove
+	 */
+	public void removeDependency(String groupId) {
+		//TODO
+	}
+	
+	/**
+	 * return a dependency (if exists)
+	 * 
+	 * @param groupId the component to return
+	 */
+	public Dependency getDependency(String groupId) {
+		return null;
+	}
+	
+	/**
+	 * 
+	 * @return all dependencies
+	 */
+	public Dependency getDependencies() {
+		return null;
+	}
+	
 }
