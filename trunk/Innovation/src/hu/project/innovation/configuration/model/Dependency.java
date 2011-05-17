@@ -7,7 +7,7 @@ public class Dependency extends HashMap<String, SoftwareComponent> {
 
 	private static final long serialVersionUID = 1L;
 
-	public class SoftwareComponent {
+	protected class SoftwareComponent {
 		private String groupId;
 		private String artifactId;
 		private String version;
