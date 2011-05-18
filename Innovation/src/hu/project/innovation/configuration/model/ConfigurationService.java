@@ -322,8 +322,8 @@ public final class ConfigurationService {
 	/**
 	 * Add a dependency
 	 */
-	public void addDependency(String groupId, String artifactId, String version, String scope) {
-		this.dependencies.addDepSoftwareComponent(groupId, artifactId, version, scope);
+	public void addDependency(String groupId, String artifactId, String version, String type, String scope) {
+		this.dependencies.addDepSoftwareComponent(groupId, artifactId, version, type, scope);
 	}
 	
 	/**
@@ -355,8 +355,8 @@ public final class ConfigurationService {
 	/**
 	 * Add a allowed dependency
 	 */
-	public void addAllowedDependency(String groupId, String artifactId, String version, String scope) {
-		this.allowedDependencies.addDepSoftwareComponent(groupId, artifactId, version, scope);
+	public void addAllowedDependency(String groupId, String artifactId, String version, String type, String scope) {
+		this.allowedDependencies.addDepSoftwareComponent(groupId, artifactId, version, type, scope);
 	}
 	
 	/**

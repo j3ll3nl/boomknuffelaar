@@ -1,6 +1,7 @@
 package hu.project.innovation.analyse.controller;
 
 import hu.project.innovation.configuration.model.ConfigurationService;
+import hu.project.innovation.configuration.model.Dependencies.Dependency.DepSoftwareComponent;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,19 +28,11 @@ public class DependencyController {
 		this.addAllowedDependencies();
 		this.addDependencies();
 		
-//		for(DepSoftwareComponent dsc : configurationService.getAllowedDependencies()) {
-//			System.out.println(dsc.getArtifactId());
-//		}
-//		this.parseXML(pomFile, false);
-		
-//		if(configurationService.getDependencies() != null) {
-//			for(DepSoftwareComponent dec : configurationService.getDependencies()) {
-//				if(configurationService.getAllowedDependency(dec.getArtifactId()) == null) {
-//				}
-//			}
-//		}
-//		parseXML(pomFile, xmlFileName);
-		
+		for(DepSoftwareComponent dsc : configurationService.getDependencies()) {
+			if(configurationService.getAllowedDependency(dsc.getArtifactId()) == null) {
+				System.err.println("Component " + dsc.getArtifactId() + " isn't allowed");
+			}
+		}
 	}
 	
 	private void parseXML(File pomFile, final boolean isAllowedByDefault) {
@@ -47,50 +40,52 @@ public class DependencyController {
 			SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
 			try {
 				saxParser.parse(pomFile, new DefaultHandler() {
-					private boolean dependency, groupId, artifactId, version, scope = false;
-					private String _groupId, _artifactId, _version, _scope = null;
+					boolean dependencies, groupId, artifactId, version, type, scope = false;
+					String _groupId, _artifactId, _version, _type, _scope = null;
+										
 					public void startElement(String uri, String qName, String localName, Attributes attrs) {
-						setBoolVal("startElement", localName);
-						
-						// reset all strings (needed for declaring a new dependency)
-						if(localName.equals("dependency")) {
-							this._groupId = null;
-							this._artifactId = null;
-							this._version = null;
-							this._scope = null;
-						}
+						if(localName.equalsIgnoreCase("dependencies"))
+							dependencies = true;
+						else if(localName.equalsIgnoreCase("groupId"))
+							groupId = (dependencies) ? true : false;
+						else if(localName.equalsIgnoreCase("artifactId"))
+							artifactId = (dependencies) ? true : false;
+						else if(localName.equalsIgnoreCase("version"))
+							version = (dependencies) ? true : false;
+						else if(localName.equalsIgnoreCase("type"))
+							type = (dependencies) ? true : false;
+						else if(localName.equalsIgnoreCase("scope"))
+							scope = (dependencies) ? true : false;
 					}
+					
 					public void endElement(String uri, String qName, String localName) {
-						setBoolVal("endElement", localName);
-
-						if(dependency) {
-							// add a new dependency
-							if(!isAllowedByDefault) {
-								System.out.println("GroupID: " + _groupId);
-								System.out.println("ArtifactID: " + _artifactId);
-								System.out.println("Version: " + _version);
-								System.out.println("Scope: " + _scope);
-									//configurationService.addDependency(_groupId, _artifactId, _version, _scope);
-							} else configurationService.addAllowedDependency(_groupId, _artifactId, _version, _scope);
+						if(localName.equalsIgnoreCase("dependency")) {
+							if(!isAllowedByDefault)
+								configurationService.addDependency(_groupId, _artifactId, _version, _type, _scope);
+							else
+								configurationService.addAllowedDependency(_groupId, _artifactId, _version, _type, _scope);
 						}
 					}
 					
 					public void characters(char[] ch, int start, int length) {
-						if(dependency) {
-							if(groupId) this._groupId = new String(ch, start, length).trim();
-							else if(artifactId) this._artifactId = new String(ch, start, length).trim();
-							else if(version) this._version = new String(ch, start, length).trim();
-							else if(scope) this._scope = new String(ch, start, length).trim();
-						}	
-					}
-					
-					private void setBoolVal(String type, String localName) {
-						if(!this.dependency)
-							this.dependency = ((type.equals("startElement") && localName.equals("dependency")) ? true : false);
-						this.groupId = ((type.equals("startElement") && localName.equals("groupId")) ? true : false);
-						this.artifactId = ((type.equals("startElement") && localName.equals("artifactId")) ? true : false);
-						this.version = ((type.equals("startElement") && localName.equals("version")) ? true : false);
-						this.scope = ((type.equals("startElement") && localName.equals("scope")) ? true : false);
+						if(dependencies) {
+							if(groupId) {
+								_groupId = new String(ch, start, length);
+								groupId = false;
+							} else if(artifactId) {
+								_artifactId = new String(ch, start, length);
+								artifactId = false;
+							} else if(version) {
+								_version = new String(ch, start, length);
+								version = false;
+							} else if(type) {
+								_type = new String(ch, start, length);
+								type = false;
+							} else if(scope) {
+								_scope = new String(ch, start, length);
+								scope = false;
+							}
+						}
 					}
 				});
 			} catch (IOException e) {
