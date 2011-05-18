@@ -7,7 +7,7 @@ import java.util.HashMap;
 public interface Dependencies {
 	
 	/** Add a dependency / software component */
-	public void addDepSoftwareComponent(String groupId, String artifactId, String version, String scope);
+	public void addDepSoftwareComponent(String groupId, String artifactId, String version, String type, String scope);
 	
 	/**
 	 * @param groupId the id for the dependency to remove
@@ -29,13 +29,14 @@ public interface Dependencies {
 
 		public class DepSoftwareComponent {
 			/** pom.xml attributes */
-			private String groupId, artifactId, version, scope;
+			private String groupId, artifactId, version, type, scope;
 			
 			public DepSoftwareComponent() {}
-			public DepSoftwareComponent(String groupId, String artifactId, String version, String scope) {
+			public DepSoftwareComponent(String groupId, String artifactId, String version, String type, String scope) {
 				this.groupId = groupId;
 				this.artifactId = artifactId;
 				this.version = version;
+				this.type = type;
 				this.scope = scope;
 			}
 
@@ -43,14 +44,15 @@ public interface Dependencies {
 			public String getGroupId() { return this.groupId; }
 			public String getArtifactId() { return this.artifactId; }
 			public String getVersion() { return this.version; }
+			public String getType() { return this.type; }
 			public String getScope() { return this.scope; }
 		}
 		
 		public Dependency() {}
 		
 		/** add a dependency */
-		public void addDepSoftwareComponent(String groupId, String artifactId, String version, String scope) {
-			super.put(artifactId, new DepSoftwareComponent(groupId, artifactId, version, scope));
+		public void addDepSoftwareComponent(String groupId, String artifactId, String version, String type, String scope) {
+			super.put(artifactId, new DepSoftwareComponent(groupId, artifactId, version, type, scope));
 		}
 		
 		/** @param groupId the dependency to remove */
@@ -94,8 +96,8 @@ public interface Dependencies {
 		private static final long serialVersionUID = 1L;
 
 		public AllowedDependency() {}
-		public AllowedDependency(String groupId, String artifactId, String version, String scope) {
-			super.addDepSoftwareComponent(groupId, artifactId, version, scope);
+		public AllowedDependency(String groupId, String artifactId, String version, String type, String scope) {
+			super.addDepSoftwareComponent(groupId, artifactId, version, type, scope);
 		}
 	}
 }
