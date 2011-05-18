@@ -79,6 +79,9 @@ public final class ConfigurationService {
 		xr.parse(new InputSource(new FileReader(file)));
 
 		architectureDefinition = reader.getArchitectureDefinition();
+		setProjectPath(reader.getProjectPath());
+		setOutputPath(reader.getOutputPath());
+		setOutputType(reader.getOutputFormat());
 	}
 
 	/**

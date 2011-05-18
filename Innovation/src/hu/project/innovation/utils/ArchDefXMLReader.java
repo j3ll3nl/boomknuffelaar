@@ -44,6 +44,9 @@ public class ArchDefXMLReader extends DefaultHandler {
 	private SoftwareUnitDefinition currentSoftwareUnit;
 	private AppliedRule currentAppliedRule;
 	private SoftwareUnitDefinition currentSoftwareUnitException;
+	private String projectPath;
+	private String outputPath;
+	private String outputFormat;
 	private boolean isLayer = false;
 	private boolean isSoftwareUnit = false;
 	private boolean isAppliedRule = false;
@@ -51,6 +54,18 @@ public class ArchDefXMLReader extends DefaultHandler {
 	
 	public ArchitectureDefinition getArchitectureDefinition() {
 		return ar;
+	}
+	
+	public String getProjectPath() {
+		return projectPath;
+	}
+	
+	public String getOutputPath() {
+		return outputPath;
+	}
+
+	public String getOutputFormat() {
+		return outputFormat;
 	}
 	
 	public boolean validateXML(File file) throws ParserConfigurationException, SAXException, IOException {
@@ -90,6 +105,18 @@ public class ArchDefXMLReader extends DefaultHandler {
 		} else if (localName.equals("exception")) {
 			isException = true;
 		}
+		
+		// Get element attributes
+		if (localName.equals("architecture")) {
+			try {
+				ar.setName(attr.getValue(0));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (localName.equals("output")) {
+			outputFormat = attr.getValue(0);
+		}
+		
 	}
 
 	public void endElement(String namespaceURI, String localName, String qName) {
@@ -176,7 +203,12 @@ public class ArchDefXMLReader extends DefaultHandler {
 			isException = false;
 		}
 		
-		
+		// Get and set paths
+		if (localName.equals("project")) {
+			projectPath = contents.toString();
+		} else if (localName.equals("output")) {
+			outputPath = contents.toString();
+		}
 		
 	}
 
