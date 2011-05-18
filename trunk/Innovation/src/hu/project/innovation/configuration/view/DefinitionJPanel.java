@@ -5,6 +5,7 @@ import hu.project.innovation.configuration.model.SoftwareUnitDefinition;
 import hu.project.innovation.configuration.view.tables.JTableAppliedRule;
 import hu.project.innovation.configuration.view.tables.JTableSoftwareUnits;
 import hu.project.innovation.configuration.view.tables.JTableTableModel;
+import hu.project.innovation.utils.DefaultMessages;
 
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
@@ -182,17 +183,17 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 							{
 								jLabel1 = new JLabel();
 								jPanel4.add(jLabel1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-								jLabel1.setText("Layer name");
+								jLabel1.setText("Layer name");								
 							}
 							{
 								jTextFieldLayerName = new JTextField();
-
+								jTextFieldLayerName.setToolTipText(DefaultMessages.TIP_LAYER);
 								jPanel4.add(jTextFieldLayerName, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 							}
 							{
 								jLabel2 = new JLabel();
 								jPanel4.add(jLabel2, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-								jLabel2.setText("Description");
+								jLabel2.setText("Description");								
 							}
 							{
 								jScrollPane2 = new JScrollPane();
@@ -203,6 +204,7 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 								{
 									jTextAreaLayerDescription = new JTextArea();
 									jTextAreaLayerDescription.setFont(new java.awt.Font("Tahoma", 0, 11));
+									jTextAreaLayerDescription.setToolTipText(DefaultMessages.TIP_LAYERDESCRIPTION);									
 									jScrollPane2.setViewportView(jTextAreaLayerDescription);
 								}
 							}
@@ -335,7 +337,8 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 	private JCheckBox getJCheckBox1() {
 		if(jCheckBoxAccess == null) {
 			jCheckBoxAccess = new JCheckBox();	
-			jCheckBoxAccess.setText("Only accessible by interface");
+			jCheckBoxAccess.setText("Only accessible by a facade (interface)");
+			jCheckBoxAccess.setToolTipText(DefaultMessages.TIP_FACADE);			
 		}
 		return jCheckBoxAccess;
 	}
@@ -343,7 +346,7 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 	private JLabel getJLabel3() {
 		if(jLabel3 == null) {
 			jLabel3 = new JLabel();
-			jLabel3.setText("Access:");
+			jLabel3.setText("Access:");			
 		}
 		return jLabel3;
 	}
