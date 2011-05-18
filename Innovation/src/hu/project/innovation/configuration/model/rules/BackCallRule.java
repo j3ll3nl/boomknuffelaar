@@ -20,10 +20,7 @@ public class BackCallRule extends AbstractRuleType {
 	 */
 	public Object visit(ASTClassOrInterfaceType node, Object data) {
 		// Only check if we have a type
-		if (node.getType() != null) {
-			// Get the called package name
-//			Log.i(this, Modifier.isPublic(node.getType().getModifiers()) + " " + node.getType().getSimpleName());
-			
+		if (node.getType() != null) {	
 			this.checkViolation(node.getType(), data, node);
 		}
 		// Run the super function
@@ -44,7 +41,7 @@ public class BackCallRule extends AbstractRuleType {
 		return super.visit(node, data);
 	}
 	
-	public void checkViolation(Class<?> toClass, Object data, SimpleNode node) {
+	protected void checkViolation(Class<?> toClass, Object data, SimpleNode node) {
 		String calledName = toClass.getCanonicalName();
 		
 		if (isPackageChecked(calledName)) {
@@ -57,13 +54,17 @@ public class BackCallRule extends AbstractRuleType {
 			
 //			Log.i(this,"from: " + this.getPackageName(node) + " to: " + calledName);
 //			Log.i(this,"from: " + fromLayer + " to: " + toLayer);
-			if(fromLayer == null || toLayer == null) return;
-			
-			// Check if the rule is applied for these two layers and this rule
-			if (fromLayer.hasAppliedRule(this.getClass().getSimpleName(), toLayer)) {
-				this.addViolation(data, node);
+			if(fromLayer != null && toLayer != null) {
+				// Check if the rule is applied for these two layers and this rule
+				if (fromLayer.hasAppliedRule(this.getClass().getSimpleName(), toLayer)) {
+					this.addViolationWithMessage(data, node, this.getViolationMessage(fromLayer, toLayer));
+				}
 			}
 		}
+	}
+	
+	protected String getViolationMessage(Layer fromLayer, Layer toLayer) {
+		return fromLayer.getName() + " calls " + toLayer.getName() + ": " + this.getMessage();
 	}
 
 	/**

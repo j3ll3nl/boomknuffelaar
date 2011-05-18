@@ -14,17 +14,7 @@ import org.jaxen.JaxenException;
 public abstract class AbstractRuleType extends AbstractJavaRule implements XMLable {
 
 	protected AbstractRuleType() {
-//		Log.i(this, this.getClass().getSimpleName() + "()");
 		this.setName(this.getClass().getSimpleName());
-	}
-
-	/**
-	 * The name formatted for xml. It changes AnExampleClass to an_example_class
-	 * 
-	 * @return
-	 */
-	private String formattedName() {
-		return this.getName().replaceAll("(.)([A-Z])", "$1_$2").toLowerCase();
 	}
 
 	/**
@@ -60,7 +50,7 @@ public abstract class AbstractRuleType extends AbstractJavaRule implements XMLab
 	public String toXML() {
 		String xml = "";
 
-		xml += "<rule name=\"" + this.formattedName() + "\" ";
+		xml += "<rule name=\"" + this.getName() + "\" ";
 		xml += "message=\"" + this.getName() + "\" ";
 		xml += "class=\"" + this.getClass().getPackage() + this.getClass().getSimpleName() + "\">";
 		xml += "<description>" + this.getDescription() + "</description>";
