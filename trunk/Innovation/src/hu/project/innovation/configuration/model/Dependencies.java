@@ -13,13 +13,13 @@ public interface Dependencies {
 	 * @param groupId the id for the dependency to remove
 	 * @return if the remove was successful (or not)
 	 */
-	public String removeDepSoftwareComponent(String groupId);
+	public String removeDepSoftwareComponent(String artifactId);
 	
 	/**
 	 * @param groupId
 	 * @return the dependency
 	 */
-	public DepSoftwareComponent getDepSoftwareComponent(String groupId);
+	public DepSoftwareComponent getDepSoftwareComponent(String artifactId);
 	
 	/** @return all dependencies / software components */
 	public DepSoftwareComponent[] getDepSoftwareComponents();
@@ -50,26 +50,26 @@ public interface Dependencies {
 		
 		/** add a dependency */
 		public void addDepSoftwareComponent(String groupId, String artifactId, String version, String scope) {
-			super.put(groupId, new DepSoftwareComponent(groupId, artifactId, version, scope));
+			super.put(artifactId, new DepSoftwareComponent(groupId, artifactId, version, scope));
 		}
 		
 		/** @param groupId the dependency to remove */
-		public String removeDepSoftwareComponent(String groupId) {
-			if(super.containsKey(groupId)) {
-				super.remove(groupId);
-				return "Dependency: " + groupId + " removed.";
+		public String removeDepSoftwareComponent(String artifactId) {
+			if(super.containsKey(artifactId)) {
+				super.remove(artifactId);
+				return "Dependency: " + artifactId + " removed.";
 			} else
-				return "Dependency: " + groupId + " doesn't exist.";
+				return "Dependency: " + artifactId + " doesn't exist.";
 		}
 		
 		/**
 		 * @param groupId the identifier for the dependency to return
 		 * @return a single dependency
 		 */
-		public DepSoftwareComponent getDepSoftwareComponent(String groupId) {
-			if(super.containsKey(groupId)) return super.get(groupId);
+		public DepSoftwareComponent getDepSoftwareComponent(String artifactId) {
+			if(super.containsKey(artifactId)) return super.get(artifactId);
 			else {
-				System.err.println("Dependency: " + groupId + " doesnt' exist.");
+				System.err.println("Dependency: " + artifactId + " doesnt' exist.");
 				return null;
 			}
 		}
