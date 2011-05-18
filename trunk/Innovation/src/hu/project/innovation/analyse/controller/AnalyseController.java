@@ -4,7 +4,7 @@ import hu.project.innovation.analyse.model.AnalyseService;
 import hu.project.innovation.analyse.view.JFrameAnalyse;
 import hu.project.innovation.configuration.model.ConfigurationService;
 import hu.project.innovation.utils.Log;
-import hu.project.innovation.utils.Ui;
+import hu.project.innovation.utils.UiDialogs;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -52,7 +52,7 @@ public class AnalyseController implements ActionListener, KeyListener {
 		updateAnalyseButton();
 
 		// Set the visibility of the jframe to true so the jframe is now visible
-		Ui.showOnScreen(0, analyseJFrame);
+		UiDialogs.showOnScreen(0, analyseJFrame);
 		
 		analyseJFrame.setVisible(true);
 	}
@@ -133,7 +133,7 @@ public class AnalyseController implements ActionListener, KeyListener {
 				analyseService.startAnalyse();
 			} catch (Exception e) {
 				Log.e(this, "actionPerformed() - exception " + e.getMessage());
-				Ui.errorDialog(analyseJFrame, e.getMessage(), "Error");
+				UiDialogs.errorDialog(analyseJFrame, e.getMessage(), "Error");
 				analyseService.setRunning(false);
 			}
 

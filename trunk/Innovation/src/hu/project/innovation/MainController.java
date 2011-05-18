@@ -3,7 +3,7 @@ package hu.project.innovation;
 import hu.project.innovation.analyse.controller.AnalyseController;
 import hu.project.innovation.configuration.controller.DefinitionController;
 import hu.project.innovation.utils.Log;
-import hu.project.innovation.utils.Ui;
+import hu.project.innovation.utils.UiDialogs;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -47,7 +47,7 @@ public class MainController implements ActionListener {
 		jframe.setContentView(definitioncontroller.initUi());
 
 		// Set the visibility of the jframe to true so the jframe is now visible
-		Ui.showOnScreen(0, jframe);
+		UiDialogs.showOnScreen(0, jframe);
 		jframe.setVisible(true);
 	}
 
@@ -99,10 +99,10 @@ public class MainController implements ActionListener {
 		} else if(action.getSource() == jframe.jMenuItemCheckDependencies) {
 			//todo daan
 			Log.i(this, "actionPerformed() - check dependensies");
-			Ui.messageDialog(jframe, "todo", "Check dependencies");
+			UiDialogs.messageDialog(jframe, "todo", "Check dependencies");
 		} else if (action.getSource() == jframe.jMenuItemAbout) {
 			Log.i(this, "actionPerformed() - about");
-			Ui.messageDialog(jframe, "This application is made an project team on Hogeschool Utrecht.", "About");
+			UiDialogs.messageDialog(jframe, "This application is made an project team on Hogeschool Utrecht.", "About");
 		} else if (action.getSource() == jframe.jMenuItemExit) {
 			System.exit(0);
 		} else {
