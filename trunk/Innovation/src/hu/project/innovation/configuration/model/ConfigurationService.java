@@ -96,13 +96,13 @@ public final class ConfigurationService {
 		} else {
 			
 			String configurationXML = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
-			configurationXML = configurationXML + "<configuration>\n";
-			configurationXML = configurationXML + architectureDefinition.toXML();
-			configurationXML = configurationXML + "\t<paths>\n";
-			configurationXML = configurationXML + "\t\t<project>" + getProjectPath() + "</project>\n";
-			configurationXML = configurationXML + "\t\t<output format=\"" + getOutputFormat() + "\">" + getOutputPath() + "</output>\n";
-			configurationXML = configurationXML + "\t</paths>\n";
-			configurationXML = configurationXML + "</configuration>";
+			configurationXML += "<configuration>\n";
+			configurationXML += architectureDefinition.toXML();
+			configurationXML += "\t<paths>\n";
+			configurationXML += "\t\t<project>" + getProjectPath() + "</project>\n";
+			configurationXML += "\t\t<output format=\"" + getOutputFormat() + "\">" + getOutputPath() + "</output>\n";
+			configurationXML += "\t</paths>\n";
+			configurationXML += "</configuration>";
 			
 			FileWriter fstream = new FileWriter(file);
 			BufferedWriter out = new BufferedWriter(fstream);
