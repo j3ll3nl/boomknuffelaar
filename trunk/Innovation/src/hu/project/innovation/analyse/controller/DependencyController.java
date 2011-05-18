@@ -1,4 +1,4 @@
-package hu.project.innovation;
+package hu.project.innovation.analyse.controller;
 
 import hu.project.innovation.configuration.model.ConfigurationService;
 import hu.project.innovation.configuration.model.Dependencies.Dependency.DepSoftwareComponent;
@@ -15,7 +15,6 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 public class DependencyController {
-	private String xmlFile = "pom.xml";
 	private ConfigurationService configurationService;
 	
 	public static void main(String[] args) {
@@ -25,15 +24,26 @@ public class DependencyController {
 	public DependencyController() {
 		configurationService = ConfigurationService.getInstance();
 		configurationService.setProjectPath(System.getProperty("user.dir"));
-		
-		File pomFile = new File(configurationService.getProjectPath()+"/"+xmlFile);
-		
+				
 		this.addAllowedDependencies();
+		this.addDependencies();
 		
-		parseXML(pomFile);
+//		for(DepSoftwareComponent dsc : configurationService.getAllowedDependencies()) {
+//			System.out.println(dsc.getArtifactId());
+//		}
+//		this.parseXML(pomFile, false);
+		
+//		if(configurationService.getDependencies() != null) {
+//			for(DepSoftwareComponent dec : configurationService.getDependencies()) {
+//				if(configurationService.getAllowedDependency(dec.getArtifactId()) == null) {
+//				}
+//			}
+//		}
+//		parseXML(pomFile, xmlFileName);
+		
 	}
 	
-	private void parseXML(File pomFile) {
+	private void parseXML(File pomFile, final boolean isAllowedByDefault) {
 		try {
 			SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
 			try {
@@ -54,9 +64,16 @@ public class DependencyController {
 					public void endElement(String uri, String qName, String localName) {
 						setBoolVal("endElement", localName);
 
-						// add a new dependency
-						if(localName.equals("dependency"))
-							configurationService.addDependency(_groupId, _artifactId, _version, _scope);
+						if(dependency) {
+							// add a new dependency
+							if(!isAllowedByDefault) {
+								System.out.println("GroupID: " + _groupId);
+								System.out.println("ArtifactID: " + _artifactId);
+								System.out.println("Version: " + _version);
+								System.out.println("Scope: " + _scope);
+									//configurationService.addDependency(_groupId, _artifactId, _version, _scope);
+							} else configurationService.addAllowedDependency(_groupId, _artifactId, _version, _scope);
+						}
 					}
 					
 					public void characters(char[] ch, int start, int length) {
@@ -85,12 +102,16 @@ public class DependencyController {
 		} catch (SAXException e) {
 			e.printStackTrace();
 		}
-		for(DepSoftwareComponent dec : configurationService.getDependencies()) {
-			System.out.println("Dependency: " + dec.getGroupId());
-		}
 	}
 	
 	private void addAllowedDependencies() {
-		parseXML(new File(configurationService.getProjectPath() + "/mydependencies.xml"));
+		String fileName = "mydependencies.xml";
+		File file = new File(configurationService.getProjectPath() + "/" + fileName);
+		parseXML(file, true);
+	}
+	
+	private void addDependencies() {
+		File file = new File(configurationService.getProjectPath()+"/pom.xml");
+		parseXML(file, false);
 	}
 }
