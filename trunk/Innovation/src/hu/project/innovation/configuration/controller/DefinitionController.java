@@ -1,6 +1,7 @@
 package hu.project.innovation.configuration.controller;
 
 import hu.project.innovation.MainController;
+import hu.project.innovation.configuration.model.AppliedRule;
 import hu.project.innovation.configuration.model.ConfigurationService;
 import hu.project.innovation.configuration.model.Layer;
 import hu.project.innovation.configuration.model.SoftwareUnitDefinition;
@@ -504,7 +505,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 			JPanelStatus.getInstance("Updating software unit table").start();
 
 			// Get all components from the service
-			ArrayList<SoftwareUnitDefinition> components = layer.getAllSoftwareUnitDefinitions();
+			ArrayList<SoftwareUnitDefinition> components = layer.getSoftwareUnitDefinitions();
 
 			// Get the tablemodel from the table
 			JTableTableModel atm = (JTableTableModel) definitionJPanel.jTableSoftwareUnits.getModel();
@@ -530,7 +531,22 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		if (layer != null) {
 			JPanelStatus.getInstance("Updating rules applied table").start();
 
-			// TODO implement this function
+			// Get all applied rules from the service
+			ArrayList<AppliedRule> rules = layer.getAppliedRules();
+
+			// Get the tablemodel from the table
+			JTableTableModel atm = (JTableTableModel) definitionJPanel.jTableAppliedRules.getModel();
+
+			// Remove all items in the table
+			atm.getDataVector().removeAllElements();
+			if (rules != null) {
+				for (AppliedRule rule : rules) {
+					Object rowdata[] = { rule, rule.getToLayer(), rule.isEnabled(), rule.getNumberOfExceptions() + "" };
+					atm.addRow(rowdata);
+				}
+			}
+			atm.fireTableDataChanged();
+
 			JPanelStatus.getInstance().stop();
 		}
 	}
