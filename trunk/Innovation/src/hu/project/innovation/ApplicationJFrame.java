@@ -26,7 +26,7 @@ import javax.swing.WindowConstants;
 public class ApplicationJFrame extends javax.swing.JFrame {
 
 	private static final long serialVersionUID = 6858870868564931134L;
-	private String defaultTitle = "Belastingdienst Architectuur";
+	private String defaultTitle = "Belastingdienst Architectuur";	
 	private JSeparator jSeparator1;
 	public JMenuItem jMenuItemExit;
 	private JMenuBar jMenuBar;
@@ -62,7 +62,7 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 		try {
 			setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 			setTitle(defaultTitle);
-			setIconImage(new ImageIcon(getClass().getClassLoader().getResource("belastingdienst.jpg")).getImage());
+			setIconImage(new ImageIcon(getClass().getClassLoader().getResource("hu/project/innovation/resources/jframeicon.jpg")).getImage());
 			{
 				jPanelContentView = new JPanel();
 				BorderLayout jPanel1Layout = new BorderLayout();
@@ -89,6 +89,7 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 						jMenu1.add(jMenuItemNewArchitecture);
 						jMenuItemNewArchitecture.setText("New architecture");
 						jMenuItemNewArchitecture.setMnemonic(KeyEvent.VK_N);
+						jMenuItemNewArchitecture.setIcon(new ImageIcon(getClass().getClassLoader().getResource("hu/project/innovation/resources/new.png")));
 						jMenuItemNewArchitecture.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
 					}
 					{
@@ -96,6 +97,7 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 						jMenu1.add(jMenuItemOpenArchitecture);
 						jMenuItemOpenArchitecture.setText("Open architecture");
 						jMenuItemOpenArchitecture.setMnemonic(KeyEvent.VK_O);
+						jMenuItemOpenArchitecture.setIcon(new ImageIcon(getClass().getClassLoader().getResource("hu/project/innovation/resources/open.png")));
 						jMenuItemOpenArchitecture.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK));
 					}
 					{
@@ -103,6 +105,7 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 						jMenu1.add(jMenuItemSaveArchitecture);
 						jMenuItemSaveArchitecture.setText("Save architecture");
 						jMenuItemSaveArchitecture.setMnemonic(KeyEvent.VK_S);
+						jMenuItemSaveArchitecture.setIcon(new ImageIcon(getClass().getClassLoader().getResource("hu/project/innovation/resources/save.png")));
 						jMenuItemSaveArchitecture.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
 					}
 					{
@@ -113,8 +116,7 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 						jMenuItemExit = new JMenuItem();
 						jMenu1.add(jMenuItemExit);
 						jMenuItemExit.setText("Exit");
-						jMenuItemSaveArchitecture.setMnemonic(KeyEvent.VK_X);
-						jMenuItemSaveArchitecture.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.CTRL_MASK));
+						jMenuItemExit.setIcon(new ImageIcon(getClass().getClassLoader().getResource("hu/project/innovation/resources/exit.png")));
 					}
 				}
 				{
@@ -125,9 +127,17 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 						jMenuItemStartAnalyse = new JMenuItem();
 						jMenu2.add(jMenuItemStartAnalyse);
 						jMenuItemStartAnalyse.setText("Start analyse");
+						jMenuItemStartAnalyse.setMnemonic(KeyEvent.VK_1);
+						jMenuItemStartAnalyse.setIcon(new ImageIcon(getClass().getClassLoader().getResource("hu/project/innovation/resources/analyse.png")));
+						jMenuItemStartAnalyse.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, ActionEvent.CTRL_MASK));
+					}
+					{
 						jMenuItemCheckDependencies = new JMenuItem();
 						jMenu2.add(jMenuItemCheckDependencies);
 						jMenuItemCheckDependencies.setText("Check dependencies");
+						jMenuItemCheckDependencies.setMnemonic(KeyEvent.VK_2);
+						jMenuItemCheckDependencies.setIcon(new ImageIcon(getClass().getClassLoader().getResource("hu/project/innovation/resources/analyse.png")));
+						jMenuItemCheckDependencies.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2, ActionEvent.CTRL_MASK));
 					}
 				}
 				{
@@ -138,6 +148,9 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 						jMenuItemAbout = new JMenuItem();
 						jMenu3.add(jMenuItemAbout);
 						jMenuItemAbout.setText("About");
+						jMenuItemAbout.setMnemonic(KeyEvent.VK_H);
+						jMenuItemAbout.setIcon(new ImageIcon(getClass().getClassLoader().getResource("hu/project/innovation/resources/about.png")));
+						jMenuItemAbout.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_H, ActionEvent.CTRL_MASK));
 					}
 				}
 			}
