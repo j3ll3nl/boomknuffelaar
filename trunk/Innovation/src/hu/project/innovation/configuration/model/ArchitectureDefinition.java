@@ -109,11 +109,11 @@ public class ArchitectureDefinition implements XMLable {
 	}
 
 	public String toXML() {
-		String xml = "<architecture>\n";
+		String xml = "\t<architecture>\n";
 		if (topLayer != null) {
 			xml += topLayer.toXML();
 		}
-		xml += "</architecture>\n";
+		xml += "\t</architecture>\n";
 
 		return xml;
 	}

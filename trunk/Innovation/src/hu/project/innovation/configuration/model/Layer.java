@@ -155,10 +155,10 @@ public class Layer implements XMLable {
 		String xml = "";
 
 		// Current layer
-		xml += "\t<layer>\n";
-		xml += "\t\t<id>" + this.id + "</id>\n";
-		xml += "\t\t<name>" + this.name + "</name>\n";
-		xml += "\t\t<description>" + this.description + "</description>\n";
+		xml += "\t\t<layer>\n";
+		xml += "\t\t\t<id>" + this.id + "</id>\n";
+		xml += "\t\t\t<name>" + this.name + "</name>\n";
+		xml += "\t\t\t<description>" + this.description + "</description>\n";
 
 		if (softwareUnitDefinitions != null) {
 			for (SoftwareUnitDefinition sud : this.getSoftwareUnitDefinitions()) {
@@ -172,7 +172,7 @@ public class Layer implements XMLable {
 			}
 		}
 
-		xml += "\t</layer>\n";
+		xml += "\t\t</layer>\n";
 
 		if (childLayer != null) {
 			xml += childLayer.toXML();
