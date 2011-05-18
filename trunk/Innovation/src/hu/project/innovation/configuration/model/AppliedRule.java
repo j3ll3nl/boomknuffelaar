@@ -1,5 +1,6 @@
 package hu.project.innovation.configuration.model;
 
+import hu.project.innovation.configuration.model.rules.AbstractRuleType;
 import hu.project.innovation.utils.Log;
 import hu.project.innovation.utils.XMLable;
 

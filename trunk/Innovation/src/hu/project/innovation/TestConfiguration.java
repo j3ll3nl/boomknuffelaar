@@ -1,11 +1,11 @@
 package hu.project.innovation;
 
 import hu.project.innovation.configuration.model.AppliedRule;
-import hu.project.innovation.configuration.model.BackCallRule;
 import hu.project.innovation.configuration.model.Configuration;
 import hu.project.innovation.configuration.model.ConfigurationService;
-import hu.project.innovation.configuration.model.SkipLayerRule;
 import hu.project.innovation.configuration.model.SoftwareUnitDefinition;
+import hu.project.innovation.configuration.model.rules.BackCallRule;
+import hu.project.innovation.configuration.model.rules.SkipLayerRule;
 import hu.project.innovation.utils.Log;
 
 import java.io.File;

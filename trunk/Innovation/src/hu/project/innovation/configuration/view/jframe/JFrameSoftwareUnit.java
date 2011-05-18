@@ -1,6 +1,7 @@
-package hu.project.innovation.configuration.view;
+package hu.project.innovation.configuration.view.jframe;
 
 import hu.project.innovation.configuration.model.SoftwareUnitDefinition;
+import hu.project.innovation.configuration.view.tables.JTableException;
 
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;

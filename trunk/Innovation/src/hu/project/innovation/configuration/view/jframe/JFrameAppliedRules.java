@@ -1,4 +1,4 @@
-package hu.project.innovation.configuration.view;
+package hu.project.innovation.configuration.view.jframe;
 
 import javax.swing.WindowConstants;
 

@@ -1,5 +1,7 @@
-package hu.project.innovation.configuration.model;
+package hu.project.innovation.configuration.model.rules;
 
+import hu.project.innovation.configuration.model.ConfigurationService;
+import hu.project.innovation.configuration.model.Layer;
 import net.sourceforge.pmd.ast.ASTClassOrInterfaceDeclaration;
 import net.sourceforge.pmd.ast.ASTClassOrInterfaceType;
 import net.sourceforge.pmd.ast.ASTMethodDeclaration;
@@ -7,7 +9,8 @@ import net.sourceforge.pmd.ast.SimpleNode;
 
 public class BackCallRule extends AbstractRuleType {
 
-	private final String[] notCheckedPackages = new String[] { "java", "javax", "sun", "org.xml" };
+	private final String[] notCheckedPackages = new String[] { 
+			"java", "javax", "sun", "org.xml", "net.sourceforge.pmd" };
 
 	/**
 	 * Use class and interface types to find a BackRule violation
@@ -19,9 +22,9 @@ public class BackCallRule extends AbstractRuleType {
 		// Only check if we have a type
 		if (node.getType() != null) {
 			// Get the called package name
-			String calledName = node.getType().getCanonicalName();
+//			Log.i(this, Modifier.isPublic(node.getType().getModifiers()) + " " + node.getType().getSimpleName());
 			
-			this.checkViolation(calledName, data, node, node.getType().isInterface());
+			this.checkViolation(node.getType(), data, node);
 		}
 		// Run the super function
 		return super.visit(node, data);
@@ -35,17 +38,15 @@ public class BackCallRule extends AbstractRuleType {
 			// Plus method name
 			calledName += "."+node.getMethodName();
 			
-			checkViolation(calledName, data, node, c.isInterface());
+			checkViolation(c, data, node);
 		} catch(Exception e) {}		
 		
 		return super.visit(node, data);
 	}
 	
-	public void checkViolation(String calledName, Object data, SimpleNode node) {
-		this.checkViolation(calledName, data, node, false);
-	}
-	
-	public void checkViolation(String calledName, Object data, SimpleNode node, boolean isInterface) {
+	public void checkViolation(Class<?> toClass, Object data, SimpleNode node) {
+		String calledName = toClass.getCanonicalName();
+		
 		if (isPackageChecked(calledName)) {
 	
 			// Get the fromLayer using the current checked class
@@ -66,7 +67,9 @@ public class BackCallRule extends AbstractRuleType {
 	}
 
 	/**
-	 * Check if a package needs to be checked. We have defined a number of packages wich do not need checking. These include java and javax packages for example.
+	 * Check if a package needs to be checked. 
+	 * We have defined a number of packages wich do not need checking. 
+	 * These include java and javax packages for example.
 	 * 
 	 * @param packageName
 	 * @return

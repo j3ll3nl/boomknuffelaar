@@ -6,10 +6,10 @@ import hu.project.innovation.configuration.model.Layer;
 import hu.project.innovation.configuration.model.SoftwareUnitDefinition;
 import hu.project.innovation.configuration.view.DefinitionJPanel;
 import hu.project.innovation.configuration.view.JPanelStatus;
-import hu.project.innovation.configuration.view.JTableTableModel;
-import hu.project.innovation.configuration.view.XmlFileFilter;
+import hu.project.innovation.configuration.view.tables.JTableTableModel;
 import hu.project.innovation.utils.Log;
 import hu.project.innovation.utils.Ui;
+import hu.project.innovation.utils.XmlFileFilter;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
