@@ -9,7 +9,7 @@ import hu.project.innovation.configuration.view.DefinitionJPanel;
 import hu.project.innovation.configuration.view.JPanelStatus;
 import hu.project.innovation.configuration.view.tables.JTableTableModel;
 import hu.project.innovation.utils.Log;
-import hu.project.innovation.utils.Ui;
+import hu.project.innovation.utils.UiDialogs;
 import hu.project.innovation.utils.XmlFileFilter;
 
 import java.awt.event.ActionEvent;
@@ -80,7 +80,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		Log.i(this, "newConfiguration()");
 		try {
 			// Ask the user for the architecture name
-			String response = Ui.inputDialog(definitionJPanel, "Please enter the architecture name", "Please input a value", JOptionPane.QUESTION_MESSAGE);
+			String response = UiDialogs.inputDialog(definitionJPanel, "Please enter the architecture name", "Please input a value", JOptionPane.QUESTION_MESSAGE);
 			if (response != null) {
 				Log.i(this, "newDefinition() - response from inputdialog: " + response);
 				JPanelStatus.getInstance("Creating new configuration").start();
@@ -96,7 +96,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 			}
 		} catch (Exception e) {
 			Log.e(this, "newConfiguration() - exception: " + e.getMessage());
-			Ui.errorDialog(definitionJPanel, e.getMessage(), "Error");
+			UiDialogs.errorDialog(definitionJPanel, e.getMessage(), "Error");
 		} finally {
 			JPanelStatus.getInstance().stop();
 		}
@@ -138,7 +138,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		} catch (Exception e) {
 			e.printStackTrace();
 			Log.e(this, "openConfiguration() - exeption: " + e.getMessage());
-			Ui.errorDialog(definitionJPanel, e.getMessage(), "Error");
+			UiDialogs.errorDialog(definitionJPanel, e.getMessage(), "Error");
 		} finally {
 			JPanelStatus.getInstance().stop();
 		}
@@ -179,7 +179,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		} catch (Exception e) {
 			e.printStackTrace();
 			Log.e(this, "saveConfiguration() - exeption: " + e.getMessage());
-			Ui.errorDialog(definitionJPanel, e.getMessage(), "Error");
+			UiDialogs.errorDialog(definitionJPanel, e.getMessage(), "Error");
 		} finally {
 			JPanelStatus.getInstance().stop();
 		}
@@ -192,7 +192,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		Log.i(this, "newLayer()");
 		try {
 			// Ask the user for the layer name
-			String layerName = Ui.inputDialog(definitionJPanel, "Please enter layer name", "Please input a value", JOptionPane.QUESTION_MESSAGE);
+			String layerName = UiDialogs.inputDialog(definitionJPanel, "Please enter layer name", "Please input a value", JOptionPane.QUESTION_MESSAGE);
 			if (layerName != null) {
 				JPanelStatus.getInstance("Creating new layer").start();
 
@@ -205,7 +205,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 			}
 		} catch (Exception e) {
 			Log.e(this, "newLayer() - exception: " + e.getMessage());
-			Ui.errorDialog(definitionJPanel, e.getMessage(), "Error");
+			UiDialogs.errorDialog(definitionJPanel, e.getMessage(), "Error");
 		} finally {
 			JPanelStatus.getInstance().stop();
 		}
@@ -220,7 +220,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 			Layer layer = definitionJPanel.getSelectedLayer();
 			if (layer != null) {
 				Log.i(this, "removeLayer() - selected layer: " + layer.getName());
-				boolean confirm = Ui.confirmDialog(definitionJPanel, "Are you sure you want to remove layer: \"" + layer.getName() + "\"", "Remove?");
+				boolean confirm = UiDialogs.confirmDialog(definitionJPanel, "Are you sure you want to remove layer: \"" + layer.getName() + "\"", "Remove?");
 				if (confirm) {
 					JPanelStatus.getInstance("Removing layer").start();
 
@@ -234,7 +234,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 			}
 		} catch (Exception e) {
 			Log.e(this, "removeLayer() - exception: " + e.getMessage());
-			Ui.errorDialog(definitionJPanel, e.getMessage(), "Error");
+			UiDialogs.errorDialog(definitionJPanel, e.getMessage(), "Error");
 		} finally {
 			JPanelStatus.getInstance().stop();
 		}
@@ -258,7 +258,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 			}
 		} catch (Exception e) {
 			Log.e(this, "moveLayerUp() - exception: " + e.getMessage());
-			Ui.errorDialog(definitionJPanel, e.getMessage(), "Error");
+			UiDialogs.errorDialog(definitionJPanel, e.getMessage(), "Error");
 		} finally {
 			JPanelStatus.getInstance().stop();
 		}
@@ -282,7 +282,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 			}
 		} catch (Exception e) {
 			Log.e(this, "moveLayerDown() - exception: " + e.getMessage());
-			Ui.errorDialog(definitionJPanel, e.getMessage(), "Error");
+			UiDialogs.errorDialog(definitionJPanel, e.getMessage(), "Error");
 		} finally {
 			JPanelStatus.getInstance().stop();
 		}
@@ -328,7 +328,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 			c.initUi();
 		} else {
 			Log.e(this, "editSoftwareUnit() - no software unit selected");
-			Ui.errorDialog(definitionJPanel, "Select a software unit", "Error");
+			UiDialogs.errorDialog(definitionJPanel, "Select a software unit", "Error");
 		}
 	}
 
@@ -343,7 +343,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 			SoftwareUnitDefinition softwareunit = definitionJPanel.getSelectedSoftwareUnit();
 			if (layer != null && softwareunit != null) {
 				// Ask the user if he is sure to remove the software unit
-				boolean confirm = Ui.confirmDialog(definitionJPanel, "Are you sure you want to remove software unit: \"" + softwareunit.getName() + "\"", "Remove?");
+				boolean confirm = UiDialogs.confirmDialog(definitionJPanel, "Are you sure you want to remove software unit: \"" + softwareunit.getName() + "\"", "Remove?");
 				if (confirm) {
 					// Remove the software unit
 					JPanelStatus.getInstance("Removing software unit").start();
@@ -354,7 +354,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 			}
 		} catch (Exception e) {
 			Log.e(this, "removeSoftwareUnit() - exception: " + e.getMessage());
-			Ui.errorDialog(definitionJPanel, e.getMessage(), "Error");
+			UiDialogs.errorDialog(definitionJPanel, e.getMessage(), "Error");
 		} finally {
 			JPanelStatus.getInstance().stop();
 		}

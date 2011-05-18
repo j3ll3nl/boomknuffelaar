@@ -8,9 +8,9 @@ import java.awt.Rectangle;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-public class Ui {
+public class UiDialogs {
 	
-	private Ui(){}
+	private UiDialogs(){}
 	
 	/**
 	 * Method which will show an inputdialog. The dialog keeps asking for input if no input is given.

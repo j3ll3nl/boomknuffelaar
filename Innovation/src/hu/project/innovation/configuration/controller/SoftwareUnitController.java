@@ -7,7 +7,7 @@ import hu.project.innovation.configuration.view.jframe.JFrameSoftwareUnit;
 import hu.project.innovation.configuration.view.tables.JTableException;
 import hu.project.innovation.configuration.view.tables.JTableTableModel;
 import hu.project.innovation.utils.Log;
-import hu.project.innovation.utils.Ui;
+import hu.project.innovation.utils.UiDialogs;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -65,7 +65,7 @@ public class SoftwareUnitController extends Observable implements ActionListener
 		jframe.jButtonCancel.addActionListener(this);
 
 		// Set the visibility of the jframe to true so the jframe is now visible
-		Ui.showOnScreen(0, jframe);
+		UiDialogs.showOnScreen(0, jframe);
 		
 		jframe.setVisible(true);
 	}
@@ -101,7 +101,7 @@ public class SoftwareUnitController extends Observable implements ActionListener
 			jframe.dispose();
 			pokeObservers();
 		} catch (Exception e) {
-			Ui.errorDialog(jframe, e.getMessage(), "Error");
+			UiDialogs.errorDialog(jframe, e.getMessage(), "Error");
 		}
 	}
 
@@ -123,7 +123,7 @@ public class SoftwareUnitController extends Observable implements ActionListener
 		JTableException table = jframe.jTableException;
 		int selectedrow = table.getSelectedRow();
 		if (selectedrow == -1) {
-			Ui.errorDialog(jframe, "Select a table row", "Error");
+			UiDialogs.errorDialog(jframe, "Select a table row", "Error");
 		} else {
 			JTableTableModel tablemodel = (JTableTableModel) table.getModel();
 			tablemodel.removeRow(selectedrow);

@@ -6,7 +6,6 @@ import hu.project.innovation.configuration.model.Dependencies.Dependency.DepSoft
 import hu.project.innovation.configuration.model.rules.AbstractRuleType;
 import hu.project.innovation.utils.ArchDefXMLReader;
 import hu.project.innovation.utils.Log;
-import hu.project.innovation.utils.Messages;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -197,7 +196,7 @@ public final class ConfigurationService {
 	 */
 	public SoftwareUnitDefinition newSoftwareUnit(Layer layer, String unitName, String unitType) throws Exception {
 		if (layer == null || (this.architectureDefinition.getLayer(layer.getName()) == null)) {
-			throw new Exception(Messages.ERROR_LAYERDOESNOTEXIST);
+			throw new Exception("Layer does not exist");
 		} else {
 			SoftwareUnitDefinition softwareunitdefinition = new SoftwareUnitDefinition(unitName, unitType);
 			layer.addSoftwareUnit(softwareunitdefinition);
@@ -215,7 +214,7 @@ public final class ConfigurationService {
 	 */
 	public void removeSoftwareUnit(Layer layer, SoftwareUnitDefinition component) throws Exception {
 		if (layer == null || (this.architectureDefinition.getLayer(layer.getName()) == null)) {
-			throw new Exception(Messages.ERROR_LAYERDOESNOTEXIST);
+			throw new Exception("Layer does not exist");
 		} else {
 			layer.removeSoftwareUniteDefinition(component);
 		}
