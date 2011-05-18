@@ -1,5 +1,6 @@
 package hu.project.innovation.configuration.view;
 
+import hu.project.innovation.configuration.model.AppliedRule;
 import hu.project.innovation.configuration.model.Layer;
 import hu.project.innovation.configuration.model.SoftwareUnitDefinition;
 import hu.project.innovation.configuration.view.tables.JTableAppliedRule;
@@ -333,6 +334,18 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 		}
 		return null;
 	}
+	
+	public AppliedRule getSelectedAppliedRule() {
+		int selectedRow = jTableAppliedRules.getSelectedRow();
+		if (selectedRow >= 0) {
+			JTableTableModel c = (JTableTableModel) jTableAppliedRules.getModel();
+			Object selected = c.getValueAt(selectedRow, 0);
+			if (selected instanceof AppliedRule) {
+				return (AppliedRule) selected;
+			}
+		}
+		return null;
+	}	
 	
 	private JCheckBox getJCheckBox1() {
 		if(jCheckBoxAccess == null) {

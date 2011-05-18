@@ -289,8 +289,9 @@ public final class ConfigurationService {
 		return null;
 	}
 
-	public void removeAppliedRule() {
-
+	public void removeAppliedRule(Layer layer, AppliedRule appliedrule) {
+		
+		//TODO: nog te maken..
 	}
 
 	public Layer getLayerBySoftwareUnitName(String name) {

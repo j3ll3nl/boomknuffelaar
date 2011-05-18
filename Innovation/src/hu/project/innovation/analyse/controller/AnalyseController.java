@@ -45,9 +45,6 @@ public class AnalyseController implements ActionListener, KeyListener {
 		analyseJFrame.jTextFieldProjectPath.setText(ConfigurationService.getInstance().getProjectPath());
 		analyseJFrame.jTextFieldOutputPath.setText(ConfigurationService.getInstance().getOutputPath());
 
-		// Try to load the pom.xml file
-		updateProjectName();
-
 		//Enable or disable the analyse button when the scan is already running
 		updateAnalyseButton();
 
@@ -55,21 +52,6 @@ public class AnalyseController implements ActionListener, KeyListener {
 		UiDialogs.showOnScreen(0, analyseJFrame);
 		
 		analyseJFrame.setVisible(true);
-	}
-
-	private void updateProjectName() {
-		String projectPath = analyseJFrame.jTextFieldProjectPath.getText();
-		String pomPath = projectPath + "/pom.xml";
-
-		File pom = new File(pomPath);
-
-		if (pom.exists()) {
-			// TODO: Read the POM.xml for project name <name>my-app</name>
-			analyseJFrame.jLabelProjectName.setText("- TODO: Read POM.xml for project name -");
-		} else {
-			analyseJFrame.jLabelProjectName.setText("Unknown");
-		}
-
 	}
 
 	private String browseForPath() {
@@ -112,8 +94,7 @@ public class AnalyseController implements ActionListener, KeyListener {
 			Log.i(this, "actionPerformed() - project browse");
 			String path = browseForPath();
 			ConfigurationService.getInstance().setProjectPath(path);
-			analyseJFrame.jTextFieldProjectPath.setText(path);
-			updateProjectName();
+			analyseJFrame.jTextFieldProjectPath.setText(path);			
 		} else if (action.getSource() == analyseJFrame.jButtonOutputBrowse) {
 			Log.i(this, "actionPerformed() - output browse");
 			String path = browseForPath();
@@ -153,8 +134,7 @@ public class AnalyseController implements ActionListener, KeyListener {
 			ConfigurationService.getInstance().setOutputPath(text);
 		} else if (arg0.getSource() == analyseJFrame.jTextFieldProjectPath) {
 			String text = analyseJFrame.jTextFieldProjectPath.getText();
-			ConfigurationService.getInstance().setProjectPath(text);
-			updateProjectName();
+			ConfigurationService.getInstance().setProjectPath(text);			
 		}
 	}
 

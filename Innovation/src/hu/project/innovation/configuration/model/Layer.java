@@ -97,6 +97,14 @@ public class Layer implements XMLable {
 		this.appliedRules.add(rule);
 	}
 
+	public void removeAppliedRule(AppliedRule rule) {
+//		if (!softwareUnitDefinitions.contains(unit)) {
+//			throw new Exception("Software unit does not exist in this layer");
+//		} else {
+//			this.softwareUnitDefinitions.remove(unit);
+//		}
+	}
+
 	/**
 	 * Add a {@link SoftwareUnitDefinition}
 	 * 

@@ -373,7 +373,28 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 
 	private void removeRuleToLayer() {
 		Log.i(this, "removeRuleToLayer()");
-		// TODO Auto-generated method stub
+		try {
+			// Get the selected layer & software unit
+			Layer layer = definitionJPanel.getSelectedLayer();
+			AppliedRule appliedrule = definitionJPanel.getSelectedAppliedRule();
+			if (layer != null && appliedrule != null) {
+				// Ask the user if he is sure to remove the software unit
+				boolean confirm = UiDialogs.confirmDialog(definitionJPanel, "Are you sure you want to remove the applied rule: \"" + appliedrule + "\"", "Remove?");
+				if (confirm) {
+					// Remove the software unit
+					JPanelStatus.getInstance("Removing applied rule").start();
+					configurationService.removeAppliedRule(layer, appliedrule);
+					
+					// Update the applied rules table
+					updateAppliedRulesTable();					
+				}
+			}
+		} catch (Exception e) {
+			Log.e(this, "removeRuleToLayer() - exception: " + e.getMessage());
+			UiDialogs.errorDialog(definitionJPanel, e.getMessage(), "Error");
+		} finally {
+			JPanelStatus.getInstance().stop();
+		}
 
 	}
 
@@ -486,10 +507,12 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 			definitionJPanel.jButtonNewLayer.setEnabled(false);
 			mainController.jframe.jMenuItemSaveArchitecture.setEnabled(false);
 			mainController.jframe.jMenuItemStartAnalyse.setEnabled(false);
+			mainController.jframe.jMenuItemCheckDependencies.setEnabled(false);
 		} else {
 			definitionJPanel.jButtonNewLayer.setEnabled(true);
 			mainController.jframe.jMenuItemSaveArchitecture.setEnabled(true);
 			mainController.jframe.jMenuItemStartAnalyse.setEnabled(true);
+			mainController.jframe.jMenuItemCheckDependencies.setEnabled(true);
 		}
 	}
 
