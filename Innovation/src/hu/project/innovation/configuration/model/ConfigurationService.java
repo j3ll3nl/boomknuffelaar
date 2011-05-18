@@ -1,5 +1,6 @@
 package hu.project.innovation.configuration.model;
 
+import hu.project.innovation.configuration.model.Dependencies.AllowedDependency;
 import hu.project.innovation.configuration.model.Dependencies.Dependency;
 import hu.project.innovation.configuration.model.Dependencies.Dependency.DepSoftwareComponent;
 import hu.project.innovation.utils.ArchDefXMLReader;
@@ -22,12 +23,16 @@ public final class ConfigurationService {
 	private Configuration configuration;
 	private static ConfigurationService instance;
 	private Dependencies dependencies;
+	private Dependencies allowedDependencies;
 
 	private ConfigurationService() {
 		Log.i(this, "constructor()");
 
 		this.configuration = new Configuration();
+		
+		//(allowed) dependencies
 		this.dependencies = new Dependency();
+		this.allowedDependencies = new AllowedDependency();
 	}
 
 	/**
@@ -297,6 +302,8 @@ public final class ConfigurationService {
 			return false;
 		}
 	}
+	
+	// custom dependencies
 
 	/**
 	 * Add a dependency
@@ -323,11 +330,43 @@ public final class ConfigurationService {
 	}
 	
 	/**
-	 * 
 	 * @return all dependencies
 	 */
 	public DepSoftwareComponent[] getDependencies() {
 		return dependencies.getDepSoftwareComponents();
+	}
+	
+	// Allowed dependencies
+	
+	/**
+	 * Add a allowed dependency
+	 */
+	public void addAllowedDependency(String groupId, String artifactId, String version, String scope) {
+		this.allowedDependencies.addDepSoftwareComponent(groupId, artifactId, version, scope);
+	}
+	
+	/**
+	 * Remove a allowed dependency
+	 * 
+	 * @param groupId the component name to remove
+	 */
+	public void removeAllowedDependency(String groupId) {
+		allowedDependencies.removeDepSoftwareComponent(groupId);
+	}
+	
+	/**
+	 * return a allowed dependency (if exists)
+	 * @param groupId the component to return
+	 */
+	public DepSoftwareComponent getAllowedDependency(String groupId) {
+		return allowedDependencies.getDepSoftwareComponent(groupId);
+	}
+	
+	/**
+	 * @return all allowed dependencies
+	 */
+	public DepSoftwareComponent[] getAllowedDependencies() {
+		return allowedDependencies.getDepSoftwareComponents();
 	}
 	
 }
