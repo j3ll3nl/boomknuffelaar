@@ -1,8 +1,9 @@
 package hu.project.innovation.configuration.model;
 
-import hu.project.innovation.configuration.model.Dependencies.AllowedDependency;
-import hu.project.innovation.configuration.model.Dependencies.Dependency;
-import hu.project.innovation.configuration.model.Dependencies.Dependency.DepSoftwareComponent;
+import hu.project.innovation.configuration.model.dependencies.AllowedDependency;
+import hu.project.innovation.configuration.model.dependencies.Dependencies;
+import hu.project.innovation.configuration.model.dependencies.Dependency;
+import hu.project.innovation.configuration.model.dependencies.Dependency.DepSoftwareComponent;
 import hu.project.innovation.configuration.model.rules.AbstractRuleType;
 import hu.project.innovation.utils.ArchDefXMLReader;
 import hu.project.innovation.utils.Log;
