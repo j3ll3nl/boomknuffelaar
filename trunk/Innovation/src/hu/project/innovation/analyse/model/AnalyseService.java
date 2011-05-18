@@ -31,7 +31,7 @@ public class AnalyseService {
 		String projectPath = ConfigurationService.getInstance().getProjectPath();
 		String outputPath = ConfigurationService.getInstance().getOutputPath();
 		String outputType = ConfigurationService.getInstance().getOutputFormat();
-		String ruleset = "\\hu\\project\\innovation\\configuration\\model\\ruleset.xml";
+		String ruleset = "\\hu\\project\\innovation\\configuration\\model\\rules\\ruleset.xml";
 
 		Log.i(this, "startAnalyse() - Project: " + projectPath);
 		Log.i(this, "startAnalyse() - Output: " + outputPath);

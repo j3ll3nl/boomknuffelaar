@@ -7,19 +7,19 @@
 	<description>A set of rules to check the architecture of an application</description>
 
 	<rule name="Back-call rule" message="A lower layer is calling a higher layer"
-		class="hu.project.innovation.configuration.model.BackCallRule">
+		class="hu.project.innovation.configuration.model.rules.BackCallRule">
 		<description>Back call rule</description>
 		<priority>3</priority>
 	</rule>
 
 	<rule name="Skip-layer rule" message="A layer is being skipped"
-		class="hu.project.innovation.configuration.model.SkipLayerRule">
+		class="hu.project.innovation.configuration.model.rules.SkipLayerRule">
 		<description>Skip layer rule</description>
 		<priority>3</priority>
 	</rule>
 
 	<rule name="Interfaces only rule" message="The called layer is only accesable through interfaces"
-		class="hu.project.innovation.configuration.model.InterfacesOnlyRule">
+		class="hu.project.innovation.configuration.model.rules.InterfacesOnlyRule">
 		<description>Interfaces only rule</description>
 		<priority>2</priority>
 	</rule>
