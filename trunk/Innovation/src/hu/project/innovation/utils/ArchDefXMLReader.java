@@ -103,7 +103,7 @@ public class ArchDefXMLReader extends DefaultHandler {
 				currentLayer = ar.getLayer(Integer.parseInt(contents.toString()));
 			}
 
-		} else if (localName.equals("name") && !isSoftwareUnit) {
+		} else if (localName.equals("name") && !isSoftwareUnit && !isAppliedRule) {
 			currentLayer.setName(contents.toString());
 		} else if (localName.equals("description")) {
 			currentLayer.setDescription(contents.toString());
@@ -128,9 +128,9 @@ public class ArchDefXMLReader extends DefaultHandler {
 			currentAppliedRule = new AppliedRule();
 			currentAppliedRule.setFromLayer(currentLayer);
 					
-			if (contents.toString().equals("BackCall")) {
+			if (contents.toString().equals("BackCallRule")) {
 				currentAppliedRule.setRuleType(new BackCallRule());
-			} else if (contents.toString().equals("SkipCall")) {
+			} else if (contents.toString().equals("SkipLayerRule")) {
 				currentAppliedRule.setRuleType(new SkipLayerRule());
 			}
 			
@@ -154,7 +154,7 @@ public class ArchDefXMLReader extends DefaultHandler {
 			currentSoftwareUnit.addException(currentSoftwareUnitException);
 		} else if (localName.equals("type") && isSoftwareUnit && isException) {
 			currentSoftwareUnitException.setType(contents.toString());
-		} else if (localName.equals("unit") && isAppliedRule && isException) {
+		} else if (localName.equals("name") && isAppliedRule && isException) {
 			currentSoftwareUnitException = new SoftwareUnitDefinition();
 			currentSoftwareUnitException.setName(contents.toString());
 			currentAppliedRule.addException(currentSoftwareUnitException);
