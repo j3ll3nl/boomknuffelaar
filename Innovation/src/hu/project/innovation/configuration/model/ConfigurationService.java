@@ -317,16 +317,16 @@ public final class ConfigurationService {
 	 * 
 	 * @param groupId the component name to remove
 	 */
-	public void removeDependency(String groupId) {
-		dependencies.removeDepSoftwareComponent(groupId);
+	public void removeDependency(String artifactId) {
+		dependencies.removeDepSoftwareComponent(artifactId);
 	}
 	
 	/**
 	 * return a dependency (if exists)
 	 * @param groupId the component to return
 	 */
-	public DepSoftwareComponent getDependency(String groupId) {
-		return dependencies.getDepSoftwareComponent(groupId);
+	public DepSoftwareComponent getDependency(String artifactId) {
+		return dependencies.getDepSoftwareComponent(artifactId);
 	}
 	
 	/**
@@ -350,16 +350,16 @@ public final class ConfigurationService {
 	 * 
 	 * @param groupId the component name to remove
 	 */
-	public void removeAllowedDependency(String groupId) {
-		allowedDependencies.removeDepSoftwareComponent(groupId);
+	public void removeAllowedDependency(String artifactId) {
+		allowedDependencies.removeDepSoftwareComponent(artifactId);
 	}
 	
 	/**
 	 * return a allowed dependency (if exists)
 	 * @param groupId the component to return
 	 */
-	public DepSoftwareComponent getAllowedDependency(String groupId) {
-		return allowedDependencies.getDepSoftwareComponent(groupId);
+	public DepSoftwareComponent getAllowedDependency(String artifactId) {
+		return allowedDependencies.getDepSoftwareComponent(artifactId);
 	}
 	
 	/**

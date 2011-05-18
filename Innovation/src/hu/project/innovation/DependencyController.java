@@ -1,6 +1,7 @@
 package hu.project.innovation;
 
 import hu.project.innovation.configuration.model.ConfigurationService;
+import hu.project.innovation.configuration.model.Dependencies.Dependency.DepSoftwareComponent;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,7 +27,9 @@ public class DependencyController {
 		configurationService.setProjectPath(System.getProperty("user.dir"));
 		
 		File pomFile = new File(configurationService.getProjectPath()+"/"+xmlFile);
-				
+		
+		this.addAllowedDependencies();
+		
 		parseXML(pomFile);
 	}
 	
@@ -82,6 +85,12 @@ public class DependencyController {
 		} catch (SAXException e) {
 			e.printStackTrace();
 		}
-		System.out.println(configurationService.getDependency("hibernate").getVersion());
+		for(DepSoftwareComponent dec : configurationService.getDependencies()) {
+			System.out.println("Dependency: " + dec.getGroupId());
+		}
+	}
+	
+	private void addAllowedDependencies() {
+		parseXML(new File(configurationService.getProjectPath() + "/mydependencies.xml"));
 	}
 }
