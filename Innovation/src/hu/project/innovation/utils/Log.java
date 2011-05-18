@@ -3,13 +3,13 @@ package hu.project.innovation.utils;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.Logger;
 
 public class Log {
 	private static final int tabsBetweenClassAndMessage = 3;
 	public static final String INFO = "INFO", ERROR = "ERROR";
-	
-	private Log() {}
+
+	private Log() {
+	}
 
 	/**
 	 * Print an information output.
@@ -30,15 +30,10 @@ public class Log {
 	public static void e(Object o, String message) {
 		log(o, message, ERROR);
 	}
-	
+
 	public static void log(Object o, String message, String type) {
 		int numberOfTabs = (tabsBetweenClassAndMessage) - (o.getClass().getSimpleName().length() / 8);
-		String fullMessage = 
-			getDateTime() + "  " 
-			+ type + "\t" 
-			+ o.getClass().getSimpleName() 
-			+ tabs(numberOfTabs) 
-			+ " - " + message;
+		String fullMessage = getDateTime() + "  " + type + "\t" + o.getClass().getSimpleName() + tabs(numberOfTabs) + " - " + message;
 		System.out.println(fullMessage);
 	}
 
