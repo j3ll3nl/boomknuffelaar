@@ -67,7 +67,7 @@ public class JFrameSoftwareUnit extends JFrame {
 		try {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			setTitle("New Software Unit");
-			setIconImage(new ImageIcon(getClass().getClassLoader().getResource("belastingdienst.jpg")).getImage());
+			setIconImage(new ImageIcon(getClass().getClassLoader().getResource("hu/project/innovation/resources/jframeicon.jpg")).getImage());
 			{
 				jPanel1 = new JPanel();
 				GridBagLayout jPanel1Layout = new GridBagLayout();
