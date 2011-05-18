@@ -1,6 +1,5 @@
 package hu.project.innovation.configuration.model;
 
-import hu.project.innovation.configuration.model.dependencies.AllowedDependency;
 import hu.project.innovation.configuration.model.dependencies.Dependencies;
 import hu.project.innovation.configuration.model.dependencies.Dependency;
 import hu.project.innovation.configuration.model.dependencies.Dependency.DepSoftwareComponent;
@@ -33,7 +32,7 @@ public final class ConfigurationService {
 		
 		//(allowed) dependencies
 		this.dependencies = new Dependency();
-		this.allowedDependencies = new AllowedDependency();
+		this.allowedDependencies = new Dependency();
 	}
 
 	/**
