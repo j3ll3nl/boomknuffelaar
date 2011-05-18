@@ -1,4 +1,4 @@
-package hu.project.innovation.configuration.model;
+package hu.project.innovation.configuration.model.rules;
 
 import hu.project.innovation.utils.Log;
 import hu.project.innovation.utils.XMLable;

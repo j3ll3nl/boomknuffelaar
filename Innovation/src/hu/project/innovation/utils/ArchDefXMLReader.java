@@ -2,10 +2,10 @@ package hu.project.innovation.utils;
 
 import hu.project.innovation.configuration.model.AppliedRule;
 import hu.project.innovation.configuration.model.ArchitectureDefinition;
-import hu.project.innovation.configuration.model.BackCallRule;
 import hu.project.innovation.configuration.model.Layer;
-import hu.project.innovation.configuration.model.SkipLayerRule;
 import hu.project.innovation.configuration.model.SoftwareUnitDefinition;
+import hu.project.innovation.configuration.model.rules.BackCallRule;
+import hu.project.innovation.configuration.model.rules.SkipLayerRule;
 
 import java.io.CharArrayWriter;
 import java.io.File;

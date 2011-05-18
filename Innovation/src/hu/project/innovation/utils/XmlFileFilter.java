@@ -1,4 +1,4 @@
-package hu.project.innovation.configuration.view;
+package hu.project.innovation.utils;
 
 import java.io.File;
 

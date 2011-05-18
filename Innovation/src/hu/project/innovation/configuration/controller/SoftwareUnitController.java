@@ -3,9 +3,9 @@ package hu.project.innovation.configuration.controller;
 import hu.project.innovation.configuration.model.ConfigurationService;
 import hu.project.innovation.configuration.model.Layer;
 import hu.project.innovation.configuration.model.SoftwareUnitDefinition;
-import hu.project.innovation.configuration.view.JFrameSoftwareUnit;
-import hu.project.innovation.configuration.view.JTableException;
-import hu.project.innovation.configuration.view.JTableTableModel;
+import hu.project.innovation.configuration.view.jframe.JFrameSoftwareUnit;
+import hu.project.innovation.configuration.view.tables.JTableException;
+import hu.project.innovation.configuration.view.tables.JTableTableModel;
 import hu.project.innovation.utils.Log;
 import hu.project.innovation.utils.Ui;
 

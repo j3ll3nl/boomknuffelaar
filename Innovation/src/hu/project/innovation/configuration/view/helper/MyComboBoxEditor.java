@@ -1,4 +1,4 @@
-package hu.project.innovation.configuration.view.anders;
+package hu.project.innovation.configuration.view.helper;
 
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;

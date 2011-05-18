@@ -1,7 +1,7 @@
-package hu.project.innovation.configuration.view;
+package hu.project.innovation.configuration.view.tables;
 
 import hu.project.innovation.configuration.model.SoftwareUnitDefinition;
-import hu.project.innovation.configuration.view.anders.MyComboBoxEditor;
+import hu.project.innovation.configuration.view.helper.MyComboBoxEditor;
 
 import javax.swing.table.TableColumn;
 

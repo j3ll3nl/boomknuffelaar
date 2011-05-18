@@ -2,6 +2,9 @@ package hu.project.innovation.configuration.view;
 
 import hu.project.innovation.configuration.model.Layer;
 import hu.project.innovation.configuration.model.SoftwareUnitDefinition;
+import hu.project.innovation.configuration.view.tables.JTableAppliedRule;
+import hu.project.innovation.configuration.view.tables.JTableSoftwareUnits;
+import hu.project.innovation.configuration.view.tables.JTableTableModel;
 
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
