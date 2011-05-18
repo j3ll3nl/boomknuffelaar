@@ -100,7 +100,7 @@ public final class ConfigurationService {
 			configurationXML = configurationXML + architectureDefinition.toXML();
 			configurationXML = configurationXML + "\t<paths>\n";
 			configurationXML = configurationXML + "\t\t<project>" + getProjectPath() + "</project>\n";
-			configurationXML = configurationXML + "\t\t<output format=\"" + getOutputFormat() + "\">" + getOutputPath() + "</project>\n";
+			configurationXML = configurationXML + "\t\t<output format=\"" + getOutputFormat() + "\">" + getOutputPath() + "</output>\n";
 			configurationXML = configurationXML + "\t</paths>\n";
 			configurationXML = configurationXML + "</configuration>";
 			
