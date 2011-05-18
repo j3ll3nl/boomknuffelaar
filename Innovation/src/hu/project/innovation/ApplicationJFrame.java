@@ -4,6 +4,8 @@ import hu.project.innovation.configuration.view.DefinitionJPanel;
 import hu.project.innovation.configuration.view.JPanelStatus;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -11,7 +13,9 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.JToolBar;
+import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
 
 /**
@@ -23,8 +27,8 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 
 	private static final long serialVersionUID = 6858870868564931134L;
 	private String defaultTitle = "Belastingdienst Architectuur";
+	private JSeparator jSeparator1;
 	public JMenuItem jMenuItemExit;
-	private JMenu jMenu4;
 	private JMenuBar jMenuBar;
 	public JLabel jLabelStatus;
 	private JToolBar jToolBar;
@@ -77,16 +81,6 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 				jMenuBar = new JMenuBar();
 				setJMenuBar(jMenuBar);
 				{
-					jMenu4 = new JMenu();
-					jMenuBar.add(jMenu4);
-					jMenu4.setText("Application");
-					{
-						jMenuItemExit = new JMenuItem();
-						jMenu4.add(jMenuItemExit);
-						jMenuItemExit.setText("Exit");
-					}
-				}
-				{
 					jMenu1 = new JMenu();
 					jMenuBar.add(jMenu1);
 					jMenu1.setText("Architecture");
@@ -94,16 +88,33 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 						jMenuItemNewArchitecture = new JMenuItem();
 						jMenu1.add(jMenuItemNewArchitecture);
 						jMenuItemNewArchitecture.setText("New architecture");
+						jMenuItemNewArchitecture.setMnemonic(KeyEvent.VK_N);
+						jMenuItemNewArchitecture.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
 					}
 					{
 						jMenuItemOpenArchitecture = new JMenuItem();
 						jMenu1.add(jMenuItemOpenArchitecture);
 						jMenuItemOpenArchitecture.setText("Open architecture");
+						jMenuItemOpenArchitecture.setMnemonic(KeyEvent.VK_O);
+						jMenuItemOpenArchitecture.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK));
 					}
 					{
 						jMenuItemSaveArchitecture = new JMenuItem();
 						jMenu1.add(jMenuItemSaveArchitecture);
 						jMenuItemSaveArchitecture.setText("Save architecture");
+						jMenuItemSaveArchitecture.setMnemonic(KeyEvent.VK_S);
+						jMenuItemSaveArchitecture.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
+					}
+					{
+						jSeparator1 = new JSeparator();
+						jMenu1.add(jSeparator1);
+					}
+					{
+						jMenuItemExit = new JMenuItem();
+						jMenu1.add(jMenuItemExit);
+						jMenuItemExit.setText("Exit");
+						jMenuItemSaveArchitecture.setMnemonic(KeyEvent.VK_X);
+						jMenuItemSaveArchitecture.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.CTRL_MASK));
 					}
 				}
 				{
