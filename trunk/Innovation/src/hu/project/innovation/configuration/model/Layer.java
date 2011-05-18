@@ -78,11 +78,11 @@ public class Layer implements XMLable {
 	public final void setParentLayer(Layer layer) {
 		parentLayer = layer;
 	}
-	
+
 	public final boolean isInterfaceAccessOnly() {
 		return this.interfaceAccessOnly;
 	}
-	
+
 	public final void setInterfaceAccesOnly(boolean bool) {
 		this.interfaceAccessOnly = bool;
 	}
@@ -92,7 +92,7 @@ public class Layer implements XMLable {
 		this.appliedRules.add(r);
 		return r;
 	}
-	
+
 	public void addAppliedRule(AppliedRule rule) {
 		this.appliedRules.add(rule);
 	}
@@ -147,7 +147,7 @@ public class Layer implements XMLable {
 	 * 
 	 * @return
 	 */
-	public final ArrayList<SoftwareUnitDefinition> getAllSoftwareUnitDefinitions() {
+	public final ArrayList<SoftwareUnitDefinition> getSoftwareUnitDefinitions() {
 		return softwareUnitDefinitions;
 	}
 
@@ -161,7 +161,7 @@ public class Layer implements XMLable {
 		xml += "\t\t<description>" + this.description + "</description>\n";
 
 		if (softwareUnitDefinitions != null) {
-			for (SoftwareUnitDefinition sud : this.getAllSoftwareUnitDefinitions()) {
+			for (SoftwareUnitDefinition sud : this.getSoftwareUnitDefinitions()) {
 				xml += sud.toXML();
 			}
 		}
@@ -186,17 +186,26 @@ public class Layer implements XMLable {
 	}
 
 	public final boolean hasAppliedRule(String ruleName, Layer toLayer) {
-		if(toLayer == null) return false;
-		
+		if (toLayer == null)
+			return false;
+
 		if (appliedRules != null) {
 			for (AppliedRule appliedRule : this.appliedRules) {
-				if (appliedRule.getToLayer().getId() == toLayer.getId() 
-						&& appliedRule.getRuleType().getName().equals(ruleName)) {
+				if (appliedRule.getToLayer().getId() == toLayer.getId() && appliedRule.getRuleType().getName().equals(ruleName)) {
 					return true;
 				}
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * Returning the applied rules for this layer
+	 * 
+	 * @return The applied rules
+	 */
+	public ArrayList<AppliedRule> getAppliedRules() {
+		return this.appliedRules;
 	}
 
 	public final void moveUp() throws Exception {
@@ -323,7 +332,8 @@ public class Layer implements XMLable {
 			return childLayer.getLayerBySoftwareUnitName(softwareUnitName);
 		}
 		// Else return null
-		else return null;
+		else
+			return null;
 	}
 
 	public final void printOrder() {
