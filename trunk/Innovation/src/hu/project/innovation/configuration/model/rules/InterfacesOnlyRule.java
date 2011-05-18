@@ -9,7 +9,7 @@ import net.sourceforge.pmd.ast.SimpleNode;
 
 public class InterfacesOnlyRule extends BackCallRule {
 	
-	public void checkViolation(Class<?> toClass, Object data, SimpleNode node) {
+	protected void checkViolation(Class<?> toClass, Object data, SimpleNode node) {
 		String calledName = toClass.getCanonicalName();
 		
 		if (isPackageChecked(calledName)) {
@@ -28,10 +28,10 @@ public class InterfacesOnlyRule extends BackCallRule {
 					&& !toClass.isInterface()) 
 			{
 				// Add a violation if the rule is applied
-				this.addViolation(data, node);
+				this.addViolationWithMessage(data, node, this.getViolationMessage(fromLayer, toLayer));
 			}
-			if(fromLayer.isInterfaceAccessOnly() && Modifier.isPublic(node.getClass().getModifiers())) {
-				this.addViolationWithMessage(data, node, "This layer is only accesable through interfaces but this is public");
+			if(toLayer.isInterfaceAccessOnly() && Modifier.isPublic(toClass.getModifiers())) {
+//				this.addViolationWithMessage(data, node, this.getViolationMessage(fromLayer, toLayer)+" And this call is public.");
 			}
 		}
 	}
