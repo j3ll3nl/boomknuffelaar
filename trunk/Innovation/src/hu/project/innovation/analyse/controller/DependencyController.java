@@ -1,7 +1,6 @@
 package hu.project.innovation.analyse.controller;
 
 import hu.project.innovation.configuration.model.ConfigurationService;
-import hu.project.innovation.configuration.model.Dependencies.Dependency.DepSoftwareComponent;
 
 import java.io.File;
 import java.io.IOException;

@@ -33,10 +33,8 @@ public class JFrameAnalyse extends javax.swing.JFrame {
 	private JPanel jPanel6;
 	private JPanel jPanel7;
 	private JLabel jLabel1;
-	private JLabel jLabel2;
 	private JLabel jLabel4;
 	private JLabel jLabel5;
-	public JLabel jLabelProjectName;
 	public JButton jButtonProjectBrowse;
 	public JButton jButtonOutputBrowse;
 	public JButton jButtonClose;
@@ -82,8 +80,8 @@ public class JFrameAnalyse extends javax.swing.JFrame {
 						GridBagLayout jPanel4Layout = new GridBagLayout();
 						jPanel2.add(jPanel4, BorderLayout.NORTH);
 						jPanel4.setBorder(BorderFactory.createTitledBorder("Project"));
-						jPanel4Layout.rowWeights = new double[] { 0.0, 0.0 };
-						jPanel4Layout.rowHeights = new int[] { 27, 27 };
+						jPanel4Layout.rowWeights = new double[] { 0.0 };
+						jPanel4Layout.rowHeights = new int[] { 27 };
 						jPanel4Layout.columnWeights = new double[] { 0.0, 0.1 };
 						jPanel4Layout.columnWidths = new int[] { 83, 7 };
 						jPanel4.setLayout(jPanel4Layout);
@@ -110,16 +108,6 @@ public class JFrameAnalyse extends javax.swing.JFrame {
 								jPanel6.add(jButtonProjectBrowse);
 								jButtonProjectBrowse.setText("Browse");
 							}
-						}
-						{
-							jLabel2 = new JLabel();
-							jPanel4.add(jLabel2, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-							jLabel2.setText("Name");
-						}
-						{
-							jLabelProjectName = new JLabel();
-							jPanel4.add(jLabelProjectName, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-							jLabelProjectName.setText("Unknown");
 						}
 					}
 					{
