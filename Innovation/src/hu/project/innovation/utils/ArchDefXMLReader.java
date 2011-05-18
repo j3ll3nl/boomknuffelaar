@@ -175,6 +175,9 @@ public class ArchDefXMLReader extends DefaultHandler {
 		} else if (localName.equals("exception")) {
 			isException = false;
 		}
+		
+		
+		
 	}
 
 	public void characters(char[] ch, int start, int length) throws SAXException {
