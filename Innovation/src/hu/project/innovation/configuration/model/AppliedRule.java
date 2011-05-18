@@ -10,7 +10,7 @@ public class AppliedRule implements XMLable {
 
 	private AbstractRuleType ruleType;
 	private Layer fromLayer, toLayer;
-
+	private boolean enabled;
 	private ArrayList<SoftwareUnitDefinition> exceptions;
 
 	public AppliedRule() {
@@ -50,7 +50,7 @@ public class AppliedRule implements XMLable {
 	public Layer getToLayer() {
 		return toLayer;
 	}
-	
+
 	public void setToLayer(Layer layer) {
 		this.toLayer = layer;
 	}
@@ -58,7 +58,7 @@ public class AppliedRule implements XMLable {
 	public AbstractRuleType getRuleType() {
 		return this.ruleType;
 	}
-	
+
 	public void setRuleType(AbstractRuleType type) {
 		this.ruleType = type;
 	}
@@ -66,15 +66,38 @@ public class AppliedRule implements XMLable {
 	public boolean addException(SoftwareUnitDefinition sud) {
 		return this.exceptions.add(sud);
 	}
-	
+
 	public boolean hasException(SoftwareUnitDefinition sud) {
-		for(SoftwareUnitDefinition exception : this.exceptions ) {
-			if(sud.getName().equals(exception.getName()) 
-					&& sud.getType().equals(exception.getType())) {
+		for (SoftwareUnitDefinition exception : this.exceptions) {
+			if (sud.getName().equals(exception.getName()) && sud.getType().equals(exception.getType())) {
 				return true;
 			}
 		}
 		return false;
+	}
+
+	public String toString() {
+		return this.ruleType.getName();
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public int getNumberOfExceptions() {
+		if (getExceptions() != null) {
+			return getExceptions().size();
+		} else {
+			return 0;
+		}
+	}
+
+	private ArrayList<SoftwareUnitDefinition> getExceptions() {
+		return exceptions;
 	}
 
 }
