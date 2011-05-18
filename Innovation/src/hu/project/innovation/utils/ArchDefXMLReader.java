@@ -44,6 +44,7 @@ public class ArchDefXMLReader extends DefaultHandler {
 	private SoftwareUnitDefinition currentSoftwareUnit;
 	private AppliedRule currentAppliedRule;
 	private SoftwareUnitDefinition currentSoftwareUnitException;
+	private boolean isLayer = false;
 	private boolean isSoftwareUnit = false;
 	private boolean isAppliedRule = false;
 	private boolean isException = false;
@@ -79,8 +80,10 @@ public class ArchDefXMLReader extends DefaultHandler {
 		Log.i(this, "startElement(" + localName + ")");
 		contents.reset();
 		
-		// Set booleans true
-		if (localName.equals("softwareUnit")) {
+		// Open complex XML element
+		if (localName.equals("layer")) {
+			isLayer = true;
+		} else if (localName.equals("softwareUnit")) {
 			isSoftwareUnit = true;
 		} else if (localName.equals("appliedRule")) {
 			isAppliedRule = true;
@@ -103,7 +106,7 @@ public class ArchDefXMLReader extends DefaultHandler {
 				currentLayer = ar.getLayer(Integer.parseInt(contents.toString()));
 			}
 
-		} else if (localName.equals("name") && !isSoftwareUnit && !isAppliedRule) {
+		} else if (localName.equals("name") && !isSoftwareUnit && !isAppliedRule && isLayer) {
 			currentLayer.setName(contents.toString());
 		} else if (localName.equals("description")) {
 			currentLayer.setDescription(contents.toString());
@@ -148,7 +151,7 @@ public class ArchDefXMLReader extends DefaultHandler {
 		}
 		
 		// Add exceptions
-		if (localName.equals("unit") && isSoftwareUnit && isException) {
+		if (localName.equals("name") && isSoftwareUnit && isException) {
 			currentSoftwareUnitException = new SoftwareUnitDefinition();
 			currentSoftwareUnitException.setName(contents.toString());
 			currentSoftwareUnit.addException(currentSoftwareUnitException);
@@ -162,8 +165,10 @@ public class ArchDefXMLReader extends DefaultHandler {
 			currentSoftwareUnitException.setType(contents.toString());
 		}
 		
-		// Set booleans false
-		if (localName.equals("softwareUnit")) {
+		// Closing complex XML element
+		if (localName.equals("layer")) {
+			isLayer = false;
+		} else if (localName.equals("softwareUnit")) {
 			isSoftwareUnit = false;
 		} else if (localName.equals("appliedRule")) {
 			isAppliedRule = false;
