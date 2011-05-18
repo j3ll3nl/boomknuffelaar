@@ -60,6 +60,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 
 		definitionJPanel.jTextFieldLayerName.addKeyListener(this);
 		definitionJPanel.jTextAreaLayerDescription.addKeyListener(this);
+		definitionJPanel.jCheckBoxAccess.addActionListener(this);
 
 		definitionJPanel.jButtonAddComponentToLayer.addActionListener(this);
 		definitionJPanel.jButtonEditComponentFromLayer.addActionListener(this);
@@ -572,6 +573,8 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 			editRuleToLayer();
 		} else if (action.getSource() == definitionJPanel.jButtonRemoveRuleFromLayer) {
 			removeRuleToLayer();
+		} else if (action.getSource() == definitionJPanel.jCheckBoxAccess) {
+			updateLayer();
 		} else {
 			Log.i(this, "actionPerformed(" + action + ")");
 		}

@@ -70,6 +70,7 @@ public class ArchitectureDefinition implements XMLable {
 		if (topLayer != null) {
 			if (topLayer == layer) {
 				topLayer = layer.getChildLayer();
+				topLayer.setParentLayer(null);
 			} else {
 				topLayer.removeLayer(layer);
 			}
