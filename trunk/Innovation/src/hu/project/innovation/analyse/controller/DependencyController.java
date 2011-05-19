@@ -7,7 +7,6 @@ import hu.project.innovation.utils.UiDialogs;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.regex.Pattern;
 
 import javax.swing.table.DefaultTableModel;
 import javax.xml.parsers.ParserConfigurationException;
@@ -44,6 +43,12 @@ public class DependencyController {
 			dependenciesJFrame = new JFrameDependencies();
 			
 			DefaultTableModel atm = (DefaultTableModel) dependenciesJFrame.getJTableFoundComponents().getModel();
+			dependenciesJFrame.setResizable(false);
+			
+			//Disable buttons (voorlopig)
+			dependenciesJFrame.getJButton1().setEnabled(false);
+			dependenciesJFrame.getJButton2().setEnabled(false);
+			dependenciesJFrame.getJButton3().setEnabled(false);
 			
 			//Add columns
 			atm.addColumn("Number");
