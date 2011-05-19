@@ -10,6 +10,8 @@ import net.sourceforge.pmd.ast.SimpleNode;
 public class InterfacesOnlyRule extends BackCallRule {
 	
 	protected void checkViolation(Class<?> toClass, Object data, SimpleNode node) {
+		this.initArchitecture();
+		
 		String calledName = toClass.getCanonicalName();
 		
 		if (isPackageChecked(calledName)) {

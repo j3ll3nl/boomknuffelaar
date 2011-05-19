@@ -1,7 +1,9 @@
 package hu.project.innovation.configuration.model.rules;
 
+import hu.project.innovation.configuration.model.ConfigurationService;
 import hu.project.innovation.utils.XMLable;
 
+import java.io.File;
 import java.util.List;
 
 import net.sourceforge.pmd.AbstractJavaRule;
@@ -58,5 +60,15 @@ public abstract class AbstractRuleType extends AbstractJavaRule implements XMLab
 		xml += "</rule>";
 
 		return xml;
+	}
+	
+	protected void initArchitecture() {
+		if(!ConfigurationService.getInstance().hasArchitectureDefinition()) {
+			try {
+				ConfigurationService.getInstance().openConfiguration(new File("architecture_definition.xml"));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }

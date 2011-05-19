@@ -42,6 +42,8 @@ public class BackCallRule extends AbstractRuleType {
 	}
 	
 	protected void checkViolation(Class<?> toClass, Object data, SimpleNode node) {
+		this.initArchitecture();
+		
 		String calledName = toClass.getCanonicalName();
 		
 		if (isPackageChecked(calledName)) {
