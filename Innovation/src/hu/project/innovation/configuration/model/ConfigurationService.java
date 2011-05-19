@@ -289,9 +289,12 @@ public final class ConfigurationService {
 		return null;
 	}
 
-	public void removeAppliedRule(Layer layer, AppliedRule appliedrule) {
-		
-		//TODO: nog te maken..
+	public void removeAppliedRule(Layer layer, AppliedRule appliedrule) throws Exception {
+		if (layer == null || (this.architectureDefinition.getLayer(layer.getName()) == null)) {
+			throw new Exception("Layer does not exist");
+		} else {
+			layer.removeAppliedRule(appliedrule);
+		}
 	}
 
 	public Layer getLayerBySoftwareUnitName(String name) {
