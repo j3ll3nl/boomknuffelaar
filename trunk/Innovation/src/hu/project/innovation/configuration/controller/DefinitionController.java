@@ -363,7 +363,19 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 
 	private void addRuleToLayer() {
 		Log.i(this, "addRuleToLayer()");
-		// TODO Auto-generated method stub
+		// Get the current selected layer
+		Layer layer = definitionJPanel.getSelectedLayer();
+		if (layer != null) {
+			Log.i(this, "addRuleToLayer() - selected layer: " + layer.getName());
+
+			// Create a new software unit controller
+			AppliedRulesController a = new AppliedRulesController(layer, null);
+			// Set the action of the view
+			a.setAction(AppliedRulesController.ACTION_NEW);
+			a.addObserver(this);
+			// Build and show the ui
+			a.initUi();
+		}
 	}
 
 	private void editRuleToLayer() {
@@ -384,9 +396,9 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 					// Remove the software unit
 					JPanelStatus.getInstance("Removing applied rule").start();
 					configurationService.removeAppliedRule(layer, appliedrule);
-					
+
 					// Update the applied rules table
-					updateAppliedRulesTable();					
+					updateAppliedRulesTable();
 				}
 			}
 		} catch (Exception e) {

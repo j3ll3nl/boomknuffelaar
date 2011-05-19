@@ -10,26 +10,20 @@ import hu.project.innovation.utils.Log;
 import hu.project.innovation.utils.UiDialogs;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Observable;
 
-public class SoftwareUnitController extends Observable implements ActionListener {
-
-	public static final String ACTION_NEW = "NEW";
-	public static final String ACTION_EDIT = "EDIT";
+public class SoftwareUnitController extends PopUpController {
 
 	private JFrameSoftwareUnit jframe;
-	private String action = SoftwareUnitController.ACTION_NEW;
 	private SoftwareUnitDefinition softwareunit;
-	private Layer layer;
 
 	public SoftwareUnitController(Layer layer, SoftwareUnitDefinition softwareunit) {
 		Log.i(this, "constructor(" + layer + ", " + softwareunit + ")");
-		this.layer = layer;
+		setLayer(layer);
 		this.softwareunit = softwareunit;
 	}
 
+	@Override
 	public void initUi() {
 		Log.i(this, "initUi()");
 		jframe = new JFrameSoftwareUnit();
@@ -66,11 +60,13 @@ public class SoftwareUnitController extends Observable implements ActionListener
 
 		// Set the visibility of the jframe to true so the jframe is now visible
 		UiDialogs.showOnScreen(0, jframe);
-		
+
 		jframe.setVisible(true);
+
 	}
 
-	private void saveSoftwareUnit() {
+	@Override
+	public void save() {
 		ConfigurationService service = ConfigurationService.getInstance();
 
 		try {
@@ -108,7 +104,8 @@ public class SoftwareUnitController extends Observable implements ActionListener
 	/**
 	 * Add a new empty row to the exception table
 	 */
-	private void addExceptionRow() {
+	@Override
+	public void addExceptionRow() {
 		JTableException table = jframe.jTableException;
 		JTableTableModel tablemodel = (JTableTableModel) table.getModel();
 
@@ -119,7 +116,8 @@ public class SoftwareUnitController extends Observable implements ActionListener
 	/**
 	 * Remove the selected row from the exception table
 	 */
-	private void removeExceptionRow() {
+	@Override
+	public void removeExceptionRow() {
 		JTableException table = jframe.jTableException;
 		int selectedrow = table.getSelectedRow();
 		if (selectedrow == -1) {
@@ -130,28 +128,6 @@ public class SoftwareUnitController extends Observable implements ActionListener
 		}
 	}
 
-	/**
-	 * Use this function to notify the definitioncontroller that there is a change
-	 */
-	private void pokeObservers() {
-		setChanged();
-		notifyObservers();
-	}
-
-	public void setAction(String action) {
-		if (action.equals(SoftwareUnitController.ACTION_EDIT) || action.equals(SoftwareUnitController.ACTION_NEW)) {
-			this.action = action;
-		}
-	}
-
-	private String getAction() {
-		return action;
-	}
-
-	private Layer getLayer() {
-		return layer;
-	}
-
 	public void actionPerformed(ActionEvent action) {
 		Log.i(this, "actionPerformed()");
 		if (action.getSource() == jframe.jButtonAddExceptionRow) {
@@ -159,7 +135,7 @@ public class SoftwareUnitController extends Observable implements ActionListener
 		} else if (action.getSource() == jframe.jButtonRemoveExceptionRow) {
 			removeExceptionRow();
 		} else if (action.getSource() == jframe.jButtonSave) {
-			saveSoftwareUnit();
+			save();
 		} else if (action.getSource() == jframe.jButtonCancel) {
 			jframe.dispose();
 		} else {
