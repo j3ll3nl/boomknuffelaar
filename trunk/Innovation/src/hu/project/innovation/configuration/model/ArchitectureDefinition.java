@@ -21,7 +21,7 @@ public class ArchitectureDefinition implements XMLable {
 	}
 
 	public void setName(String name) throws Exception {
-		if (name.equals("")) {
+		if (name == null || name.equals("")) {
 			throw new Exception("Architecture name cannot be empty");
 		}
 		this.name = name;

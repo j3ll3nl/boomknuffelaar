@@ -47,7 +47,7 @@ public final class ConfigurationService {
 		return instance;
 	}
 
-	public boolean hasArchitectureDefinition() {
+	public boolean hasArchitectureDefinition() {	
 		return this.architectureDefinition != null;
 	}
 
@@ -382,5 +382,4 @@ public final class ConfigurationService {
 	public DepSoftwareComponent[] getAllowedDependencies() {
 		return allowedDependencies.getDepSoftwareComponents();
 	}
-	
 }

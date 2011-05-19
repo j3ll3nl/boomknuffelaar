@@ -1,5 +1,7 @@
 package hu.project.innovation;
 
+import hu.project.innovation.configuration.model.ConfigurationService;
+
 public class Main {
 	
 	private Main(){};
