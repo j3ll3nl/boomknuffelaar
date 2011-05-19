@@ -137,7 +137,9 @@ public class ArchDefXMLReader extends DefaultHandler {
 			currentLayer.setName(contents.toString());
 		} else if (localName.equals("description")) {
 			currentLayer.setDescription(contents.toString());
-		} 
+		} else if (localName.equals("interfaceAccessOnly")) {
+			currentLayer.setInterfaceAccesOnly((Integer.parseInt(contents.toString()) != 0));
+		}
 		
 		// Get and set software unit information
 		if (localName.equals("name") && isSoftwareUnit) {
