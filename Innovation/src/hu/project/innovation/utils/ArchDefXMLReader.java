@@ -181,12 +181,10 @@ public class ArchDefXMLReader extends DefaultHandler {
 		
 		// Add exceptions
 		if (localName.equals("name") && isSoftwareUnit && isException) {
-			System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! exception name");
 			currentSoftwareUnitException = new SoftwareUnitDefinition();
 			currentSoftwareUnitException.setName(contents.toString());
 			currentSoftwareUnit.addException(currentSoftwareUnitException);
 		} else if (localName.equals("type") && isSoftwareUnit && isException) {
-			System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! exception type");
 			currentSoftwareUnitException.setType(contents.toString());
 		} else if (localName.equals("name") && isAppliedRule && isException) {
 			currentSoftwareUnitException = new SoftwareUnitDefinition();
