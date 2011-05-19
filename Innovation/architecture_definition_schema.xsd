@@ -13,12 +13,13 @@
                                         <xs:element name="id" type="xs:unsignedByte" minOccurs="1" maxOccurs="1" />
                                         <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1" />
                                         <xs:element name="description" type="xs:string" minOccurs="1" maxOccurs="1" />
+                                        <xs:element name="interfaceAccessOnly" type="xs:boolean" minOccurs="1" maxOccurs="1" />
                                         <xs:element name="softwareUnit" minOccurs="0" maxOccurs="unbounded">
                                             <xs:complexType>
                                                 <xs:sequence>
                                                     <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1" />
                                                     <xs:element name="type" type="xs:string" minOccurs="1" maxOccurs="1" />
-                                                    <xs:element name="exception">
+                                                    <xs:element name="exception" minOccurs="0" maxOccurs="unbounded">
                                                         <xs:complexType>
                                                             <xs:sequence>
                                                                 <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1" />
@@ -52,11 +53,11 @@
                         <xs:attribute name="name" type="xs:string" use="optional" />
                     </xs:complexType>
                 </xs:element>
-                <xs:element name="paths" minOccurs="0" maxOccurs="1">
+                <xs:element name="paths" minOccurs="1" maxOccurs="1">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="project" type="xs:string" minOccurs="0" maxOccurs="1" />
-                            <xs:element name="output" minOccurs="0" maxOccurs="1">
+                            <xs:element name="project" type="xs:string" minOccurs="1" maxOccurs="1" />
+                            <xs:element name="output" minOccurs="1" maxOccurs="1">
                                 <xs:complexType>
                                     <xs:simpleContent>
                                         <xs:extension base="xs:string">

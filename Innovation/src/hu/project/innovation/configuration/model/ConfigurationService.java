@@ -74,7 +74,7 @@ public final class ConfigurationService {
 
 		XMLReader xr = XMLReaderFactory.createXMLReader();
 		ArchDefXMLReader reader = new ArchDefXMLReader();
-		//reader.validateXML(file);
+		reader.validateXML(file);
 		xr.setContentHandler(reader);
 		xr.parse(new InputSource(new FileReader(file)));
 
