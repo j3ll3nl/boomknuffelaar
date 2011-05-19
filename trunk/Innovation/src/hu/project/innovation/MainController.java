@@ -1,6 +1,7 @@
 package hu.project.innovation;
 
 import hu.project.innovation.analyse.controller.AnalyseController;
+import hu.project.innovation.analyse.controller.DependencyController;
 import hu.project.innovation.configuration.controller.DefinitionController;
 import hu.project.innovation.utils.Log;
 import hu.project.innovation.utils.UiDialogs;
@@ -13,6 +14,7 @@ import java.io.InputStreamReader;
 public class MainController implements ActionListener {
 	private DefinitionController definitioncontroller = null;
 	private AnalyseController analysecontroller = null;
+	private DependencyController dependencycontroller = null;
 	public ApplicationJFrame jframe;
 
 	/**
@@ -23,6 +25,7 @@ public class MainController implements ActionListener {
 
 		definitioncontroller = new DefinitionController(this);
 		analysecontroller = new AnalyseController();
+		dependencycontroller = new DependencyController();
 	}
 
 	/**
@@ -99,7 +102,7 @@ public class MainController implements ActionListener {
 		} else if(action.getSource() == jframe.jMenuItemCheckDependencies) {
 			//todo daan
 			Log.i(this, "actionPerformed() - check dependensies");
-			UiDialogs.messageDialog(jframe, "todo", "Check dependencies");
+			dependencycontroller.initUI();
 		} else if (action.getSource() == jframe.jMenuItemAbout) {
 			Log.i(this, "actionPerformed() - about");
 			UiDialogs.messageDialog(jframe, "This application is made an project team on Hogeschool Utrecht.", "About");

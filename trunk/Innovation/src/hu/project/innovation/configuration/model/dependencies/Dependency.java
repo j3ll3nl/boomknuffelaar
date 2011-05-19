@@ -1,33 +1,10 @@
 package hu.project.innovation.configuration.model.dependencies;
 
-import hu.project.innovation.configuration.model.dependencies.Dependency.DepSoftwareComponent;
-
 import java.util.HashMap;
 
 public class Dependency extends HashMap<String, DepSoftwareComponent> implements Dependencies {
 	private static final long serialVersionUID = 1L;
 
-	public class DepSoftwareComponent {
-		/** pom.xml attributes */
-		private String groupId, artifactId, version, type, scope;
-		
-		public DepSoftwareComponent() {}
-		public DepSoftwareComponent(String groupId, String artifactId, String version, String type, String scope) {
-			this.groupId = groupId;
-			this.artifactId = artifactId;
-			this.version = version;
-			this.type = type;
-			this.scope = scope;
-		}
-
-		/** getter/setters */
-		public String getGroupId() { return this.groupId; }
-		public String getArtifactId() { return this.artifactId; }
-		public String getVersion() { return this.version; }
-		public String getType() { return this.type; }
-		public String getScope() { return this.scope; }
-	}
-	
 	public Dependency() {}
 	
 	/** add a dependency */
@@ -70,5 +47,15 @@ public class Dependency extends HashMap<String, DepSoftwareComponent> implements
 			System.err.println("No dependencies exist.");
 			return null;
 		}
+	}
+	
+	/** search dependency **/
+	public boolean searchDepSoftwareComponent(String keyword) {
+		for(DepSoftwareComponent component : super.values()) {
+			if(component.getArtifactId().contains(keyword)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

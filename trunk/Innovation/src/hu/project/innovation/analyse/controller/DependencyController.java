@@ -1,11 +1,15 @@
 package hu.project.innovation.analyse.controller;
 
 import hu.project.innovation.configuration.model.ConfigurationService;
-import hu.project.innovation.configuration.model.dependencies.Dependency.DepSoftwareComponent;
+import hu.project.innovation.configuration.view.dependencies.JFrameDependencies;
+import hu.project.innovation.utils.UiDialogs;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.regex.Pattern;
 
+import javax.swing.table.DefaultTableModel;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -16,26 +20,80 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class DependencyController {
 	private ConfigurationService configurationService;
+	private JFrameDependencies dependenciesJFrame = null;
 	
-	public static void main(String[] args) {
-		new DependencyController();
-	}
+	/** format for version number */
+	private static String _VERSION = "[0-9]{1,2}(.[0-9])*?";
 	
+	/**
+	 * 
+	 */
 	public DependencyController() {
 		configurationService = ConfigurationService.getInstance();
 		configurationService.setProjectPath(System.getProperty("user.dir"));
-				
+		
 		this.addAllowedDependencies();
 		this.addDependencies();
-		
-		for(DepSoftwareComponent dsc : configurationService.getDependencies()) {
-			if(configurationService.getAllowedDependency(dsc.getArtifactId()) == null) {
-				/** TODO check for version */
-				System.err.println("Component " + dsc.getArtifactId() + " isn't allowed");
-			}
-		}
 	}
 	
+	/**
+	 * 
+	 */
+	public void initUI() {
+		if(dependenciesJFrame == null) {
+			dependenciesJFrame = new JFrameDependencies();
+			
+			DefaultTableModel atm = (DefaultTableModel) dependenciesJFrame.getJTableFoundComponents().getModel();
+			
+			//Add columns
+			atm.addColumn("Number");
+			atm.addColumn("Dependency");
+			atm.addColumn("Type");
+			
+			// Id's
+			int i = 1;
+			
+			// Parse the (jar) components from the classpath string
+			ArrayList<String> extDependencies = getExtDependensies(System.getProperty("java.class.path"));
+			if(extDependencies != null) {
+				for(String dependency : extDependencies) {
+					//Kijken of de dependency een - heeft, indien het geval het stuk van de string ervoor pakken (tijdelijke oplossing)
+					if(!configurationService.searchDepSoftwareComponent((dependency.contains("-"))? dependency.split("-")[0] : dependency)) {
+						//check if the dependency is added in the project object model (pom.xml)
+						boolean tmp = false;
+						// if an dependency ends with .jar, remove ".jar" and add it to the table
+						Object rowdata[] = { i++, ((tmp = dependency.endsWith(".jar")) ? dependency.substring(0, dependency.length()-4) : dependency), (tmp) ? "Jar" : "not supported" };
+						atm.addRow(rowdata);
+					}
+				}
+			}
+		}
+		
+		UiDialogs.showOnScreen(0, dependenciesJFrame);
+		dependenciesJFrame.setVisible(true);
+	}
+	
+	/**
+	 * 
+	 * @param classPath
+	 * @return the unit names (jars)
+	 */
+	public ArrayList<String> getExtDependensies(String classPath) {
+		ArrayList<String> unitNames = new ArrayList<String>();
+		for(String path : classPath.split(":")) {
+			String[] unitName = path.split("/");
+			String unit = unitName[(unitName.length - 1)];
+			if(unit.contains("."))
+				unitNames.add(unit);
+		}
+		return unitNames;
+	}
+
+	/**
+	 * 
+	 * @param pomFile
+	 * @param isAllowedByDefault
+	 */
 	private void parseXML(File pomFile, final boolean isAllowedByDefault) {
 		try {
 			SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
@@ -99,14 +157,24 @@ public class DependencyController {
 		}
 	}
 	
+	/**
+	 * 
+	 */
 	private void addAllowedDependencies() {
 		String fileName = "mydependencies.xml";
 		File file = new File(configurationService.getProjectPath() + "/" + fileName);
 		parseXML(file, true);
 	}
 	
+	/**
+	 * 
+	 */
 	private void addDependencies() {
 		File file = new File(configurationService.getProjectPath()+"/pom.xml");
 		parseXML(file, false);
+	}
+	
+	public boolean isVersionValid(String version) {
+		return java.util.regex.Pattern.matches(_VERSION, version);
 	}
 }

@@ -1,8 +1,8 @@
 package hu.project.innovation.configuration.model;
 
+import hu.project.innovation.configuration.model.dependencies.DepSoftwareComponent;
 import hu.project.innovation.configuration.model.dependencies.Dependencies;
 import hu.project.innovation.configuration.model.dependencies.Dependency;
-import hu.project.innovation.configuration.model.dependencies.Dependency.DepSoftwareComponent;
 import hu.project.innovation.configuration.model.rules.AbstractRuleType;
 import hu.project.innovation.utils.ArchDefXMLReader;
 import hu.project.innovation.utils.Log;
@@ -351,6 +351,11 @@ public final class ConfigurationService {
 	 */
 	public DepSoftwareComponent[] getDependencies() {
 		return dependencies.getDepSoftwareComponents();
+	}
+	
+	/** @return the searched dependency (if found) */
+	public boolean searchDepSoftwareComponent(String keyword) {
+		return dependencies.searchDepSoftwareComponent(keyword);
 	}
 	
 	// Allowed dependencies
