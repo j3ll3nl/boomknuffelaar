@@ -1,6 +1,5 @@
 package hu.project.innovation.configuration.model.dependencies;
 
-import hu.project.innovation.configuration.model.dependencies.Dependency.DepSoftwareComponent;
 
 
 public interface Dependencies {
@@ -22,4 +21,7 @@ public interface Dependencies {
 	
 	/** @return all dependencies / software components */
 	public DepSoftwareComponent[] getDepSoftwareComponents();
+	
+	/** @return the searched dependency (if found) */
+	public boolean searchDepSoftwareComponent(String keyword);
 }
