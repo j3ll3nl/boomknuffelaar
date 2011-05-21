@@ -5,6 +5,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
@@ -28,8 +29,11 @@ public class JFrameDependencies extends javax.swing.JFrame {
 	private JTable jTableFoundComponents;
 	private JScrollPane jScrollPane1;
 	private JButton jButton1;
-	private JButton jButton3;
-	private JButton jButton2;
+	private JPanel jPanelPom;
+	private JScrollPane jScrollPane2;
+	private JTable jTableAllowedDeps;
+	private JPanel jPanelAllowed;
+	private JTabbedPane jTabbedPane1;
 	private JPanel jPanel1;
 
 	/**
@@ -55,51 +59,72 @@ public class JFrameDependencies extends javax.swing.JFrame {
 			setTitle("Dependencies");
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			{
-				jPanel1 = new JPanel();
-				getContentPane().add(jPanel1, BorderLayout.NORTH);
-				jPanel1.setPreferredSize(new java.awt.Dimension(610, 193));
-				jPanel1.setBorder(BorderFactory.createTitledBorder("Found project dependencies that are not defined in the pom file"));
+				// Eerste tab (found dependencies)
+				jTabbedPane1 = new JTabbedPane();
+				getContentPane().add(jTabbedPane1, BorderLayout.NORTH);
+				jTabbedPane1.setPreferredSize(new java.awt.Dimension(610, 360));
 				{
-					jScrollPane1 = new JScrollPane();
-					jPanel1.add(jScrollPane1);
-					jScrollPane1.setPreferredSize(new java.awt.Dimension(580, 127));
-					jScrollPane1.setFocusable(false);
+					jPanel1 = new JPanel();
+					jTabbedPane1.addTab("Found dependencies", null, jPanel1, null);
+					jPanel1.setPreferredSize(new java.awt.Dimension(605, 219));
+					jPanel1.setBorder(BorderFactory.createTitledBorder("Found project dependencies that are not defined in the pom file"));
 					{
-						DefaultTableModel model = new DefaultTableModel();
-						
-						TableModel jTableFoundComponentsModel = 
-							new DefaultTableModel() {
+						jScrollPane1 = new JScrollPane();
+						jPanel1.add(jScrollPane1);
+						jScrollPane1.setPreferredSize(new java.awt.Dimension(580, 240));
+						jScrollPane1.setFocusable(false);
+						{							
+							TableModel jTableFoundComponentsModel = 
+								new DefaultTableModel() {
 								private static final long serialVersionUID = 1L;
 								// de velden moeten niet editable zijn.
-							public boolean isCellEditable(int row, int col) {
-								return false;
-							}
-						};
-						jTableFoundComponents = new JTable();
-						
-						jScrollPane1.setViewportView(jTableFoundComponents);
-						jTableFoundComponents.setModel(jTableFoundComponentsModel);
-						
+								public boolean isCellEditable(int row, int col) {
+									return false;
+								}
+							};
+							jTableFoundComponents = new JTable();
+							
+							jScrollPane1.setViewportView(jTableFoundComponents);
+							jTableFoundComponents.setModel(jTableFoundComponentsModel);
+							
+						}
+					}
+					{
+						jButton1 = new JButton();
+						jPanel1.add(jButton1);
+						jButton1.setText("Toevoegen");
 					}
 				}
 				{
-					jButton1 = new JButton();
-					jPanel1.add(jButton1);
-					jButton1.setText("Toevoegen");
+					jPanelPom = new JPanel();
+					jTabbedPane1.addTab("POM file", null, jPanelPom, null);
 				}
 				{
-					jButton2 = new JButton();
-					jPanel1.add(getJButton2());
-					jButton2.setText("POM dependencies");
+					jPanelAllowed = new JPanel();
+					jTabbedPane1.addTab("Allowed", null, jPanelAllowed, null);
+					{
+						jScrollPane2 = new JScrollPane();
+						jPanelAllowed.add(jScrollPane2);
+						jScrollPane2.setPreferredSize(new java.awt.Dimension(580, 240));
+						{							
+							TableModel jTableFoundComponentsModel2 = 
+								new DefaultTableModel() {
+								private static final long serialVersionUID = 1L;
+								// de velden moeten niet editable zijn.
+								public boolean isCellEditable(int row, int col) {
+									return false;
+								}
+							};
+							jTableAllowedDeps = new JTable();
+							jScrollPane2.setViewportView(jTableAllowedDeps);
+							jTableAllowedDeps.setModel(jTableFoundComponentsModel2);
+						}
+					}
 				}
-				{
-					jButton3 = new JButton();
-					jPanel1.add(getJButton3());
-					jButton3.setText("Toegestane dependencies");
-				}
+
 			}
 			pack();
-			this.setSize(610, 225);
+			this.setSize(610, 389);
 		} catch (Exception e) {
 		    //add your error handling code here
 			e.printStackTrace();
@@ -118,20 +143,7 @@ public class JFrameDependencies extends javax.swing.JFrame {
 		return jButton1;
 	}
 	
-	/**
-	 * 
-	 * @return button pom dependencies
-	 */
-	public JButton getJButton2() {
-		return jButton2;
+	public JTable getJTableAllowedDeps() {
+		return jTableAllowedDeps;
 	}
-	
-	/**
-	 * 
-	 * @return button allowed dependencies
-	 */
-	public JButton getJButton3() {
-		return jButton3;
-	}
-
 }
