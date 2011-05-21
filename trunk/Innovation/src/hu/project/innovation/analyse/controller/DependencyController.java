@@ -1,6 +1,7 @@
 package hu.project.innovation.analyse.controller;
 
 import hu.project.innovation.configuration.model.DependencyService;
+import hu.project.innovation.configuration.model.dependencies.DepSoftwareComponent;
 import hu.project.innovation.configuration.model.dependencies.DependencySelectionHandler;
 import hu.project.innovation.configuration.view.dependencies.JFrameDependencies;
 import hu.project.innovation.utils.UiDialogs;
@@ -25,8 +26,8 @@ public class DependencyController {
 	private DependencyService dependencyService;
 	private JFrameDependencies dependenciesJFrame = null;
 	
-	private JTable extDependencyTable;
-	private JButton buttonToevoegen, buttonAllowedDeps, buttonPomDeps;
+	private JTable extDependencyTable, allowedDepsTable;
+	private JButton buttonToevoegen;
 	
 	/** format for version number */
 	private static String _VERSION = "[0-9]{1,2}(.[0-9])*?";
@@ -48,24 +49,27 @@ public class DependencyController {
 		if(dependenciesJFrame == null) {
 			dependenciesJFrame = new JFrameDependencies();
 			
+			// get (the 3) tables
 			extDependencyTable = dependenciesJFrame.getJTableFoundComponents();
+			allowedDepsTable = dependenciesJFrame.getJTableAllowedDeps();
+			
+			// get the models
 			DefaultTableModel atm = (DefaultTableModel) extDependencyTable.getModel();
+			DefaultTableModel atm2 = (DefaultTableModel) allowedDepsTable.getModel();
+			
 			dependenciesJFrame.setResizable(false);
 			
 			//Disable buttons (voorlopig)
 			buttonToevoegen = dependenciesJFrame.getJButton1(); 
-			buttonPomDeps = dependenciesJFrame.getJButton2();
-			buttonAllowedDeps = dependenciesJFrame.getJButton3();
-			buttonToevoegen.addActionListener(new DependencySelectionHandler());
+			buttonToevoegen.addActionListener(new DependencySelectionHandler(dependencyService));
 			
 			
 			extDependencyTable.getSelectionModel().addListSelectionListener(new DependencySelectionHandler(buttonToevoegen));
 			
-			
 			//Add columns
-			atm.addColumn("Number");
-			atm.addColumn("Dependency");
-			atm.addColumn("Type");
+			atm.addColumn("Number"); atm2.addColumn("Number");
+			atm.addColumn("Dependency"); atm2.addColumn("Dependency");
+			atm.addColumn("Type"); atm2.addColumn("Type");
 			
 			// Id's
 			int i = 1;
@@ -83,6 +87,17 @@ public class DependencyController {
 						atm.addRow(rowdata);
 					}
 				}
+			}
+			
+			//add allowed components to the table
+			DepSoftwareComponent[] allowedDSComponents;
+			if((allowedDSComponents = dependencyService.getAllowedDependencies()) != null) {
+				i = 1;
+				for(DepSoftwareComponent allowedDsc : allowedDSComponents) {
+					// if an dependency ends with .jar, remove ".jar" and add it to the table
+					Object rowdata[] = { i++, allowedDsc.getArtifactId(), allowedDsc.getType() };
+					atm2.addRow(rowdata);
+				}	
 			}
 		}
 		
