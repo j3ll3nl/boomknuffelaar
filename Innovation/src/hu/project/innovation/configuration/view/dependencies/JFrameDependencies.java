@@ -1,5 +1,6 @@
 package hu.project.innovation.configuration.view.dependencies;
 import java.awt.BorderLayout;
+import java.awt.LayoutManager;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -7,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
@@ -31,6 +33,14 @@ public class JFrameDependencies extends javax.swing.JFrame {
 	private JButton jButton1;
 	private JPanel jPanelPom;
 	private JScrollPane jScrollPane2;
+	private JButton jButton4;
+	private JButton jButton3;
+	private JButton jButtonAllowDepAdd;
+	private JButton jButtonSearch;
+	private JPanel jPanel2;
+	private JTextField jTextField1;
+	private JButton jButtonDeletePomD;
+	private JButton jButtonAddPomD;
 	private JScrollPane jScrollPane3;
 	private JTable jTableDepsPom;
 	private JTable jTableAllowedDeps;
@@ -64,7 +74,7 @@ public class JFrameDependencies extends javax.swing.JFrame {
 				// Eerste tab (found dependencies)
 				jTabbedPane1 = new JTabbedPane();
 				getContentPane().add(jTabbedPane1, BorderLayout.NORTH);
-				jTabbedPane1.setPreferredSize(new java.awt.Dimension(610, 360));
+				jTabbedPane1.setPreferredSize(new java.awt.Dimension(610, 419));
 				{
 					jPanel1 = new JPanel();
 					jTabbedPane1.addTab("Undefined", null, jPanel1, null);
@@ -94,7 +104,7 @@ public class JFrameDependencies extends javax.swing.JFrame {
 					{
 						jButton1 = new JButton();
 						jPanel1.add(jButton1);
-						jButton1.setText("Toevoegen");
+						jButton1.setText("Add Dependency");
 					}
 				}
 				{
@@ -118,14 +128,40 @@ public class JFrameDependencies extends javax.swing.JFrame {
 							jTableDepsPom.setModel(jTableFoundComponentsModel3);
 						}
 					}
+					{
+						jButtonAddPomD = new JButton();
+						jPanelPom.add(jButtonAddPomD);
+						jButtonAddPomD.setText("Add dependency");
+					}
+					{
+						jButtonDeletePomD = new JButton();
+						jPanelPom.add(jButtonDeletePomD);
+						jButtonDeletePomD.setText("Remove");
+					}
 				}
 				{
 					jPanelAllowed = new JPanel();
 					jTabbedPane1.addTab("Allowed", null, jPanelAllowed, null);
+					jPanelAllowed.setPreferredSize(new java.awt.Dimension(605, 368));
+					{
+						jPanel2 = new JPanel();
+						jPanelAllowed.add(jPanel2);
+						jPanel2.setPreferredSize(new java.awt.Dimension(193, 34));
+						{
+							jTextField1 = new JTextField();
+							jPanel2.add(jTextField1);
+							jTextField1.setText("dependency");
+						}
+						{
+							jButtonSearch = new JButton();
+							jPanel2.add(jButtonSearch);
+							jButtonSearch.setText("Search");
+						}
+					}
 					{
 						jScrollPane2 = new JScrollPane();
 						jPanelAllowed.add(jScrollPane2);
-						jScrollPane2.setPreferredSize(new java.awt.Dimension(580, 240));
+						jScrollPane2.setPreferredSize(new java.awt.Dimension(580, 296));
 						{							
 							TableModel jTableFoundComponentsModel2 = 
 								new DefaultTableModel() {
@@ -140,11 +176,26 @@ public class JFrameDependencies extends javax.swing.JFrame {
 							jTableAllowedDeps.setModel(jTableFoundComponentsModel2);
 						}
 					}
+					{
+						jButtonAllowDepAdd = new JButton();
+						jPanelAllowed.add(jButtonAllowDepAdd);
+						jButtonAllowDepAdd.setText("Add dependency");
+					}
+					{
+						jButton3 = new JButton();
+						jPanelAllowed.add(jButton3);
+						jButton3.setText("Edit");
+					}
+					{
+						jButton4 = new JButton();
+						jPanelAllowed.add(jButton4);
+						jButton4.setText("Remove");
+					}
 				}
 
 			}
 			pack();
-			this.setSize(610, 389);
+			this.setSize(610, 449);
 		} catch (Exception e) {
 		    //add your error handling code here
 			e.printStackTrace();
@@ -163,6 +214,21 @@ public class JFrameDependencies extends javax.swing.JFrame {
 		return jButton1;
 	}
 	
+	public JButton getJButtonDeletePomD() {
+		return jButtonDeletePomD;
+	}
+	
+	public JButton getJButtonAllowDepAdd() {
+		return jButtonAllowDepAdd;
+	}
+	
+	public JButton getJButtonAllowDepEdit() {
+		return jButton3;
+	}
+	
+	public JButton getJButtonAllowDepRemove() {
+		return jButton4;
+	}
 	public JTable getJTableAllowedDeps() {
 		return jTableAllowedDeps;
 	}
