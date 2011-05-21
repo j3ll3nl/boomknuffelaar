@@ -1,6 +1,7 @@
 package hu.project.innovation.analyse.controller;
 
-import hu.project.innovation.configuration.model.ConfigurationService;
+import hu.project.innovation.configuration.model.DependencyService;
+import hu.project.innovation.configuration.model.dependencies.DependencySelectionHandler;
 import hu.project.innovation.configuration.view.dependencies.JFrameDependencies;
 import hu.project.innovation.utils.UiDialogs;
 
@@ -8,6 +9,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -18,8 +21,12 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 public class DependencyController {
-	private ConfigurationService configurationService;
+	private String projectPath;
+	private DependencyService dependencyService;
 	private JFrameDependencies dependenciesJFrame = null;
+	
+	private JTable extDependencyTable;
+	private JButton buttonToevoegen, buttonAllowedDeps, buttonPomDeps;
 	
 	/** format for version number */
 	private static String _VERSION = "[0-9]{1,2}(.[0-9])*?";
@@ -28,9 +35,8 @@ public class DependencyController {
 	 * 
 	 */
 	public DependencyController() {
-		configurationService = ConfigurationService.getInstance();
-		configurationService.setProjectPath(System.getProperty("user.dir"));
-		
+		dependencyService = new DependencyService();
+		projectPath = System.getProperty("user.dir");
 		this.addAllowedDependencies();
 		this.addDependencies();
 	}
@@ -42,13 +48,19 @@ public class DependencyController {
 		if(dependenciesJFrame == null) {
 			dependenciesJFrame = new JFrameDependencies();
 			
-			DefaultTableModel atm = (DefaultTableModel) dependenciesJFrame.getJTableFoundComponents().getModel();
+			extDependencyTable = dependenciesJFrame.getJTableFoundComponents();
+			DefaultTableModel atm = (DefaultTableModel) extDependencyTable.getModel();
 			dependenciesJFrame.setResizable(false);
 			
 			//Disable buttons (voorlopig)
-			dependenciesJFrame.getJButton1().setEnabled(false);
-			dependenciesJFrame.getJButton2().setEnabled(false);
-			dependenciesJFrame.getJButton3().setEnabled(false);
+			buttonToevoegen = dependenciesJFrame.getJButton1(); 
+			buttonPomDeps = dependenciesJFrame.getJButton2();
+			buttonAllowedDeps = dependenciesJFrame.getJButton3();
+			buttonToevoegen.addActionListener(new DependencySelectionHandler());
+			
+			
+			extDependencyTable.getSelectionModel().addListSelectionListener(new DependencySelectionHandler(buttonToevoegen));
+			
 			
 			//Add columns
 			atm.addColumn("Number");
@@ -63,7 +75,7 @@ public class DependencyController {
 			if(extDependencies != null) {
 				for(String dependency : extDependencies) {
 					//Kijken of de dependency een - heeft, indien het geval het stuk van de string ervoor pakken (tijdelijke oplossing)
-					if(!configurationService.searchDepSoftwareComponent((dependency.contains("-"))? dependency.split("-")[0] : dependency)) {
+					if(!dependencyService.searchDepSoftwareComponent((dependency.contains("-"))? dependency.split("-")[0] : dependency)) {
 						//check if the dependency is added in the project object model (pom.xml)
 						boolean tmp = false;
 						// if an dependency ends with .jar, remove ".jar" and add it to the table
@@ -125,9 +137,9 @@ public class DependencyController {
 					public void endElement(String uri, String qName, String localName) {
 						if(localName.equalsIgnoreCase("dependency")) {
 							if(!isAllowedByDefault)
-								configurationService.addDependency(_groupId, _artifactId, _version, _type, _scope);
+								dependencyService.addDependency(_groupId, _artifactId, _version, _type, _scope);
 							else
-								configurationService.addAllowedDependency(_groupId, _artifactId, _version, _type, _scope);
+								dependencyService.addAllowedDependency(_groupId, _artifactId, _version, _type, _scope);
 						}
 					}
 					
@@ -167,7 +179,7 @@ public class DependencyController {
 	 */
 	private void addAllowedDependencies() {
 		String fileName = "mydependencies.xml";
-		File file = new File(configurationService.getProjectPath() + "/" + fileName);
+		File file = new File(projectPath + "/" + fileName);
 		parseXML(file, true);
 	}
 	
@@ -175,7 +187,7 @@ public class DependencyController {
 	 * 
 	 */
 	private void addDependencies() {
-		File file = new File(configurationService.getProjectPath()+"/pom.xml");
+		File file = new File(projectPath+"/pom.xml");
 		parseXML(file, false);
 	}
 	
