@@ -26,7 +26,7 @@ public class DependencyController {
 	private DependencyService dependencyService;
 	private JFrameDependencies dependenciesJFrame = null;
 	
-	private JTable extDependencyTable, allowedDepsTable;
+	private JTable extDependencyTable, allowedDepsTable, pomDepsTable;
 	private JButton buttonToevoegen;
 	
 	/** format for version number */
@@ -52,10 +52,12 @@ public class DependencyController {
 			// get (the 3) tables
 			extDependencyTable = dependenciesJFrame.getJTableFoundComponents();
 			allowedDepsTable = dependenciesJFrame.getJTableAllowedDeps();
+			pomDepsTable = dependenciesJFrame.getJTableDepsPom();
 			
 			// get the models
 			DefaultTableModel atm = (DefaultTableModel) extDependencyTable.getModel();
 			DefaultTableModel atm2 = (DefaultTableModel) allowedDepsTable.getModel();
+			DefaultTableModel atm3 = (DefaultTableModel) pomDepsTable.getModel();
 			
 			dependenciesJFrame.setResizable(false);
 			
@@ -67,9 +69,17 @@ public class DependencyController {
 			extDependencyTable.getSelectionModel().addListSelectionListener(new DependencySelectionHandler(buttonToevoegen));
 			
 			//Add columns
-			atm.addColumn("Number"); atm2.addColumn("Number");
-			atm.addColumn("Dependency"); atm2.addColumn("Dependency");
-			atm.addColumn("Type"); atm2.addColumn("Type");
+			atm.addColumn("Number");
+			atm2.addColumn("Number");
+			atm3.addColumn("Number");
+			
+			atm.addColumn("Dependency");
+			atm2.addColumn("Dependency");
+			atm3.addColumn("Dependency");
+			
+			atm.addColumn("Type");
+			atm2.addColumn("Type");
+			atm3.addColumn("Type");
 			
 			// Id's
 			int i = 1;
@@ -89,12 +99,21 @@ public class DependencyController {
 				}
 			}
 			
+			//add pom dependencies to the table
+			DepSoftwareComponent[] pomDSComponents;
+			if((pomDSComponents = dependencyService.getDependencies()) != null) {
+				i = 1;
+				for(DepSoftwareComponent pomDsc : pomDSComponents) {
+					Object rowdata[] = { i++, pomDsc.getArtifactId(), pomDsc.getType() };
+					atm3.addRow(rowdata);
+				}
+			}
+			
 			//add allowed components to the table
 			DepSoftwareComponent[] allowedDSComponents;
 			if((allowedDSComponents = dependencyService.getAllowedDependencies()) != null) {
 				i = 1;
 				for(DepSoftwareComponent allowedDsc : allowedDSComponents) {
-					// if an dependency ends with .jar, remove ".jar" and add it to the table
 					Object rowdata[] = { i++, allowedDsc.getArtifactId(), allowedDsc.getType() };
 					atm2.addRow(rowdata);
 				}	
