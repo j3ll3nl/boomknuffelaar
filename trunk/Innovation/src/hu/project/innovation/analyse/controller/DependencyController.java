@@ -2,6 +2,7 @@ package hu.project.innovation.analyse.controller;
 
 import hu.project.innovation.configuration.model.DependencyService;
 import hu.project.innovation.configuration.model.dependencies.DepSoftwareComponent;
+import hu.project.innovation.configuration.model.dependencies.DependencyParseHandler;
 import hu.project.innovation.configuration.model.dependencies.DependencySelectionHandler;
 import hu.project.innovation.configuration.view.dependencies.JFrameDependencies;
 import hu.project.innovation.utils.UiDialogs;
@@ -17,17 +18,14 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
 
 public class DependencyController {
 	private String projectPath;
 	private DependencyService dependencyService;
 	private JFrameDependencies dependenciesJFrame = null;
-	
-	private JTable extDependencyTable, allowedDepsTable, pomDepsTable;
-	private JButton buttonToevoegen;
+	private ArrayList<JTable> tables = new ArrayList<JTable>();
+	private ArrayList<JButton> buttons = new ArrayList<JButton>();
 	
 	/** format for version number */
 	private static String _VERSION = "[0-9]{1,2}(.[0-9])*?";
@@ -48,75 +46,80 @@ public class DependencyController {
 	public void initUI() {
 		if(dependenciesJFrame == null) {
 			dependenciesJFrame = new JFrameDependencies();
-			
 			// get (the 3) tables
-			extDependencyTable = dependenciesJFrame.getJTableFoundComponents();
-			allowedDepsTable = dependenciesJFrame.getJTableAllowedDeps();
-			pomDepsTable = dependenciesJFrame.getJTableDepsPom();
-			
-			// get the models
-			DefaultTableModel atm = (DefaultTableModel) extDependencyTable.getModel();
-			DefaultTableModel atm2 = (DefaultTableModel) allowedDepsTable.getModel();
-			DefaultTableModel atm3 = (DefaultTableModel) pomDepsTable.getModel();
-			
+			tables.add(dependenciesJFrame.getJTableFoundComponents());
+			tables.add(dependenciesJFrame.getJTableDepsPom());
+			tables.add(dependenciesJFrame.getJTableAllowedDeps());
+						
 			dependenciesJFrame.setResizable(false);
 			
 			//Disable buttons (voorlopig)
-			buttonToevoegen = dependenciesJFrame.getJButton1(); 
-			buttonToevoegen.addActionListener(new DependencySelectionHandler(dependencyService));
+			buttons.add(dependenciesJFrame.getJButton1());
+			buttons.add(dependenciesJFrame.getJButtonAllowDepAdd());
+			buttons.add(dependenciesJFrame.getJButtonAllowDepEdit());
+			buttons.add(dependenciesJFrame.getJButtonAllowDepRemove());
+			buttons.add(dependenciesJFrame.getJButtonDeletePomD());
+			
+			DependencySelectionHandler dsHandler = new DependencySelectionHandler(dependencyService);
+			for(JButton button : buttons)
+				button.addActionListener(dsHandler);
 			
 			
-			extDependencyTable.getSelectionModel().addListSelectionListener(new DependencySelectionHandler(buttonToevoegen));
+			//for(JTable table : tables)
+			//pomDepsTable.getSelectionModel().addListSelectionListener(new DependencySelectionHandler(jButtonDeletePomD));
 			
 			//Add columns
-			atm.addColumn("Number");
-			atm2.addColumn("Number");
-			atm3.addColumn("Number");
-			
-			atm.addColumn("Dependency");
-			atm2.addColumn("Dependency");
-			atm3.addColumn("Dependency");
-			
-			atm.addColumn("Type");
-			atm2.addColumn("Type");
-			atm3.addColumn("Type");
+			for(JTable table : tables) {
+				DefaultTableModel dtm = (DefaultTableModel)table.getModel();
+				dtm.addColumn("Number");
+				dtm.addColumn("Dependency");
+				dtm.addColumn("Version");
+				dtm.addColumn("Type");
+			}
 			
 			// Id's
 			int i = 1;
 			
-			// Parse the (jar) components from the classpath string
-			ArrayList<String> extDependencies = getExtDependensies(System.getProperty("java.class.path"));
-			if(extDependencies != null) {
-				for(String dependency : extDependencies) {
-					//Kijken of de dependency een - heeft, indien het geval het stuk van de string ervoor pakken (tijdelijke oplossing)
-					if(!dependencyService.searchDepSoftwareComponent((dependency.contains("-"))? dependency.split("-")[0] : dependency)) {
-						//check if the dependency is added in the project object model (pom.xml)
-						boolean tmp = false;
-						// if an dependency ends with .jar, remove ".jar" and add it to the table
-						Object rowdata[] = { i++, ((tmp = dependency.endsWith(".jar")) ? dependency.substring(0, dependency.length()-4) : dependency), (tmp) ? "Jar" : "not supported" };
-						atm.addRow(rowdata);
+			int counter = 0;
+			for(JTable table : tables) {
+				DefaultTableModel dtm = (DefaultTableModel)table.getModel();
+				DepSoftwareComponent[] pomDSComponents;
+				DepSoftwareComponent[] allowedDSComponents;
+				if(counter == 0) {
+					// Parse the (jar) components from the classpath string
+					ArrayList<String> extDependencies = getExtDependensies(System.getProperty("java.class.path"));
+					if(extDependencies != null) {
+						for(String dependency : extDependencies) {
+							//Kijken of de dependency een - heeft, indien het geval het stuk van de string ervoor pakken (tijdelijke oplossing)
+							if(!dependencyService.searchDepSoftwareComponent((dependency.contains("-"))? dependency.split("-")[0] : dependency)) {
+								//check if the dependency is added in the project object model (pom.xml)
+								boolean tmp = false;
+								// if an dependency ends with .jar, remove ".jar" and add it to the table
+								Object rowdata[] = { i++, ((tmp = dependency.endsWith(".jar")) ? dependency.substring(0, dependency.length()-4) : dependency), "?", (tmp) ? "Jar" : "not supported" };
+								dtm.addRow(rowdata);
+							}
+						}
 					}
+				} else if(counter == 1) {
+					//add pom dependencies to the table
+					if((pomDSComponents = dependencyService.getDependencies()) != null) {
+						i = 1;
+						for(DepSoftwareComponent pomDsc : pomDSComponents) {
+							Object rowdata[] = { i++, pomDsc.getArtifactId(), pomDsc.getVersion(), pomDsc.getType() };
+							dtm.addRow(rowdata);
+						}
+					}
+				} else {
+					//add allowed components to the table
+					if((allowedDSComponents = dependencyService.getAllowedDependencies()) != null) {
+						i = 1;
+						for(DepSoftwareComponent allowedDsc : allowedDSComponents) {
+							Object rowdata[] = { i++, allowedDsc.getArtifactId(), allowedDsc.getVersion(), allowedDsc.getType() };
+							dtm.addRow(rowdata);
+						}	
+					}					
 				}
-			}
-			
-			//add pom dependencies to the table
-			DepSoftwareComponent[] pomDSComponents;
-			if((pomDSComponents = dependencyService.getDependencies()) != null) {
-				i = 1;
-				for(DepSoftwareComponent pomDsc : pomDSComponents) {
-					Object rowdata[] = { i++, pomDsc.getArtifactId(), pomDsc.getType() };
-					atm3.addRow(rowdata);
-				}
-			}
-			
-			//add allowed components to the table
-			DepSoftwareComponent[] allowedDSComponents;
-			if((allowedDSComponents = dependencyService.getAllowedDependencies()) != null) {
-				i = 1;
-				for(DepSoftwareComponent allowedDsc : allowedDSComponents) {
-					Object rowdata[] = { i++, allowedDsc.getArtifactId(), allowedDsc.getType() };
-					atm2.addRow(rowdata);
-				}	
+				counter++;
 			}
 		}
 		
@@ -149,55 +152,7 @@ public class DependencyController {
 		try {
 			SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
 			try {
-				saxParser.parse(pomFile, new DefaultHandler() {
-					boolean dependencies, groupId, artifactId, version, type, scope = false;
-					String _groupId, _artifactId, _version, _type, _scope = null;
-										
-					public void startElement(String uri, String qName, String localName, Attributes attrs) {
-						if(localName.equalsIgnoreCase("dependencies"))
-							dependencies = true;
-						else if(localName.equalsIgnoreCase("groupId"))
-							groupId = (dependencies) ? true : false;
-						else if(localName.equalsIgnoreCase("artifactId"))
-							artifactId = (dependencies) ? true : false;
-						else if(localName.equalsIgnoreCase("version"))
-							version = (dependencies) ? true : false;
-						else if(localName.equalsIgnoreCase("type"))
-							type = (dependencies) ? true : false;
-						else if(localName.equalsIgnoreCase("scope"))
-							scope = (dependencies) ? true : false;
-					}
-					
-					public void endElement(String uri, String qName, String localName) {
-						if(localName.equalsIgnoreCase("dependency")) {
-							if(!isAllowedByDefault)
-								dependencyService.addDependency(_groupId, _artifactId, _version, _type, _scope);
-							else
-								dependencyService.addAllowedDependency(_groupId, _artifactId, _version, _type, _scope);
-						}
-					}
-					
-					public void characters(char[] ch, int start, int length) {
-						if(dependencies) {
-							if(groupId) {
-								_groupId = new String(ch, start, length);
-								groupId = false;
-							} else if(artifactId) {
-								_artifactId = new String(ch, start, length);
-								artifactId = false;
-							} else if(version) {
-								_version = new String(ch, start, length);
-								version = false;
-							} else if(type) {
-								_type = new String(ch, start, length);
-								type = false;
-							} else if(scope) {
-								_scope = new String(ch, start, length);
-								scope = false;
-							}
-						}
-					}
-				});
+				saxParser.parse(pomFile, new DependencyParseHandler(dependencyService, isAllowedByDefault));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
