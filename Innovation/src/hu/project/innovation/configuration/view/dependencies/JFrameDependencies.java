@@ -31,6 +31,8 @@ public class JFrameDependencies extends javax.swing.JFrame {
 	private JButton jButton1;
 	private JPanel jPanelPom;
 	private JScrollPane jScrollPane2;
+	private JScrollPane jScrollPane3;
+	private JTable jTableDepsPom;
 	private JTable jTableAllowedDeps;
 	private JPanel jPanelAllowed;
 	private JTabbedPane jTabbedPane1;
@@ -65,7 +67,7 @@ public class JFrameDependencies extends javax.swing.JFrame {
 				jTabbedPane1.setPreferredSize(new java.awt.Dimension(610, 360));
 				{
 					jPanel1 = new JPanel();
-					jTabbedPane1.addTab("Found dependencies", null, jPanel1, null);
+					jTabbedPane1.addTab("Undefined", null, jPanel1, null);
 					jPanel1.setPreferredSize(new java.awt.Dimension(605, 219));
 					jPanel1.setBorder(BorderFactory.createTitledBorder("Found project dependencies that are not defined in the pom file"));
 					{
@@ -97,7 +99,25 @@ public class JFrameDependencies extends javax.swing.JFrame {
 				}
 				{
 					jPanelPom = new JPanel();
-					jTabbedPane1.addTab("POM file", null, jPanelPom, null);
+					jTabbedPane1.addTab("Project Object Model", null, jPanelPom, null);
+					{
+						jScrollPane3 = new JScrollPane();
+						jPanelPom.add(jScrollPane3);
+						jScrollPane3.setPreferredSize(new java.awt.Dimension(580, 240));
+						{
+							TableModel jTableFoundComponentsModel3 = 
+								new DefaultTableModel() {
+								private static final long serialVersionUID = 1L;
+								// de velden moeten niet editable zijn.
+								public boolean isCellEditable(int row, int col) {
+									return false;
+								}
+							};
+							jTableDepsPom = new JTable();
+							jScrollPane3.setViewportView(getJTableDepsPom());
+							jTableDepsPom.setModel(jTableFoundComponentsModel3);
+						}
+					}
 				}
 				{
 					jPanelAllowed = new JPanel();
@@ -145,5 +165,9 @@ public class JFrameDependencies extends javax.swing.JFrame {
 	
 	public JTable getJTableAllowedDeps() {
 		return jTableAllowedDeps;
+	}
+	
+	public JTable getJTableDepsPom() {
+		return jTableDepsPom;
 	}
 }
