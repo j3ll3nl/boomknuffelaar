@@ -61,7 +61,7 @@ public class DependencyController {
 			buttons.add(dependenciesJFrame.getJButtonDeletePomD());
 			
 			DependencySelectionHandler dsHandler = new DependencySelectionHandler(dependencyService);
-			for(JButton button : buttons)
+			for(JButton button : buttons) 
 				button.addActionListener(dsHandler);
 			
 			
@@ -69,18 +69,24 @@ public class DependencyController {
 			//pomDepsTable.getSelectionModel().addListSelectionListener(new DependencySelectionHandler(jButtonDeletePomD));
 			
 			//Add columns
+			int counter = 0;
 			for(JTable table : tables) {
 				DefaultTableModel dtm = (DefaultTableModel)table.getModel();
 				dtm.addColumn("Number");
 				dtm.addColumn("Dependency");
 				dtm.addColumn("Version");
 				dtm.addColumn("Type");
+				for(JButton button : buttons) {
+					System.out.println(button.getName());
+					table.getSelectionModel().addListSelectionListener(new DependencySelectionHandler(button));
+				}
+				counter++;
 			}
 			
 			// Id's
 			int i = 1;
 			
-			int counter = 0;
+			counter = 0;
 			for(JTable table : tables) {
 				DefaultTableModel dtm = (DefaultTableModel)table.getModel();
 				DepSoftwareComponent[] pomDSComponents;

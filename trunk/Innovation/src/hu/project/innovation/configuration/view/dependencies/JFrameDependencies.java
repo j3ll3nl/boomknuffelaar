@@ -180,6 +180,7 @@ public class JFrameDependencies extends javax.swing.JFrame {
 						jButtonAllowDepAdd = new JButton();
 						jPanelAllowed.add(jButtonAllowDepAdd);
 						jButtonAllowDepAdd.setText("Add dependency");
+						jButtonAllowDepAdd.setName("AddDependencyFound");
 					}
 					{
 						jButton3 = new JButton();
