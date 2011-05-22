@@ -33,13 +33,34 @@ public class DependencyController {
 	/**
 	 * 
 	 */
+	
+	public static void main(String[] arg) {
+		new DependencyController();
+	}
+	
 	public DependencyController() {
 		dependencyService = new DependencyService();
 		projectPath = System.getProperty("user.dir");
 		this.addAllowedDependencies();
 		this.addDependencies();
+		for(DepSoftwareComponent _component : dependencyService.getAllowedDependencies()) {
+			validateVersion(_component);
+		}
+	
 	}
 	
+	private void validateVersion(DepSoftwareComponent _component) {
+		System.out.println(_component.getArtifactId() + " : " + getRegExpression(_component.getVersion()));
+	}
+	
+	private final String getRegExpression(String version) {
+		String _temp = (!version.contains("x") ? version : version.replace("x", "[0-9]"));
+		if(version.contains(","))
+			if(_temp.contains(","))
+				_temp = "(" + _temp.replace(",", ")|(") + ")";
+		return _temp;
+	}
+
 	/**
 	 * 
 	 */
