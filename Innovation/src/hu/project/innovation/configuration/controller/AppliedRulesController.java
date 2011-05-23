@@ -42,9 +42,10 @@ public class AppliedRulesController extends PopUpController {
 			jframe.setTitle("Edit applied rule");
 			if (appliedrule != null) {
 				// Load name & type
-				// jframe.jTextFieldSoftwareUnitName.setText(appliedrule.getName());
-				// jframe.jComboBoxSoftwareUnitType.setSelectedItem(appliedrule.getType());
-
+				jframe.jComboBoxAppliedRule.setSelectedItem(appliedrule.getRuleType());
+				jframe.jComboBoxToLayer.setSelectedItem(appliedrule.getToLayer());
+				jframe.jCheckBoxEnabled.setSelected(appliedrule.isEnabled());
+				
 				// Load table with exceptions
 				JTableException table = jframe.jTableException;
 				JTableTableModel tablemodel = (JTableTableModel) table.getModel();
@@ -54,7 +55,6 @@ public class AppliedRulesController extends PopUpController {
 					Object[] row = { exception.getName(), exception.getType() };
 					tablemodel.addRow(row);
 				}
-
 			}
 		}
 
@@ -78,7 +78,7 @@ public class AppliedRulesController extends PopUpController {
 			layers.remove(getLayer());
 
 			ComboBoxModel jComboBoxModel = new DefaultComboBoxModel(layers.toArray());
-			jframe.jComboBox2.setModel(jComboBoxModel);
+			jframe.jComboBoxToLayer.setModel(jComboBoxModel);
 		}
 	}
 

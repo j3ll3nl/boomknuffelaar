@@ -11,10 +11,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JFileChooser;
 
-public class AnalyseController implements ActionListener, KeyListener {
+public class AnalyseController implements Observer, ActionListener, KeyListener {
 
 	private AnalyseService analyseService;
 	private JFrameAnalyse analyseJFrame = null;
@@ -44,9 +46,6 @@ public class AnalyseController implements ActionListener, KeyListener {
 		// Set the latest project/output path settings
 		analyseJFrame.jTextFieldProjectPath.setText(ConfigurationService.getInstance().getProjectPath());
 		analyseJFrame.jTextFieldOutputPath.setText(ConfigurationService.getInstance().getOutputPath());
-
-		// Enable or disable the analyse button when the scan is already running
-		updateAnalyseButton();
 
 		// Set the visibility of the jframe to true so the jframe is now visible
 		UiDialogs.showOnScreen(0, analyseJFrame);
@@ -80,12 +79,13 @@ public class AnalyseController implements ActionListener, KeyListener {
 		return null;
 	}
 
-	private void updateAnalyseButton() {
-		if (analyseService.isRunning()) {
+	private void updateAnalyseButton(boolean running) {
+		if (running) {
 			analyseJFrame.jButtonStartAnalyse.setEnabled(false);
 		} else {
 			analyseJFrame.jButtonStartAnalyse.setEnabled(true);
 		}
+
 	}
 
 	public void actionPerformed(ActionEvent action) {
@@ -110,15 +110,9 @@ public class AnalyseController implements ActionListener, KeyListener {
 		} else if (action.getSource() == analyseJFrame.jButtonStartAnalyse) {
 			Log.i(this, "actionPerformed() - start analyse");
 
-			try {
-				analyseService.startAnalyse();
-			} catch (Exception e) {
-				Log.e(this, "actionPerformed() - exception " + e.getMessage());
-				UiDialogs.errorDialog(analyseJFrame, e.getMessage(), "Error");
-				analyseService.setRunning(false);
-			}
-
-			updateAnalyseButton();
+			analyseService.startAnalyse(this);
+			updateAnalyseButton(true);
+			
 		}
 	}
 
@@ -140,5 +134,10 @@ public class AnalyseController implements ActionListener, KeyListener {
 
 	public void keyTyped(KeyEvent arg0) {
 		// Ignore
+	}
+
+	public void update(Observable arg0, Object arg1) {
+		UiDialogs.messageDialog(analyseJFrame, "PMD finished scanning the project", "Done!");
+		updateAnalyseButton(false);
 	}
 }

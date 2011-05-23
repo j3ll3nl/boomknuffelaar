@@ -35,10 +35,10 @@ public class JFrameAppliedRules extends javax.swing.JFrame {
 	private JLabel jLabel3;
 	private JPanel jPanel3;
 	private JScrollPane jScrollPane1;
-	private JCheckBox jCheckBox1;
+	public JCheckBox jCheckBoxEnabled;
 	private JLabel jLabel4;
-	public JComboBox jComboBox2;
-	private JComboBox jComboBox1;
+	public JComboBox jComboBoxToLayer;
+	public JComboBox jComboBoxAppliedRule;
 	public JTableException jTableException;
 	private JPanel jPanel4;
 	public JButton jButtonAddExceptionRow;
@@ -143,19 +143,19 @@ public class JFrameAppliedRules extends javax.swing.JFrame {
 				}
 				{
 					ComboBoxModel jComboBox1Model = new DefaultComboBoxModel(new Object[] { new BackCallRule(), new SkipLayerRule(), new InterfacesOnlyRule() });
-					jComboBox1 = new JComboBox();
-					jPanel1.add(jComboBox1, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-					jComboBox1.setModel(jComboBox1Model);
+					jComboBoxAppliedRule = new JComboBox();
+					jPanel1.add(jComboBoxAppliedRule, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+					jComboBoxAppliedRule.setModel(jComboBox1Model);
 				}
 				{
-					ComboBoxModel jComboBox2Model = new DefaultComboBoxModel(new String[] { "-" });
-					jComboBox2 = new JComboBox();
-					jPanel1.add(jComboBox2, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-					jComboBox2.setModel(jComboBox2Model);
+					ComboBoxModel jComboBox2Model = new DefaultComboBoxModel(new String[] { "" });
+					jComboBoxToLayer = new JComboBox();
+					jPanel1.add(jComboBoxToLayer, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+					jComboBoxToLayer.setModel(jComboBox2Model);
 				}
 				{
-					jCheckBox1 = new JCheckBox();
-					jPanel1.add(jCheckBox1, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+					jCheckBoxEnabled = new JCheckBox();
+					jPanel1.add(jCheckBoxEnabled, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 				}
 			}
 			{
