@@ -5,6 +5,7 @@
 			<id>0</id>
 			<name>UI</name>
 			<description>Presentation logic</description>
+			<interfaceAccessOnly>0</interfaceAccessOnly>
 			<softwareUnit>
 				<name>hu.project.innovation.configuration.view.*</name>
 				<type>package</type>
@@ -30,6 +31,7 @@
 			<id>1</id>
 			<name>Task</name>
 			<description>Task specific logic</description>
+			<interfaceAccessOnly>0</interfaceAccessOnly>
 			<softwareUnit>
 				<name>hu.project.innovation.configuration.controller.*</name>
 				<type>package</type>
@@ -47,6 +49,7 @@
 			<id>2</id>
 			<name>Domain</name>
 			<description>Domain logic</description>
+			<interfaceAccessOnly>0</interfaceAccessOnly>
 			<softwareUnit>
 				<name>hu.project.innovation.configuration.model.*</name>
 				<type>package</type>
