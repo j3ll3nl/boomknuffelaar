@@ -63,8 +63,8 @@ public class AppliedRule implements XMLable {
 		this.ruleType = type;
 	}
 
-	public boolean addException(SoftwareUnitDefinition sud) {
-		return this.exceptions.add(sud);
+	public void addException(SoftwareUnitDefinition sud) {
+		exceptions.add(sud);
 	}
 
 	public boolean hasException(SoftwareUnitDefinition sud) {
@@ -98,6 +98,10 @@ public class AppliedRule implements XMLable {
 
 	public ArrayList<SoftwareUnitDefinition> getExceptions() {
 		return exceptions;
+	}
+
+	public void removeAllExceptions() {
+		exceptions.clear();
 	}
 
 }

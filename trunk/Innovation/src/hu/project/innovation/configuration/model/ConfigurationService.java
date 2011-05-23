@@ -219,6 +219,11 @@ public final class ConfigurationService {
 		softwareunit.addException(exception);
 	}
 
+	public void addException(AppliedRule appliedrule, String unitName, String unitType) {
+		SoftwareUnitDefinition exception = new SoftwareUnitDefinition(unitName, unitType);
+		appliedrule.addException(exception);
+	}
+
 	/**
 	 * Set the project path
 	 * 

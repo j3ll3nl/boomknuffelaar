@@ -12,7 +12,7 @@ import javax.swing.event.ListSelectionListener;
 public class DependencySelectionHandler implements ListSelectionListener, ActionListener {
 	private JButton button;
 	@SuppressWarnings("unused")
-	private DependencyService dependencyService; //TODO Wordt niet gebruikt? Misschien verwijderen?
+	private DependencyService dependencyService; // TODO Wordt niet gebruikt? Misschien verwijderen?
 
 	public DependencySelectionHandler() {
 
