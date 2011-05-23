@@ -10,9 +10,11 @@ import hu.project.innovation.utils.Log;
 import hu.project.innovation.utils.UiDialogs;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
-public class SoftwareUnitController extends PopUpController {
+public class SoftwareUnitController extends PopUpController implements KeyListener {
 
 	private JFrameSoftwareUnit jframe;
 	private SoftwareUnitDefinition softwareunit;
@@ -57,6 +59,7 @@ public class SoftwareUnitController extends PopUpController {
 		jframe.jButtonRemoveExceptionRow.addActionListener(this);
 		jframe.jButtonSave.addActionListener(this);
 		jframe.jButtonCancel.addActionListener(this);
+		jframe.addKeyListener(this);
 
 		// Set the visibility of the jframe to true so the jframe is now visible
 		UiDialogs.showOnScreen(0, jframe);
@@ -78,7 +81,7 @@ public class SoftwareUnitController extends PopUpController {
 
 				int tablerows = tablemodel.getRowCount();
 				for (int i = 0; i < tablerows; i++) {
-					service.addException(softwareunit, tablemodel.getValueAt(i, 0).toString(), tablemodel.getValueAt(i, 0).toString());
+					service.addException(softwareunit, tablemodel.getValueAt(i, 0).toString(), tablemodel.getValueAt(i, 1).toString());
 				}
 			} else if (getAction().equals(PopUpController.ACTION_EDIT)) {
 				softwareunit.setName(jframe.jTextFieldSoftwareUnitName.getText());
@@ -91,7 +94,7 @@ public class SoftwareUnitController extends PopUpController {
 
 				int tablerows = tablemodel.getRowCount();
 				for (int i = 0; i < tablerows; i++) {
-					service.addException(softwareunit, tablemodel.getValueAt(i, 0).toString(), tablemodel.getValueAt(i, 0).toString());
+					service.addException(softwareunit, tablemodel.getValueAt(i, 0).toString(), tablemodel.getValueAt(i, 1).toString());
 				}
 			}
 			jframe.dispose();
@@ -141,5 +144,20 @@ public class SoftwareUnitController extends PopUpController {
 		} else {
 			Log.i(this, "actionPerformed(" + action + ") - unknown button event");
 		}
+	}
+
+	public void keyPressed(KeyEvent arg0) {
+		// Ignore
+	}
+
+	public void keyReleased(KeyEvent arg0) {
+		Log.i(this, "keyreleased");
+		if (arg0.getKeyCode() == KeyEvent.VK_ESCAPE) {
+			jframe.dispose();
+		}
+	}
+
+	public void keyTyped(KeyEvent arg0) {
+		// Ignore
 	}
 }

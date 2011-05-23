@@ -41,6 +41,7 @@ public class AnalyseController implements Observer, ActionListener, KeyListener 
 			analyseJFrame.jButtonClose.addActionListener(this);
 			analyseJFrame.jButtonStartAnalyse.addActionListener(this);
 			analyseJFrame.jComboBoxOutputType.addActionListener(this);
+			analyseJFrame.addKeyListener(this);
 		}
 
 		// Set the latest project/output path settings
@@ -112,14 +113,12 @@ public class AnalyseController implements Observer, ActionListener, KeyListener 
 
 			analyseService.startAnalyse(this);
 			updateAnalyseButton(true);
-			
+
 		}
 	}
 
 	public void keyPressed(KeyEvent arg0) {
 		// Ignore
-		analyseJFrame.jTextFieldOutputPath.addKeyListener(this);
-		analyseJFrame.jTextFieldProjectPath.addKeyListener(this);
 	}
 
 	public void keyReleased(KeyEvent arg0) {
@@ -129,6 +128,9 @@ public class AnalyseController implements Observer, ActionListener, KeyListener 
 		} else if (arg0.getSource() == analyseJFrame.jTextFieldProjectPath) {
 			String text = analyseJFrame.jTextFieldProjectPath.getText();
 			ConfigurationService.getInstance().setProjectPath(text);
+		}
+		if (arg0.getKeyCode() == KeyEvent.VK_ESCAPE) {
+			analyseJFrame.dispose();
 		}
 	}
 
