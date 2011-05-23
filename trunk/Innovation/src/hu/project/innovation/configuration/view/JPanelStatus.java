@@ -5,6 +5,7 @@ import hu.project.innovation.utils.Log;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.Stack;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -15,8 +16,7 @@ public class JPanelStatus extends JPanel {
 
 	private static final long serialVersionUID = -7360960342696885795L;
 	private String defaultMessage = "Idle";
-	// TODO: change String to a Strack with pop/flop ;)
-	private String message = "";
+	private Stack<String> messages = new Stack<String>();
 	private JLabel jLabelStatus;
 	private JProgressBar jProgressBar1;
 
@@ -73,22 +73,32 @@ public class JPanelStatus extends JPanel {
 	 * @param newMessage The message that needs to show when the user calls <code>start()</code>
 	 */
 	private void setMessage(String newMessage) {
-		if (newMessage.trim().equals("")) {
-			message = defaultMessage;
-		} else {
-			message = newMessage;
+		if (messages.empty()) {
+			messages.push(defaultMessage);
 		}
+		messages.push(newMessage);
 	}
 
 	/**
 	 * This method shows the given message and starts the progressbar.
 	 */
 	public void start() {
-		Log.i(this, "start() - Message: " + message);
-		jLabelStatus.setText(message);
-		jProgressBar1.setIndeterminate(true);
-		repaint();
+		Log.i(this, "start() - Message: " + messages.peek());
 
+		jLabelStatus.setText(messages.peek());
+		jProgressBar1.setIndeterminate(true);
+
+		repaint();
+	}
+
+	private void gotoLastTask() {
+		Log.i(this, "gotoLastTask() : \"" + messages.peek() + "\"");
+		if (messages.peek().equals(defaultMessage) || messages.peek().equals("") || messages.empty()) {
+			jLabelStatus.setText(defaultMessage);
+			jProgressBar1.setIndeterminate(false);
+		} else {
+			start();
+		}
 	}
 
 	/**
@@ -96,8 +106,10 @@ public class JPanelStatus extends JPanel {
 	 */
 	public void stop() {
 		Log.i(this, "stop() - Message: " + defaultMessage);
-		jLabelStatus.setText(defaultMessage);
-		jProgressBar1.setIndeterminate(false);
 
+		// Remove the last message from the stack
+		messages.pop();
+
+		gotoLastTask();
 	}
 }

@@ -53,6 +53,7 @@ public class DependencyController {
 
 	}
 
+	@SuppressWarnings("unused")
 	private boolean isVersionValidate(String terms, String _version) {
 		// Valideer de versie nummer aan de hand van de regular expression
 		return java.util.regex.Pattern.matches(getRegExpression(terms), _version + "3");

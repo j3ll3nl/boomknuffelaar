@@ -11,7 +11,8 @@ import javax.swing.event.ListSelectionListener;
 
 public class DependencySelectionHandler implements ListSelectionListener, ActionListener {
 	private JButton button;
-	private DependencyService dependencyService;
+	@SuppressWarnings("unused")
+	private DependencyService dependencyService; //TODO Wordt niet gebruikt? Misschien verwijderen?
 
 	public DependencySelectionHandler() {
 

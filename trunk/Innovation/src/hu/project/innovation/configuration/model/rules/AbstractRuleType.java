@@ -71,4 +71,8 @@ public abstract class AbstractRuleType extends AbstractJavaRule implements XMLab
 			}
 		}
 	}
+	
+	public String toString(){
+		return getName();		
+	}
 }

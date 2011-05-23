@@ -1,17 +1,15 @@
 package hu.project.innovation.analyse.model;
 
+import hu.project.innovation.analyse.controller.AnalyseController;
 import hu.project.innovation.configuration.model.ConfigurationService;
 import hu.project.innovation.utils.Log;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import net.sourceforge.pmd.PMD;
-
 public class AnalyseService {
 
 	private static AnalyseService instance;
-	private boolean running;
 
 	public AnalyseService() {
 		Log.i(this, "constructor()");
@@ -24,7 +22,7 @@ public class AnalyseService {
 		return instance;
 	}
 
-	public void startAnalyse() {
+	public void startAnalyse(AnalyseController analyseController) {
 		Log.i(this, "startAnalyse()");
 
 		Log.i(this, "startAnalyse() - configuration settings:");
@@ -37,25 +35,15 @@ public class AnalyseService {
 		Log.i(this, "startAnalyse() - Output: " + outputPath);
 		Log.i(this, "startAnalyse() - Output type: " + outputType);
 
-		setRunning(true);
-
 		Calendar cal = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy H-mm-ss");
 
-		String[] pmdArgs = { projectPath, outputType, ruleset, "-reportfile", outputPath + "/Report " + sdf.format(cal.getTime()) + "." + outputType };
+		String[] pmdArgs = { projectPath, outputType, ruleset, "-reportfile", outputPath + "/Report " + sdf.format(cal.getTime()) + "." + (outputType.equals("text") ? "txt" : outputType) };
 
-		// Start PMD
-		PMD.main(pmdArgs);
+		PmdThread p = new PmdThread();
+		p.addObserver(analyseController);
+		p.setArguments(pmdArgs);
 
-		setRunning(false);
+		new Thread(p).start();
 	}
-
-	public void setRunning(boolean running) {
-		this.running = running;
-	}
-
-	public boolean isRunning() {
-		return running;
-	}
-
 }
