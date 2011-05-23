@@ -100,7 +100,6 @@ public class MainController implements ActionListener {
 			Log.i(this, "actionPerformed() - start analyse");
 			analysecontroller.initUi();
 		} else if (action.getSource() == jframe.jMenuItemCheckDependencies) {
-			// todo daan
 			Log.i(this, "actionPerformed() - check dependensies");
 			dependencycontroller.initUI();
 		} else if (action.getSource() == jframe.jMenuItemAbout) {
