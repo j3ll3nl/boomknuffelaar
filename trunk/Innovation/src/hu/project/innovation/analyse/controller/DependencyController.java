@@ -43,18 +43,34 @@ public class DependencyController {
 		projectPath = System.getProperty("user.dir");
 		this.addAllowedDependencies();
 		this.addDependencies();
-		for(DepSoftwareComponent _component : dependencyService.getAllowedDependencies()) {
-			validateVersion(_component);
+		//Kijken of de dependency in de POM voorkomt (en in dat geval dus is allowed) in mydependencies.xml
+		for(DepSoftwareComponent _component : dependencyService.getDependencies()) {
+			if(dependencyService.searchAllowedDepSoftwareComponent(_component.getArtifactId())) {
+				if(!isVersionValidate(dependencyService.getAllowedDependency(_component.getArtifactId()).getVersion(), _component.getVersion())) {
+					System.err.println("Warning: component "  + _component.getArtifactId() + " with version: " + _component.getVersion() + " is illegal");
+					System.err.println("Allowed version: " + dependencyService.getAllowedDependency(_component.getArtifactId()).getVersion());
+				}
+			} else {
+				//de dependency (in de pom) komt niet voor in de allowed file
+				System.err.println("Warning: component "  + _component.getArtifactId() + " (with version: " + _component.getVersion() + ") is illegal");
+			}
 		}
 	
 	}
 	
-	private void validateVersion(DepSoftwareComponent _component) {
-		System.out.println(_component.getArtifactId() + " : " + getRegExpression(_component.getVersion()));
+	private boolean isVersionValidate(String terms, String _version) {
+		//Valideer de versie nummer aan de hand van de regular expression
+		return java.util.regex.Pattern.matches(getRegExpression(terms), _version+"3");
 	}
 	
+	/**
+	 * 
+	 * @param version
+	 * @return
+	 */
 	private final String getRegExpression(String version) {
-		String _temp = (!version.contains("x") ? version : version.replace("x", "[0-9]"));
+		//converteer de versie nummer naar een reguliere expressie
+		String _temp = (!version.contains("x") ? version : version.replace("x", "([0-9]{1,2})"));
 		if(version.contains(","))
 			if(_temp.contains(","))
 				_temp = "(" + _temp.replace(",", ")|(") + ")";

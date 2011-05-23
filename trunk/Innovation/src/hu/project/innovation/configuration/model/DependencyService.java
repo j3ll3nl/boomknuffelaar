@@ -84,4 +84,9 @@ public final class DependencyService {
 	public DepSoftwareComponent[] getAllowedDependencies() {
 		return allowedDependencies.getDepSoftwareComponents();
 	}
+	
+	/** @return the searched dependency (if found) */
+	public boolean searchAllowedDepSoftwareComponent(String keyword) {
+		return allowedDependencies.searchDepSoftwareComponent(keyword);
+	}
 }
