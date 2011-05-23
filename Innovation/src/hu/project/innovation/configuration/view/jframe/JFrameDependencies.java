@@ -1,6 +1,6 @@
-package hu.project.innovation.configuration.view.dependencies;
+package hu.project.innovation.configuration.view.jframe;
+
 import java.awt.BorderLayout;
-import java.awt.LayoutManager;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -14,20 +14,16 @@ import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
-
 /**
-* This code was edited or generated using CloudGarden's Jigloo
-* SWT/Swing GUI Builder, which is free for non-commercial
-* use. If Jigloo is being used commercially (ie, by a corporation,
-* company or business for any purpose whatever) then you
-* should purchase a license for each developer using Jigloo.
-* Please visit www.cloudgarden.com for details.
-* Use of Jigloo implies acceptance of these licensing terms.
-* A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
-* THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
-* LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
-*/
+ * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI Builder, which is free for non-commercial use. If Jigloo is being used commercially (ie, by a corporation, company or
+ * business for any purpose whatever) then you should purchase a license for each developer using Jigloo. Please visit www.cloudgarden.com for details. Use of Jigloo implies acceptance of these
+ * licensing terms. A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
+ */
 public class JFrameDependencies extends javax.swing.JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4282706188506824166L;
 	private JTable jTableFoundComponents;
 	private JScrollPane jScrollPane1;
 	private JButton jButton1;
@@ -49,8 +45,8 @@ public class JFrameDependencies extends javax.swing.JFrame {
 	private JPanel jPanel1;
 
 	/**
-	* Auto-generated main method to display this JFrame
-	*/
+	 * Auto-generated main method to display this JFrame
+	 */
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
@@ -60,12 +56,12 @@ public class JFrameDependencies extends javax.swing.JFrame {
 			}
 		});
 	}
-	
+
 	public JFrameDependencies() {
 		super();
 		initGUI();
 	}
-	
+
 	private void initGUI() {
 		try {
 			setTitle("Dependencies");
@@ -85,20 +81,20 @@ public class JFrameDependencies extends javax.swing.JFrame {
 						jPanel1.add(jScrollPane1);
 						jScrollPane1.setPreferredSize(new java.awt.Dimension(580, 240));
 						jScrollPane1.setFocusable(false);
-						{							
-							TableModel jTableFoundComponentsModel = 
-								new DefaultTableModel() {
+						{
+							TableModel jTableFoundComponentsModel = new DefaultTableModel() {
 								private static final long serialVersionUID = 1L;
+
 								// de velden moeten niet editable zijn.
 								public boolean isCellEditable(int row, int col) {
 									return false;
 								}
 							};
 							jTableFoundComponents = new JTable();
-							
+
 							jScrollPane1.setViewportView(jTableFoundComponents);
 							jTableFoundComponents.setModel(jTableFoundComponentsModel);
-							
+
 						}
 					}
 					{
@@ -115,9 +111,9 @@ public class JFrameDependencies extends javax.swing.JFrame {
 						jPanelPom.add(jScrollPane3);
 						jScrollPane3.setPreferredSize(new java.awt.Dimension(580, 240));
 						{
-							TableModel jTableFoundComponentsModel3 = 
-								new DefaultTableModel() {
+							TableModel jTableFoundComponentsModel3 = new DefaultTableModel() {
 								private static final long serialVersionUID = 1L;
+
 								// de velden moeten niet editable zijn.
 								public boolean isCellEditable(int row, int col) {
 									return false;
@@ -162,10 +158,10 @@ public class JFrameDependencies extends javax.swing.JFrame {
 						jScrollPane2 = new JScrollPane();
 						jPanelAllowed.add(jScrollPane2);
 						jScrollPane2.setPreferredSize(new java.awt.Dimension(580, 296));
-						{							
-							TableModel jTableFoundComponentsModel2 = 
-								new DefaultTableModel() {
+						{
+							TableModel jTableFoundComponentsModel2 = new DefaultTableModel() {
 								private static final long serialVersionUID = 1L;
+
 								// de velden moeten niet editable zijn.
 								public boolean isCellEditable(int row, int col) {
 									return false;
@@ -198,15 +194,15 @@ public class JFrameDependencies extends javax.swing.JFrame {
 			pack();
 			this.setSize(610, 449);
 		} catch (Exception e) {
-		    //add your error handling code here
+			// add your error handling code here
 			e.printStackTrace();
 		}
 	}
-	
+
 	public JTable getJTableFoundComponents() {
 		return jTableFoundComponents;
 	}
-	
+
 	/**
 	 * 
 	 * @return button toevoegen
@@ -214,26 +210,27 @@ public class JFrameDependencies extends javax.swing.JFrame {
 	public JButton getJButton1() {
 		return jButton1;
 	}
-	
+
 	public JButton getJButtonDeletePomD() {
 		return jButtonDeletePomD;
 	}
-	
+
 	public JButton getJButtonAllowDepAdd() {
 		return jButtonAllowDepAdd;
 	}
-	
+
 	public JButton getJButtonAllowDepEdit() {
 		return jButton3;
 	}
-	
+
 	public JButton getJButtonAllowDepRemove() {
 		return jButton4;
 	}
+
 	public JTable getJTableAllowedDeps() {
 		return jTableAllowedDeps;
 	}
-	
+
 	public JTable getJTableDepsPom() {
 		return jTableDepsPom;
 	}

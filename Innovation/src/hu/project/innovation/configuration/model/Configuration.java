@@ -39,7 +39,7 @@ public class Configuration {
 	public AbstractRuleType getRuleType(String ruleName) {
 		return this.rules.get(ruleName);
 	}
-	
+
 	public ArrayList<AbstractRuleType> getRuleTypes() {
 		ArrayList<AbstractRuleType> ruleTypes = new ArrayList<AbstractRuleType>();
 		ruleTypes.addAll(this.rules.values());

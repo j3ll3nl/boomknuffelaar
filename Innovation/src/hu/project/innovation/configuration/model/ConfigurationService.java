@@ -38,7 +38,7 @@ public final class ConfigurationService {
 		return instance;
 	}
 
-	public boolean hasArchitectureDefinition() {	
+	public boolean hasArchitectureDefinition() {
 		return this.architectureDefinition != null;
 	}
 
@@ -83,11 +83,11 @@ public final class ConfigurationService {
 	 */
 	public void saveConfiguration(File file) throws Exception {
 		Log.i(this, "saveConfiguration(" + file + ")");
-		
+
 		if (!hasArchitectureDefinition()) {
 
 		} else {
-			
+
 			String configurationXML = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
 			configurationXML += "<configuration>\n";
 			configurationXML += architectureDefinition.toXML();
@@ -96,7 +96,7 @@ public final class ConfigurationService {
 			configurationXML += "\t\t<output format=\"" + getOutputFormat() + "\">" + getOutputPath() + "</output>\n";
 			configurationXML += "\t</paths>\n";
 			configurationXML += "</configuration>";
-			
+
 			FileWriter fstream = new FileWriter(file);
 			BufferedWriter out = new BufferedWriter(fstream);
 			out.write(configurationXML);

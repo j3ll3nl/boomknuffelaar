@@ -38,17 +38,11 @@ public class AnalyseService {
 		Log.i(this, "startAnalyse() - Output type: " + outputType);
 
 		setRunning(true);
-		
+
 		Calendar cal = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy H-mm-ss");
 
-		String[] pmdArgs = { 
-				projectPath, 
-				outputType, 
-				ruleset, 
-				"-reportfile", 
-				outputPath + "/Report " + sdf.format(cal.getTime()) + "." + outputType 
-		};
+		String[] pmdArgs = { projectPath, outputType, ruleset, "-reportfile", outputPath + "/Report " + sdf.format(cal.getTime()) + "." + outputType };
 
 		// Start PMD
 		PMD.main(pmdArgs);

@@ -65,21 +65,21 @@ public class MainController implements ActionListener {
 		String lineseperator = "----------------------------------------------------------------------------------------";
 		String cmdLine = "Enter command: ";
 		try {
-			Log.i(this,helpCommando);
-			Log.i(this,lineseperator);
-			Log.i(this,cmdLine);
+			Log.i(this, helpCommando);
+			Log.i(this, lineseperator);
+			Log.i(this, cmdLine);
 
 			String line = "";
 			while ((line = in.readLine()) != null) {
 				if (line.startsWith("help")) {
-					Log.i(this,helpCommando);
+					Log.i(this, helpCommando);
 				} else if (line.startsWith("exit")) {
 					System.exit(0);
 				} else {
-					Log.i(this,"Sorry, unknown commando");
+					Log.i(this, "Sorry, unknown commando");
 				}
-				Log.i(this,lineseperator);
-				Log.i(this,cmdLine);
+				Log.i(this, lineseperator);
+				Log.i(this, cmdLine);
 			}
 		} catch (Exception e) {
 			Log.e(getClass().getSimpleName(), "initCommand() - Exception: " + e);
@@ -99,8 +99,8 @@ public class MainController implements ActionListener {
 		} else if (action.getSource() == jframe.jMenuItemStartAnalyse) {
 			Log.i(this, "actionPerformed() - start analyse");
 			analysecontroller.initUi();
-		} else if(action.getSource() == jframe.jMenuItemCheckDependencies) {
-			//todo daan
+		} else if (action.getSource() == jframe.jMenuItemCheckDependencies) {
+			// todo daan
 			Log.i(this, "actionPerformed() - check dependensies");
 			dependencycontroller.initUI();
 		} else if (action.getSource() == jframe.jMenuItemAbout) {
