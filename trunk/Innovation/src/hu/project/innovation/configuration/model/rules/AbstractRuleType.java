@@ -61,9 +61,9 @@ public abstract class AbstractRuleType extends AbstractJavaRule implements XMLab
 
 		return xml;
 	}
-	
+
 	protected void initArchitecture() {
-		if(!ConfigurationService.getInstance().hasArchitectureDefinition()) {
+		if (!ConfigurationService.getInstance().hasArchitectureDefinition()) {
 			try {
 				ConfigurationService.getInstance().openConfiguration(new File("architecture_definition.xml"));
 			} catch (Exception e) {

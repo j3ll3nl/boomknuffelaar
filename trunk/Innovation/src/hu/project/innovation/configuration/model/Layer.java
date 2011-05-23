@@ -173,7 +173,7 @@ public class Layer implements XMLable {
 		xml += "\t\t\t<id>" + this.id + "</id>\n";
 		xml += "\t\t\t<name>" + this.name + "</name>\n";
 		xml += "\t\t\t<description>" + this.description + "</description>\n";
-		xml += "\t\t\t<interfaceAccessOnly>" + ((interfaceAccessOnly)?1:0) + "</interfaceAccessOnly>\n";
+		xml += "\t\t\t<interfaceAccessOnly>" + ((interfaceAccessOnly) ? 1 : 0) + "</interfaceAccessOnly>\n";
 
 		if (softwareUnitDefinitions != null) {
 			for (SoftwareUnitDefinition sud : this.getSoftwareUnitDefinitions()) {

@@ -1,6 +1,5 @@
 package hu.project.innovation.configuration.view.tables;
 
-
 import javax.swing.JTable;
 
 public class AbstractJTable extends JTable {

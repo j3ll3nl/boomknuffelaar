@@ -26,7 +26,7 @@ import javax.swing.WindowConstants;
 public class ApplicationJFrame extends javax.swing.JFrame {
 
 	private static final long serialVersionUID = 6858870868564931134L;
-	private String defaultTitle = "Belastingdienst Architectuur";	
+	private String defaultTitle = "Belastingdienst Architectuur";
 	private JSeparator jSeparator1;
 	public JMenuItem jMenuItemExit;
 	private JMenuBar jMenuBar;

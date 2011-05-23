@@ -4,7 +4,7 @@ import hu.project.innovation.configuration.model.DependencyService;
 import hu.project.innovation.configuration.model.dependencies.DepSoftwareComponent;
 import hu.project.innovation.configuration.model.dependencies.DependencyParseHandler;
 import hu.project.innovation.configuration.model.dependencies.DependencySelectionHandler;
-import hu.project.innovation.configuration.view.dependencies.JFrameDependencies;
+import hu.project.innovation.configuration.view.jframe.JFrameDependencies;
 import hu.project.innovation.utils.UiDialogs;
 
 import java.io.File;
@@ -26,53 +26,53 @@ public class DependencyController {
 	private JFrameDependencies dependenciesJFrame = null;
 	private ArrayList<JTable> tables = new ArrayList<JTable>();
 	private ArrayList<JButton> buttons = new ArrayList<JButton>();
-	
+
 	/** format for version number */
 	private static String _VERSION = "[0-9]{1,2}(.[0-9])*?";
-	
+
 	/**
 	 * 
 	 */
-	
+
 	public static void main(String[] arg) {
 		new DependencyController();
 	}
-	
+
 	public DependencyController() {
 		dependencyService = new DependencyService();
 		projectPath = System.getProperty("user.dir");
 		this.addAllowedDependencies();
 		this.addDependencies();
-		//Kijken of de dependency in de POM voorkomt (en in dat geval dus is allowed) in mydependencies.xml
-		for(DepSoftwareComponent _component : dependencyService.getDependencies()) {
-			if(dependencyService.searchAllowedDepSoftwareComponent(_component.getArtifactId())) {
-				if(!isVersionValidate(dependencyService.getAllowedDependency(_component.getArtifactId()).getVersion(), _component.getVersion())) {
-					System.err.println("Warning: component "  + _component.getArtifactId() + " with version: " + _component.getVersion() + " is illegal");
+		// Kijken of de dependency in de POM voorkomt (en in dat geval dus is allowed) in mydependencies.xml
+		for (DepSoftwareComponent _component : dependencyService.getDependencies()) {
+			if (dependencyService.searchAllowedDepSoftwareComponent(_component.getArtifactId())) {
+				if (!isVersionValidate(dependencyService.getAllowedDependency(_component.getArtifactId()).getVersion(), _component.getVersion())) {
+					System.err.println("Warning: component " + _component.getArtifactId() + " with version: " + _component.getVersion() + " is illegal");
 					System.err.println("Allowed version: " + dependencyService.getAllowedDependency(_component.getArtifactId()).getVersion());
 				}
 			} else {
-				//de dependency (in de pom) komt niet voor in de allowed file
-				System.err.println("Warning: component "  + _component.getArtifactId() + " (with version: " + _component.getVersion() + ") is illegal");
+				// de dependency (in de pom) komt niet voor in de allowed file
+				System.err.println("Warning: component " + _component.getArtifactId() + " (with version: " + _component.getVersion() + ") is illegal");
 			}
 		}
-	
+
 	}
-	
+
 	private boolean isVersionValidate(String terms, String _version) {
-		//Valideer de versie nummer aan de hand van de regular expression
-		return java.util.regex.Pattern.matches(getRegExpression(terms), _version+"3");
+		// Valideer de versie nummer aan de hand van de regular expression
+		return java.util.regex.Pattern.matches(getRegExpression(terms), _version + "3");
 	}
-	
+
 	/**
 	 * 
 	 * @param version
 	 * @return
 	 */
 	private final String getRegExpression(String version) {
-		//converteer de versie nummer naar een reguliere expressie
+		// converteer de versie nummer naar een reguliere expressie
 		String _temp = (!version.contains("x") ? version : version.replace("x", "([0-9]{1,2})"));
-		if(version.contains(","))
-			if(_temp.contains(","))
+		if (version.contains(","))
+			if (_temp.contains(","))
 				_temp = "(" + _temp.replace(",", ")|(") + ")";
 		return _temp;
 	}
@@ -81,95 +81,94 @@ public class DependencyController {
 	 * 
 	 */
 	public void initUI() {
-		if(dependenciesJFrame == null) {
+		if (dependenciesJFrame == null) {
 			dependenciesJFrame = new JFrameDependencies();
 			// get (the 3) tables
 			tables.add(dependenciesJFrame.getJTableFoundComponents());
 			tables.add(dependenciesJFrame.getJTableDepsPom());
 			tables.add(dependenciesJFrame.getJTableAllowedDeps());
-						
+
 			dependenciesJFrame.setResizable(false);
-			
-			//Disable buttons (voorlopig)
+
+			// Disable buttons (voorlopig)
 			buttons.add(dependenciesJFrame.getJButton1());
 			buttons.add(dependenciesJFrame.getJButtonAllowDepAdd());
 			buttons.add(dependenciesJFrame.getJButtonAllowDepEdit());
 			buttons.add(dependenciesJFrame.getJButtonAllowDepRemove());
 			buttons.add(dependenciesJFrame.getJButtonDeletePomD());
-			
+
 			DependencySelectionHandler dsHandler = new DependencySelectionHandler(dependencyService);
-			for(JButton button : buttons) 
+			for (JButton button : buttons)
 				button.addActionListener(dsHandler);
-			
-			
-			//for(JTable table : tables)
-			//pomDepsTable.getSelectionModel().addListSelectionListener(new DependencySelectionHandler(jButtonDeletePomD));
-			
-			//Add columns
+
+			// for(JTable table : tables)
+			// pomDepsTable.getSelectionModel().addListSelectionListener(new DependencySelectionHandler(jButtonDeletePomD));
+
+			// Add columns
 			int counter = 0;
-			for(JTable table : tables) {
-				DefaultTableModel dtm = (DefaultTableModel)table.getModel();
+			for (JTable table : tables) {
+				DefaultTableModel dtm = (DefaultTableModel) table.getModel();
 				dtm.addColumn("Number");
 				dtm.addColumn("Dependency");
 				dtm.addColumn("Version");
 				dtm.addColumn("Type");
-				for(JButton button : buttons) {
+				for (JButton button : buttons) {
 					System.out.println(button.getName());
 					table.getSelectionModel().addListSelectionListener(new DependencySelectionHandler(button));
 				}
 				counter++;
 			}
-			
+
 			// Id's
 			int i = 1;
-			
+
 			counter = 0;
-			for(JTable table : tables) {
-				DefaultTableModel dtm = (DefaultTableModel)table.getModel();
+			for (JTable table : tables) {
+				DefaultTableModel dtm = (DefaultTableModel) table.getModel();
 				DepSoftwareComponent[] pomDSComponents;
 				DepSoftwareComponent[] allowedDSComponents;
-				if(counter == 0) {
+				if (counter == 0) {
 					// Parse the (jar) components from the classpath string
 					ArrayList<String> extDependencies = getExtDependensies(System.getProperty("java.class.path"));
-					if(extDependencies != null) {
-						for(String dependency : extDependencies) {
-							//Kijken of de dependency een - heeft, indien het geval het stuk van de string ervoor pakken (tijdelijke oplossing)
-							if(!dependencyService.searchDepSoftwareComponent((dependency.contains("-"))? dependency.split("-")[0] : dependency)) {
-								//check if the dependency is added in the project object model (pom.xml)
+					if (extDependencies != null) {
+						for (String dependency : extDependencies) {
+							// Kijken of de dependency een - heeft, indien het geval het stuk van de string ervoor pakken (tijdelijke oplossing)
+							if (!dependencyService.searchDepSoftwareComponent((dependency.contains("-")) ? dependency.split("-")[0] : dependency)) {
+								// check if the dependency is added in the project object model (pom.xml)
 								boolean tmp = false;
 								// if an dependency ends with .jar, remove ".jar" and add it to the table
-								Object rowdata[] = { i++, ((tmp = dependency.endsWith(".jar")) ? dependency.substring(0, dependency.length()-4) : dependency), "?", (tmp) ? "Jar" : "not supported" };
+								Object rowdata[] = { i++, ((tmp = dependency.endsWith(".jar")) ? dependency.substring(0, dependency.length() - 4) : dependency), "?", (tmp) ? "Jar" : "not supported" };
 								dtm.addRow(rowdata);
 							}
 						}
 					}
-				} else if(counter == 1) {
-					//add pom dependencies to the table
-					if((pomDSComponents = dependencyService.getDependencies()) != null) {
+				} else if (counter == 1) {
+					// add pom dependencies to the table
+					if ((pomDSComponents = dependencyService.getDependencies()) != null) {
 						i = 1;
-						for(DepSoftwareComponent pomDsc : pomDSComponents) {
+						for (DepSoftwareComponent pomDsc : pomDSComponents) {
 							Object rowdata[] = { i++, pomDsc.getArtifactId(), pomDsc.getVersion(), pomDsc.getType() };
 							dtm.addRow(rowdata);
 						}
 					}
 				} else {
-					//add allowed components to the table
-					if((allowedDSComponents = dependencyService.getAllowedDependencies()) != null) {
+					// add allowed components to the table
+					if ((allowedDSComponents = dependencyService.getAllowedDependencies()) != null) {
 						i = 1;
-						for(DepSoftwareComponent allowedDsc : allowedDSComponents) {
+						for (DepSoftwareComponent allowedDsc : allowedDSComponents) {
 							Object rowdata[] = { i++, allowedDsc.getArtifactId(), allowedDsc.getVersion(), allowedDsc.getType() };
 							dtm.addRow(rowdata);
-						}	
-					}					
+						}
+					}
 				}
 				counter++;
 			}
 		}
-		
+
 		UiDialogs.showOnScreen(0, dependenciesJFrame);
 		dependenciesJFrame.setVisible(true);
 	}
-	
+
 	/**
 	 * 
 	 * @param classPath
@@ -177,10 +176,10 @@ public class DependencyController {
 	 */
 	public ArrayList<String> getExtDependensies(String classPath) {
 		ArrayList<String> unitNames = new ArrayList<String>();
-		for(String path : classPath.split(":")) {
+		for (String path : classPath.split(":")) {
 			String[] unitName = path.split("/");
 			String unit = unitName[(unitName.length - 1)];
-			if(unit.contains("."))
+			if (unit.contains("."))
 				unitNames.add(unit);
 		}
 		return unitNames;
@@ -205,7 +204,7 @@ public class DependencyController {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * 
 	 */
@@ -214,15 +213,15 @@ public class DependencyController {
 		File file = new File(projectPath + "/" + fileName);
 		parseXML(file, true);
 	}
-	
+
 	/**
 	 * 
 	 */
 	private void addDependencies() {
-		File file = new File(projectPath+"/pom.xml");
+		File file = new File(projectPath + "/pom.xml");
 		parseXML(file, false);
 	}
-	
+
 	public boolean isVersionValid(String version) {
 		return java.util.regex.Pattern.matches(_VERSION, version);
 	}

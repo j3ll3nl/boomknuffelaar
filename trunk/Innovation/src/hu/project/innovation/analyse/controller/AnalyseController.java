@@ -45,12 +45,12 @@ public class AnalyseController implements ActionListener, KeyListener {
 		analyseJFrame.jTextFieldProjectPath.setText(ConfigurationService.getInstance().getProjectPath());
 		analyseJFrame.jTextFieldOutputPath.setText(ConfigurationService.getInstance().getOutputPath());
 
-		//Enable or disable the analyse button when the scan is already running
+		// Enable or disable the analyse button when the scan is already running
 		updateAnalyseButton();
 
 		// Set the visibility of the jframe to true so the jframe is now visible
 		UiDialogs.showOnScreen(0, analyseJFrame);
-		
+
 		analyseJFrame.setVisible(true);
 	}
 
@@ -94,7 +94,7 @@ public class AnalyseController implements ActionListener, KeyListener {
 			Log.i(this, "actionPerformed() - project browse");
 			String path = browseForPath();
 			ConfigurationService.getInstance().setProjectPath(path);
-			analyseJFrame.jTextFieldProjectPath.setText(path);			
+			analyseJFrame.jTextFieldProjectPath.setText(path);
 		} else if (action.getSource() == analyseJFrame.jButtonOutputBrowse) {
 			Log.i(this, "actionPerformed() - output browse");
 			String path = browseForPath();
@@ -134,7 +134,7 @@ public class AnalyseController implements ActionListener, KeyListener {
 			ConfigurationService.getInstance().setOutputPath(text);
 		} else if (arg0.getSource() == analyseJFrame.jTextFieldProjectPath) {
 			String text = analyseJFrame.jTextFieldProjectPath.getText();
-			ConfigurationService.getInstance().setProjectPath(text);			
+			ConfigurationService.getInstance().setProjectPath(text);
 		}
 	}
 

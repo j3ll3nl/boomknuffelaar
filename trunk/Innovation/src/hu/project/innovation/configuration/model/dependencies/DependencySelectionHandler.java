@@ -12,12 +12,11 @@ import javax.swing.event.ListSelectionListener;
 public class DependencySelectionHandler implements ListSelectionListener, ActionListener {
 	private JButton button;
 	private DependencyService dependencyService;
-	
 
 	public DependencySelectionHandler() {
-		
+
 	}
-	
+
 	public DependencySelectionHandler(JButton button) {
 		this.button = button;
 		this.button.setEnabled(false);
@@ -28,11 +27,12 @@ public class DependencySelectionHandler implements ListSelectionListener, Action
 	}
 
 	public void valueChanged(ListSelectionEvent arg0) {
-		if(!button.isEnabled()) button.setEnabled(true);
+		if (!button.isEnabled())
+			button.setEnabled(true);
 	}
 
 	public void actionPerformed(ActionEvent event) {
-				
+
 	}
 
 }

@@ -30,8 +30,8 @@ import org.xml.sax.helpers.DefaultHandler;
 /**
  * SAMPLE HOW TO USE:
  * 
- * XMLReader xr = XMLReaderFactory.createXMLReader(); ArchDefXMLReader reader = new ArchDefXMLReader(); 
- * xr.setContentHandler(reader); xr.parse(new InputSource(new FileReader("architecture_definition.xml")));
+ * XMLReader xr = XMLReaderFactory.createXMLReader(); ArchDefXMLReader reader = new ArchDefXMLReader(); xr.setContentHandler(reader); xr.parse(new InputSource(new
+ * FileReader("architecture_definition.xml")));
  * 
  * reader.getArchitectureDefinition();
  */
@@ -51,15 +51,15 @@ public class ArchDefXMLReader extends DefaultHandler {
 	private boolean isSoftwareUnit = false;
 	private boolean isAppliedRule = false;
 	private boolean isException = false;
-	
+
 	public ArchitectureDefinition getArchitectureDefinition() {
 		return ar;
 	}
-	
+
 	public String getProjectPath() {
 		return projectPath;
 	}
-	
+
 	public String getOutputPath() {
 		return outputPath;
 	}
@@ -67,7 +67,7 @@ public class ArchDefXMLReader extends DefaultHandler {
 	public String getOutputFormat() {
 		return outputFormat;
 	}
-	
+
 	public boolean validateXML(File file) throws ParserConfigurationException, SAXException, IOException {
 		// parse an XML document into a DOM tree
 		DocumentBuilder parser = DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -88,13 +88,13 @@ public class ArchDefXMLReader extends DefaultHandler {
 
 		return false;
 	}
-	
+
 	// Extended methods ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public void startElement(String namespaceURI, String localName, String qName, Attributes attr) throws SAXException {
 		Log.i(this, "startElement(" + localName + ")");
 		contents.reset();
-		
+
 		// Open complex XML element
 		if (localName.equals("layer")) {
 			isLayer = true;
@@ -105,7 +105,7 @@ public class ArchDefXMLReader extends DefaultHandler {
 		} else if (localName.equals("exception")) {
 			isException = true;
 		}
-		
+
 		// Get element attributes
 		if (localName.equals("architecture")) {
 			try {
@@ -116,15 +116,15 @@ public class ArchDefXMLReader extends DefaultHandler {
 		} else if (localName.equals("output")) {
 			outputFormat = attr.getValue(0);
 		}
-		
+
 	}
 
 	public void endElement(String namespaceURI, String localName, String qName) {
 		Log.i(this, "endElement(" + localName + ")");
-		
+
 		// Get and set layer information
 		if (localName.equals("id")) {
-			
+
 			if (ar.getLayer(Integer.parseInt(contents.toString())) == null) {
 				currentLayer = new Layer();
 				currentLayer.setId(Integer.parseInt(contents.toString()));
@@ -140,7 +140,7 @@ public class ArchDefXMLReader extends DefaultHandler {
 		} else if (localName.equals("interfaceAccessOnly")) {
 			currentLayer.setInterfaceAccesOnly((Integer.parseInt(contents.toString()) != 0));
 		}
-		
+
 		// Get and set software unit information
 		if (localName.equals("name") && isSoftwareUnit && !isException) {
 			try {
@@ -153,21 +153,21 @@ public class ArchDefXMLReader extends DefaultHandler {
 		} else if (localName.equals("type")) {
 			currentSoftwareUnit.setType(contents.toString());
 		}
-		
+
 		// Get and set applied rule information
 		if (localName.equals("ruleType")) {
-			
+
 			currentAppliedRule = new AppliedRule();
 			currentAppliedRule.setFromLayer(currentLayer);
-					
+
 			if (contents.toString().equals("BackCallRule")) {
 				currentAppliedRule.setRuleType(new BackCallRule());
 			} else if (contents.toString().equals("SkipLayerRule")) {
 				currentAppliedRule.setRuleType(new SkipLayerRule());
 			}
-			
+
 		} else if (localName.equals("toLayer")) {
-			
+
 			if (ar.getLayer(Integer.parseInt(contents.toString())) == null) {
 				Layer toLayer = new Layer();
 				toLayer.setId(Integer.parseInt(contents.toString()));
@@ -178,7 +178,7 @@ public class ArchDefXMLReader extends DefaultHandler {
 		} else if (localName.equals("appliedRule")) {
 			currentLayer.addAppliedRule(currentAppliedRule);
 		}
-		
+
 		// Add exceptions
 		if (localName.equals("name") && isSoftwareUnit && isException) {
 			currentSoftwareUnitException = new SoftwareUnitDefinition();
@@ -193,7 +193,7 @@ public class ArchDefXMLReader extends DefaultHandler {
 		} else if (localName.equals("type") && isAppliedRule && isException) {
 			currentSoftwareUnitException.setType(contents.toString());
 		}
-		
+
 		// Closing complex XML element
 		if (localName.equals("layer")) {
 			isLayer = false;
@@ -204,14 +204,14 @@ public class ArchDefXMLReader extends DefaultHandler {
 		} else if (localName.equals("exception")) {
 			isException = false;
 		}
-		
+
 		// Get and set paths
 		if (localName.equals("project")) {
 			projectPath = contents.toString();
 		} else if (localName.equals("output")) {
 			outputPath = contents.toString();
 		}
-		
+
 	}
 
 	public void characters(char[] ch, int start, int length) throws SAXException {

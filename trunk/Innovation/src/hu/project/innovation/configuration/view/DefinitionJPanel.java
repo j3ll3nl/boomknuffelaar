@@ -173,10 +173,10 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 						{
 							jPanel4 = new JPanel();
 							GridBagLayout jPanel4Layout = new GridBagLayout();
-							jPanel4Layout.rowWeights = new double[] {0.0, 0.1, 0.1};
-							jPanel4Layout.rowHeights = new int[] {27, 7, 7};
-							jPanel4Layout.columnWeights = new double[] {0.0, 0.1};
-							jPanel4Layout.columnWidths = new int[] {118, 7};
+							jPanel4Layout.rowWeights = new double[] { 0.0, 0.1, 0.1 };
+							jPanel4Layout.rowHeights = new int[] { 27, 7, 7 };
+							jPanel4Layout.columnWeights = new double[] { 0.0, 0.1 };
+							jPanel4Layout.columnWidths = new int[] { 118, 7 };
 							jPanel4.setLayout(jPanel4Layout);
 							jPanelRight.add(jPanel4, BorderLayout.NORTH);
 							jPanel4.setBorder(BorderFactory.createTitledBorder("Layer configuration"));
@@ -184,7 +184,7 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 							{
 								jLabel1 = new JLabel();
 								jPanel4.add(jLabel1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-								jLabel1.setText("Layer name");								
+								jLabel1.setText("Layer name");
 							}
 							{
 								jTextFieldLayerName = new JTextField();
@@ -194,7 +194,7 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 							{
 								jLabel2 = new JLabel();
 								jPanel4.add(jLabel2, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-								jLabel2.setText("Description");								
+								jLabel2.setText("Description");
 							}
 							{
 								jScrollPane2 = new JScrollPane();
@@ -205,7 +205,7 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 								{
 									jTextAreaLayerDescription = new JTextArea();
 									jTextAreaLayerDescription.setFont(new java.awt.Font("Tahoma", 0, 11));
-									jTextAreaLayerDescription.setToolTipText(DefaultMessages.TIP_LAYERDESCRIPTION);									
+									jTextAreaLayerDescription.setToolTipText(DefaultMessages.TIP_LAYERDESCRIPTION);
 									jScrollPane2.setViewportView(jTextAreaLayerDescription);
 								}
 							}
@@ -334,7 +334,7 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 		}
 		return null;
 	}
-	
+
 	public AppliedRule getSelectedAppliedRule() {
 		int selectedRow = jTableAppliedRules.getSelectedRow();
 		if (selectedRow >= 0) {
@@ -345,21 +345,21 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 			}
 		}
 		return null;
-	}	
-	
+	}
+
 	private JCheckBox getJCheckBox1() {
-		if(jCheckBoxAccess == null) {
-			jCheckBoxAccess = new JCheckBox();	
+		if (jCheckBoxAccess == null) {
+			jCheckBoxAccess = new JCheckBox();
 			jCheckBoxAccess.setText("Only accessible by a facade (interface)");
-			jCheckBoxAccess.setToolTipText(DefaultMessages.TIP_FACADE);			
+			jCheckBoxAccess.setToolTipText(DefaultMessages.TIP_FACADE);
 		}
 		return jCheckBoxAccess;
 	}
-	
+
 	private JLabel getJLabel3() {
-		if(jLabel3 == null) {
+		if (jLabel3 == null) {
 			jLabel3 = new JLabel();
-			jLabel3.setText("Access:");			
+			jLabel3.setText("Access:");
 		}
 		return jLabel3;
 	}

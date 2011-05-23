@@ -1,6 +1,5 @@
 package hu.project.innovation.configuration.view.tables;
 
-
 import javax.swing.table.TableColumn;
 
 public class JTableAppliedRule extends AbstractJTable {

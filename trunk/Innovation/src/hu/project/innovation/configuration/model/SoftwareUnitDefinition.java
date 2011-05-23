@@ -96,21 +96,19 @@ public class SoftwareUnitDefinition implements XMLable {
 	}
 
 	public boolean contains(String softwareUnitName) {
-//		Log.i(this, this.getName()+" vs "+softwareUnitName);
+		// Log.i(this, this.getName()+" vs "+softwareUnitName);
 		// The called name equals the name of this unit
-		if(this.getName().equals(softwareUnitName) || 
-				this.getName().equals(softwareUnitName + ".*")) {
+		if (this.getName().equals(softwareUnitName) || this.getName().equals(softwareUnitName + ".*")) {
 			return true;
-		} 
+		}
 		// This is a package
-		else if(this.getName().endsWith(".*") 
-				&& softwareUnitName.startsWith(this.getName().substring(0, this.getName().length()-1))) {
+		else if (this.getName().endsWith(".*") && softwareUnitName.startsWith(this.getName().substring(0, this.getName().length() - 1))) {
 			// Exceptions
-			for(SoftwareUnitDefinition exception : this.exceptions) {
-				if(exception.contains(softwareUnitName)) {
+			for (SoftwareUnitDefinition exception : this.exceptions) {
+				if (exception.contains(softwareUnitName)) {
 					return false;
 				}
-			}			
+			}
 			return true;
 		}
 		return false;
