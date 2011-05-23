@@ -53,7 +53,7 @@
                         <xs:attribute name="name" type="xs:string" use="optional" />
                     </xs:complexType>
                 </xs:element>
-                <xs:element name="paths" minOccurs="1" maxOccurs="1">
+                <xs:element name="paths" minOccurs="0" maxOccurs="1">
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="project" type="xs:string" minOccurs="1" maxOccurs="1" />
