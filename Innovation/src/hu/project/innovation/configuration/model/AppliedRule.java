@@ -96,7 +96,7 @@ public class AppliedRule implements XMLable {
 		}
 	}
 
-	private ArrayList<SoftwareUnitDefinition> getExceptions() {
+	public ArrayList<SoftwareUnitDefinition> getExceptions() {
 		return exceptions;
 	}
 

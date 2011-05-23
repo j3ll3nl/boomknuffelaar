@@ -30,19 +30,13 @@ public class DependencyController {
 	/** format for version number */
 	private static String _VERSION = "[0-9]{1,2}(.[0-9])*?";
 
-	/**
-	 * 
-	 */
-
-	public static void main(String[] arg) {
-		new DependencyController();
-	}
-
 	public DependencyController() {
 		dependencyService = new DependencyService();
 		projectPath = System.getProperty("user.dir");
 		this.addAllowedDependencies();
 		this.addDependencies();
+		//TODO Aan daan: Deze code wordt te vroeg uitgevoerd. Bij het opstarten van de app wordt direct iets met pom.xml gedaan. Dat veroorzaakte mij een nullpointerexception waardoor de app niet opstarte. (stefan) 
+		/*		
 		// Kijken of de dependency in de POM voorkomt (en in dat geval dus is allowed) in mydependencies.xml
 		for (DepSoftwareComponent _component : dependencyService.getDependencies()) {
 			if (dependencyService.searchAllowedDepSoftwareComponent(_component.getArtifactId())) {
@@ -55,6 +49,7 @@ public class DependencyController {
 				System.err.println("Warning: component " + _component.getArtifactId() + " (with version: " + _component.getVersion() + ") is illegal");
 			}
 		}
+		*/
 
 	}
 

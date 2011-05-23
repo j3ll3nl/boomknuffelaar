@@ -302,7 +302,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 			// Create a new software unit controller
 			SoftwareUnitController c = new SoftwareUnitController(layer, null);
 			// Set the action of the view
-			c.setAction(SoftwareUnitController.ACTION_NEW);
+			c.setAction(PopUpController.ACTION_NEW);
 			c.addObserver(this);
 			// Build and show the ui
 			c.initUi();
@@ -323,7 +323,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 			// Create a new software unit controller
 			SoftwareUnitController c = new SoftwareUnitController(layer, softwareunit);
 			// Set the action of the view
-			c.setAction(SoftwareUnitController.ACTION_EDIT);
+			c.setAction(PopUpController.ACTION_EDIT);
 			c.addObserver(this);
 			// Build and show the ui
 			c.initUi();
@@ -371,7 +371,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 			// Create a new software unit controller
 			AppliedRulesController a = new AppliedRulesController(layer, null);
 			// Set the action of the view
-			a.setAction(AppliedRulesController.ACTION_NEW);
+			a.setAction(PopUpController.ACTION_NEW);
 			a.addObserver(this);
 			// Build and show the ui
 			a.initUi();
@@ -380,7 +380,23 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 
 	private void editRuleToLayer() {
 		Log.i(this, "editRuleToLayer()");
-		// TODO Auto-generated method stub
+		Layer layer = definitionJPanel.getSelectedLayer();
+		AppliedRule appliedrule = definitionJPanel.getSelectedAppliedRule();
+		if (layer != null && appliedrule != null) {
+			Log.i(this, "editRuleToLayer() - selected layer: " + layer.getName());
+			Log.i(this, "editRuleToLayer() - selected applied rule: " + appliedrule);
+
+			// Create a new software unit controller
+			AppliedRulesController a = new AppliedRulesController(layer, appliedrule);
+			// Set the action of the view
+			a.setAction(PopUpController.ACTION_EDIT);
+			a.addObserver(this);
+			// Build and show the ui
+			a.initUi();
+		} else {
+			Log.e(this, "editRuleToLayer() - no applied rule selected");
+			UiDialogs.errorDialog(definitionJPanel, "Select a applied rule", "Error");
+		}
 	}
 
 	private void removeRuleToLayer() {

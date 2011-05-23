@@ -29,10 +29,10 @@ public class SoftwareUnitController extends PopUpController {
 		jframe = new JFrameSoftwareUnit();
 
 		// Change view of jframe conforms the action
-		if (getAction().equals(SoftwareUnitController.ACTION_NEW)) {
+		if (getAction().equals(PopUpController.ACTION_NEW)) {
 			jframe.jButtonSave.setText("Create");
 			jframe.setTitle("New software unit");
-		} else if (getAction().equals(SoftwareUnitController.ACTION_EDIT)) {
+		} else if (getAction().equals(PopUpController.ACTION_EDIT)) {
 			jframe.jButtonSave.setText("Save");
 			jframe.setTitle("Edit software unit");
 			if (softwareunit != null) {
@@ -70,7 +70,7 @@ public class SoftwareUnitController extends PopUpController {
 		ConfigurationService service = ConfigurationService.getInstance();
 
 		try {
-			if (getAction().equals(SoftwareUnitController.ACTION_NEW)) {
+			if (getAction().equals(PopUpController.ACTION_NEW)) {
 				softwareunit = service.newSoftwareUnit(getLayer(), jframe.jTextFieldSoftwareUnitName.getText(), jframe.jComboBoxSoftwareUnitType.getSelectedItem().toString());
 
 				JTableException table = jframe.jTableException;
@@ -80,7 +80,7 @@ public class SoftwareUnitController extends PopUpController {
 				for (int i = 0; i < tablerows; i++) {
 					service.addException(softwareunit, tablemodel.getValueAt(i, 0).toString(), tablemodel.getValueAt(i, 0).toString());
 				}
-			} else if (getAction().equals(SoftwareUnitController.ACTION_EDIT)) {
+			} else if (getAction().equals(PopUpController.ACTION_EDIT)) {
 				softwareunit.setName(jframe.jTextFieldSoftwareUnitName.getText());
 				softwareunit.setType(jframe.jComboBoxSoftwareUnitType.getSelectedItem().toString());
 
