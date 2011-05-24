@@ -27,7 +27,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
- * SAMPLE HOW TO USE:
+ * EXAMPLE HOW TO USE:
  * 
  * XMLReader xr = XMLReaderFactory.createXMLReader(); ArchDefXMLReader reader = new ArchDefXMLReader(); xr.setContentHandler(reader); xr.parse(new InputSource(new
  * FileReader("architecture_definition.xml")));
@@ -51,22 +51,47 @@ public class ArchDefXMLReader extends DefaultHandler {
 	private boolean isAppliedRule = false;
 	private boolean isException = false;
 
+	/**
+	 * Get the ArchitectureDefinition
+	 * 
+	 * @return Returns an object of ArchitectureDefinition when parsing has been done.
+	 */
 	public ArchitectureDefinition getArchitectureDefinition() {
 		return ar;
 	}
 
+	/**
+	 * Get project path
+	 * 
+	 * @return Returns a String of the project path when parsing has been done.
+	 */
 	public String getProjectPath() {
 		return projectPath;
 	}
 
+	/**
+	 * Get output path
+	 * 
+	 * @return Returns a String of the output path when parsing has been done.
+	 */
 	public String getOutputPath() {
 		return outputPath;
 	}
 
+	/**
+	 * Get output format
+	 * 
+	 * @return Returns a String of the output format when parsing has been done.
+	 */
 	public String getOutputFormat() {
 		return outputFormat;
 	}
 
+	/**
+	 * Validate an XML-file with pre-defined XML-schema.
+	 * 
+	 * @return Returns true when XML-file is valid, false when it's not valid.
+	 */
 	public boolean validateXML(File file) throws ParserConfigurationException, SAXException, IOException {
 		// parse an XML document into a DOM tree
 		DocumentBuilder parser = DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -115,7 +140,6 @@ public class ArchDefXMLReader extends DefaultHandler {
 		} else if (localName.equals("output")) {
 			outputFormat = attr.getValue(0);
 		}
-
 	}
 
 	public void endElement(String namespaceURI, String localName, String qName) {
@@ -187,6 +211,13 @@ public class ArchDefXMLReader extends DefaultHandler {
 			currentSoftwareUnitException.setType(contents.toString());
 		}
 
+		// Get and set paths
+		if (localName.equals("project")) {
+			projectPath = contents.toString();
+		} else if (localName.equals("output")) {
+			outputPath = contents.toString();
+		}
+		
 		// Closing complex XML element
 		if (localName.equals("layer")) {
 			isLayer = false;
@@ -197,14 +228,6 @@ public class ArchDefXMLReader extends DefaultHandler {
 		} else if (localName.equals("exception")) {
 			isException = false;
 		}
-
-		// Get and set paths
-		if (localName.equals("project")) {
-			projectPath = contents.toString();
-		} else if (localName.equals("output")) {
-			outputPath = contents.toString();
-		}
-
 	}
 
 	public void characters(char[] ch, int start, int length) throws SAXException {
@@ -213,6 +236,5 @@ public class ArchDefXMLReader extends DefaultHandler {
 
 	public void endDocument() {
 		Log.i(this, " endDocument()");
-
 	}
 }
