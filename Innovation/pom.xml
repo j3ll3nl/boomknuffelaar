@@ -1,8 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>Innovation</groupId>
-  <artifactId>Innovation</artifactId>
-  <version>0.8</version>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>Innovation</groupId>
+	<artifactId>Innovation</artifactId>
+	<version>0.8</version>
+  	<properties>
+  		<targetjdk>1.5</targetjdk>
+  	</properties>
   
   <build>
     <directory>bin</directory>
@@ -10,4 +13,15 @@
     <testOutputDirectory>target/test-classes</testOutputDirectory>
     <sourceDirectory>src</sourceDirectory>
   </build>
+  <reporting>
+	<plugins>
+		  <plugin>
+		     <artifactId>sonar-pmd-plugin</artifactId>
+		     <version>2.5</version>
+		     <configuration>
+		          <targetjdk>1.5</targetjdk>
+		     </configuration>
+		  </plugin>
+		  </plugins>
+	  </reporting>
 </project>
