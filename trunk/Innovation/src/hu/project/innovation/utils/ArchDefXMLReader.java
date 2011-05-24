@@ -5,8 +5,6 @@ import hu.project.innovation.configuration.model.ArchitectureDefinition;
 import hu.project.innovation.configuration.model.ConfigurationService;
 import hu.project.innovation.configuration.model.Layer;
 import hu.project.innovation.configuration.model.SoftwareUnitDefinition;
-import hu.project.innovation.configuration.model.rules.BackCallRule;
-import hu.project.innovation.configuration.model.rules.SkipLayerRule;
 
 import java.io.CharArrayWriter;
 import java.io.File;
@@ -125,7 +123,7 @@ public class ArchDefXMLReader extends DefaultHandler {
 
 		// Get and set layer information
 		if (localName.equals("id")) {
-
+			// Check if layer already exists
 			if (ar.getLayer(Integer.parseInt(contents.toString())) == null) {
 				currentLayer = new Layer();
 				currentLayer.setId(Integer.parseInt(contents.toString()));
@@ -161,7 +159,7 @@ public class ArchDefXMLReader extends DefaultHandler {
 			currentAppliedRule.setFromLayer(currentLayer);
 			currentAppliedRule.setRuleType(ConfigurationService.getInstance().getRuleType(contents.toString()));
 		} else if (localName.equals("toLayer")) {
-
+			// Check if layer already exists
 			if (ar.getLayer(Integer.parseInt(contents.toString())) == null) {
 				Layer toLayer = new Layer();
 				toLayer.setId(Integer.parseInt(contents.toString()));
