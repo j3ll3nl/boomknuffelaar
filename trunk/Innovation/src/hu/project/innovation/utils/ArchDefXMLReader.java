@@ -158,7 +158,6 @@ public class ArchDefXMLReader extends DefaultHandler {
 				currentLayer.setId(Integer.parseInt(contents.toString()));
 				layers.put(Integer.parseInt(contents.toString()), currentLayer);
 			}
-
 		} else if (localName.equals("name") && !isSoftwareUnit && !isAppliedRule && isLayer) {
 			currentLayer.setName(contents.toString());
 		} else if (localName.equals("description")) {
