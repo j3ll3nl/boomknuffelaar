@@ -2,6 +2,7 @@ package hu.project.innovation.utils;
 
 import hu.project.innovation.configuration.model.AppliedRule;
 import hu.project.innovation.configuration.model.ArchitectureDefinition;
+import hu.project.innovation.configuration.model.ConfigurationService;
 import hu.project.innovation.configuration.model.Layer;
 import hu.project.innovation.configuration.model.SoftwareUnitDefinition;
 import hu.project.innovation.configuration.model.rules.BackCallRule;
@@ -156,22 +157,16 @@ public class ArchDefXMLReader extends DefaultHandler {
 
 		// Get and set applied rule information
 		if (localName.equals("ruleType")) {
-
 			currentAppliedRule = new AppliedRule();
 			currentAppliedRule.setFromLayer(currentLayer);
-
-			if (contents.toString().equals("BackCallRule")) {
-				currentAppliedRule.setRuleType(new BackCallRule());
-			} else if (contents.toString().equals("SkipLayerRule")) {
-				currentAppliedRule.setRuleType(new SkipLayerRule());
-			}
-
+			currentAppliedRule.setRuleType(ConfigurationService.getInstance().getRuleType(contents.toString()));
 		} else if (localName.equals("toLayer")) {
 
 			if (ar.getLayer(Integer.parseInt(contents.toString())) == null) {
 				Layer toLayer = new Layer();
 				toLayer.setId(Integer.parseInt(contents.toString()));
 				currentAppliedRule.setToLayer(toLayer);
+				ar.addLayer(toLayer);
 			} else {
 				currentAppliedRule.setToLayer(ar.getLayer(Integer.parseInt(contents.toString())));
 			}
