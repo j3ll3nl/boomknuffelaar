@@ -21,20 +21,25 @@ import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.SAXException;
 
 public class DependencyController {
-	private String projectPath;
 	private DependencyService dependencyService;
+	
+	private String projectPath = System.getProperty("user.dir");
 	private JFrameDependencies dependenciesJFrame = null;
 	private ArrayList<JTable> tables = new ArrayList<JTable>();
 	private ArrayList<JButton> buttons = new ArrayList<JButton>();
-	private File pomFile, allowedDepsFile;
+	
+	// de pom.xml en mydependencies.xml (toegestane dependencies door de belastingdienst)
+	private File pomFile = new File(projectPath + "/pom.xml"),
+		allowedDepsFile = new File(projectPath + "/mydependencies.xml");
 
 	/** format for version number */
 	private static String _VERSION = "[0-9]{1,2}(.[0-9])*?";
 	
+	public static void main(String[] args) {
+		new DependencyController();
+	}
+	
 	public DependencyController() {
-		projectPath = System.getProperty("user.dir");
-		pomFile = new File(projectPath + "/pom.xml");
-		allowedDepsFile = new File(projectPath + "/mydependencies.xml");
 		// TODO Aan daan: Deze code wordt te vroeg uitgevoerd. Bij het opstarten van de app wordt direct iets met pom.xml gedaan. Dat veroorzaakte mij een nullpointerexception waardoor de app niet
 		// opstarte. (stefan)
 		
