@@ -62,10 +62,9 @@ public class DependencyController {
 		} else System.err.println("File: " + pomFile.getAbsolutePath() + " can't be found");
 	}
 
-	@SuppressWarnings("unused")
 	private boolean isVersionValidate(String terms, String _version) {
 		// Valideer de versie nummer aan de hand van de regular expression
-		return java.util.regex.Pattern.matches(getRegExpression(terms), _version + "3");
+		return java.util.regex.Pattern.matches(getRegExpression(terms), _version);
 	}
 
 	/**
@@ -179,7 +178,7 @@ public class DependencyController {
 	 * @param classPath
 	 * @return the unit names (jars)
 	 */
-	public ArrayList<String> getExtDependensies(String classPath) {
+	private ArrayList<String> getExtDependensies(String classPath) {
 		ArrayList<String> unitNames = new ArrayList<String>();
 		for (String path : classPath.split(":")) {
 			String[] unitName = path.split("/");
@@ -222,9 +221,5 @@ public class DependencyController {
 	 */
 	private void addDependencies() {
 		parseXML(pomFile, false);
-	}
-
-	public boolean isVersionValid(String version) {
-		return java.util.regex.Pattern.matches(_VERSION, version);
 	}
 }
