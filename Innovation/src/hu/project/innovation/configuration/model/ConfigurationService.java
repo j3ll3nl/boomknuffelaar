@@ -277,6 +277,15 @@ public final class ConfigurationService {
 	public String getOutputFormat() {
 		return this.configuration.getSetting(Configuration.OUTPUT_FORMAT);
 	}
+	
+	/**
+	 * Get rule type based on String
+	 * 
+	 * @return Rule type
+	 */
+	public AbstractRuleType getRuleType(String name) {
+		return this.configuration.getRuleType(name);
+	}
 
 	public AppliedRule newAppliedRule(Layer fromLayer, Layer toLayer, AbstractRuleType ruleType) {
 		if (null != fromLayer && null != toLayer && null != ruleType) {
