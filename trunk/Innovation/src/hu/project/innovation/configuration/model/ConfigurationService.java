@@ -156,6 +156,13 @@ public final class ConfigurationService {
 		return this.architectureDefinition.getLayer(name);
 	}
 
+	public ArrayList<Layer> getLayers() {
+		if (!hasArchitectureDefinition()) {
+			return null;
+		}
+		return this.architectureDefinition.getLayers();
+	}
+
 	/**
 	 * Move a layer up
 	 * 
@@ -308,13 +315,6 @@ public final class ConfigurationService {
 		} else {
 			layer.removeAppliedRule(appliedrule);
 		}
-	}
-
-	public ArrayList<Layer> getLayers() {
-		if (!hasArchitectureDefinition()) {
-			return null;
-		}
-		return this.architectureDefinition.getAllLayers();
 	}
 
 	public Layer getLayerBySoftwareUnitName(String name) {
