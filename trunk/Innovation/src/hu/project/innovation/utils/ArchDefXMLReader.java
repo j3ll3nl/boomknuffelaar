@@ -93,27 +93,16 @@ public class ArchDefXMLReader extends DefaultHandler {
 	/**
 	 * Validate an XML-file with pre-defined XML-schema.
 	 * 
-	 * @return Returns true when XML-file is valid, false when it's not valid.
+	 * @exception Throws an exception when the XML-file isn't valid.
 	 */
-	public boolean validateXML(File file) throws ParserConfigurationException, SAXException, IOException {
-		// parse an XML document into a DOM tree
+	public void validateXML(File file) throws ParserConfigurationException, SAXException, IOException {
 		DocumentBuilder parser = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 		Document document = parser.parse(file);
-
-		// create a SchemaFactory capable of understanding WXS schemas
 		SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-
-		// load a WXS schema, represented by a Schema instance
 		Source schemaFile = new StreamSource(new File("architecture_definition_schema.xsd"));
 		Schema schema = factory.newSchema(schemaFile);
-
-		// create a Validator instance, which can be used to validate an instance document
 		Validator validator = schema.newValidator();
-
-		// validate the DOM tree
 		validator.validate(new DOMSource(document));
-
-		return false;
 	}
 
 	// Extended methods ///////////////////////////////////////////////////////////////////////////////////////////////////
