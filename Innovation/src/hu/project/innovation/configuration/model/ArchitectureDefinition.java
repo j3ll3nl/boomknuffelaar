@@ -92,7 +92,7 @@ public class ArchitectureDefinition implements XMLable {
 		return null;
 	}
 
-	public ArrayList<Layer> getAllLayers() {
+	public ArrayList<Layer> getLayers() {
 		Log.i(this, "getAllLayers()");
 		ArrayList<Layer> layers = new ArrayList<Layer>();
 

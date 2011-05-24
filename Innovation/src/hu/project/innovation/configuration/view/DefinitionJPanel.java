@@ -85,10 +85,10 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 	 */
 	public DefinitionJPanel() {
 		super();
-		initGUI();
+		initUI();
 	}
 
-	public final void initGUI() {
+	public final void initUI() {
 		try {
 			{
 				BorderLayout thisLayout = new BorderLayout();
