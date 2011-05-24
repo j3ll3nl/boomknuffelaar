@@ -1,5 +1,6 @@
 package hu.project.innovation.configuration.model;
 
+import hu.project.innovation.utils.Log;
 import hu.project.innovation.utils.XMLable;
 
 import java.util.ArrayList;
@@ -8,38 +9,38 @@ public class SoftwareUnitDefinition implements XMLable {
 
 	public static final String METHOD = "method", CLASS = "class", PACKAGE = "package";
 
-	private String name;
-	private String type;
-	private ArrayList<SoftwareUnitDefinition> softwareUnits;
-	private ArrayList<SoftwareUnitDefinition> exceptions;
+	private String softwareUnitName;
+	private String softwareUnitType;
+	private ArrayList<SoftwareUnitDefinition> softwareUnits = new ArrayList<SoftwareUnitDefinition>();
+	private ArrayList<SoftwareUnitDefinition> exceptions = new ArrayList<SoftwareUnitDefinition>();
 
 	private Layer layer;
 
-	public SoftwareUnitDefinition(String name, String type) {
-		setName(name);
-		setType(type);
-
-		exceptions = new ArrayList<SoftwareUnitDefinition>();
+	public SoftwareUnitDefinition() {
+		Log.i(this, "constructor()");
 	}
 
-	public SoftwareUnitDefinition() {
-		exceptions = new ArrayList<SoftwareUnitDefinition>();
+	public SoftwareUnitDefinition(String name, String type) {
+		Log.i(this, "constructor(" + name + ", " + type + ")");
+
+		setName(name);
+		setType(type);
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.softwareUnitName = name;
 	}
 
 	public String getName() {
-		return name;
+		return softwareUnitName;
 	}
 
 	public void setType(String type) {
-		this.type = type;
+		this.softwareUnitType = type;
 	}
 
 	public String getType() {
-		return type;
+		return softwareUnitType;
 	}
 
 	public void setLayer(Layer layer) {
@@ -50,8 +51,8 @@ public class SoftwareUnitDefinition implements XMLable {
 		return this.layer;
 	}
 
-	public void addSoftwareUnitDefinition(SoftwareUnitDefinition unit) {
-		softwareUnits.add(unit);
+	public void addSoftwareUnitDefinition(SoftwareUnitDefinition softwareunit) {
+		softwareUnits.add(softwareunit);
 	}
 
 	public void addException(SoftwareUnitDefinition softwareunit) {
@@ -77,8 +78,8 @@ public class SoftwareUnitDefinition implements XMLable {
 
 	public String toXML() {
 		String xml = "\t\t\t<softwareUnit>\n";
-		xml += "\t\t\t\t<name>" + this.name + "</name>\n";
-		xml += "\t\t\t\t<type>" + this.type + "</type>\n";
+		xml += "\t\t\t\t<name>" + this.softwareUnitName + "</name>\n";
+		xml += "\t\t\t\t<type>" + this.softwareUnitType + "</type>\n";
 		if (exceptions != null) {
 			for (SoftwareUnitDefinition unit : exceptions) {
 				xml += "\t\t\t\t<exception>\n";

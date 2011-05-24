@@ -11,18 +11,69 @@ public class AppliedRule implements XMLable {
 	private AbstractRuleType ruleType;
 	private Layer fromLayer, toLayer;
 	private boolean enabled;
-	private ArrayList<SoftwareUnitDefinition> exceptions;
+	private ArrayList<SoftwareUnitDefinition> exceptions = new ArrayList<SoftwareUnitDefinition>();;
 
 	public AppliedRule() {
-		Log.i(this, this.getClass().getSimpleName() + "()");
-		this.exceptions = new ArrayList<SoftwareUnitDefinition>();
+		Log.i(this, "constructor()");
 	}
 
 	public AppliedRule(AbstractRuleType ruleType, Layer fromLayer, Layer toLayer) {
-		this();
-		this.ruleType = ruleType;
-		this.setFromLayer(fromLayer);
-		this.toLayer = toLayer;
+		Log.i(this, "constructor(" + ruleType + ", " + fromLayer + ", " + toLayer + ")");
+		setRuleType(ruleType);
+		setFromLayer(fromLayer);
+		setToLayer(toLayer);
+	}
+
+	public void setFromLayer(Layer fromLayer) {
+		this.fromLayer = fromLayer;
+	}
+
+	public Layer getFromLayer() {
+		return fromLayer;
+	}
+
+	public void setToLayer(Layer layer) {
+		this.toLayer = layer;
+	}
+
+	public Layer getToLayer() {
+		return toLayer;
+	}
+
+	public void setRuleType(AbstractRuleType type) {
+		this.ruleType = type;
+	}
+
+	public AbstractRuleType getRuleType() {
+		return this.ruleType;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void addException(SoftwareUnitDefinition sud) {
+		exceptions.add(sud);
+	}
+
+	public ArrayList<SoftwareUnitDefinition> getExceptions() {
+		return exceptions;
+	}
+
+	public int getNumberOfExceptions() {
+		if (getExceptions() != null) {
+			return getExceptions().size();
+		} else {
+			return 0;
+		}
+	}
+
+	public void removeAllExceptions() {
+		exceptions.clear();
 	}
 
 	public String toXML() {
@@ -39,69 +90,8 @@ public class AppliedRule implements XMLable {
 		return xml;
 	}
 
-	public void setFromLayer(Layer fromLayer) {
-		this.fromLayer = fromLayer;
-	}
-
-	public Layer getFromLayer() {
-		return fromLayer;
-	}
-
-	public Layer getToLayer() {
-		return toLayer;
-	}
-
-	public void setToLayer(Layer layer) {
-		this.toLayer = layer;
-	}
-
-	public AbstractRuleType getRuleType() {
-		return this.ruleType;
-	}
-
-	public void setRuleType(AbstractRuleType type) {
-		this.ruleType = type;
-	}
-
-	public void addException(SoftwareUnitDefinition sud) {
-		exceptions.add(sud);
-	}
-
-	public boolean hasException(SoftwareUnitDefinition sud) {
-		for (SoftwareUnitDefinition exception : this.exceptions) {
-			if (sud.getName().equals(exception.getName()) && sud.getType().equals(exception.getType())) {
-				return true;
-			}
-		}
-		return false;
-	}
-
 	public String toString() {
 		return this.ruleType.getName();
-	}
-
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
-
-	public boolean isEnabled() {
-		return enabled;
-	}
-
-	public int getNumberOfExceptions() {
-		if (getExceptions() != null) {
-			return getExceptions().size();
-		} else {
-			return 0;
-		}
-	}
-
-	public ArrayList<SoftwareUnitDefinition> getExceptions() {
-		return exceptions;
-	}
-
-	public void removeAllExceptions() {
-		exceptions.clear();
 	}
 
 }

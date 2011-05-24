@@ -93,7 +93,7 @@ public final class ConfigurationService {
 			configurationXML += architectureDefinition.toXML();
 			configurationXML += "\t<paths>\n";
 			configurationXML += "\t\t<project>" + getProjectPath() + "</project>\n";
-			configurationXML += "\t\t<output format=\"" + getOutputFormat() + "\">" + getOutputPath() + "</output>\n";
+			configurationXML += "\t\t<output format=\"" + getOutputType() + "\">" + getOutputPath() + "</output>\n";
 			configurationXML += "\t</paths>\n";
 			configurationXML += "</configuration>";
 
@@ -234,30 +234,21 @@ public final class ConfigurationService {
 	}
 
 	/**
-	 * Set the output path
-	 * 
-	 * @param path A string to the output directory
-	 */
-	public void setOutputPath(String path) {
-		this.configuration.setSetting(Configuration.OUTPUT_PATH, path);
-	}
-
-	/**
-	 * Sets the output type.
-	 * 
-	 * @param format Values are: text, html or xml.
-	 */
-	public void setOutputType(String format) {
-		this.configuration.setSetting(Configuration.OUTPUT_FORMAT, format);
-	}
-
-	/**
 	 * Get project path.
 	 * 
 	 * @return The path to the project that needs to be scanned
 	 */
 	public String getProjectPath() {
 		return this.configuration.getSetting(Configuration.PROJECT_PATH);
+	}
+
+	/**
+	 * Set the output path
+	 * 
+	 * @param path A string to the output directory
+	 */
+	public void setOutputPath(String path) {
+		this.configuration.setSetting(Configuration.OUTPUT_PATH, path);
 	}
 
 	/**
@@ -270,11 +261,20 @@ public final class ConfigurationService {
 	}
 
 	/**
+	 * Sets the output type.
+	 * 
+	 * @param format Values are: text, html or xml.
+	 */
+	public void setOutputType(String format) {
+		this.configuration.setSetting(Configuration.OUTPUT_FORMAT, format);
+	}
+
+	/**
 	 * Get the output format
 	 * 
 	 * @return Output format
 	 */
-	public String getOutputFormat() {
+	public String getOutputType() {
 		return this.configuration.getSetting(Configuration.OUTPUT_FORMAT);
 	}
 	
@@ -294,16 +294,20 @@ public final class ConfigurationService {
 		return null;
 	}
 
+	public boolean isRuleApplied(Layer fromLayer, Layer toLayer, String ruleName) {
+		if (fromLayer != null) {
+			return fromLayer.hasAppliedRule(ruleName, toLayer);
+		} else {
+			return false;
+		}
+	}
+
 	public void removeAppliedRule(Layer layer, AppliedRule appliedrule) throws Exception {
 		if (layer == null || (this.architectureDefinition.getLayer(layer.getName()) == null)) {
 			throw new Exception("Layer does not exist");
 		} else {
 			layer.removeAppliedRule(appliedrule);
 		}
-	}
-
-	public Layer getLayerBySoftwareUnitName(String name) {
-		return this.architectureDefinition.getLayerBySoftwareUnitName(name);
 	}
 
 	public ArrayList<Layer> getLayers() {
@@ -313,15 +317,11 @@ public final class ConfigurationService {
 		return this.architectureDefinition.getAllLayers();
 	}
 
-	public String architectureToXML() {
-		return this.architectureDefinition.toXML();
+	public Layer getLayerBySoftwareUnitName(String name) {
+		return this.architectureDefinition.getLayerBySoftwareUnitName(name);
 	}
 
-	public boolean isRuleApplied(Layer fromLayer, Layer toLayer, String ruleName) {
-		if (fromLayer != null) {
-			return fromLayer.hasAppliedRule(ruleName, toLayer);
-		} else {
-			return false;
-		}
+	public String architectureToXML() {
+		return this.architectureDefinition.toXML();
 	}
 }
