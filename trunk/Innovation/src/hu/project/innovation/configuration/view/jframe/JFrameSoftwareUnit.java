@@ -93,7 +93,10 @@ public class JFrameSoftwareUnit extends JFrame {
 					jLabel2.setText("Type");
 				}
 				{
-					ComboBoxModel jComboBox1Model = new DefaultComboBoxModel(new String[] { SoftwareUnitDefinition.PACKAGE, SoftwareUnitDefinition.CLASS, SoftwareUnitDefinition.METHOD });
+					ComboBoxModel jComboBox1Model = new DefaultComboBoxModel(new String[] { 
+							SoftwareUnitDefinition.PACKAGE, 
+							SoftwareUnitDefinition.CLASS, 
+							SoftwareUnitDefinition.METHOD });
 					jComboBoxSoftwareUnitType = new JComboBox();
 					jPanel1.add(jComboBoxSoftwareUnitType, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 					jComboBoxSoftwareUnitType.setModel(jComboBox1Model);
