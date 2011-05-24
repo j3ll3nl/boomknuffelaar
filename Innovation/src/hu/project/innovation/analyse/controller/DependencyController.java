@@ -26,25 +26,40 @@ public class DependencyController {
 	private JFrameDependencies dependenciesJFrame = null;
 	private ArrayList<JTable> tables = new ArrayList<JTable>();
 	private ArrayList<JButton> buttons = new ArrayList<JButton>();
+	private File pomFile, allowedDepsFile;
 
 	/** format for version number */
 	private static String _VERSION = "[0-9]{1,2}(.[0-9])*?";
-
+	
 	public DependencyController() {
-		dependencyService = new DependencyService();
 		projectPath = System.getProperty("user.dir");
-		this.addAllowedDependencies();
-		this.addDependencies();
+		pomFile = new File(projectPath + "/pom.xml");
+		allowedDepsFile = new File(projectPath + "/mydependencies.xml");
 		// TODO Aan daan: Deze code wordt te vroeg uitgevoerd. Bij het opstarten van de app wordt direct iets met pom.xml gedaan. Dat veroorzaakte mij een nullpointerexception waardoor de app niet
 		// opstarte. (stefan)
-		/*
-		 * // Kijken of de dependency in de POM voorkomt (en in dat geval dus is allowed) in mydependencies.xml for (DepSoftwareComponent _component : dependencyService.getDependencies()) { if
-		 * (dependencyService.searchAllowedDepSoftwareComponent(_component.getArtifactId())) { if (!isVersionValidate(dependencyService.getAllowedDependency(_component.getArtifactId()).getVersion(),
-		 * _component.getVersion())) { System.err.println("Warning: component " + _component.getArtifactId() + " with version: " + _component.getVersion() + " is illegal");
-		 * System.err.println("Allowed version: " + dependencyService.getAllowedDependency(_component.getArtifactId()).getVersion()); } } else { // de dependency (in de pom) komt niet voor in de
-		 * allowed file System.err.println("Warning: component " + _component.getArtifactId() + " (with version: " + _component.getVersion() + ") is illegal"); } }
-		 */
-
+		
+		  // Kijken of de dependency in de POM voorkomt (en in dat geval dus is allowed) in mydependencies.xml
+		if(pomFile.exists()) {
+			if(allowedDepsFile.exists()) {
+				dependencyService = new DependencyService();
+				this.addAllowedDependencies();
+				this.addDependencies();
+				if(dependencyService.getDependencies() != null) {
+					if(dependencyService.getAllowedDependencies() != null) {
+						for (DepSoftwareComponent _component : dependencyService.getDependencies()) {
+							if(dependencyService.searchAllowedDepSoftwareComponent(_component.getArtifactId())) {
+								if (!isVersionValidate(dependencyService.getAllowedDependency(_component.getArtifactId()).getVersion(), _component.getVersion())) {
+									System.err.println("Warning: component " + _component.getArtifactId() + " with version: " + _component.getVersion() + " is illegal");
+									System.err.println("Allowed version: " + dependencyService.getAllowedDependency(_component.getArtifactId()).getVersion());
+								}
+							} else{ // de dependency (in de pom) komt niet voor in de allowed file
+								System.err.println("Warning: component " + _component.getArtifactId() + " (with version: " + _component.getVersion() + ") is illegal");
+							}
+						}
+					}
+				}
+			} else System.err.println("File: " + allowedDepsFile.getAbsolutePath() + " can't be found");
+		} else System.err.println("File: " + pomFile.getAbsolutePath() + " can't be found");
 	}
 
 	@SuppressWarnings("unused")
@@ -199,17 +214,14 @@ public class DependencyController {
 	 * 
 	 */
 	private void addAllowedDependencies() {
-		String fileName = "mydependencies.xml";
-		File file = new File(projectPath + "/" + fileName);
-		parseXML(file, true);
+		parseXML(allowedDepsFile, true);
 	}
 
 	/**
 	 * 
 	 */
 	private void addDependencies() {
-		File file = new File(projectPath + "/pom.xml");
-		parseXML(file, false);
+		parseXML(pomFile, false);
 	}
 
 	public boolean isVersionValid(String version) {
