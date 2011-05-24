@@ -9,6 +9,8 @@ import hu.project.innovation.configuration.model.SoftwareUnitDefinition;
 import java.io.CharArrayWriter;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
@@ -39,6 +41,7 @@ public class ArchDefXMLReader extends DefaultHandler {
 
 	private CharArrayWriter contents = new CharArrayWriter();
 	private ArchitectureDefinition ar = new ArchitectureDefinition();
+	private HashMap<Integer, Layer> layers = new HashMap<Integer, Layer>();
 	private Layer currentLayer;
 	private SoftwareUnitDefinition currentSoftwareUnit;
 	private AppliedRule currentAppliedRule;
@@ -148,12 +151,12 @@ public class ArchDefXMLReader extends DefaultHandler {
 		// Get and set layer information
 		if (localName.equals("id")) {
 			// Check if layer already exists
-			if (ar.getLayer(Integer.parseInt(contents.toString())) == null) {
+			if (layers.containsKey(Integer.parseInt(contents.toString()))) {
+				currentLayer = layers.get(Integer.parseInt(contents.toString()));
+			} else {
 				currentLayer = new Layer();
 				currentLayer.setId(Integer.parseInt(contents.toString()));
-				ar.addLayer(currentLayer);
-			} else {
-				currentLayer = ar.getLayer(Integer.parseInt(contents.toString()));
+				layers.put(Integer.parseInt(contents.toString()), currentLayer);
 			}
 
 		} else if (localName.equals("name") && !isSoftwareUnit && !isAppliedRule && isLayer) {
@@ -173,7 +176,7 @@ public class ArchDefXMLReader extends DefaultHandler {
 				e.printStackTrace();
 			}
 			currentSoftwareUnit.setName(contents.toString());
-		} else if (localName.equals("type")) {
+		} else if (localName.equals("type") && isSoftwareUnit && !isException) {
 			currentSoftwareUnit.setType(contents.toString());
 		}
 
@@ -184,13 +187,13 @@ public class ArchDefXMLReader extends DefaultHandler {
 			currentAppliedRule.setRuleType(ConfigurationService.getInstance().getRuleType(contents.toString()));
 		} else if (localName.equals("toLayer")) {
 			// Check if layer already exists
-			if (ar.getLayer(Integer.parseInt(contents.toString())) == null) {
+			if (layers.containsKey(Integer.parseInt(contents.toString()))) {
+				currentAppliedRule.setToLayer(layers.get(Integer.parseInt(contents.toString())));
+			} else {
 				Layer toLayer = new Layer();
 				toLayer.setId(Integer.parseInt(contents.toString()));
 				currentAppliedRule.setToLayer(toLayer);
-				ar.addLayer(toLayer);
-			} else {
-				currentAppliedRule.setToLayer(ar.getLayer(Integer.parseInt(contents.toString())));
+				layers.put(Integer.parseInt(contents.toString()), toLayer);
 			}
 		} else if (localName.equals("appliedRule")) {
 			currentLayer.addAppliedRule(currentAppliedRule);
@@ -236,5 +239,9 @@ public class ArchDefXMLReader extends DefaultHandler {
 
 	public void endDocument() {
 		Log.i(this, " endDocument()");
+		// Add all layers to ArchitectureDefinition
+		for(Map.Entry<Integer, Layer> entry : layers.entrySet()) {
+			ar.addLayer(entry.getValue());
+		}
 	}
 }
