@@ -35,10 +35,6 @@ public class DependencyController {
 	/** format for version number */
 	private static String _VERSION = "[0-9]{1,2}(.[0-9])*?";
 	
-	public static void main(String[] args) {
-		new DependencyController();
-	}
-	
 	public DependencyController() {
 		// TODO Aan daan: Deze code wordt te vroeg uitgevoerd. Bij het opstarten van de app wordt direct iets met pom.xml gedaan. Dat veroorzaakte mij een nullpointerexception waardoor de app niet
 		// opstarte. (stefan)
@@ -79,10 +75,15 @@ public class DependencyController {
 	 */
 	private final String getRegExpression(String version) {
 		// converteer de versie nummer naar een reguliere expressie
-		String _temp = (!version.contains("x") ? version : version.replace("x", "([0-9]{1,2})"));
-		if (version.contains(","))
-			if (_temp.contains(","))
-				_temp = "(" + _temp.replace(",", ")|(") + ")";
+		System.out.println(version);
+		String _temp = version;
+		if (version.contains(",")) {
+			if (_temp.contains(",")) {
+				_temp = _temp.contains("x") ? ("(" + _temp.replace(",", ")|(") + ")").replace("x", "([0-9]{1,2})") 
+						: "(" + _temp.replace(",", ")|(") + ")";
+			}
+		} else
+			_temp = (!version.contains("x") ? version : version.replace("x", "([0-9]{1,2})"));
 		return _temp;
 	}
 
