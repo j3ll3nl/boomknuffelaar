@@ -84,10 +84,7 @@ public final class ConfigurationService {
 	public void saveConfiguration(File file) throws Exception {
 		Log.i(this, "saveConfiguration(" + file + ")");
 
-		if (!hasArchitectureDefinition()) {
-
-		} else {
-
+		if (hasArchitectureDefinition()) {
 			String configurationXML = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
 			configurationXML += "<configuration>\n";
 			configurationXML += architectureDefinition.toXML();
