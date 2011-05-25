@@ -1,6 +1,5 @@
-package hu.project.innovation.configuration.view;
+package hu.project.innovation.utils;
 
-import hu.project.innovation.utils.Log;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -92,7 +91,6 @@ public class JPanelStatus extends JPanel {
 	}
 
 	private void gotoLastTask() {
-		Log.i(this, "gotoLastTask() : \"" + messages.peek() + "\"");
 		if (messages.peek().equals(defaultMessage) || messages.peek().equals("") || messages.empty()) {
 			jLabelStatus.setText(defaultMessage);
 			jProgressBar1.setIndeterminate(false);

@@ -1,6 +1,6 @@
 package hu.project.innovation.analyse.model;
 
-import hu.project.innovation.configuration.view.JPanelStatus;
+import hu.project.innovation.utils.JPanelStatus;
 import hu.project.innovation.utils.Log;
 import hu.project.innovation.utils.UiDialogs;
 

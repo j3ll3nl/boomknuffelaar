@@ -1,9 +1,9 @@
 package hu.project.innovation.analyse.controller;
 
+import hu.project.innovation.analyse.view.JFrameDependencies;
 import hu.project.innovation.configuration.model.DependencyService;
 import hu.project.innovation.configuration.model.dependencies.DepSoftwareComponent;
 import hu.project.innovation.configuration.model.dependencies.DependencyParseHandler;
-import hu.project.innovation.configuration.view.jframe.JFrameDependencies;
 import hu.project.innovation.utils.UiDialogs;
 
 import java.awt.event.ActionEvent;

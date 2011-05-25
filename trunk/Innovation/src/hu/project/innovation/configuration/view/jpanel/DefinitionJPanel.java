@@ -1,4 +1,4 @@
-package hu.project.innovation.configuration.view;
+package hu.project.innovation.configuration.view.jpanel;
 
 import hu.project.innovation.configuration.model.AppliedRule;
 import hu.project.innovation.configuration.model.Layer;

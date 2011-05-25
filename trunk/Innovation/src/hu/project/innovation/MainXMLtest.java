@@ -13,8 +13,8 @@ public class MainXMLtest {
 		ExportController exportController = new ExportController();
 		ImportController importController = new ImportController();
 
-		exportController.exportXML(new File("C:\\Users\\Stefan Kemp\\Desktop\\export.xml"));
-		importController.importXML(new File("C:\\Users\\Stefan Kemp\\Desktop\\export.xml"));
+		exportController.exportXML(new File("./export.xml"));
+		importController.importXML(new File("./export.xml"));
 		
 		System.out.println("Done!");
 	}
