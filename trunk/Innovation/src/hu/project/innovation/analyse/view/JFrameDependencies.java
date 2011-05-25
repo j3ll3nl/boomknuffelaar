@@ -3,6 +3,7 @@ package hu.project.innovation.analyse.view;
 import java.awt.BorderLayout;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -10,7 +11,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
-import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -21,9 +21,7 @@ import javax.swing.table.TableModel;
  * licensing terms. A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
  */
 public class JFrameDependencies extends javax.swing.JFrame {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = -4282706188506824166L;
 	private JTable jTableFoundComponents;
 	private JScrollPane jScrollPane1;
@@ -42,7 +40,7 @@ public class JFrameDependencies extends javax.swing.JFrame {
 	private JScrollPane jScrollPane4;
 	private JPanel jPanel3;
 	private JTextField jTextFieldMyDeps;
-	private JTextField jTextFieldPom;	
+	private JTextField jTextFieldPom;
 	private JPanel jPanel2;
 	private JTextField jTextField1;
 	private JButton jButtonDeletePomD;
@@ -54,17 +52,13 @@ public class JFrameDependencies extends javax.swing.JFrame {
 	private JTabbedPane jTabbedPane1;
 	private JPanel jPanel1;
 
-	/**
-	 * Auto-generated main method to display this JFrame
-	 */
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				JFrameDependencies inst = new JFrameDependencies();
-				inst.setLocationRelativeTo(null);
-				inst.setVisible(true);
-			}
-		});
+	{
+		// Set Look & Feel
+		try {
+			javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public JFrameDependencies() {
@@ -76,11 +70,13 @@ public class JFrameDependencies extends javax.swing.JFrame {
 		try {
 			setTitle("Dependencies");
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+			setIconImage(new ImageIcon(getClass().getClassLoader().getResource("hu/project/innovation/resources/jframeicon.jpg")).getImage());
 			{
 				// Eerste tab (found dependencies)
 				jTabbedPane1 = new JTabbedPane();
 				getContentPane().add(jTabbedPane1, BorderLayout.NORTH);
 				jTabbedPane1.setPreferredSize(new java.awt.Dimension(610, 420));
+				jTabbedPane1.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
 				{
 					jPanelCheck = new JPanel();
 					jTabbedPane1.addTab("Check", null, jPanelCheck, null);
@@ -120,8 +116,8 @@ public class JFrameDependencies extends javax.swing.JFrame {
 							jScrollPane4.setViewportView(jTextPaneDepLog);
 							jTextPaneDepLog.setText("Messages");
 							jTextPaneDepLog.setPreferredSize(new java.awt.Dimension(580, 252));
-							jTextPaneDepLog.setBackground(new java.awt.Color(0,0,0));
-							jTextPaneDepLog.setForeground(new java.awt.Color(255,255,255));
+							jTextPaneDepLog.setBackground(new java.awt.Color(0, 0, 0));
+							jTextPaneDepLog.setForeground(new java.awt.Color(255, 255, 255));
 							jTextPaneDepLog.setEditable(false);
 						}
 					}
@@ -295,35 +291,35 @@ public class JFrameDependencies extends javax.swing.JFrame {
 	public JTable getJTableDepsPom() {
 		return jTableDepsPom;
 	}
-	
+
 	public JTextField getSearchDepField() {
 		return jTextField1;
 	}
-	
+
 	public JButton getJButtonSearch() {
 		return jButtonSearch;
 	}
-	
+
 	public JTextPane getJTextPaneDepLog() {
 		return jTextPaneDepLog;
 	}
-	
+
 	public JButton getJButtonCheckDeps() {
 		return jButtonCheckDeps;
 	}
-	
+
 	public JButton getJButtonPomBrowse() {
 		return jButtonPomBrowse;
 	}
-	
+
 	public JButton getJButtonMyDepsBrowse() {
 		return jButtonMyDepsBrowse;
 	}
-	
+
 	public JTextField getJTextFieldPom() {
 		return jTextFieldPom;
 	}
-	
+
 	public JTextField getJTextFieldMyDeps() {
 		return jTextFieldMyDeps;
 	}

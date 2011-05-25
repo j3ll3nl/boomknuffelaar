@@ -61,7 +61,7 @@ public class JFrameAnalyse extends javax.swing.JFrame {
 		try {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			pack();
-			setTitle("Analyse");
+			setTitle("Code analyse");
 			setIconImage(new ImageIcon(getClass().getClassLoader().getResource("hu/project/innovation/resources/jframeicon.jpg")).getImage());
 			setResizable(false);
 			{
