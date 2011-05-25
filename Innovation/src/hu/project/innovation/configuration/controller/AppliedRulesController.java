@@ -104,7 +104,7 @@ public class AppliedRulesController extends PopUpController implements KeyListen
 			} else if (getAction().equals(PopUpController.ACTION_EDIT)) {
 				appliedrule.setToLayer((Layer) jframe.jComboBoxToLayer.getSelectedItem());
 				appliedrule.setRuleType((AbstractRuleType) jframe.jComboBoxAppliedRule.getSelectedItem());
-				appliedrule.setEnabled(jframe.jCheckBoxEnabled.isEnabled());
+				appliedrule.setEnabled(jframe.jCheckBoxEnabled.isSelected());
 
 				appliedrule.removeAllExceptions();
 
