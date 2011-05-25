@@ -33,6 +33,7 @@ public class DependencyController implements ActionListener {
 	private JFrameDependencies dependenciesJFrame = null;
 	private ArrayList<JTable> tables = new ArrayList<JTable>();
 	private ArrayList<JButton> buttons = new ArrayList<JButton>();
+	@SuppressWarnings("unused")
 	private JTextField searchField, jTextFieldPomPath, jTextFieldMyDepsPath;
 	private JFileChooser selectPom, selectMyDeps;
 	private JButton buttonCheckDeps;
@@ -43,6 +44,7 @@ public class DependencyController implements ActionListener {
 		allowedDepsFile = new File(projectPath + "/mydependencies.xml");
 
 	/** format for version number */
+	@SuppressWarnings("unused")
 	private static String _VERSION = "[0-9]{1,2}(.[0-9])*?";
 	
 	public DependencyController() {

@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -43,8 +42,7 @@ public class JFrameDependencies extends javax.swing.JFrame {
 	private JScrollPane jScrollPane4;
 	private JPanel jPanel3;
 	private JTextField jTextFieldMyDeps;
-	private JTextField jTextFieldPom;
-	private JLabel jLabelSelecteerPom;
+	private JTextField jTextFieldPom;	
 	private JPanel jPanel2;
 	private JTextField jTextField1;
 	private JButton jButtonDeletePomD;
