@@ -16,8 +16,10 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.DefaultEditorKit;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -33,6 +35,8 @@ public class DependencyController implements ActionListener {
 	private ArrayList<JButton> buttons = new ArrayList<JButton>();
 	private JTextField searchField, jTextFieldPomPath, jTextFieldMyDepsPath;
 	private JFileChooser selectPom, selectMyDeps;
+	private JButton buttonCheckDeps;
+	private JTextPane jTextPaneDepLog;
 	
 	// de pom.xml en mydependencies.xml (toegestane dependencies door de belastingdienst)
 	private File pomFile = new File(projectPath + "/pom.xml"),
@@ -53,11 +57,11 @@ public class DependencyController implements ActionListener {
 				for (DepSoftwareComponent _component : dependencyService.getDependencies()) {
 					if(dependencyService.searchAllowedDepSoftwareComponent(_component.getArtifactId())) {
 						if (!isVersionValidate(dependencyService.getAllowedDependency(_component.getArtifactId()).getVersion(), _component.getVersion())) {
-							System.err.println("Warning: component " + _component.getArtifactId() + " with version: " + _component.getVersion() + " is illegal");
-							System.err.println("Allowed version: " + dependencyService.getAllowedDependency(_component.getArtifactId()).getVersion());
+							jTextPaneDepLog.setText(jTextPaneDepLog.getText() + "\n" + "Warning: component " + _component.getArtifactId() + " with version: " + _component.getVersion() + " is illegal");
+							jTextPaneDepLog.setText(jTextPaneDepLog.getText() + "\n" + "Allowed version: " + dependencyService.getAllowedDependency(_component.getArtifactId()).getVersion());
 						}
 					} else{ // de dependency (in de pom) komt niet voor in de allowed file
-						System.err.println("Warning: component " + _component.getArtifactId() + " (with version: " + _component.getVersion() + ") is illegal");
+						jTextPaneDepLog.setText(jTextPaneDepLog.getText() + "\n" + "Warning: component " + _component.getArtifactId() + " (with version: " + _component.getVersion() + ") is illegal");
 					}
 				}
 			}
@@ -142,10 +146,18 @@ public class DependencyController implements ActionListener {
 			buttons.add(buttonBrowsePom);
 			buttons.add(buttonBrowseMyDeps);
 			
+			buttonCheckDeps = dependenciesJFrame.getJButtonCheckDeps();
+			buttonCheckDeps.setName("buttonCheckDeps");
+			buttonCheckDeps.addActionListener(this);
+			
 			//textfields
 			searchField = dependenciesJFrame.getSearchDepField();
 			jTextFieldPomPath = dependenciesJFrame.getJTextFieldPom();
 			jTextFieldMyDepsPath = dependenciesJFrame.getJTextFieldMyDeps();
+			
+			//jtextpane
+			jTextPaneDepLog = dependenciesJFrame.getJTextPaneDepLog();
+			jTextPaneDepLog.getDocument().putProperty(DefaultEditorKit.EndOfLineStringProperty, "\n");
 
 //			DependencySelectionHandler dsHandler = new DependencySelectionHandler(dependencyService);
 			for (JButton button : buttons)
@@ -285,6 +297,8 @@ public class DependencyController implements ActionListener {
 					allowedDepsFile = new File(projectPath + "/" + selectPom.getSelectedFile().getName());
 					jTextFieldMyDepsPath.setText(allowedDepsFile.getAbsolutePath());
 				}
+			} else if(button.getName().equals("buttonCheckDeps")) {
+				check();
 			}
 		}
 		

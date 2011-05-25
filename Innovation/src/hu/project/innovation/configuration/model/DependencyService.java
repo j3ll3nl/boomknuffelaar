@@ -13,7 +13,7 @@ public final class DependencyService {
 		this.dependencies = new Dependency();
 		this.allowedDependencies = new Dependency();
 	}
-
+	
 	// custom dependencies
 
 	/**
