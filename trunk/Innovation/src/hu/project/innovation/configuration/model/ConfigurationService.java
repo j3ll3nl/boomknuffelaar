@@ -17,13 +17,11 @@ import org.xml.sax.helpers.XMLReaderFactory;
 public final class ConfigurationService {
 
 	private ArchitectureDefinition architectureDefinition;
-	private Configuration configuration;
+	private Configuration configuration = new Configuration();
 	private static ConfigurationService instance;
 
 	private ConfigurationService() {
 		Log.i(this, "constructor()");
-
-		this.configuration = new Configuration();
 	}
 
 	/**
@@ -149,8 +147,11 @@ public final class ConfigurationService {
 	 * @param name The layer name
 	 */
 	public Layer getLayer(String name) {
-		// TODO: Remove this method
 		return this.architectureDefinition.getLayer(name);
+	}
+
+	public Layer getLayer(int id) {
+		return null;
 	}
 
 	public ArrayList<Layer> getLayers() {
@@ -281,7 +282,7 @@ public final class ConfigurationService {
 	public String getOutputType() {
 		return this.configuration.getSetting(Configuration.OUTPUT_FORMAT);
 	}
-	
+
 	/**
 	 * Get rule type based on String
 	 * 
@@ -292,7 +293,7 @@ public final class ConfigurationService {
 	}
 
 	public AppliedRule newAppliedRule(Layer fromLayer, Layer toLayer, AbstractRuleType ruleType) {
-		if (null != fromLayer && null != toLayer && null != ruleType) {
+		if (null != fromLayer && null != ruleType) {
 			return fromLayer.addAppliedRule(ruleType, toLayer);
 		}
 		return null;
