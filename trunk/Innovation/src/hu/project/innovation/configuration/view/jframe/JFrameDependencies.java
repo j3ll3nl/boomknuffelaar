@@ -40,6 +40,7 @@ public class JFrameDependencies extends javax.swing.JFrame {
 	private JButton jButtonAllowDepAdd;
 	private JButton jButtonSearch;
 	private JButton jButtonMyDepsBrowse;
+	private JScrollPane jScrollPane4;
 	private JPanel jPanel3;
 	private JTextField jTextFieldMyDeps;
 	private JTextField jTextFieldPom;
@@ -113,13 +114,18 @@ public class JFrameDependencies extends javax.swing.JFrame {
 						jButtonMyDepsBrowse.setText("Select My Dependencies");
 					}
 					{
-						jTextPaneDepLog = new JTextPane();
-						jPanelCheck.add(getJTextPaneDepLogx());
-						jTextPaneDepLog.setText("Messages");
-						jTextPaneDepLog.setPreferredSize(new java.awt.Dimension(580, 252));
-						jTextPaneDepLog.setBackground(new java.awt.Color(0,0,0));
-						jTextPaneDepLog.setForeground(new java.awt.Color(255,255,255));
-						jTextPaneDepLog.setEditable(false);
+						jScrollPane4 = new JScrollPane();
+						jPanelCheck.add(jScrollPane4);
+						jScrollPane4.setPreferredSize(new java.awt.Dimension(580, 252));
+						{
+							jTextPaneDepLog = new JTextPane();
+							jScrollPane4.setViewportView(jTextPaneDepLog);
+							jTextPaneDepLog.setText("Messages");
+							jTextPaneDepLog.setPreferredSize(new java.awt.Dimension(580, 252));
+							jTextPaneDepLog.setBackground(new java.awt.Color(0,0,0));
+							jTextPaneDepLog.setForeground(new java.awt.Color(255,255,255));
+							jTextPaneDepLog.setEditable(false);
+						}
 					}
 					{
 						jButtonCheckDeps = new JButton();
@@ -306,10 +312,6 @@ public class JFrameDependencies extends javax.swing.JFrame {
 	
 	public JButton getJButtonCheckDeps() {
 		return jButtonCheckDeps;
-	}
-	
-	public JTextPane getJTextPaneDepLogx() {
-		return jTextPaneDepLog;
 	}
 	
 	public JButton getJButtonPomBrowse() {
