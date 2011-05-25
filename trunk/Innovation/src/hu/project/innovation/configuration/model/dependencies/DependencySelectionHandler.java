@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -33,7 +34,9 @@ public class DependencySelectionHandler implements ListSelectionListener, Action
 	}
 
 	public void actionPerformed(ActionEvent event) {
-
+		if(event.getSource() instanceof JTextField) {
+			
+		}
 	}
 
 }
