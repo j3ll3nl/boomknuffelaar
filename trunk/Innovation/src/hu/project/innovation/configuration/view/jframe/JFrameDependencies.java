@@ -40,6 +40,9 @@ public class JFrameDependencies extends javax.swing.JFrame {
 	private JButton jButtonAllowDepAdd;
 	private JButton jButtonSearch;
 	private JButton jButtonMyDepsBrowse;
+	private JPanel jPanel3;
+	private JTextField jTextFieldMyDeps;
+	private JTextField jTextFieldPom;
 	private JLabel jLabelSelecteerPom;
 	private JPanel jPanel2;
 	private JTextField jTextField1;
@@ -83,9 +86,26 @@ public class JFrameDependencies extends javax.swing.JFrame {
 					jPanelCheck = new JPanel();
 					jTabbedPane1.addTab("Check", null, jPanelCheck, null);
 					{
-						jButtonPomBrowse = new JButton();
-						jPanelCheck.add(getJButtonPomBrowse());
-						jButtonPomBrowse.setText("Select POM file");
+						jPanel3 = new JPanel();
+						jPanelCheck.add(jPanel3);
+						jPanel3.setPreferredSize(new java.awt.Dimension(500, 33));
+						{
+							jTextFieldPom = new JTextField();
+							jPanel3.add(jTextFieldPom);
+							jTextFieldPom.setPreferredSize(new java.awt.Dimension(250, 20));
+							jTextFieldPom.setText("Path");
+						}
+						{
+							jButtonPomBrowse = new JButton();
+							jPanel3.add(jButtonPomBrowse);
+							jButtonPomBrowse.setText("Select POM file");
+						}
+					}
+					{
+						jTextFieldMyDeps = new JTextField();
+						jPanelCheck.add(getJTextFieldMyDeps());
+						jTextFieldMyDeps.setText("Path");
+						jTextFieldMyDeps.setPreferredSize(new java.awt.Dimension(250, 20));
 					}
 					{
 						jButtonMyDepsBrowse = new JButton();
@@ -298,5 +318,13 @@ public class JFrameDependencies extends javax.swing.JFrame {
 	
 	public JButton getJButtonMyDepsBrowse() {
 		return jButtonMyDepsBrowse;
+	}
+	
+	public JTextField getJTextFieldPom() {
+		return jTextFieldPom;
+	}
+	
+	public JTextField getJTextFieldMyDeps() {
+		return jTextFieldMyDeps;
 	}
 }

@@ -31,7 +31,7 @@ public class DependencyController implements ActionListener {
 	private JFrameDependencies dependenciesJFrame = null;
 	private ArrayList<JTable> tables = new ArrayList<JTable>();
 	private ArrayList<JButton> buttons = new ArrayList<JButton>();
-	private JTextField searchField;
+	private JTextField searchField, jTextFieldPomPath, jTextFieldMyDepsPath;
 	private JFileChooser selectPom, selectMyDeps;
 	
 	// de pom.xml en mydependencies.xml (toegestane dependencies door de belastingdienst)
@@ -144,6 +144,8 @@ public class DependencyController implements ActionListener {
 			
 			//textfields
 			searchField = dependenciesJFrame.getSearchDepField();
+			jTextFieldPomPath = dependenciesJFrame.getJTextFieldPom();
+			jTextFieldMyDepsPath = dependenciesJFrame.getJTextFieldMyDeps();
 
 //			DependencySelectionHandler dsHandler = new DependencySelectionHandler(dependencyService);
 			for (JButton button : buttons)
@@ -274,11 +276,15 @@ public class DependencyController implements ActionListener {
 			JButton button = (JButton) event.getSource();
 			if(button.getName().equals("buttonBrowsePom")) {
 				// Als de pom (of een xml bestand) is geselecteerd
-				if(selectPom.showOpenDialog(button) == JFileChooser.APPROVE_OPTION)
+				if(selectPom.showOpenDialog(button) == JFileChooser.APPROVE_OPTION) {
 					pomFile = new File(projectPath + "/" + selectPom.getSelectedFile().getName());
+					jTextFieldPomPath.setText(pomFile.getAbsolutePath());
+				}
 			} else if(button.getName().equals("buttonBrowseMyDeps")) {
-				if(selectMyDeps.showOpenDialog(button) == JFileChooser.APPROVE_OPTION)
+				if(selectMyDeps.showOpenDialog(button) == JFileChooser.APPROVE_OPTION) {
 					allowedDepsFile = new File(projectPath + "/" + selectPom.getSelectedFile().getName());
+					jTextFieldMyDepsPath.setText(allowedDepsFile.getAbsolutePath());
+				}
 			}
 		}
 		
