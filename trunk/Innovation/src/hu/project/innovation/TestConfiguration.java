@@ -22,7 +22,7 @@ public class TestConfiguration {
 			conf.setOutputPath("C:\\");
 			conf.setOutputType(Configuration.OUTPUT_FORMAT_TEXT);
 
-			conf.newConfiguration("Test Architecture", "");
+			conf.newConfiguration("Innovation Test Architecture", "Deze architectuur definitie wordt gebruikt voor testdoeleinden van onze eigen applicatie.");
 
 			String ui = "UI";
 			String task = "Task";

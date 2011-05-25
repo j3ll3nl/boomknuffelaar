@@ -1,5 +1,6 @@
 package hu.project.innovation;
 
+import hu.project.innovation.configuration.model.ConfigurationService;
 import hu.project.innovation.configuration.view.DefinitionJPanel;
 import hu.project.innovation.configuration.view.JPanelStatus;
 
@@ -61,7 +62,12 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 	private void initUi() {
 		try {
 			setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-			setTitle(defaultTitle);
+			
+			if(ConfigurationService.getInstance().hasArchitectureDefinition()){
+				setTitle(ConfigurationService.getInstance().getConfiguration().getName());
+			}else{
+				setTitle("");
+			}
 			setIconImage(new ImageIcon(getClass().getClassLoader().getResource("hu/project/innovation/resources/jframeicon.jpg")).getImage());
 			{
 				jPanelContentView = new JPanel();
@@ -169,7 +175,11 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 
 	@Override
 	public void setTitle(String configuration) {
-		super.setTitle(defaultTitle + " - " + configuration);
+		if(configuration.trim().equals("")){
+			super.setTitle(defaultTitle);
+		}else{
+			super.setTitle(defaultTitle + " - " + configuration);
+		}
 	}
 
 }

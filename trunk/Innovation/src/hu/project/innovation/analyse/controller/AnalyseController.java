@@ -54,10 +54,15 @@ public class AnalyseController implements Observer, ActionListener, KeyListener 
 		analyseJFrame.setVisible(true);
 	}
 
-	private String browseForPath() {
-		// Create a file chooser
+	private String browseForPath(String preferedpath) {
+		if (preferedpath.trim().equals("")) {
+			preferedpath = System.getProperty("user.dir");
+		}
 
-		JFileChooser fc = new JFileChooser();
+		File defaultPath = new File(preferedpath);
+
+		// Create a file chooser
+		JFileChooser fc = new JFileChooser(defaultPath);
 
 		fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		fc.setAcceptAllFileFilterUsed(false);
@@ -77,7 +82,7 @@ public class AnalyseController implements Observer, ActionListener, KeyListener 
 				Log.e(this, "openConfiguration() - exeption: " + e.getMessage());
 			}
 		}
-		return null;
+		return preferedpath;
 	}
 
 	private void updateAnalyseButton(boolean running) {
@@ -93,12 +98,12 @@ public class AnalyseController implements Observer, ActionListener, KeyListener 
 		Log.i(this, "actionPerformed()");
 		if (action.getSource() == analyseJFrame.jButtonProjectBrowse) {
 			Log.i(this, "actionPerformed() - project browse");
-			String path = browseForPath();
+			String path = browseForPath(analyseJFrame.jTextFieldProjectPath.getText());
 			ConfigurationService.getInstance().setProjectPath(path);
 			analyseJFrame.jTextFieldProjectPath.setText(path);
 		} else if (action.getSource() == analyseJFrame.jButtonOutputBrowse) {
 			Log.i(this, "actionPerformed() - output browse");
-			String path = browseForPath();
+			String path = browseForPath(analyseJFrame.jTextFieldOutputPath.getText());
 			ConfigurationService.getInstance().setOutputPath(path);
 			analyseJFrame.jTextFieldOutputPath.setText(path);
 		} else if (action.getSource() == analyseJFrame.jComboBoxOutputType) {
