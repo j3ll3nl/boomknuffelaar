@@ -25,7 +25,6 @@ public class MainController implements ActionListener {
 
 		definitioncontroller = new DefinitionController(this);
 		analysecontroller = new AnalyseController();
-		dependencycontroller = new DependencyController();
 	}
 
 	/**
@@ -101,6 +100,7 @@ public class MainController implements ActionListener {
 			analysecontroller.initUi();
 		} else if (action.getSource() == jframe.jMenuItemCheckDependencies) {
 			Log.i(this, "actionPerformed() - check dependensies");
+			dependencycontroller = new DependencyController();
 			dependencycontroller.initUI();
 		} else if (action.getSource() == jframe.jMenuItemAbout) {
 			Log.i(this, "actionPerformed() - about");

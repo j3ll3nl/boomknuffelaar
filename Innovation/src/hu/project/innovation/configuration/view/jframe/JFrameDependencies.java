@@ -4,11 +4,13 @@ import java.awt.BorderLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
@@ -29,10 +31,16 @@ public class JFrameDependencies extends javax.swing.JFrame {
 	private JButton jButton1;
 	private JPanel jPanelPom;
 	private JScrollPane jScrollPane2;
+	private JButton jButtonPomBrowse;
+	private JButton jButtonCheckDeps;
+	private JTextPane jTextPaneDepLog;
+	private JPanel jPanelCheck;
 	private JButton jButton4;
 	private JButton jButton3;
 	private JButton jButtonAllowDepAdd;
 	private JButton jButtonSearch;
+	private JButton jButtonMyDepsBrowse;
+	private JLabel jLabelSelecteerPom;
 	private JPanel jPanel2;
 	private JTextField jTextField1;
 	private JButton jButtonDeletePomD;
@@ -70,11 +78,39 @@ public class JFrameDependencies extends javax.swing.JFrame {
 				// Eerste tab (found dependencies)
 				jTabbedPane1 = new JTabbedPane();
 				getContentPane().add(jTabbedPane1, BorderLayout.NORTH);
-				jTabbedPane1.setPreferredSize(new java.awt.Dimension(610, 419));
+				jTabbedPane1.setPreferredSize(new java.awt.Dimension(610, 420));
+				{
+					jPanelCheck = new JPanel();
+					jTabbedPane1.addTab("Check", null, jPanelCheck, null);
+					{
+						jButtonPomBrowse = new JButton();
+						jPanelCheck.add(getJButtonPomBrowse());
+						jButtonPomBrowse.setText("Select POM file");
+					}
+					{
+						jButtonMyDepsBrowse = new JButton();
+						jPanelCheck.add(getJButtonMyDepsBrowse());
+						jButtonMyDepsBrowse.setText("Select My Dependencies");
+					}
+					{
+						jTextPaneDepLog = new JTextPane();
+						jPanelCheck.add(getJTextPaneDepLogx());
+						jTextPaneDepLog.setText("Messages");
+						jTextPaneDepLog.setPreferredSize(new java.awt.Dimension(580, 252));
+						jTextPaneDepLog.setBackground(new java.awt.Color(0,0,0));
+						jTextPaneDepLog.setForeground(new java.awt.Color(255,255,255));
+						jTextPaneDepLog.setEditable(false);
+					}
+					{
+						jButtonCheckDeps = new JButton();
+						jPanelCheck.add(jButtonCheckDeps);
+						jButtonCheckDeps.setText("Check Dependencies");
+					}
+				}
 				{
 					jPanel1 = new JPanel();
 					jTabbedPane1.addTab("Undefined", null, jPanel1, null);
-					jPanel1.setPreferredSize(new java.awt.Dimension(605, 219));
+					jPanel1.setPreferredSize(new java.awt.Dimension(0, 0));
 					jPanel1.setBorder(BorderFactory.createTitledBorder("Found project dependencies that are not defined in the pom file"));
 					{
 						jScrollPane1 = new JScrollPane();
@@ -152,6 +188,7 @@ public class JFrameDependencies extends javax.swing.JFrame {
 							jButtonSearch = new JButton();
 							jPanel2.add(jButtonSearch);
 							jButtonSearch.setText("Search");
+							jButtonSearch.setName("searchbutton");
 						}
 					}
 					{
@@ -192,7 +229,7 @@ public class JFrameDependencies extends javax.swing.JFrame {
 
 			}
 			pack();
-			this.setSize(610, 449);
+			this.setSize(610, 448);
 		} catch (Exception e) {
 			// add your error handling code here
 			e.printStackTrace();
@@ -233,5 +270,33 @@ public class JFrameDependencies extends javax.swing.JFrame {
 
 	public JTable getJTableDepsPom() {
 		return jTableDepsPom;
+	}
+	
+	public JTextField getSearchDepField() {
+		return jTextField1;
+	}
+	
+	public JButton getJButtonSearch() {
+		return jButtonSearch;
+	}
+	
+	public JTextPane getJTextPaneDepLog() {
+		return jTextPaneDepLog;
+	}
+	
+	public JButton getJButtonCheckDeps() {
+		return jButtonCheckDeps;
+	}
+	
+	public JTextPane getJTextPaneDepLogx() {
+		return jTextPaneDepLog;
+	}
+	
+	public JButton getJButtonPomBrowse() {
+		return jButtonPomBrowse;
+	}
+	
+	public JButton getJButtonMyDepsBrowse() {
+		return jButtonMyDepsBrowse;
 	}
 }

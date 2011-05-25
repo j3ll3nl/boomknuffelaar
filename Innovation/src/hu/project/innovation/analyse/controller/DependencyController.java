@@ -3,16 +3,20 @@ package hu.project.innovation.analyse.controller;
 import hu.project.innovation.configuration.model.DependencyService;
 import hu.project.innovation.configuration.model.dependencies.DepSoftwareComponent;
 import hu.project.innovation.configuration.model.dependencies.DependencyParseHandler;
-import hu.project.innovation.configuration.model.dependencies.DependencySelectionHandler;
 import hu.project.innovation.configuration.view.jframe.JFrameDependencies;
 import hu.project.innovation.utils.UiDialogs;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.filechooser.FileFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -20,13 +24,15 @@ import javax.xml.parsers.SAXParserFactory;
 
 import org.xml.sax.SAXException;
 
-public class DependencyController {
+public class DependencyController implements ActionListener {
 	private DependencyService dependencyService;
-	
+		
 	private String projectPath = System.getProperty("user.dir");
 	private JFrameDependencies dependenciesJFrame = null;
 	private ArrayList<JTable> tables = new ArrayList<JTable>();
 	private ArrayList<JButton> buttons = new ArrayList<JButton>();
+	private JTextField searchField;
+	private JFileChooser selectPom, selectMyDeps;
 	
 	// de pom.xml en mydependencies.xml (toegestane dependencies door de belastingdienst)
 	private File pomFile = new File(projectPath + "/pom.xml"),
@@ -38,29 +44,36 @@ public class DependencyController {
 	public DependencyController() {
 		// TODO Aan daan: Deze code wordt te vroeg uitgevoerd. Bij het opstarten van de app wordt direct iets met pom.xml gedaan. Dat veroorzaakte mij een nullpointerexception waardoor de app niet
 		// opstarte. (stefan)
-		
-		  // Kijken of de dependency in de POM voorkomt (en in dat geval dus is allowed) in mydependencies.xml
+	}
+	
+	public void check() {
+		// Kijken of de dependency in de POM voorkomt (en in dat geval dus is allowed) in mydependencies.xml
+		if(dependencyService.getDependencies() != null) {
+			if(dependencyService.getAllowedDependencies() != null) {
+				for (DepSoftwareComponent _component : dependencyService.getDependencies()) {
+					if(dependencyService.searchAllowedDepSoftwareComponent(_component.getArtifactId())) {
+						if (!isVersionValidate(dependencyService.getAllowedDependency(_component.getArtifactId()).getVersion(), _component.getVersion())) {
+							System.err.println("Warning: component " + _component.getArtifactId() + " with version: " + _component.getVersion() + " is illegal");
+							System.err.println("Allowed version: " + dependencyService.getAllowedDependency(_component.getArtifactId()).getVersion());
+						}
+					} else{ // de dependency (in de pom) komt niet voor in de allowed file
+						System.err.println("Warning: component " + _component.getArtifactId() + " (with version: " + _component.getVersion() + ") is illegal");
+					}
+				}
+			}
+		}
+	}
+	
+	private boolean doFilesExist() {
 		if(pomFile.exists()) {
 			if(allowedDepsFile.exists()) {
 				dependencyService = new DependencyService();
 				this.addAllowedDependencies();
 				this.addDependencies();
-				if(dependencyService.getDependencies() != null) {
-					if(dependencyService.getAllowedDependencies() != null) {
-						for (DepSoftwareComponent _component : dependencyService.getDependencies()) {
-							if(dependencyService.searchAllowedDepSoftwareComponent(_component.getArtifactId())) {
-								if (!isVersionValidate(dependencyService.getAllowedDependency(_component.getArtifactId()).getVersion(), _component.getVersion())) {
-									System.err.println("Warning: component " + _component.getArtifactId() + " with version: " + _component.getVersion() + " is illegal");
-									System.err.println("Allowed version: " + dependencyService.getAllowedDependency(_component.getArtifactId()).getVersion());
-								}
-							} else{ // de dependency (in de pom) komt niet voor in de allowed file
-								System.err.println("Warning: component " + _component.getArtifactId() + " (with version: " + _component.getVersion() + ") is illegal");
-							}
-						}
-					}
-				}
+				return true;
 			} else System.err.println("File: " + allowedDepsFile.getAbsolutePath() + " can't be found");
 		} else System.err.println("File: " + pomFile.getAbsolutePath() + " can't be found");
+		return false;
 	}
 
 	private boolean isVersionValidate(String terms, String _version) {
@@ -73,9 +86,8 @@ public class DependencyController {
 	 * @param version
 	 * @return
 	 */
-	private final String getRegExpression(String version) {
+	private String getRegExpression(String version) {
 		// converteer de versie nummer naar een reguliere expressie
-		System.out.println(version);
 		String _temp = version;
 		if (version.contains(",")) {
 			if (_temp.contains(",")) {
@@ -88,9 +100,24 @@ public class DependencyController {
 	}
 
 	/**
-	 * 
+	 * start de gui
 	 */
 	public void initUI() {
+		doFilesExist();
+		selectPom = new JFileChooser(projectPath);
+		selectPom.setFileFilter(new FileFilter() {
+			@Override
+			public boolean accept(File f) {
+				return f.getName().endsWith(".xml");
+			}
+			@Override
+			public String getDescription() {
+				return "*.xml";
+			}
+		});
+		//copy
+		selectMyDeps = selectPom;
+		
 		if (dependenciesJFrame == null) {
 			dependenciesJFrame = new JFrameDependencies();
 			// get (the 3) tables
@@ -100,16 +127,29 @@ public class DependencyController {
 
 			dependenciesJFrame.setResizable(false);
 
+			JButton buttonBrowsePom = dependenciesJFrame.getJButtonPomBrowse();
+			JButton buttonBrowseMyDeps = dependenciesJFrame.getJButtonMyDepsBrowse();
+			buttonBrowsePom.setName("buttonBrowsePom");
+			buttonBrowseMyDeps.setName("buttonBrowseMyDeps");
+			
 			// Disable buttons (voorlopig)
 			buttons.add(dependenciesJFrame.getJButton1());
 			buttons.add(dependenciesJFrame.getJButtonAllowDepAdd());
 			buttons.add(dependenciesJFrame.getJButtonAllowDepEdit());
 			buttons.add(dependenciesJFrame.getJButtonAllowDepRemove());
 			buttons.add(dependenciesJFrame.getJButtonDeletePomD());
+			buttons.add(dependenciesJFrame.getJButtonSearch());
+			buttons.add(buttonBrowsePom);
+			buttons.add(buttonBrowseMyDeps);
+			
+			//textfields
+			searchField = dependenciesJFrame.getSearchDepField();
 
-			DependencySelectionHandler dsHandler = new DependencySelectionHandler(dependencyService);
+//			DependencySelectionHandler dsHandler = new DependencySelectionHandler(dependencyService);
 			for (JButton button : buttons)
-				button.addActionListener(dsHandler);
+				button.addActionListener(this);
+			
+//			searchField.addActionListener(dsHandler);
 
 			// for(JTable table : tables)
 			// pomDepsTable.getSelectionModel().addListSelectionListener(new DependencySelectionHandler(jButtonDeletePomD));
@@ -124,7 +164,7 @@ public class DependencyController {
 				dtm.addColumn("Type");
 				for (JButton button : buttons) {
 					System.out.println(button.getName());
-					table.getSelectionModel().addListSelectionListener(new DependencySelectionHandler(button));
+//					table.getSelectionModel().addListSelectionListener(new DependencySelectionHandler(button));
 				}
 				counter++;
 			}
@@ -227,5 +267,20 @@ public class DependencyController {
 	 */
 	private void addDependencies() {
 		parseXML(pomFile, false);
+	}
+
+	public void actionPerformed(ActionEvent event) {
+		if(event.getSource() instanceof JButton) {
+			JButton button = (JButton) event.getSource();
+			if(button.getName().equals("buttonBrowsePom")) {
+				// Als de pom (of een xml bestand) is geselecteerd
+				if(selectPom.showOpenDialog(button) == JFileChooser.APPROVE_OPTION)
+					pomFile = new File(projectPath + "/" + selectPom.getSelectedFile().getName());
+			} else if(button.getName().equals("buttonBrowseMyDeps")) {
+				if(selectMyDeps.showOpenDialog(button) == JFileChooser.APPROVE_OPTION)
+					allowedDepsFile = new File(projectPath + "/" + selectPom.getSelectedFile().getName());
+			}
+		}
+		
 	}
 }
