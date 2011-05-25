@@ -1,8 +1,8 @@
 package hu.project.innovation;
 
 import hu.project.innovation.configuration.model.ConfigurationService;
-import hu.project.innovation.configuration.view.DefinitionJPanel;
-import hu.project.innovation.configuration.view.JPanelStatus;
+import hu.project.innovation.configuration.view.jpanel.DefinitionJPanel;
+import hu.project.innovation.utils.JPanelStatus;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;

@@ -5,12 +5,12 @@ import hu.project.innovation.configuration.model.AppliedRule;
 import hu.project.innovation.configuration.model.ConfigurationService;
 import hu.project.innovation.configuration.model.Layer;
 import hu.project.innovation.configuration.model.SoftwareUnitDefinition;
-import hu.project.innovation.configuration.view.DefinitionJPanel;
-import hu.project.innovation.configuration.view.JPanelStatus;
+import hu.project.innovation.configuration.view.helper.XmlFileFilter;
+import hu.project.innovation.configuration.view.jpanel.DefinitionJPanel;
 import hu.project.innovation.configuration.view.tables.JTableTableModel;
+import hu.project.innovation.utils.JPanelStatus;
 import hu.project.innovation.utils.Log;
 import hu.project.innovation.utils.UiDialogs;
-import hu.project.innovation.utils.XmlFileFilter;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

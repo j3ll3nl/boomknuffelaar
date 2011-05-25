@@ -1,4 +1,4 @@
-package hu.project.innovation.configuration.view.jframe;
+package hu.project.innovation.analyse.view;
 
 import java.awt.BorderLayout;
 

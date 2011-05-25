@@ -104,17 +104,17 @@ public class ExportController extends Controller {
 
 	private String exportExceptions(AppliedRule appliedRule) {
 		StringBuilder export = new StringBuilder();
-		export.append("\t\t\t\t\t\t\t<" + this.exception + "s>\n");
+		export.append("\t\t\t\t\t\t<" + this.exception + "s>\n");
 
 		ArrayList<SoftwareUnitDefinition> exceptions = appliedRule.getExceptions();
 		for (SoftwareUnitDefinition exception : exceptions) {
-			export.append("\t\t\t\t\t\t\t\t<" + this.exception + ">\n");
-			export.append("\t\t\t\t\t\t\t\t\t<" + this.exception_name + ">" + exception.getName() + "</" + this.exception_name + ">\n");
-			export.append("\t\t\t\t\t\t\t\t\t<" + this.exception_type + ">" + exception.getType() + "</" + this.exception_type + ">\n");
-			export.append("\t\t\t\t\t\t\t\t</" + this.exception + ">\n");
+			export.append("\t\t\t\t\t\t\t<" + this.exception + ">\n");
+			export.append("\t\t\t\t\t\t\t\t<" + this.exception_name + ">" + exception.getName() + "</" + this.exception_name + ">\n");
+			export.append("\t\t\t\t\t\t\t\t<" + this.exception_type + ">" + exception.getType() + "</" + this.exception_type + ">\n");
+			export.append("\t\t\t\t\t\t\t</" + this.exception + ">\n");
 		}
 
-		export.append("\t\t\t\t\t\t\t</" + this.exception + "s>\n");
+		export.append("\t\t\t\t\t\t</" + this.exception + "s>\n");
 		return export.toString();
 	}
 }
