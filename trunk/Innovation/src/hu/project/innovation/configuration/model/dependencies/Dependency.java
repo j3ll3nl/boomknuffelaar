@@ -6,6 +6,7 @@ public class Dependency extends HashMap<String, DepSoftwareComponent> implements
 	private static final long serialVersionUID = 1L;
 
 	public Dependency() {
+		
 	}
 
 	/** add a dependency */
@@ -59,5 +60,10 @@ public class Dependency extends HashMap<String, DepSoftwareComponent> implements
 			}
 		}
 		return false;
+	}
+	
+	/** remove dependencies **/
+	public void removeDependencies() {
+		super.clear();
 	}
 }

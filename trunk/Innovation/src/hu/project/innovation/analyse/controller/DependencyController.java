@@ -144,6 +144,7 @@ public class DependencyController implements ActionListener {
 			buttons.add(dependenciesJFrame.getJButtonAllowDepRemove());
 			buttons.add(dependenciesJFrame.getJButtonDeletePomD());
 			buttons.add(dependenciesJFrame.getJButtonSearch());
+			buttons.add(dependenciesJFrame.getJButtonClear());
 			buttons.add(buttonBrowsePom);
 			buttons.add(buttonBrowseMyDeps);
 			
@@ -290,15 +291,23 @@ public class DependencyController implements ActionListener {
 			if(button.getName().equals("buttonBrowsePom")) {
 				// Als de pom (of een xml bestand) is geselecteerd
 				if(selectPom.showOpenDialog(button) == JFileChooser.APPROVE_OPTION) {
-					pomFile = new File(projectPath + "/" + selectPom.getSelectedFile().getName());
 					jTextFieldPomPath.setText(pomFile.getAbsolutePath());
+					//clear dependencies and add the new ones (in the file defined)
+					dependencyService.removeAllDependencies();
+					addDependencies();
 				}
+			} else if(button.getName().equals("buttonClear")) {
+				jTextPaneDepLog.setText("");
 			} else if(button.getName().equals("buttonBrowseMyDeps")) {
 				if(selectMyDeps.showOpenDialog(button) == JFileChooser.APPROVE_OPTION) {
 					allowedDepsFile = new File(projectPath + "/" + selectPom.getSelectedFile().getName());
 					jTextFieldMyDepsPath.setText(allowedDepsFile.getAbsolutePath());
+					//clear allowed dependencies and add the new ones (in the file defined)
+					dependencyService.removeAllAllowedDependencies();
+					addAllowedDependencies();
 				}
 			} else if(button.getName().equals("buttonCheckDeps")) {
+				System.out.println("path: " + pomFile.getAbsolutePath());
 				check();
 			}
 		}

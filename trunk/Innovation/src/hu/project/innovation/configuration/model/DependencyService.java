@@ -52,6 +52,10 @@ public final class DependencyService {
 	public boolean searchDepSoftwareComponent(String keyword) {
 		return dependencies.searchDepSoftwareComponent(keyword);
 	}
+	
+	public void removeAllDependencies() {
+		dependencies.removeDependencies();
+	}
 
 	// Allowed dependencies
 
@@ -90,5 +94,9 @@ public final class DependencyService {
 	/** @return the searched dependency (if found) */
 	public boolean searchAllowedDepSoftwareComponent(String keyword) {
 		return allowedDependencies.searchDepSoftwareComponent(keyword);
+	}
+	
+	public void removeAllAllowedDependencies() {
+		allowedDependencies.removeDependencies();
 	}
 }
