@@ -37,6 +37,7 @@ public class JFrameDependencies extends javax.swing.JFrame {
 	private JButton jButtonAllowDepAdd;
 	private JButton jButtonSearch;
 	private JButton jButtonMyDepsBrowse;
+	private JButton jButtonClear;
 	private JScrollPane jScrollPane4;
 	private JPanel jPanel3;
 	private JTextField jTextFieldMyDeps;
@@ -125,6 +126,12 @@ public class JFrameDependencies extends javax.swing.JFrame {
 						jButtonCheckDeps = new JButton();
 						jPanelCheck.add(jButtonCheckDeps);
 						jButtonCheckDeps.setText("Check Dependencies");
+					}
+					{
+						jButtonClear = new JButton();
+						jButtonClear.setName("buttonClear");
+						jPanelCheck.add(jButtonClear);
+						jButtonClear.setText("Clear log");
 					}
 				}
 				{
@@ -314,6 +321,10 @@ public class JFrameDependencies extends javax.swing.JFrame {
 
 	public JButton getJButtonMyDepsBrowse() {
 		return jButtonMyDepsBrowse;
+	}
+	
+	public JButton getJButtonClear() {
+		return jButtonClear;
 	}
 
 	public JTextField getJTextFieldPom() {

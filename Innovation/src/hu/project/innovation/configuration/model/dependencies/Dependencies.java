@@ -22,4 +22,7 @@ public interface Dependencies {
 
 	/** @return the searched dependency (if found) */
 	public boolean searchDepSoftwareComponent(String keyword);
+	
+	/** remove all dependencies **/
+	public void removeDependencies();
 }
