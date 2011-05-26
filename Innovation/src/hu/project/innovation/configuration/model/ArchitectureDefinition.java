@@ -2,11 +2,10 @@ package hu.project.innovation.configuration.model;
 
 import hu.project.innovation.utils.DefaultMessages;
 import hu.project.innovation.utils.Log;
-import hu.project.innovation.utils.XMLable;
 
 import java.util.ArrayList;
 
-public class ArchitectureDefinition implements XMLable {
+public class ArchitectureDefinition {
 
 	private String architectureName;
 	private String architectureDescription;
@@ -116,23 +115,14 @@ public class ArchitectureDefinition implements XMLable {
 	 */
 	public void autoUpdateLayerSequence() {
 		Layer firstLayer = topLayer.getFirstLayer();
-	
+
 		topLayer = topLayer.getFirstLayer();
-	
+
 		// Auto update the ID numbers for the layers. Ofcourse, the first layer should be 0 etc.
 		firstLayer.updateId(0);
 	}
 
-	public String toXML() {
-		String xml = "\t<architecture name=\"" + getName() + "\">\n";
-		if (topLayer != null) {
-			xml += topLayer.toXML();
-		}
-		xml += "\t</architecture>\n";
-
-		return xml;
-	}
-	public String toString(){
+	public String toString() {
 		return getName();
 	}
 }

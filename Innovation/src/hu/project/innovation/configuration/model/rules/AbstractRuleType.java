@@ -1,7 +1,6 @@
 package hu.project.innovation.configuration.model.rules;
 
 import hu.project.innovation.configuration.model.ConfigurationService;
-import hu.project.innovation.utils.XMLable;
 
 import java.io.File;
 import java.util.List;
@@ -13,7 +12,7 @@ import net.sourceforge.pmd.ast.SimpleNode;
 
 import org.jaxen.JaxenException;
 
-public abstract class AbstractRuleType extends AbstractJavaRule implements XMLable {
+public abstract class AbstractRuleType extends AbstractJavaRule {
 
 	protected AbstractRuleType() {
 		this.setName(this.getClass().getSimpleName());
@@ -46,25 +45,12 @@ public abstract class AbstractRuleType extends AbstractJavaRule implements XMLab
 			return "";
 		} else {
 			ASTClassOrInterfaceDeclaration c = node.getFirstParentOfType(ASTClassOrInterfaceDeclaration.class);
-			if(c.getType() != null) {
+			if (c.getType() != null) {
 				return c.getType().getCanonicalName();
 			} else {
 				return "";
 			}
 		}
-	}
-
-	public String toXML() {
-		String xml = "";
-
-		xml += "<rule name=\"" + this.getName() + "\" ";
-		xml += "message=\"" + this.getName() + "\" ";
-		xml += "class=\"" + this.getClass().getPackage() + this.getClass().getSimpleName() + "\">";
-		xml += "<description>" + this.getDescription() + "</description>";
-		xml += "<priority>" + this.getPriority() + "</priority>";
-		xml += "</rule>";
-
-		return xml;
 	}
 
 	protected void initArchitecture() {
