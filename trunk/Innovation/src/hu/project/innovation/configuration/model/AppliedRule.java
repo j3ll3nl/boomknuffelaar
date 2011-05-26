@@ -2,11 +2,10 @@ package hu.project.innovation.configuration.model;
 
 import hu.project.innovation.configuration.model.rules.AbstractRuleType;
 import hu.project.innovation.utils.Log;
-import hu.project.innovation.utils.XMLable;
 
 import java.util.ArrayList;
 
-public class AppliedRule implements XMLable {
+public class AppliedRule {
 
 	private AbstractRuleType ruleType;
 	private Layer fromLayer, toLayer;
@@ -74,20 +73,6 @@ public class AppliedRule implements XMLable {
 
 	public void removeAllExceptions() {
 		exceptions.clear();
-	}
-
-	public String toXML() {
-		String xml = "\t\t\t<appliedRule>\n";
-		xml += "\t\t\t\t<ruleType>" + ruleType.getName() + "</ruleType>\n";
-		xml += "\t\t\t\t<toLayer>" + toLayer.getId() + "</toLayer>\n";
-		for (SoftwareUnitDefinition unit : exceptions) {
-			xml += "\t\t\t\t<exception>\n";
-			xml += "\t\t\t\t\t<name>" + unit.getName() + "</name>\n";
-			xml += "\t\t\t\t\t<type>" + unit.getType() + "</type>\n";
-			xml += "\t\t\t\t</exception>\n";
-		}
-		xml += "\t\t\t</appliedRule>\n";
-		return xml;
 	}
 
 	public String toString() {

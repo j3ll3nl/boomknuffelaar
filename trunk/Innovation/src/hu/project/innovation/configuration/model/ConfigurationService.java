@@ -1,18 +1,12 @@
 package hu.project.innovation.configuration.model;
 
+import hu.project.innovation.configuration.controller.xml.ExportController;
+import hu.project.innovation.configuration.controller.xml.ImportController;
 import hu.project.innovation.configuration.model.rules.AbstractRuleType;
-import hu.project.innovation.utils.ArchDefXMLReader;
 import hu.project.innovation.utils.Log;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.util.ArrayList;
-
-import org.xml.sax.InputSource;
-import org.xml.sax.XMLReader;
-import org.xml.sax.helpers.XMLReaderFactory;
 
 public final class ConfigurationService {
 
@@ -61,16 +55,8 @@ public final class ConfigurationService {
 	public void openConfiguration(File file) throws Exception {
 		Log.i(this, "openConfiguration(" + file + ")");
 
-		XMLReader xr = XMLReaderFactory.createXMLReader();
-		ArchDefXMLReader reader = new ArchDefXMLReader();
-		reader.validateXML(file);
-		xr.setContentHandler(reader);
-		xr.parse(new InputSource(new FileReader(file)));
-
-		architectureDefinition = reader.getArchitectureDefinition();
-		setProjectPath(reader.getProjectPath());
-		setOutputPath(reader.getOutputPath());
-		setOutputType(reader.getOutputFormat());
+		ImportController importController = new ImportController();
+		importController.importXML(file);
 	}
 
 	/**
@@ -82,21 +68,8 @@ public final class ConfigurationService {
 	public void saveConfiguration(File file) throws Exception {
 		Log.i(this, "saveConfiguration(" + file + ")");
 
-		if (hasArchitectureDefinition()) {
-			String configurationXML = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
-			configurationXML += "<configuration>\n";
-			configurationXML += architectureDefinition.toXML();
-			configurationXML += "\t<paths>\n";
-			configurationXML += "\t\t<project>" + getProjectPath() + "</project>\n";
-			configurationXML += "\t\t<output format=\"" + getOutputType() + "\">" + getOutputPath() + "</output>\n";
-			configurationXML += "\t</paths>\n";
-			configurationXML += "</configuration>";
-
-			FileWriter fstream = new FileWriter(file);
-			BufferedWriter out = new BufferedWriter(fstream);
-			out.write(configurationXML);
-			out.close();
-		}
+		ExportController exportController = new ExportController();
+		exportController.exportXML(file);
 	}
 
 	/**
@@ -317,9 +290,5 @@ public final class ConfigurationService {
 
 	public Layer getLayerBySoftwareUnitName(String name) {
 		return this.architectureDefinition.getLayerBySoftwareUnitName(name);
-	}
-
-	public String architectureToXML() {
-		return this.architectureDefinition.toXML();
 	}
 }

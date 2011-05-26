@@ -2,11 +2,10 @@ package hu.project.innovation.configuration.model;
 
 import hu.project.innovation.configuration.model.rules.AbstractRuleType;
 import hu.project.innovation.utils.Log;
-import hu.project.innovation.utils.XMLable;
 
 import java.util.ArrayList;
 
-public class Layer implements XMLable {
+public class Layer {
 
 	private int id;
 	private String name;
@@ -163,38 +162,7 @@ public class Layer implements XMLable {
 	 */
 	public final ArrayList<SoftwareUnitDefinition> getSoftwareUnitDefinitions() {
 		return softwareUnitDefinitions;
-	}
-
-	public final String toXML() {
-		String xml = "";
-
-		// Current layer
-		xml += "\t\t<layer>\n";
-		xml += "\t\t\t<id>" + this.id + "</id>\n";
-		xml += "\t\t\t<name>" + this.name + "</name>\n";
-		xml += "\t\t\t<description>" + this.description + "</description>\n";
-		xml += "\t\t\t<interfaceAccessOnly>" + ((interfaceAccessOnly) ? 1 : 0) + "</interfaceAccessOnly>\n";
-
-		if (softwareUnitDefinitions != null) {
-			for (SoftwareUnitDefinition sud : this.getSoftwareUnitDefinitions()) {
-				xml += sud.toXML();
-			}
-		}
-
-		if (appliedRules != null) {
-			for (AppliedRule rule : appliedRules) {
-				xml += rule.toXML();
-			}
-		}
-
-		xml += "\t\t</layer>\n";
-
-		if (childLayer != null) {
-			xml += childLayer.toXML();
-		}
-
-		return xml;
-	}
+	}	
 
 	public final String toString() {
 		return getName();

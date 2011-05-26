@@ -1,11 +1,10 @@
 package hu.project.innovation.configuration.model;
 
 import hu.project.innovation.utils.Log;
-import hu.project.innovation.utils.XMLable;
 
 import java.util.ArrayList;
 
-public class SoftwareUnitDefinition implements XMLable {
+public class SoftwareUnitDefinition {
 
 	public static final String METHOD = "method", CLASS = "class", PACKAGE = "package";
 
@@ -74,22 +73,6 @@ public class SoftwareUnitDefinition implements XMLable {
 
 	public void removeAllExceptions() {
 		exceptions.clear();
-	}
-
-	public String toXML() {
-		String xml = "\t\t\t<softwareUnit>\n";
-		xml += "\t\t\t\t<name>" + this.softwareUnitName + "</name>\n";
-		xml += "\t\t\t\t<type>" + this.softwareUnitType + "</type>\n";
-		if (exceptions != null) {
-			for (SoftwareUnitDefinition unit : exceptions) {
-				xml += "\t\t\t\t<exception>\n";
-				xml += "\t\t\t\t\t<name>" + unit.getName() + "</name>\n";
-				xml += "\t\t\t\t\t<type>" + unit.getType() + "</type>\n";
-				xml += "\t\t\t\t</exception>\n";
-			}
-		}
-		xml += "\t\t\t</softwareUnit>\n";
-		return xml;
 	}
 
 	public String toString() {
