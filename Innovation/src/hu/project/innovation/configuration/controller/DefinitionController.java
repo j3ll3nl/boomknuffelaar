@@ -135,6 +135,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 				Log.i(this, "openConfiguration() - success opening configuration");
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			Log.e(this, "openConfiguration() - exeption: " + e.getMessage());
 			UiDialogs.errorDialog(definitionJPanel, e.getMessage(), "Error");
 		} finally {
@@ -641,7 +642,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 						boolean appliedRuleIsEnabled = configurationService.getAppliedRuleIsEnabled(layer_id, appliedrule_id);
 						String enabled = "Off";
 						if (appliedRuleIsEnabled) {
-							enabled = "True";
+							enabled = "On";
 						}
 						// Number of exceptions
 						ArrayList<Long> appliedRulesExceptions = configurationService.getAppliedRuleExceptions(layer_id, appliedrule_id);

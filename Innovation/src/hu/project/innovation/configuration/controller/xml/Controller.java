@@ -44,12 +44,21 @@ public class Controller {
 	 * @return The value or null
 	 */
 	public String getValue(Element element, String value) {
-		NodeList list = element.getElementsByTagName(value);
+		try {
+			NodeList list = element.getElementsByTagName(value);
+			if (list != null) {
+				Element fstNmElmnt = (Element) list.item(0);
+				if (fstNmElmnt != null) {
+					NodeList fstNm = fstNmElmnt.getChildNodes();
+					if (fstNm != null) {
+						return ((Node) fstNm.item(0)).getNodeValue();
+					}
+				}
+			}
+		} catch (NullPointerException e) {
 
-		Element fstNmElmnt = (Element) list.item(0);
-		NodeList fstNm = fstNmElmnt.getChildNodes();
-
-		return ((Node) fstNm.item(0)).getNodeValue();
+		}
+		return null;
 	}
 
 }
