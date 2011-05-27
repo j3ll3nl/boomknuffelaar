@@ -11,7 +11,7 @@ public class AnalyseService {
 
 	private static AnalyseService instance;
 
-	public AnalyseService() {
+	private AnalyseService() {
 		Log.i(this, "constructor()");
 	}
 
