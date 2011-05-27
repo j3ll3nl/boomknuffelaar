@@ -1,6 +1,6 @@
 package hu.project.innovation.configuration.controller;
 
-import hu.project.innovation.MainController;
+import hu.project.innovation.ApplicationController;
 import hu.project.innovation.configuration.model.ConfigurationService;
 import hu.project.innovation.configuration.view.helper.DataHelper;
 import hu.project.innovation.configuration.view.helper.XmlFileFilter;
@@ -30,9 +30,9 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 
 	private DefinitionJPanel definitionJPanel;
 	private ConfigurationService configurationService;
-	private MainController mainController;
+	private ApplicationController mainController;
 
-	public DefinitionController(MainController mc) {
+	public DefinitionController(ApplicationController mc) {
 		Log.i(this, "constructor()");
 		mainController = mc;
 		definitionJPanel = new DefinitionJPanel();

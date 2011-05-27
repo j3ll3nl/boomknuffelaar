@@ -1,19 +1,21 @@
 package hu.project.innovation;
 
+import hu.project.innovation.configuration.controller.xml.ImportController;
 import hu.project.innovation.configuration.model.ConfigurationService;
+
+import java.io.File;
+
 import net.sourceforge.pmd.PMD;
 
-class MainJan {
+public class MainStandalone {
 
-	private MainJan() {
-	};
-
-	public static void main(String[] args) {
-		new TestConfiguration();
+	public static void main(String[] args) throws Exception {
+		ImportController importc = new ImportController();
+		importc.importXML(new File("./defaultConfiguratie.xml"));
 
 		String[] pmdArgs = new String[] { ConfigurationService.getInstance().getProjectPath(), ConfigurationService.getInstance().getOutputType(), "\\hu\\project\\innovation\\configuration\\model\\rules\\ruleset.xml" };
+		
 		// Start PMD
 		PMD.main(pmdArgs);
-
 	}
 }
