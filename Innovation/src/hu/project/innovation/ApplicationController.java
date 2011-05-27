@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-public class MainController implements ActionListener {
+public class ApplicationController implements ActionListener {
 	private DefinitionController definitioncontroller = null;
 	private AnalyseController analysecontroller = null;
 	private DependencyController dependencycontroller = null;
@@ -20,7 +20,7 @@ public class MainController implements ActionListener {
 	/**
 	 * MainController constructor. This constructor will initialize a new Definition and Analyse controller.
 	 */
-	public MainController() {
+	public ApplicationController() {
 		Log.i(this, "constructor()");
 
 		definitioncontroller = new DefinitionController(this);
