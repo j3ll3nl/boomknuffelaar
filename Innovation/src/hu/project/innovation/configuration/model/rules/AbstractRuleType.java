@@ -13,6 +13,10 @@ import net.sourceforge.pmd.ast.SimpleNode;
 import org.jaxen.JaxenException;
 
 public abstract class AbstractRuleType extends AbstractJavaRule {
+	public static String back_call = "BackCallRule";
+	public static String skip_call = "SkipLayerRule";
+	public static String interface_only = "InterfacesOnlyRule";
+	
 
 	protected AbstractRuleType() {
 		this.setName(this.getClass().getSimpleName());
@@ -56,7 +60,7 @@ public abstract class AbstractRuleType extends AbstractJavaRule {
 	protected void initArchitecture() {
 		if (!ConfigurationService.getInstance().hasArchitectureDefinition()) {
 			try {
-				ConfigurationService.getInstance().openConfiguration(new File("architecture_definition.xml"));
+				ConfigurationService.getInstance().importConfiguration(new File("architecture_definition.xml"));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

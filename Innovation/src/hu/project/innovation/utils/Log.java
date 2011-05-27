@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class Log {
 	private static final int tabsBetweenClassAndMessage = 3;
-	public static final String INFO = "INFO", ERROR = "ERROR";
+	public static final String INFO = "INFO", ERROR = "ERROR", DEBUG = "DEBUG";
 
 	private Log() {
 	}
@@ -29,6 +29,16 @@ public class Log {
 	 */
 	public static void e(Object o, String message) {
 		log(o, message, ERROR);
+	}
+
+	/**
+	 * Print an debug output.
+	 * 
+	 * @param o
+	 * @param message
+	 */
+	public static void d(Object o, String message) {
+		log(o, message, DEBUG);
 	}
 
 	public static void log(Object o, String message, String type) {

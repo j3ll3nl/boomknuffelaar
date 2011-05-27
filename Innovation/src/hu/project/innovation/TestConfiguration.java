@@ -1,11 +1,8 @@
 package hu.project.innovation;
 
-import hu.project.innovation.configuration.model.AppliedRule;
 import hu.project.innovation.configuration.model.Configuration;
 import hu.project.innovation.configuration.model.ConfigurationService;
-import hu.project.innovation.configuration.model.SoftwareUnitDefinition;
-import hu.project.innovation.configuration.model.rules.BackCallRule;
-import hu.project.innovation.configuration.model.rules.SkipLayerRule;
+import hu.project.innovation.configuration.model.rules.AbstractRuleType;
 import hu.project.innovation.utils.Log;
 
 import java.io.File;
@@ -24,31 +21,29 @@ public class TestConfiguration {
 
 			conf.newConfiguration("Innovation Test Architecture", "Deze architectuur definitie wordt gebruikt voor testdoeleinden van onze eigen applicatie.");
 
-			String ui = "UI";
-			String task = "Task";
-			String domain = "Domain";
-
 			// Layers
-			conf.newLayer(ui, "Presentation logic");
-			conf.newLayer(task, "Task specific logic");
-			conf.newLayer(domain, "Domain logic").setInterfaceAccesOnly(true);
-			conf.getConfiguration().autoUpdateLayerSequence();
+			int layer_ui = conf.newLayer("UI", "Presentation logic");
+			int layer_task = conf.newLayer("Task", "Task specific logic");
+			int layer_domain = conf.newLayer("Domain", "Domain logic");
+			conf.setLayerInterfaceAccesOnly(layer_domain, true);
 
 			// Software units
-			conf.newSoftwareUnit(conf.getLayer(ui), "hu.project.innovation.configuration.view.*", "package");
-			conf.newSoftwareUnit(conf.getLayer(ui), "hu.project.innovation.report.view.*", "package");
-			conf.newSoftwareUnit(conf.getLayer(ui), "hu.project.innovation.analyse.view.*", "package");
-			conf.newSoftwareUnit(conf.getLayer(task), "hu.project.innovation.configuration.controller.*", "package");
-			conf.newSoftwareUnit(conf.getLayer(task), "hu.project.innovation.analyse.controller.*", "package");
-			conf.newSoftwareUnit(conf.getLayer(domain), "hu.project.innovation.configuration.model.*", "package");
-			conf.newSoftwareUnit(conf.getLayer(domain), "hu.project.innovation.report.model.*", "package");
-			conf.newSoftwareUnit(conf.getLayer(domain), "hu.project.innovation.analyse.model.*", "package");
+			conf.newSoftwareUnit(layer_ui, "hu.project.innovation.configuration.view.*", "package");
+			conf.newSoftwareUnit(layer_ui, "hu.project.innovation.report.view.*", "package");
+			conf.newSoftwareUnit(layer_ui, "hu.project.innovation.analyse.view.*", "package");
+			conf.newSoftwareUnit(layer_task, "hu.project.innovation.configuration.controller.*", "package");
+			conf.newSoftwareUnit(layer_task, "hu.project.innovation.analyse.controller.*", "package");
+			conf.newSoftwareUnit(layer_domain, "hu.project.innovation.configuration.model.*", "package");
+			conf.newSoftwareUnit(layer_domain, "hu.project.innovation.report.model.*", "package");
+			conf.newSoftwareUnit(layer_domain, "hu.project.innovation.analyse.model.*", "package");
 
 			// Applied rules
-			AppliedRule rule = conf.newAppliedRule(conf.getLayer(ui), conf.getLayer(domain), new SkipLayerRule());
-			rule.addException(new SoftwareUnitDefinition("hu.project.innovation.configuration.model.Layer", "class"));
-			conf.newAppliedRule(conf.getLayer(task), conf.getLayer(ui), new BackCallRule());
-			conf.newAppliedRule(conf.getLayer(domain), conf.getLayer(task), new BackCallRule());
+			long rule = conf.newAppliedRule(layer_ui, layer_domain, AbstractRuleType.skip_call);
+
+			conf.newAppliedRuleException(layer_ui, rule, "hu.project.innovation.configuration.model.Layer", "class");
+
+			conf.newAppliedRule(layer_task, layer_ui, AbstractRuleType.back_call);
+			conf.newAppliedRule(layer_domain, layer_task, AbstractRuleType.back_call);
 		} catch (Exception e) {
 			Log.e(this, e.getMessage());
 		}

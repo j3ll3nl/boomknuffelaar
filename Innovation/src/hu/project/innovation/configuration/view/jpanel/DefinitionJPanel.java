@@ -1,8 +1,6 @@
 package hu.project.innovation.configuration.view.jpanel;
 
-import hu.project.innovation.configuration.model.AppliedRule;
-import hu.project.innovation.configuration.model.Layer;
-import hu.project.innovation.configuration.model.SoftwareUnitDefinition;
+import hu.project.innovation.configuration.view.helper.DataHelper;
 import hu.project.innovation.configuration.view.tables.JTableAppliedRule;
 import hu.project.innovation.configuration.view.tables.JTableSoftwareUnits;
 import hu.project.innovation.configuration.view.tables.JTableTableModel;
@@ -315,36 +313,39 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 		}
 	}
 
-	public Layer getSelectedLayer() {
+	public int getSelectedLayer() {
 		Object selected = jListLayers.getSelectedValue();
-		if (selected instanceof Layer) {
-			return (Layer) selected;
+		if (selected instanceof DataHelper) {
+			int id = ((DataHelper) selected).getIntId();
+			return id;
 		}
-		return null;
+		return -1;
 	}
 
-	public SoftwareUnitDefinition getSelectedSoftwareUnit() {
+	public long getSelectedSoftwareUnit() {
 		int selectedRow = jTableSoftwareUnits.getSelectedRow();
 		if (selectedRow >= 0) {
 			JTableTableModel c = (JTableTableModel) jTableSoftwareUnits.getModel();
+
 			Object selected = c.getValueAt(selectedRow, 0);
-			if (selected instanceof SoftwareUnitDefinition) {
-				return (SoftwareUnitDefinition) selected;
+			if (selected instanceof DataHelper) {
+				return ((DataHelper) selected).getLongId();
 			}
 		}
-		return null;
+		return -1L;
 	}
 
-	public AppliedRule getSelectedAppliedRule() {
+	public long getSelectedAppliedRule() {
 		int selectedRow = jTableAppliedRules.getSelectedRow();
 		if (selectedRow >= 0) {
 			JTableTableModel c = (JTableTableModel) jTableAppliedRules.getModel();
+
 			Object selected = c.getValueAt(selectedRow, 0);
-			if (selected instanceof AppliedRule) {
-				return (AppliedRule) selected;
+			if (selected instanceof DataHelper) {
+				return ((DataHelper) selected).getLongId();
 			}
 		}
-		return null;
+		return -1L;
 	}
 
 	private JCheckBox getJCheckBox1() {

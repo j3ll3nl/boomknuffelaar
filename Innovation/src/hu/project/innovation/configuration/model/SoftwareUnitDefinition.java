@@ -1,6 +1,7 @@
 package hu.project.innovation.configuration.model;
 
 import hu.project.innovation.utils.Log;
+import hu.project.innovation.utils.UniqueID;
 
 import java.util.ArrayList;
 
@@ -8,22 +9,19 @@ public class SoftwareUnitDefinition {
 
 	public static final String METHOD = "method", CLASS = "class", PACKAGE = "package";
 
+	private long id;
 	private String softwareUnitName;
 	private String softwareUnitType;
-	private ArrayList<SoftwareUnitDefinition> softwareUnits = new ArrayList<SoftwareUnitDefinition>();
 	private ArrayList<SoftwareUnitDefinition> exceptions = new ArrayList<SoftwareUnitDefinition>();
 
 	private Layer layer;
-
-	public SoftwareUnitDefinition() {
-		Log.i(this, "constructor()");
-	}
 
 	public SoftwareUnitDefinition(String name, String type) {
 		Log.i(this, "constructor(" + name + ", " + type + ")");
 
 		setName(name);
 		setType(type);
+		setId();
 	}
 
 	public void setName(String name) {
@@ -50,16 +48,28 @@ public class SoftwareUnitDefinition {
 		return this.layer;
 	}
 
-	public void addSoftwareUnitDefinition(SoftwareUnitDefinition softwareunit) {
-		softwareUnits.add(softwareunit);
+	public long newException(String name, String type) {
+		SoftwareUnitDefinition exception = new SoftwareUnitDefinition(name, type);
+		exceptions.add(exception);
+
+		return exception.getId();
 	}
 
-	public void addException(SoftwareUnitDefinition softwareunit) {
-		exceptions.add(softwareunit);
+	public ArrayList<Long> getExceptions() {
+		ArrayList<Long> arrayList = new ArrayList<Long>();
+		for (SoftwareUnitDefinition exception : exceptions) {
+			arrayList.add(exception.getId());
+		}
+		return arrayList;
 	}
 
-	public ArrayList<SoftwareUnitDefinition> getExceptions() {
-		return exceptions;
+	public SoftwareUnitDefinition getExeption(long id) {
+		for (SoftwareUnitDefinition exception : exceptions) {
+			if (exception.getId() == id) {
+				return exception;
+			}
+		}
+		return null;
 	}
 
 	public int getNumberOfExceptions() {
@@ -98,4 +108,11 @@ public class SoftwareUnitDefinition {
 		return false;
 	}
 
+	public void setId() {
+		id = UniqueID.get();
+	}
+
+	public long getId() {
+		return id;
+	}
 }

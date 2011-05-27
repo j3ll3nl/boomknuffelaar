@@ -1,8 +1,6 @@
 package hu.project.innovation.configuration.controller;
 
-import hu.project.innovation.configuration.model.ConfigurationService;
-import hu.project.innovation.configuration.model.Layer;
-import hu.project.innovation.configuration.model.SoftwareUnitDefinition;
+import hu.project.innovation.configuration.view.helper.DataHelper;
 import hu.project.innovation.configuration.view.jframe.JFrameSoftwareUnit;
 import hu.project.innovation.configuration.view.tables.JTableException;
 import hu.project.innovation.configuration.view.tables.JTableTableModel;
@@ -17,16 +15,16 @@ import java.util.ArrayList;
 public class SoftwareUnitController extends PopUpController implements KeyListener {
 
 	private JFrameSoftwareUnit jframe;
-	private SoftwareUnitDefinition softwareunit;
+	private long softwareunit_id;
 
-	public SoftwareUnitController(Layer layer, SoftwareUnitDefinition softwareunit) {
-		Log.i(this, "constructor(" + layer + ", " + softwareunit + ")");
-		setLayer(layer);
-		this.softwareunit = softwareunit;
+	public SoftwareUnitController(int layer_id, long softwareunit_id) {
+		Log.i(this, "constructor(" + layer_id + ", " + softwareunit_id + ")");
+		setLayerID(layer_id);
+		this.softwareunit_id = softwareunit_id;
 	}
 
 	@Override
-	public void initUi() {
+	public void initUi() throws Exception {
 		Log.i(this, "initUi()");
 		jframe = new JFrameSoftwareUnit();
 
@@ -37,21 +35,24 @@ public class SoftwareUnitController extends PopUpController implements KeyListen
 		} else if (getAction().equals(PopUpController.ACTION_EDIT)) {
 			jframe.jButtonSave.setText("Save");
 			jframe.setTitle("Edit software unit");
-			if (softwareunit != null) {
+			if (softwareunit_id != -1L) {
 				// Load name & type
-				jframe.jTextFieldSoftwareUnitName.setText(softwareunit.getName());
-				jframe.jComboBoxSoftwareUnitType.setSelectedItem(softwareunit.getType());
+				jframe.jTextFieldSoftwareUnitName.setText(configurationService.getSoftwareUnitName(getLayerID(), softwareunit_id));
+				jframe.jComboBoxSoftwareUnitType.setSelectedItem(configurationService.getSoftwareUnitType(getLayerID(), softwareunit_id));
 
 				// Load table with exceptions
 				JTableException table = jframe.jTableException;
 				JTableTableModel tablemodel = (JTableTableModel) table.getModel();
 
-				ArrayList<SoftwareUnitDefinition> exceptions = softwareunit.getExceptions();
-				for (SoftwareUnitDefinition exception : exceptions) {
-					Object[] row = { exception.getName(), exception.getType() };
+				ArrayList<Long> exceptions = configurationService.getSoftwareUnitExceptions(getLayerID(), softwareunit_id);
+				for (long exception_id : exceptions) {
+					DataHelper datahelper = new DataHelper();
+					datahelper.setId(exception_id);
+					datahelper.setValue(configurationService.getSoftwareUnitExceptionName(getLayerID(), softwareunit_id, exception_id));
+
+					Object[] row = { datahelper, configurationService.getSoftwareUnitExceptionType(getLayerID(), softwareunit_id, exception_id) };
 					tablemodel.addRow(row);
 				}
-
 			}
 		}
 
@@ -70,31 +71,29 @@ public class SoftwareUnitController extends PopUpController implements KeyListen
 
 	@Override
 	public void save() {
-		ConfigurationService service = ConfigurationService.getInstance();
-
 		try {
 			if (getAction().equals(PopUpController.ACTION_NEW)) {
-				softwareunit = service.newSoftwareUnit(getLayer(), jframe.jTextFieldSoftwareUnitName.getText(), jframe.jComboBoxSoftwareUnitType.getSelectedItem().toString());
+				softwareunit_id = configurationService.newSoftwareUnit(getLayerID(), jframe.jTextFieldSoftwareUnitName.getText(), jframe.jComboBoxSoftwareUnitType.getSelectedItem().toString());
 
 				JTableException table = jframe.jTableException;
 				JTableTableModel tablemodel = (JTableTableModel) table.getModel();
 
 				int tablerows = tablemodel.getRowCount();
 				for (int i = 0; i < tablerows; i++) {
-					service.addException(softwareunit, tablemodel.getValueAt(i, 0).toString(), tablemodel.getValueAt(i, 1).toString());
+					configurationService.newSoftwareUnitException(getLayerID(), softwareunit_id, tablemodel.getValueAt(i, 0).toString(), tablemodel.getValueAt(i, 1).toString());
 				}
 			} else if (getAction().equals(PopUpController.ACTION_EDIT)) {
-				softwareunit.setName(jframe.jTextFieldSoftwareUnitName.getText());
-				softwareunit.setType(jframe.jComboBoxSoftwareUnitType.getSelectedItem().toString());
+				configurationService.setSoftwareUnitName(getLayerID(), softwareunit_id, jframe.jTextFieldSoftwareUnitName.getText());
+				configurationService.setSoftwareUnitType(getLayerID(), softwareunit_id, jframe.jComboBoxSoftwareUnitType.getSelectedItem().toString());
 
-				softwareunit.removeAllExceptions();
+				configurationService.removeSoftwareUnitExceptions(getLayerID(), softwareunit_id);
 
 				JTableException table = jframe.jTableException;
 				JTableTableModel tablemodel = (JTableTableModel) table.getModel();
 
 				int tablerows = tablemodel.getRowCount();
 				for (int i = 0; i < tablerows; i++) {
-					service.addException(softwareunit, tablemodel.getValueAt(i, 0).toString(), tablemodel.getValueAt(i, 1).toString());
+					configurationService.newSoftwareUnitException(getLayerID(), softwareunit_id, tablemodel.getValueAt(i, 0).toString(), tablemodel.getValueAt(i, 1).toString());
 				}
 			}
 			jframe.dispose();

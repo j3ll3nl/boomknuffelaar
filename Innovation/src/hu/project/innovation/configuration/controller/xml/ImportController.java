@@ -1,14 +1,7 @@
 package hu.project.innovation.configuration.controller.xml;
 
-import hu.project.innovation.configuration.model.AppliedRule;
-import hu.project.innovation.configuration.model.Layer;
-import hu.project.innovation.configuration.model.SoftwareUnitDefinition;
-import hu.project.innovation.configuration.model.rules.AbstractRuleType;
-import hu.project.innovation.configuration.model.rules.BackCallRule;
-import hu.project.innovation.configuration.model.rules.InterfacesOnlyRule;
-import hu.project.innovation.configuration.model.rules.SkipLayerRule;
-
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -20,7 +13,7 @@ import org.w3c.dom.NodeList;
 
 public class ImportController extends Controller {
 
-	private HashMap<Integer, AppliedRule> unknownAppliedRules = new HashMap<Integer, AppliedRule>();
+	private HashMap<Integer, Long> unknownAppliedRules = new HashMap<Integer, Long>();
 
 	public void importXML(File file) throws Exception {
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -52,14 +45,13 @@ public class ImportController extends Controller {
 				Element layerElement = (Element) layersNode.item(b);
 
 				// Create a new layer
-				int layerid = Integer.parseInt(getValue(layerElement, this.layer_id));
-				Layer layer = service.newLayer(getValue(layerElement, this.layer_name), getValue(layerElement, this.layer_description));
-				layer.setInterfaceAccesOnly((getValue(layerElement, this.layer_interfaceAccesOnly) == "1" ? true : false)); // Set interface only
+				int layer_id = service.newLayer(getValue(layerElement, this.layer_name), getValue(layerElement, this.layer_description));
+				service.setLayerInterfaceAccesOnly(layer_id, (getValue(layerElement, this.layer_interfaceAccesOnly) == "1" ? true : false));
 
-				if (unknownAppliedRules.containsKey(layerid)) {
-					AppliedRule appliedrule = unknownAppliedRules.get(layerid);
-					appliedrule.setToLayer(layer);
-					unknownAppliedRules.remove(layerid);
+				if (unknownAppliedRules.containsKey(layer_id)) {
+					Long appliedrule = unknownAppliedRules.get(layer_id);
+					service.setAppliedRuleToLayer(service.getAppliedRuleFromLayer(appliedrule), appliedrule, layer_id);
+					unknownAppliedRules.remove(layer_id);
 				}
 
 				// Read software units
@@ -68,61 +60,39 @@ public class ImportController extends Controller {
 					Element softwareUnitElement = (Element) softwareUnitsNode.item(c);
 
 					// Create the software unit
-					SoftwareUnitDefinition softwareunit = service.newSoftwareUnit(layer, getValue(softwareUnitElement, this.softwareunit_name), getValue(softwareUnitElement, this.softwareunit_type));
+					long softwareunit_id = service.newSoftwareUnit(layer_id, getValue(softwareUnitElement, this.softwareunit_name), getValue(softwareUnitElement, this.softwareunit_type));
 
 					// Each software unit could contain exceptions
 					NodeList exceptionsNode = softwareUnitElement.getElementsByTagName(this.exception);
-					readExceptions(exceptionsNode, softwareunit);
+					for (int d = 0; d < exceptionsNode.getLength(); d++) {
+						Element exceptionElement = (Element) exceptionsNode.item(d);
+						service.newSoftwareUnitException(layer_id, softwareunit_id, getValue(exceptionElement, this.exception_name), getValue(exceptionElement, this.exception_type));
+					}
 				}
 
 				// Read applied rules
 				NodeList appliedRulesNode = layerElement.getElementsByTagName(this.appliedrule);
-				for (int d = 0; d < appliedRulesNode.getLength(); d++) {
-					Element appliedRuleElement = (Element) appliedRulesNode.item(d);
+				for (int e = 0; e < appliedRulesNode.getLength(); e++) {
+					Element appliedRuleElement = (Element) appliedRulesNode.item(e);
 
-					String ruletype = getValue(appliedRuleElement, this.appliedrule_ruleType);
-					AbstractRuleType abstractRuleType = null;
-					if (ruletype.trim().equals("SkipLayerRule")) {
-						abstractRuleType = new SkipLayerRule();
-					} else if (ruletype.trim().equals("BackCallRule")) {
-						abstractRuleType = new BackCallRule();
-					} else if (ruletype.trim().equals("InterfacesOnlyRule")) {
-						abstractRuleType = new InterfacesOnlyRule();
-					}
+					int layer_id_to = Integer.parseInt(getValue(appliedRuleElement, this.appliedrule_tolayer));
 
-					int tolayerid = Integer.parseInt(getValue(appliedRuleElement, this.appliedrule_tolayer));
-					Layer toLayer = service.getLayer(tolayerid);
+					long appliedRule_id = service.newAppliedRule(layer_id, layer_id_to, getValue(appliedRuleElement, this.appliedrule_ruleType));
 
-					AppliedRule appliedRule = service.newAppliedRule(layer, toLayer, abstractRuleType);
-					if (toLayer == null) {
-						unknownAppliedRules.put(layerid, appliedRule);
+					// Check if the layer_to exists! If it does not exists we need to remeber this applied rule until we find the layer_to.
+					ArrayList<Integer> layers = service.getLayers();
+					if (!layers.contains(layer_id_to)) {
+						unknownAppliedRules.put(layer_id_to, appliedRule_id);
 					}
 
 					// Each applied rule could contain exceptions
 					NodeList exceptionsNode = appliedRuleElement.getElementsByTagName(this.exception);
-					readExceptions(exceptionsNode, appliedRule);
+					for (int f = 0; f < exceptionsNode.getLength(); f++) {
+						Element exceptionElement = (Element) exceptionsNode.item(f);
+						service.newAppliedRuleException(layer_id, appliedRule_id, getValue(exceptionElement, this.exception_name), getValue(exceptionElement, this.exception_type));
+					}
 				}
 			}
-		}
-	}
-
-	/**
-	 * Method for reading in the exception
-	 * 
-	 * @param node
-	 * @param softwareunit
-	 */
-	private void readExceptions(NodeList node, SoftwareUnitDefinition softwareunit) {
-		for (int c = 0; c < node.getLength(); c++) {
-			Element exceptionElement = (Element) node.item(c);
-			service.addException(softwareunit, getValue(exceptionElement, this.exception_name), getValue(exceptionElement, this.exception_type));
-		}
-	}
-
-	private void readExceptions(NodeList node, AppliedRule appliedRule) {
-		for (int c = 0; c < node.getLength(); c++) {
-			Element exceptionElement = (Element) node.item(c);
-			service.addException(appliedRule, getValue(exceptionElement, this.exception_name), getValue(exceptionElement, this.exception_type));
 		}
 	}
 }
