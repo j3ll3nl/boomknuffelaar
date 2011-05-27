@@ -6,7 +6,7 @@
 		<output_type>text</output_type>
 	</setting>
 	<architecture>
-		<architecturename>Innovation Test Architecture</architecturename>
+		<name>Innovation Test Architecture</name>
 		<description>Deze architectuur definitie wordt gebruikt voor testdoeleinden van onze eigen applicatie.</description>
 		<layers>
 			<layer>

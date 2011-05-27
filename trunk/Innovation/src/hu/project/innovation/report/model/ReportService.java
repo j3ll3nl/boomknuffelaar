@@ -9,7 +9,7 @@ public final class ReportService {
 	}
 
 	public String getViolationtype(String ruleName, Integer violationType) {
-		// TODO Auto-generated method stub
+		// TODO Deze wordt niet gebruikt. Wat nu?
 		return "Ruletype Backcall - Violationtype: 1.	Software unit uit lagere laag roept SU uit hogere laag aan.";
 	}
 

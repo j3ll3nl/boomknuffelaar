@@ -62,10 +62,10 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 	private void initUi() {
 		try {
 			setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-			
-			if(ConfigurationService.getInstance().hasArchitectureDefinition()){
-				setTitle(ConfigurationService.getInstance().getConfiguration().getName());
-			}else{
+
+			if (ConfigurationService.getInstance().hasArchitectureDefinition()) {
+				setTitle(ConfigurationService.getInstance().getArchitectureName());
+			} else {
 				setTitle("");
 			}
 			setIconImage(new ImageIcon(getClass().getClassLoader().getResource("hu/project/innovation/resources/jframeicon.jpg")).getImage());
@@ -175,9 +175,9 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 
 	@Override
 	public void setTitle(String configuration) {
-		if(configuration.trim().equals("")){
+		if (configuration.trim().equals("")) {
 			super.setTitle(defaultTitle);
-		}else{
+		} else {
 			super.setTitle(defaultTitle + " - " + configuration);
 		}
 	}

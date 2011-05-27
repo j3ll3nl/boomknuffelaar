@@ -1,6 +1,6 @@
 package hu.project.innovation.configuration.controller;
 
-import hu.project.innovation.configuration.model.Layer;
+import hu.project.innovation.configuration.model.ConfigurationService;
 
 import java.awt.event.ActionListener;
 import java.util.Observable;
@@ -9,10 +9,11 @@ public abstract class PopUpController extends Observable implements ActionListen
 	public static final String ACTION_NEW = "NEW";
 	public static final String ACTION_EDIT = "EDIT";
 
-	private String action = PopUpController.ACTION_NEW;
-	private Layer layer;
+	protected ConfigurationService configurationService = ConfigurationService.getInstance();
+	protected String action = PopUpController.ACTION_NEW;
+	protected int layer_id;
 
-	public abstract void initUi();
+	public abstract void initUi() throws Exception;
 
 	public abstract void save();
 
@@ -28,12 +29,12 @@ public abstract class PopUpController extends Observable implements ActionListen
 		notifyObservers();
 	}
 
-	public void setLayer(Layer layer) {
-		this.layer = layer;
+	public void setLayerID(int layer) {
+		this.layer_id = layer;
 	}
 
-	protected Layer getLayer() {
-		return layer;
+	protected int getLayerID() {
+		return layer_id;
 	}
 
 	public void setAction(String action) {

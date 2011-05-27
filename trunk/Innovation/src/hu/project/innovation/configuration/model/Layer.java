@@ -1,143 +1,130 @@
 package hu.project.innovation.configuration.model;
 
-import hu.project.innovation.configuration.model.rules.AbstractRuleType;
 import hu.project.innovation.utils.Log;
 
 import java.util.ArrayList;
 
 public class Layer {
 
-	private int id;
-	private String name;
-	private String description;
+	private int layer_id;
+	private String layer_name;
+	private String layer_description;
+	private boolean interfaceAccessOnly = false;
+	
 	private Layer parentLayer;
 	private Layer childLayer;
-	private ArrayList<AppliedRule> appliedRules;
-	private ArrayList<SoftwareUnitDefinition> softwareUnitDefinitions;
-	private boolean interfaceAccessOnly;
+	private ArrayList<AppliedRule> appliedRules = new ArrayList<AppliedRule>();
+	private ArrayList<SoftwareUnitDefinition> softwareUnitDefinitions = new ArrayList<SoftwareUnitDefinition>();
 
-	public Layer() {
-		this.appliedRules = new ArrayList<AppliedRule>();
-		this.softwareUnitDefinitions = new ArrayList<SoftwareUnitDefinition>();
-		this.interfaceAccessOnly = false;
-	}
-
-	public Layer(String name, String description) {
-		this();
+	public Layer(String name, String description) throws Exception {
 		Log.i(this, "constructor(\"" + name + "\", \"" + description + "\")");
 
-		setName(name);
-		setDescription(description);
+		setLayerName(name);
+		setLayerDescription(description);
 	}
 
-	public final int getId() {
-		return id;
+	public int getId() {
+		return layer_id;
 	}
 
-	public final void setId(int id) {
-		this.id = id;
+	public void setId(int id) {
+		this.layer_id = id;
 	}
 
-	public final void updateId(int i) {
-		Log.i(this, "updateId(" + i + ")");
-		setId(i);
-		if (childLayer != null) {
-			childLayer.updateId(i + 1);
+	public String getLayerName() {
+		return layer_name;
+	}
+
+	public void setLayerName(String layer_name) throws Exception {
+		if (layer_name.trim().equals("")) {
+			throw new Exception("No layer name");
 		}
+		this.layer_name = layer_name;
 	}
 
-	public final String getName() {
-		return name;
+	public String getDescription() {
+		return layer_description;
 	}
 
-	public final void setName(String name) {
-		this.name = name;
+	public void setLayerDescription(String description) {
+		this.layer_description = description;
 	}
 
-	public final String getDescription() {
-		return description;
-	}
-
-	public final void setDescription(String description) {
-		this.description = description;
-	}
-
-	public final Layer getChildLayer() {
-		return childLayer;
-	}
-
-	public final void setChildLayer(Layer layer) {
-		childLayer = layer;
-	}
-
-	public final Layer getParentLayer() {
-		return parentLayer;
-	}
-
-	public final void setParentLayer(Layer layer) {
-		parentLayer = layer;
-	}
-
-	public final boolean isInterfaceAccessOnly() {
+	public boolean isInterfaceAccessOnly() {
 		return this.interfaceAccessOnly;
 	}
 
-	public final void setInterfaceAccesOnly(boolean bool) {
+	public void setInterfaceAccesOnly(boolean bool) {
 		this.interfaceAccessOnly = bool;
 	}
 
-	public final AppliedRule addAppliedRule(AbstractRuleType ruleType, Layer toLayer) {
-		AppliedRule r = new AppliedRule(ruleType, this, toLayer);
-		this.appliedRules.add(r);
-		return r;
+	public Layer getChildLayer() {
+		return childLayer;
 	}
 
-	public void addAppliedRule(AppliedRule rule) {
-		this.appliedRules.add(rule);
+	public void setChildLayer(Layer layer) {
+		childLayer = layer;
 	}
 
-	/**
-	 * Removes the AppliedRule with from this layer
-	 * 
-	 * @param rule
-	 * @throws Exception
-	 */
-	public void removeAppliedRule(AppliedRule rule) throws Exception {
-		if (!appliedRules.contains(rule)) {
-			throw new Exception("Applied rule does not exist in this layer");
-		} else {
-			this.appliedRules.remove(rule);
+	public Layer getParentLayer() {
+		return parentLayer;
+	}
+
+	public void setParentLayer(Layer layer) {
+		parentLayer = layer;
+	}
+
+	public long newAppliedRule(String ruleType, Layer toLayer) throws Exception {
+		AppliedRule appliedRule = new AppliedRule(ruleType, this, toLayer);
+		appliedRules.add(appliedRule);
+
+		return appliedRule.getId();
+	}
+
+	public AppliedRule getAppliedRule(long appliedrule_id) {
+		for (AppliedRule appliedRule : appliedRules) {
+			if (appliedRule.getId() == appliedrule_id) {
+				return appliedRule;
+			}
 		}
+		return null;		
 	}
 
-	/**
-	 * Add a {@link SoftwareUnitDefinition}
-	 * 
-	 * @param name
-	 * @param type
-	 * @return Return true if the specified name was not already used for a software unit
-	 */
-	public final void addSoftwareUnit(SoftwareUnitDefinition unit) throws Exception {
-		if (softwareUnitDefinitions.contains(unit)) {
+	public void removeAppliedRule(long appliedrule_id) throws Exception {
+		for (AppliedRule appliedRule : appliedRules) {
+			if (appliedRule.getId() == appliedrule_id) {
+				appliedRules.remove(appliedRule);
+				return;
+			}
+		}
+		throw new Exception("Applied rule does not exist");
+	}
+
+	public long newSoftwareUnit(String unitName, String unitType) throws Exception {
+		if (softwareUnitDefinitions.contains(unitName)) {
 			throw new Exception("Software unit is already added to this layer");
-		} else {
-			softwareUnitDefinitions.add(unit);
-			unit.setLayer(this);
 		}
+		SoftwareUnitDefinition softwareunitdefinition = new SoftwareUnitDefinition(unitName, unitType);
+		softwareunitdefinition.setLayer(this);
+		softwareUnitDefinitions.add(softwareunitdefinition);
+
+		return softwareunitdefinition.getId();
 	}
 
 	/**
 	 * Removes the SoftwareUnit with the specified name
 	 * 
-	 * @param name
+	 * @param layer_name
 	 * @return the previous SoftwareUnit associated with that name, or null if there was no SoftwareUnit with that name.
 	 */
-	public final void removeSoftwareUniteDefinition(SoftwareUnitDefinition unit) throws Exception {
-		if (!softwareUnitDefinitions.contains(unit)) {
-			throw new Exception("Software unit does not exist in this layer");
-		} else {
-			this.softwareUnitDefinitions.remove(unit);
+	public void removeSoftwareUniteDefinition(long softwareunit_id) throws Exception {
+		for (SoftwareUnitDefinition softwareunitdefinition : softwareUnitDefinitions) {
+			if (softwareunitdefinition.getId() == softwareunit_id) {
+				softwareUnitDefinitions.remove(softwareunitdefinition);
+				return;
+			}
 		}
+		throw new Exception("Software unit does not exist in this layer");
 	}
 
 	/**
@@ -146,9 +133,24 @@ public class Layer {
 	 * @param name
 	 * @return The software unit with the specified name of null if this layer doesn't have that unit
 	 */
-	public final SoftwareUnitDefinition getSoftwareUnit(String name) {
+	public SoftwareUnitDefinition getSoftwareUnit(String name) {
 		for (SoftwareUnitDefinition softwareunitdefinition : softwareUnitDefinitions) {
 			if (softwareunitdefinition.getName().equals(name)) {
+				return softwareunitdefinition;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Get a software unit by its id
+	 * 
+	 * @param name
+	 * @return The software unit with the specified name of null if this layer doesn't have that unit
+	 */
+	public SoftwareUnitDefinition getSoftwareUnit(long id) {
+		for (SoftwareUnitDefinition softwareunitdefinition : softwareUnitDefinitions) {
+			if (softwareunitdefinition.getId() == id) {
 				return softwareunitdefinition;
 			}
 		}
@@ -160,15 +162,19 @@ public class Layer {
 	 * 
 	 * @return
 	 */
-	public final ArrayList<SoftwareUnitDefinition> getSoftwareUnitDefinitions() {
-		return softwareUnitDefinitions;
-	}	
-
-	public final String toString() {
-		return getName();
+	public ArrayList<Long> getSoftwareUnitDefinitions() {
+		ArrayList<Long> arrayList = new ArrayList<Long>();
+		for (SoftwareUnitDefinition softwareUnitDefinition : softwareUnitDefinitions) {
+			arrayList.add(softwareUnitDefinition.getId());
+		}
+		return arrayList;
 	}
 
-	public final boolean hasAppliedRule(String ruleName, Layer toLayer) {
+	public String toString() {
+		return getLayerName();
+	}
+
+	public boolean hasAppliedRule(String ruleName, Layer toLayer) {
 		if (toLayer == null)
 			return false;
 
@@ -187,11 +193,15 @@ public class Layer {
 	 * 
 	 * @return The applied rules
 	 */
-	public ArrayList<AppliedRule> getAppliedRules() {
-		return this.appliedRules;
+	public ArrayList<Long> getAppliedRules() {
+		ArrayList<Long> arrayList = new ArrayList<Long>();
+		for (AppliedRule appliedRule : appliedRules) {
+			arrayList.add(appliedRule.getId());
+		}
+		return arrayList;
 	}
 
-	public final void moveUp() throws Exception {
+	public void moveUp() throws Exception {
 		Log.i(this, "moveUp()");
 		if (getParentLayer() == null) {
 			throw new Exception("Layer is already at the top");
@@ -218,7 +228,7 @@ public class Layer {
 		}
 	}
 
-	public final void moveDown() throws Exception {
+	public void moveDown() throws Exception {
 		Log.i(this, "moveDown()");
 		if (getChildLayer() == null) {
 			throw new Exception("Layer is already at the bottom");
@@ -244,7 +254,7 @@ public class Layer {
 		}
 	}
 
-	public final void addChildLayer(Layer layer) {
+	public void addChildLayer(Layer layer) {
 		Log.i(this, "addChildLayer(" + layer + ") [" + this + "]");
 		if (childLayer != null) {
 			Log.i(this, "addChildLayer(" + layer + ") - asking child to add this layer");
@@ -256,7 +266,7 @@ public class Layer {
 		}
 	}
 
-	public final Layer getFirstLayer() {
+	public Layer getFirstLayer() {
 		if (parentLayer != null) {
 			return parentLayer.getFirstLayer();
 		} else {
@@ -264,7 +274,7 @@ public class Layer {
 		}
 	}
 
-	public final Layer getLayer(int id) {
+	public Layer getLayer(int id) {
 		if (getId() == id) {
 			return this;
 		} else if (childLayer != null) {
@@ -274,7 +284,7 @@ public class Layer {
 		}
 	}
 
-	public final void removeLayer(Layer layer) {
+	public void removeLayer(Layer layer) {
 		if (this == layer) {
 			if (getParentLayer() != null) {
 				getParentLayer().setChildLayer(getChildLayer());
@@ -287,8 +297,8 @@ public class Layer {
 		}
 	}
 
-	public final Layer getLayer(String name) {
-		if (getName().equals(name)) {
+	public Layer getLayer(String name) {
+		if (getLayerName().equals(name)) {
 			return this;
 		} else if (childLayer != null) {
 			return childLayer.getLayer(name);
@@ -303,7 +313,7 @@ public class Layer {
 	 * @param softwareUnitName
 	 * @return
 	 */
-	public final Layer getLayerBySoftwareUnitName(String softwareUnitName) {
+	public Layer getLayerBySoftwareUnitName(String softwareUnitName) {
 		// First look in this layer
 		for (SoftwareUnitDefinition sud : softwareUnitDefinitions) {
 			if (sud.contains(softwareUnitName)) {
@@ -319,19 +329,19 @@ public class Layer {
 			return null;
 	}
 
-	public final void printOrder() {
-		String message = "I am " + getId() + ", my name is: " + getName() + ", my parent is: ";
+	public void printOrder() {
+		String message = "I am " + getId() + ", my name is: " + getLayerName() + ", my parent is: ";
 		Layer p = getParentLayer();
 		Layer c = getChildLayer();
 
 		if (p != null) {
-			message += getParentLayer().getName();
+			message += getParentLayer().getLayerName();
 		} else {
 			message += "-";
 		}
 		message += ", my child is: ";
 		if (c != null) {
-			message += getChildLayer().getName();
+			message += getChildLayer().getLayerName();
 		} else {
 			message += "-";
 		}
@@ -340,6 +350,14 @@ public class Layer {
 
 		if (childLayer != null) {
 			childLayer.printOrder();
+		}
+	}
+
+	public void updateId(int i) {
+		Log.i(this, "updateId(" + i + ")");
+		setId(i);
+		if (childLayer != null) {
+			childLayer.updateId(i + 1);
 		}
 	}
 }

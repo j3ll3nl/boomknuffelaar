@@ -1,8 +1,6 @@
 package hu.project.innovation.configuration.view.jframe;
 
-import hu.project.innovation.configuration.model.rules.BackCallRule;
-import hu.project.innovation.configuration.model.rules.InterfacesOnlyRule;
-import hu.project.innovation.configuration.model.rules.SkipLayerRule;
+import hu.project.innovation.configuration.model.rules.AbstractRuleType;
 import hu.project.innovation.configuration.view.tables.JTableException;
 
 import java.awt.BorderLayout;
@@ -142,7 +140,7 @@ public class JFrameAppliedRules extends javax.swing.JFrame {
 					jLabel4.setText("Rule");
 				}
 				{
-					ComboBoxModel jComboBox1Model = new DefaultComboBoxModel(new Object[] { new BackCallRule(), new SkipLayerRule(), new InterfacesOnlyRule() });
+					ComboBoxModel jComboBox1Model = new DefaultComboBoxModel(new Object[] { AbstractRuleType.back_call, AbstractRuleType.skip_call });
 					jComboBoxAppliedRule = new JComboBox();
 					jPanel1.add(jComboBoxAppliedRule, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 					jComboBoxAppliedRule.setModel(jComboBox1Model);

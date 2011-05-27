@@ -57,7 +57,7 @@ public class BackCallRule extends AbstractRuleType {
 	}
 
 	protected String getViolationMessage(Layer fromLayer, Layer toLayer) {
-		return fromLayer.getName() + " calls " + toLayer.getName() + ": " + this.getMessage();
+		return fromLayer.getLayerName() + " calls " + toLayer.getLayerName() + ": " + this.getMessage();
 	}
 
 	/**
