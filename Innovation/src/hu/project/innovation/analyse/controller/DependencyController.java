@@ -57,7 +57,10 @@ public class DependencyController implements ActionListener {
 		dependenciesJFrame.setVisible(true);
 	}
 
-	public void loadTables() {
+	public void loadTables() throws Exception {
+		Log.i(this, "loadTables()");
+
+		Log.i(this, "loadTables() - loading undenfined");
 		JTable table1 = dependenciesJFrame.jTableFoundComponents;
 		DefaultTableModel table1dtm = (DefaultTableModel) table1.getModel();
 
@@ -76,6 +79,7 @@ public class DependencyController implements ActionListener {
 			}
 		}
 
+		Log.i(this, "loadTables() - loading pom");
 		JTable table2 = dependenciesJFrame.jTableDepsPom;
 		DefaultTableModel table2dtm = (DefaultTableModel) table2.getModel();
 		DepSoftwareComponent[] pomDSComponents;
@@ -88,6 +92,7 @@ public class DependencyController implements ActionListener {
 			}
 		}
 
+		Log.i(this, "loadTables() - loading dependencies.xml");
 		JTable table3 = dependenciesJFrame.jTableAllowedDeps;
 		DefaultTableModel table3dtm = (DefaultTableModel) table3.getModel();
 		DepSoftwareComponent[] allowedDSComponents;
@@ -99,33 +104,34 @@ public class DependencyController implements ActionListener {
 				table3dtm.addRow(rowdata);
 			}
 		}
+
 	}
 
 	private String browseForPath(String preferedpath) {
 		Log.i(this, "browseForPath(" + preferedpath + ")");
-	
+
 		if (preferedpath.trim().equals("")) {
 			preferedpath = System.getProperty("user.dir");
 		}
-	
+
 		File defaultPath = new File(preferedpath);
-	
+
 		// Create a file chooser
 		JFileChooser fc = new JFileChooser(defaultPath);
-	
+
 		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
 		fc.setAcceptAllFileFilterUsed(false);
-	
+
 		// In response to a button click:
 		int returnVal = fc.showOpenDialog(dependenciesJFrame);
-	
+
 		// The user did click on Open
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			try {
 				// Getting selected file from dialog
 				File file = fc.getSelectedFile();
 				Log.i(this, "browseForPath() - opening file: " + file.getAbsolutePath());
-	
+
 				return file.getAbsolutePath();
 			} catch (Exception e) {
 				Log.e(this, "browseForPath() - exeption: " + e.getMessage());
@@ -135,6 +141,8 @@ public class DependencyController implements ActionListener {
 	}
 
 	private boolean isVersionValidate(String terms, String _version) {
+		Log.i(this, "isVersionValidate(" + terms + ", " + _version + ")");
+
 		// Valideer de versie nummer aan de hand van de regular expression
 		return java.util.regex.Pattern.matches(getRegExpression(terms), _version);
 	}
@@ -145,6 +153,8 @@ public class DependencyController implements ActionListener {
 	 * @return
 	 */
 	private String getRegExpression(String version) {
+		Log.i(this, "getRegExcpression(" + version + ")");
+
 		// converteer de versie nummer naar een reguliere expressie
 		String _temp = version;
 		if (version.contains(",")) {
@@ -162,6 +172,8 @@ public class DependencyController implements ActionListener {
 	 * @return the unit names (jars)
 	 */
 	private ArrayList<String> getExtDependensies(String classPath) {
+		Log.i(this, "getExtDependensies(" + classPath + ")");
+
 		ArrayList<String> unitNames = new ArrayList<String>();
 		for (String path : classPath.split(":")) {
 			String[] unitName = path.split("/");
@@ -178,6 +190,7 @@ public class DependencyController implements ActionListener {
 	 * @param isAllowedByDefault
 	 */
 	private void parseXML(File pomFile, final boolean isAllowedByDefault) {
+		Log.i(this, "parseXML(" + pomFile + ", " + isAllowedByDefault + ")");
 		try {
 			SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
 			try {
@@ -193,25 +206,33 @@ public class DependencyController implements ActionListener {
 	}
 
 	private void check() {
-		addAllowedDependencies();
-		addDependencies();
-		
-		loadTables();
-	
-		// Kijken of de dependency in de POM voorkomt (en in dat geval dus is allowed) in mydependencies.xml
-		if (dependencyService.getDependencies() != null) {
-			if (dependencyService.getAllowedDependencies() != null) {
-				for (DepSoftwareComponent _component : dependencyService.getDependencies()) {
-					if (dependencyService.searchAllowedDepSoftwareComponent(_component.getArtifactId())) {
-						if (!isVersionValidate(dependencyService.getAllowedDependency(_component.getArtifactId()).getVersion(), _component.getVersion())) {
-							dependenciesJFrame.jTextPaneDepLog.setText(dependenciesJFrame.jTextPaneDepLog.getText() + "\n" + "Warning: component " + _component.getArtifactId() + " with version: " + _component.getVersion() + " is illegal");
-							dependenciesJFrame.jTextPaneDepLog.setText(dependenciesJFrame.jTextPaneDepLog.getText() + "\n" + "Allowed version: " + dependencyService.getAllowedDependency(_component.getArtifactId()).getVersion());
+		Log.i(this, "check()");
+
+		try {
+			addAllowedDependencies();
+			addDependencies();
+
+			loadTables();
+
+			// Kijken of de dependency in de POM voorkomt (en in dat geval dus is allowed) in mydependencies.xml
+			if (dependencyService.getDependencies() != null) {
+				if (dependencyService.getAllowedDependencies() != null) {
+					for (DepSoftwareComponent _component : dependencyService.getDependencies()) {
+						if (dependencyService.searchAllowedDepSoftwareComponent(_component.getArtifactId())) {
+							if (!isVersionValidate(dependencyService.getAllowedDependency(_component.getArtifactId()).getVersion(), _component.getVersion())) {
+								dependenciesJFrame.jTextPaneDepLog.setText(dependenciesJFrame.jTextPaneDepLog.getText() + "\n" + "Warning: component " + _component.getArtifactId() + " with version: " + _component.getVersion() + " is illegal");
+								dependenciesJFrame.jTextPaneDepLog.setText(dependenciesJFrame.jTextPaneDepLog.getText() + "\n" + "Allowed version: " + dependencyService.getAllowedDependency(_component.getArtifactId()).getVersion());
+							}
+						} else { // de dependency (in de pom) komt niet voor in de allowed file
+							dependenciesJFrame.jTextPaneDepLog.setText(dependenciesJFrame.jTextPaneDepLog.getText() + "\n" + "Warning: component " + _component.getArtifactId() + " (with version: " + _component.getVersion() + ") is illegal");
 						}
-					} else { // de dependency (in de pom) komt niet voor in de allowed file
-						dependenciesJFrame.jTextPaneDepLog.setText(dependenciesJFrame.jTextPaneDepLog.getText() + "\n" + "Warning: component " + _component.getArtifactId() + " (with version: " + _component.getVersion() + ") is illegal");
 					}
 				}
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			Log.e(this, "loadTables() - exception: " + e.getMessage());
+			UiDialogs.errorDialog(dependenciesJFrame, e.getMessage(), "Error!");
 		}
 	}
 
@@ -219,6 +240,8 @@ public class DependencyController implements ActionListener {
 	 * 
 	 */
 	private void addAllowedDependencies() {
+		Log.i(this, "addAllowedDependencies()");
+
 		File file = new File(dependenciesJFrame.jTextFieldDependencies.getText());
 		parseXML(file, true);
 	}
@@ -227,6 +250,8 @@ public class DependencyController implements ActionListener {
 	 * 
 	 */
 	private void addDependencies() {
+		Log.i(this, "addDependencies()");
+
 		File file = new File(dependenciesJFrame.jTextFieldPom.getText());
 		parseXML(file, false);
 	}
@@ -253,7 +278,8 @@ public class DependencyController implements ActionListener {
 			dependencyService.removeAllAllowedDependencies();
 
 			check();
+		} else {
+			Log.e(this, "actionPerformed() - unkown command: " + event);
 		}
-
 	}
 }

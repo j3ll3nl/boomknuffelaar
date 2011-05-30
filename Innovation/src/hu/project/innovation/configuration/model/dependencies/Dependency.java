@@ -6,7 +6,7 @@ public class Dependency extends HashMap<String, DepSoftwareComponent> implements
 	private static final long serialVersionUID = 1L;
 
 	public Dependency() {
-		
+
 	}
 
 	/** add a dependency */
@@ -38,7 +38,7 @@ public class Dependency extends HashMap<String, DepSoftwareComponent> implements
 
 	/** @return all dependencies */
 	public DepSoftwareComponent[] getDepSoftwareComponents() {
-		if (super.size() > 0) {
+		if (!isEmpty()) {
 			DepSoftwareComponent[] components = new DepSoftwareComponent[super.size()];
 			int i = 0;
 			for (DepSoftwareComponent component : super.values()) {
@@ -47,9 +47,9 @@ public class Dependency extends HashMap<String, DepSoftwareComponent> implements
 			}
 			return components;
 		} else {
-			System.err.println("No dependencies exist.");
-			return null;
+			//throw new Exception("No dependencies exist.");
 		}
+		return null;
 	}
 
 	/** search dependency **/
@@ -61,7 +61,7 @@ public class Dependency extends HashMap<String, DepSoftwareComponent> implements
 		}
 		return false;
 	}
-	
+
 	/** remove dependencies **/
 	public void removeDependencies() {
 		super.clear();

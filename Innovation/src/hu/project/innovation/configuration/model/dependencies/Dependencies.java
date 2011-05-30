@@ -17,7 +17,8 @@ public interface Dependencies {
 	 */
 	public DepSoftwareComponent getDepSoftwareComponent(String artifactId);
 
-	/** @return all dependencies / software components */
+	/** @return all dependencies / software components 
+	 * @throws Exception */
 	public DepSoftwareComponent[] getDepSoftwareComponents();
 
 	/** @return the searched dependency (if found) */
