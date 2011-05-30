@@ -43,6 +43,7 @@ public final class DependencyService {
 
 	/**
 	 * @return all dependencies
+	 * @throws Exception 
 	 */
 	public DepSoftwareComponent[] getDependencies() {
 		return dependencies.getDepSoftwareComponents();
@@ -86,8 +87,9 @@ public final class DependencyService {
 
 	/**
 	 * @return all allowed dependencies
+	 * @throws Exception 
 	 */
-	public DepSoftwareComponent[] getAllowedDependencies() {
+	public DepSoftwareComponent[] getAllowedDependencies() throws Exception {
 		return allowedDependencies.getDepSoftwareComponents();
 	}
 
