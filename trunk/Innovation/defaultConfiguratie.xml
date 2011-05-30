@@ -3,7 +3,7 @@
 	<setting>
 		<project>C:\Users\Stefan Kemp\Development\eclipse\Innovation\src</project>
 		<output>C:\</output>
-		<output_type>text</output_type>
+		<output_type>html</output_type>
 	</setting>
 	<architecture>
 		<name>Innovation Test Architecture</name>
