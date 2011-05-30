@@ -13,10 +13,6 @@ public class MainStandalone {
 		ImportController importc = new ImportController();
 		importc.importXML(new File("./defaultConfiguratie.xml"));
 
-	public static void main(String[] args) {
-		new TestConfiguration();
-		ConfigurationService.getInstance().setProjectPath("C:\\Users\\Jan\\workspace\\ArchitectureTestProject\\src");
-
 		String[] pmdArgs = new String[] { 
 				ConfigurationService.getInstance().getProjectPath(), 
 				"text", 
