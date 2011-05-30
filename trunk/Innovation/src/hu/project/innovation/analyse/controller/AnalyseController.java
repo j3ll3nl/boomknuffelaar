@@ -47,6 +47,7 @@ public class AnalyseController implements Observer, ActionListener, KeyListener 
 		// Set the latest project/output path settings
 		analyseJFrame.jTextFieldProjectPath.setText(ConfigurationService.getInstance().getProjectPath());
 		analyseJFrame.jTextFieldOutputPath.setText(ConfigurationService.getInstance().getOutputPath());
+		analyseJFrame.jComboBoxOutputType.setSelectedItem(ConfigurationService.getInstance().getOutputType());
 
 		// Set the visibility of the jframe to true so the jframe is now visible
 		UiDialogs.showOnScreen(0, analyseJFrame);
