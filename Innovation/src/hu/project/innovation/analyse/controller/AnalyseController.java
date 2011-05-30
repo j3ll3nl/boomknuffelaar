@@ -1,7 +1,7 @@
 package hu.project.innovation.analyse.controller;
 
 import hu.project.innovation.analyse.model.AnalyseService;
-import hu.project.innovation.analyse.view.JFrameAnalyse;
+import hu.project.innovation.analyse.view.jframe.JFrameAnalyse;
 import hu.project.innovation.configuration.model.ConfigurationService;
 import hu.project.innovation.utils.Log;
 import hu.project.innovation.utils.UiDialogs;
@@ -25,7 +25,6 @@ public class AnalyseController implements Observer, ActionListener, KeyListener 
 		Log.i(this, "constructor()");
 
 		analyseService = AnalyseService.getInstance();
-
 	}
 
 	public void initUi() {

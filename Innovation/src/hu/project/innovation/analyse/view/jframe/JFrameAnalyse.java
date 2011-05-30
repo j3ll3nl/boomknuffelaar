@@ -1,4 +1,4 @@
-package hu.project.innovation.analyse.view;
+package hu.project.innovation.analyse.view.jframe;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
