@@ -2,7 +2,6 @@ package hu.project.innovation.configuration.model.rules;
 
 import hu.project.innovation.configuration.model.ConfigurationService;
 import hu.project.innovation.configuration.model.Layer;
-import hu.project.innovation.utils.Log;
 import net.sourceforge.pmd.ast.ASTClassOrInterfaceType;
 import net.sourceforge.pmd.ast.ASTImportDeclaration;
 import net.sourceforge.pmd.ast.ASTPrimaryExpression;
