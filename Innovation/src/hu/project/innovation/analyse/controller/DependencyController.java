@@ -69,11 +69,12 @@ public class DependencyController implements ActionListener {
 		if (extDependencies != null) {
 			for (String dependency : extDependencies) {
 				// Kijken of de dependency een - heeft, indien het geval het stuk van de string ervoor pakken (tijdelijke oplossing)
+				int counter = 0;
 				if (!dependencyService.searchDepSoftwareComponent((dependency.contains("-")) ? dependency.split("-")[0] : dependency)) {
 					// check if the dependency is added in the project object model (pom.xml)
 					boolean tmp = false;
 					// if an dependency ends with .jar, remove ".jar" and add it to the table
-					Object rowdata[] = { 0, ((tmp = dependency.endsWith(".jar")) ? dependency.substring(0, dependency.length() - 4) : dependency), "?", (tmp) ? "Jar" : "not supported" };
+					Object rowdata[] = { counter++, ((tmp = dependency.endsWith(".jar")) ? dependency.substring(0, dependency.length() - 4) : dependency), "?", (tmp) ? "Jar" : "not supported" };
 					table1dtm.addRow(rowdata);
 				}
 			}
@@ -86,8 +87,9 @@ public class DependencyController implements ActionListener {
 
 		// add pom dependencies to the table
 		if ((pomDSComponents = dependencyService.getDependencies()) != null) {
+			int counter = 0;
 			for (DepSoftwareComponent pomDsc : pomDSComponents) {
-				Object rowdata[] = { 0, pomDsc.getArtifactId(), pomDsc.getVersion(), pomDsc.getType() };
+				Object rowdata[] = { counter++, pomDsc.getArtifactId(), pomDsc.getVersion(), pomDsc.getType() };
 				table2dtm.addRow(rowdata);
 			}
 		}
@@ -99,8 +101,9 @@ public class DependencyController implements ActionListener {
 
 		// add allowed components to the table
 		if ((allowedDSComponents = dependencyService.getAllowedDependencies()) != null) {
+			int counter = 0;
 			for (DepSoftwareComponent allowedDsc : allowedDSComponents) {
-				Object rowdata[] = { 0, allowedDsc.getArtifactId(), allowedDsc.getVersion(), allowedDsc.getType() };
+				Object rowdata[] = { counter++, allowedDsc.getArtifactId(), allowedDsc.getVersion(), allowedDsc.getType() };
 				table3dtm.addRow(rowdata);
 			}
 		}
