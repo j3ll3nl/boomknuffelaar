@@ -44,17 +44,18 @@ public abstract class AbstractRuleType extends AbstractJavaRule {
 	 * @param node
 	 * @return The classname of this node or an empty <code>String</code> if the classname could not be found
 	 */
+	@SuppressWarnings("unchecked")
 	protected String getClassName(SimpleNode node) {
-		if (node.getFirstParentOfType(ASTClassOrInterfaceDeclaration.class) == null) {
+		try {
+			List<ASTClassOrInterfaceDeclaration> classes = node.findChildNodesWithXPath("//ClassOrInterfaceDeclaration");
+			return classes.get(0).getImage();
+		} catch (Exception e) {
 			return "";
-		} else {
-			ASTClassOrInterfaceDeclaration c = node.getFirstParentOfType(ASTClassOrInterfaceDeclaration.class);
-			if (c.getType() != null) {
-				return c.getType().getCanonicalName();
-			} else {
-				return "";
-			}
 		}
+	}
+	
+	protected String getCanonicalName(SimpleNode node) {
+		return this.getPackageName(node) + "." + this.getClassName(node);
 	}
 
 	protected void initArchitecture() {

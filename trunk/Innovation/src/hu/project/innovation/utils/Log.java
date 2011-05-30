@@ -20,6 +20,10 @@ public class Log {
 	public static void i(Object o, String message) {
 		log(o, message, INFO);
 	}
+	
+	public static void i(Object o, int i) {
+		log(o, Integer.toString(i), INFO);
+	}
 
 	/**
 	 * Print an error output.

@@ -13,7 +13,14 @@ public class MainStandalone {
 		ImportController importc = new ImportController();
 		importc.importXML(new File("./defaultConfiguratie.xml"));
 
-		String[] pmdArgs = new String[] { ConfigurationService.getInstance().getProjectPath(), ConfigurationService.getInstance().getOutputType(), "\\hu\\project\\innovation\\configuration\\model\\rules\\ruleset.xml" };
+	public static void main(String[] args) {
+		new TestConfiguration();
+		ConfigurationService.getInstance().setProjectPath("C:\\Users\\Jan\\workspace\\ArchitectureTestProject\\src");
+
+		String[] pmdArgs = new String[] { 
+				ConfigurationService.getInstance().getProjectPath(), 
+				"text", 
+				"\\hu\\project\\innovation\\configuration\\model\\rules\\ruleset.xml"};
 		
 		// Start PMD
 		PMD.main(pmdArgs);

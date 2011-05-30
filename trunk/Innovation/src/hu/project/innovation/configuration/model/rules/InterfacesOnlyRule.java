@@ -12,11 +12,12 @@ public class InterfacesOnlyRule extends BackCallRule {
 	protected void checkViolation(Class<?> toClass, Object data, SimpleNode node) {
 		this.initArchitecture();
 
+		String callingName = this.getPackageName(node)+"."+this.getClassName(node);
 		String calledName = toClass.getCanonicalName();
 
 		if (isPackageChecked(calledName)) {
 			// Get the fromLayer using the current checked class
-			Layer fromLayer = ConfigurationService.getInstance().getLayerBySoftwareUnitName(this.getClassName(node));
+			Layer fromLayer = ConfigurationService.getInstance().getLayerBySoftwareUnitName(callingName);
 
 			// Get the toLayer using the package name from the called class
 			Layer toLayer = ConfigurationService.getInstance().getLayerBySoftwareUnitName(calledName);
