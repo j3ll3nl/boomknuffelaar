@@ -16,9 +16,12 @@ public class SoftwareUnitDefinition {
 
 	private Layer layer;
 
-	public SoftwareUnitDefinition(String name, String type) {
+	public SoftwareUnitDefinition(String name, String type) throws Exception {
 		Log.i(this, "constructor(" + name + ", " + type + ")");
 
+		if(name.isEmpty()){
+			throw new Exception("De naam de van de exception is niet ingevuld.");
+		}
 		setName(name);
 		setType(type);
 		setId();
@@ -48,7 +51,7 @@ public class SoftwareUnitDefinition {
 		return this.layer;
 	}
 
-	public long newException(String name, String type) {
+	public long newException(String name, String type) throws Exception {
 		SoftwareUnitDefinition exception = new SoftwareUnitDefinition(name, type);
 		exceptions.add(exception);
 

@@ -101,7 +101,7 @@ public class AppliedRule {
 		return id;
 	}
 
-	public long newException(String unitName, String unitType) {
+	public long newException(String unitName, String unitType) throws Exception {
 		SoftwareUnitDefinition exception = new SoftwareUnitDefinition(unitName, unitType);
 		exceptions.add(exception);
 
