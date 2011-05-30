@@ -264,6 +264,7 @@ public final class ConfigurationService {
 		Layer layer = architectureDefinition.getLayer(layer_id);
 		if (layer != null) {
 			layer.removeSoftwareUniteDefinition(softwareunit_id);
+			return;
 		}
 		throw new Exception("Layer does not exist");
 	}
@@ -367,7 +368,7 @@ public final class ConfigurationService {
 
 	public long newAppliedRule(int layer_id_from, int layer_id_to, String ruleType) throws Exception {
 		Log.i(this, "newAppliedRule(" + layer_id_from + "," + layer_id_to + ", " + ruleType + ")");
-
+		
 		Layer layer_from = architectureDefinition.getLayer(layer_id_from);
 		if (layer_from != null) {
 			Layer layer_to = architectureDefinition.getLayer(layer_id_to);
@@ -382,6 +383,7 @@ public final class ConfigurationService {
 		Layer layer_from = architectureDefinition.getLayer(layer_id_from);
 		if (layer_from != null) {
 			layer_from.removeAppliedRule(appliedrule_id);
+			return;
 		}
 		throw new Exception("Layer does not exist");
 	}

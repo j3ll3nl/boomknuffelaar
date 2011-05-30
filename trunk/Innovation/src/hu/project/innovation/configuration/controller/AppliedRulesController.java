@@ -98,7 +98,7 @@ public class AppliedRulesController extends PopUpController implements KeyListen
 		try {
 			if (getAction().equals(PopUpController.ACTION_NEW)) {
 				appliedrule_id = configurationService.newAppliedRule(getLayerID(), ((DataHelper) jframe.jComboBoxToLayer.getSelectedItem()).getIntId(), jframe.jComboBoxAppliedRule.getSelectedItem().toString());
-
+				configurationService.setAppliedRuleIsEnabled(getLayerID(), appliedrule_id, jframe.jCheckBoxEnabled.isSelected());
 				JTableException table = jframe.jTableException;
 				JTableTableModel tablemodel = (JTableTableModel) table.getModel();
 
