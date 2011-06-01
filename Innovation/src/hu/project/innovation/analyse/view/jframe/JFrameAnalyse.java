@@ -35,9 +35,9 @@ public class JFrameAnalyse extends javax.swing.JFrame {
 	private JLabel jLabel1;
 	private JLabel jLabel4;
 	private JLabel jLabel5;
-	private JButton jButton1;
+	public JButton jButtonJarBrowse;
 	private JPanel jPanel8;
-	private JTextField jTextField1;
+	public JTextField jTextFieldJarPath;
 	private JLabel jLabel2;
 	public JButton jButtonProjectBrowse;
 	public JButton jButtonOutputBrowse;
@@ -127,13 +127,13 @@ public class JFrameAnalyse extends javax.swing.JFrame {
 							jPanel8.setLayout(jPanel8Layout);
 							jPanel4.add(jPanel8, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
 							{
-								jTextField1 = new JTextField(50);
-								jPanel8.add(jTextField1);								
+								jTextFieldJarPath = new JTextField(50);
+								jPanel8.add(jTextFieldJarPath);								
 							}
 							{
-								jButton1 = new JButton();
-								jPanel8.add(jButton1);
-								jButton1.setText("Browse");
+								jButtonJarBrowse = new JButton();
+								jPanel8.add(jButtonJarBrowse);
+								jButtonJarBrowse.setText("Browse");
 							}
 						}
 					}

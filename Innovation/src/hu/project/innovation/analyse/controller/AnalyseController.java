@@ -101,6 +101,11 @@ public class AnalyseController implements Observer, ActionListener, KeyListener 
 			String path = browseForPath(analyseJFrame.jTextFieldProjectPath.getText());
 			ConfigurationService.getInstance().setProjectPath(path);
 			analyseJFrame.jTextFieldProjectPath.setText(path);
+		} else if (action.getSource() == analyseJFrame.jButtonJarBrowse) {
+			Log.i(this, "actionPerformed() - project browse");
+			String path = browseForPath(analyseJFrame.jTextFieldJarPath.getText());
+			ConfigurationService.getInstance().setJarPath(path);
+			analyseJFrame.jTextFieldJarPath.setText(path);
 		} else if (action.getSource() == analyseJFrame.jButtonOutputBrowse) {
 			Log.i(this, "actionPerformed() - output browse");
 			String path = browseForPath(analyseJFrame.jTextFieldOutputPath.getText());
