@@ -36,7 +36,7 @@ public final class ConfigurationService {
 	 * @return True = there is an architecture / False != an architecture
 	 */
 	public boolean hasArchitectureDefinition() {
-		Log.i(this, "hasArchitectureDefinition()");
+//		Log.i(this, "hasArchitectureDefinition()");
 
 		return architectureDefinition != null;
 	}
@@ -134,7 +134,7 @@ public final class ConfigurationService {
 	}
 
 	public ArrayList<Integer> getLayers() {
-		Log.i(this, "getLayers()");
+//		Log.i(this, "getLayers()");
 
 		if (hasArchitectureDefinition()) {
 			ArrayList<Integer> layers = architectureDefinition.getLayers();
@@ -426,7 +426,7 @@ public final class ConfigurationService {
 	}
 
 	public void setAppliedRuleToLayer(int layer_id_from, long appliedrule_id, int layer_id_to) throws Exception {
-		Log.i(this, "setAppliedRuleToLayer(" + layer_id_from + ", " + appliedrule_id + ", " + layer_id_to + ")");
+//		Log.i(this, "setAppliedRuleToLayer(" + layer_id_from + ", " + appliedrule_id + ", " + layer_id_to + ")");
 
 		AppliedRule appliedRule = getAppliedRule(layer_id_from, appliedrule_id);
 		Layer layer = architectureDefinition.getLayer(layer_id_to);
@@ -624,7 +624,7 @@ public final class ConfigurationService {
 	}
 
 	public Layer getLayerBySoftwareUnitName(String name) {
-		Log.i(this, "getAppliedRules()");
+//		Log.i(this, "getAppliedRules()");
 
 		return this.architectureDefinition.getLayerBySoftwareUnitName(name);
 	}

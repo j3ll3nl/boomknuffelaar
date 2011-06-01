@@ -46,7 +46,7 @@ public class AnalyseService {
 			addClasspath(jarPath);
 			}
 
-			String ruleset = "\\hu\\project\\innovation\\configuration\\model\\rules\\ruleset.xml";
+			String ruleset = new File("./xml/ruleset.xml").getAbsolutePath();;
 
 			Log.i(this, "startAnalyse() - Project: " + projectPath);
 			Log.i(this, "startAnalyse() - Jar path: " + jarPath);

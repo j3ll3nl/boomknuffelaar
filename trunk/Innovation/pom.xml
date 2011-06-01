@@ -4,7 +4,7 @@
 	<artifactId>Innovation</artifactId>
 	<version>0.8</version>
   	<properties>
-  		<targetjdk>1.5</targetjdk>
+  		<targetjdk>1.6</targetjdk>
   	</properties>
   
   <build>
