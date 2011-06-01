@@ -13,10 +13,11 @@ public class Configuration {
 
 	public static final String PROJECT_PATH = "project_path";
 	public static final String OUTPUT_PATH = "output_path";
+	public static final String JAR_PATH = "jar_path";
 	public static final String OUTPUT_FORMAT = "output_format";
 	public static final String OUTPUT_FORMAT_TEXT = "text";
 	public static final String OUTPUT_FORMAT_HTML = "html";
-	public static final String OUTPUT_FORMAT_XML = "xml";
+	public static final String OUTPUT_FORMAT_XML = "xml";	
 
 	private HashMap<String, String> settings;
 	private HashMap<String, AbstractRuleType> rules;
