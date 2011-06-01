@@ -35,11 +35,11 @@ public class JFrameAnalyse extends javax.swing.JFrame {
 	private JLabel jLabel1;
 	private JLabel jLabel4;
 	private JLabel jLabel5;
-	public JButton jButtonJarBrowse;
 	private JPanel jPanel8;
 	public JTextField jTextFieldJarPath;
 	private JLabel jLabel2;
 	public JButton jButtonProjectBrowse;
+	public JButton jButtonJarpathBrowse;
 	public JButton jButtonOutputBrowse;
 	public JButton jButtonClose;
 	public JButton jButtonStartAnalyse;
@@ -131,9 +131,9 @@ public class JFrameAnalyse extends javax.swing.JFrame {
 								jPanel8.add(jTextFieldJarPath);								
 							}
 							{
-								jButtonJarBrowse = new JButton();
-								jPanel8.add(jButtonJarBrowse);
-								jButtonJarBrowse.setText("Browse");
+								jButtonJarpathBrowse = new JButton();
+								jPanel8.add(jButtonJarpathBrowse);
+								jButtonJarpathBrowse.setText("Browse");
 							}
 						}
 					}
