@@ -34,8 +34,10 @@ public class AnalyseController implements Observer, ActionListener, KeyListener 
 			analyseJFrame = new JFrameAnalyse();
 
 			analyseJFrame.jTextFieldProjectPath.addKeyListener(this);
+			analyseJFrame.jTextFieldJarPath.addKeyListener(this);
 			analyseJFrame.jTextFieldOutputPath.addKeyListener(this);
 			analyseJFrame.jButtonProjectBrowse.addActionListener(this);
+			analyseJFrame.jButtonJarpathBrowse.addActionListener(this);
 			analyseJFrame.jButtonOutputBrowse.addActionListener(this);
 			analyseJFrame.jButtonClose.addActionListener(this);
 			analyseJFrame.jButtonStartAnalyse.addActionListener(this);
@@ -84,6 +86,37 @@ public class AnalyseController implements Observer, ActionListener, KeyListener 
 		}
 		return preferedpath;
 	}
+	
+	private String browseForJarpath(String preferedpath) {
+		if (preferedpath.trim().equals("")) {
+			preferedpath = System.getProperty("user.dir");
+		}
+
+		File defaultPath = new File(preferedpath);
+
+		// Create a file chooser
+		JFileChooser fc = new JFileChooser(defaultPath);
+
+		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		fc.setAcceptAllFileFilterUsed(false);
+
+		// In response to a button click:
+		int returnVal = fc.showOpenDialog(analyseJFrame);
+
+		// The user did click on Open
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			try {
+				// Getting selected file from dialog
+				File file = fc.getSelectedFile();
+				Log.i(this, "openConfiguration() - opening file: " + file.getAbsolutePath());
+
+				return file.getAbsolutePath();
+			} catch (Exception e) {
+				Log.e(this, "openConfiguration() - exeption: " + e.getMessage());
+			}
+		}
+		return preferedpath;
+	}
 
 	private void updateAnalyseButton(boolean running) {
 		if (running) {
@@ -101,9 +134,9 @@ public class AnalyseController implements Observer, ActionListener, KeyListener 
 			String path = browseForPath(analyseJFrame.jTextFieldProjectPath.getText());
 			ConfigurationService.getInstance().setProjectPath(path);
 			analyseJFrame.jTextFieldProjectPath.setText(path);
-		} else if (action.getSource() == analyseJFrame.jButtonJarBrowse) {
+		} else if (action.getSource() == analyseJFrame.jButtonJarpathBrowse) {
 			Log.i(this, "actionPerformed() - project browse");
-			String path = browseForPath(analyseJFrame.jTextFieldJarPath.getText());
+			String path = browseForJarpath(analyseJFrame.jTextFieldJarPath.getText());
 			ConfigurationService.getInstance().setJarPath(path);
 			analyseJFrame.jTextFieldJarPath.setText(path);
 		} else if (action.getSource() == analyseJFrame.jButtonOutputBrowse) {

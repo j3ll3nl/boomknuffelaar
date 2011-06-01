@@ -33,12 +33,18 @@ public class AnalyseService {
 		try {
 			Log.i(this, "startAnalyse() - configuration settings:");
 			String projectPath = ConfigurationService.getInstance().getProjectPath();
-			String jarPath = ConfigurationService.getInstance().getJarPath();
+			String jarPath = null;
+			if(ConfigurationService.getInstance().getJarPath() != null){
+			jarPath = ConfigurationService.getInstance().getJarPath();
+			}
 			String outputPath = ConfigurationService.getInstance().getOutputPath();
 			String outputType = ConfigurationService.getInstance().getOutputType();
 
 			// Set the jar path
+			
+			if(jarPath != null){
 			addClasspath(jarPath);
+			}
 
 			String ruleset = "\\hu\\project\\innovation\\configuration\\model\\rules\\ruleset.xml";
 
