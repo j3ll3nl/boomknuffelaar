@@ -18,13 +18,10 @@ import javax.swing.JFileChooser;
 
 public class AnalyseController implements Observer, ActionListener, KeyListener {
 
-	private AnalyseService analyseService;
 	private JFrameAnalyse analyseJFrame = null;
 
 	public AnalyseController() {
 		Log.i(this, "constructor()");
-
-		analyseService = AnalyseService.getInstance();
 	}
 
 	public void initUi() {
@@ -154,7 +151,7 @@ public class AnalyseController implements Observer, ActionListener, KeyListener 
 		} else if (action.getSource() == analyseJFrame.jButtonStartAnalyse) {
 			Log.i(this, "actionPerformed() - start analyse");
 
-			analyseService.startAnalyse(this);
+			AnalyseService.getInstance().startAnalyse(this);
 			updateAnalyseButton(true);
 
 		}

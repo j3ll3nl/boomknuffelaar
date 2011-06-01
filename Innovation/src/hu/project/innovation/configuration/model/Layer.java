@@ -180,7 +180,18 @@ public class Layer {
 
 		if (appliedRules != null) {
 			for (AppliedRule appliedRule : this.appliedRules) {
-				if (appliedRule.getToLayer().getId() == toLayer.getId() && appliedRule.getRuleType().getName().equals(ruleName)) {
+				if(appliedRule == null) {
+					Log.e(this, "appliedrule = null");
+				}
+				if(appliedRule.getToLayer() == null) {
+					Log.e(this, "appliedrule.getToLayer = null");
+				}
+				if(appliedRule.getRuleType() == null) {
+					Log.e(this, "appliedrule.getRuleType = null");
+				}
+				
+				if (appliedRule.getToLayer().getId() == toLayer.getId() 
+						&& appliedRule.getRuleType().getName().equals(ruleName)) {
 					return true;
 				}
 			}

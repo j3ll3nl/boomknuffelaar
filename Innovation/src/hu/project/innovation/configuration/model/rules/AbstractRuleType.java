@@ -92,7 +92,7 @@ public abstract class AbstractRuleType extends AbstractJavaRule {
 	protected void initArchitecture() {
 		if (!ConfigurationService.getInstance().hasArchitectureDefinition()) {
 			try {
-				ConfigurationService.getInstance().importConfiguration(new File("architecture_definition.xml"));
+				ConfigurationService.getInstance().importConfiguration(new File("./xml/architecture.xml"));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

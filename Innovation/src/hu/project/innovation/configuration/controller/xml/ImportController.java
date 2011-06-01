@@ -1,8 +1,7 @@
 package hu.project.innovation.configuration.controller.xml;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.HashSet;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -13,7 +12,7 @@ import org.w3c.dom.NodeList;
 
 public class ImportController extends Controller {
 
-	private HashMap<Integer, Long> unknownAppliedRules = new HashMap<Integer, Long>();
+	private HashSet<AppliedRuleData> unknownAppliedRules = new HashSet<AppliedRuleData>();
 
 	public void importXML(File file) throws Exception {
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -48,11 +47,6 @@ public class ImportController extends Controller {
 				int layer_id = service.newLayer(getValue(layerElement, this.layer_name), getValue(layerElement, this.layer_description));
 				service.setLayerInterfaceAccesOnly(layer_id, (getValue(layerElement, this.layer_interfaceAccesOnly) == "1" ? true : false));
 
-				if (unknownAppliedRules.containsKey(layer_id)) {
-					Long appliedrule = unknownAppliedRules.get(layer_id);
-					service.setAppliedRuleToLayer(service.getAppliedRuleFromLayer(appliedrule), appliedrule, layer_id);
-					unknownAppliedRules.remove(layer_id);
-				}
 
 				// Read software units
 				NodeList softwareUnitsNode = layerElement.getElementsByTagName(this.softwareunit);
@@ -78,13 +72,9 @@ public class ImportController extends Controller {
 					int layer_id_to = Integer.parseInt(getValue(appliedRuleElement, this.appliedrule_tolayer));
 
 					long appliedRule_id = service.newAppliedRule(layer_id, layer_id_to, getValue(appliedRuleElement, this.appliedrule_ruleType));
-
-					// Check if the layer_to exists! If it does not exists we need to remeber this applied rule until we find the layer_to.
-					ArrayList<Integer> layers = service.getLayers();
-					if (!layers.contains(layer_id_to)) {
-						unknownAppliedRules.put(layer_id_to, appliedRule_id);
-					}
-
+					
+					unknownAppliedRules.add(new AppliedRuleData(layer_id_to, appliedRule_id));
+					
 					// Each applied rule could contain exceptions
 					NodeList exceptionsNode = appliedRuleElement.getElementsByTagName(this.exception);
 					for (int f = 0; f < exceptionsNode.getLength(); f++) {
@@ -93,6 +83,16 @@ public class ImportController extends Controller {
 					}
 				}
 			}
+		}
+		
+		for(AppliedRuleData unknownAppliedRule : unknownAppliedRules){
+			long applied_rule_id = unknownAppliedRule.getAppliedRule_id();
+			int layer_id_to = unknownAppliedRule.getLayer_id_to();
+			
+			int appliedRuleFromLayer = service.getAppliedRuleFromLayer(applied_rule_id);
+						
+			service.setAppliedRuleToLayer(appliedRuleFromLayer, applied_rule_id, layer_id_to);
+			
 		}
 	}
 }

@@ -11,12 +11,13 @@ public class MainStandalone {
 
 	public static void main(String[] args) throws Exception {
 		ImportController importc = new ImportController();
-		importc.importXML(new File("./defaultConfiguratie.xml"));
-
+		importc.importXML(new File("./xml/architecture.xml"));
+		
 		String[] pmdArgs = new String[] { 
 				ConfigurationService.getInstance().getProjectPath(), 
-				"text", 
-				"\\hu\\project\\innovation\\configuration\\model\\rules\\ruleset.xml"};
+				"text",
+				new File("./xml/ruleset.xml").getAbsolutePath(),
+				"-targetjdk", "1.6"};
 		
 		// Start PMD
 		PMD.main(pmdArgs);
