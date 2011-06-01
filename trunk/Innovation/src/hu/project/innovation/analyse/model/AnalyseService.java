@@ -51,7 +51,7 @@ public class AnalyseService {
 		new Thread(p).start();
 	}
 	
-	public static void addClasspath(String s) throws Exception {
+	public void addClasspath(String s) throws Exception {
 		  File f = new File(s);
 		  URL u = f.toURI().toURL();
 		  URLClassLoader urlClassLoader = (URLClassLoader) ClassLoader.getSystemClassLoader();
