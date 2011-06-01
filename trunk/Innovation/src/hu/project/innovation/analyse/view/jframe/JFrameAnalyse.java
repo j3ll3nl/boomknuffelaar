@@ -35,6 +35,10 @@ public class JFrameAnalyse extends javax.swing.JFrame {
 	private JLabel jLabel1;
 	private JLabel jLabel4;
 	private JLabel jLabel5;
+	private JButton jButton1;
+	private JPanel jPanel8;
+	private JTextField jTextField1;
+	private JLabel jLabel2;
 	public JButton jButtonProjectBrowse;
 	public JButton jButtonOutputBrowse;
 	public JButton jButtonClose;
@@ -80,8 +84,8 @@ public class JFrameAnalyse extends javax.swing.JFrame {
 						GridBagLayout jPanel4Layout = new GridBagLayout();
 						jPanel2.add(jPanel4, BorderLayout.NORTH);
 						jPanel4.setBorder(BorderFactory.createTitledBorder("Project"));
-						jPanel4Layout.rowWeights = new double[] { 0.0 };
-						jPanel4Layout.rowHeights = new int[] { 27 };
+						jPanel4Layout.rowWeights = new double[] {0.0, 0.1};
+						jPanel4Layout.rowHeights = new int[] {27, 7};
 						jPanel4Layout.columnWeights = new double[] { 0.0, 0.1 };
 						jPanel4Layout.columnWidths = new int[] { 83, 7 };
 						jPanel4.setLayout(jPanel4Layout);
@@ -107,6 +111,29 @@ public class JFrameAnalyse extends javax.swing.JFrame {
 								jButtonProjectBrowse = new JButton();
 								jPanel6.add(jButtonProjectBrowse);
 								jButtonProjectBrowse.setText("Browse");
+							}
+						}
+						{
+							jLabel2 = new JLabel();
+							jPanel4.add(jLabel2, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+							jLabel2.setText("Jar");
+						}
+						{
+							jPanel8 = new JPanel();
+							FlowLayout jPanel8Layout = new FlowLayout();
+							jPanel8Layout.setHgap(0);
+							jPanel8Layout.setVgap(0);
+							jPanel8Layout.setAlignment(FlowLayout.LEFT);
+							jPanel8.setLayout(jPanel8Layout);
+							jPanel4.add(jPanel8, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+							{
+								jTextField1 = new JTextField(50);
+								jPanel8.add(jTextField1);								
+							}
+							{
+								jButton1 = new JButton();
+								jPanel8.add(jButton1);
+								jButton1.setText("Browse");
 							}
 						}
 					}
