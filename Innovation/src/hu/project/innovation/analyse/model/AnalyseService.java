@@ -33,23 +33,21 @@ public class AnalyseService {
 		try {
 			Log.i(this, "startAnalyse() - configuration settings:");
 			String projectPath = ConfigurationService.getInstance().getProjectPath();
-			String jarPath = null;
-			if(ConfigurationService.getInstance().getJarPath() != null){
-			jarPath = ConfigurationService.getInstance().getJarPath();
+
+			// Set the jar path
+			String jarPath = "";
+			if (ConfigurationService.getInstance().getJarPath() != null) {
+				jarPath = ConfigurationService.getInstance().getJarPath();
+				String[] split = jarPath.split(";");
+				for (int i = 0; i < split.length; i++) {
+					addClasspath(split[i]);
+				}
 			}
 			String outputPath = ConfigurationService.getInstance().getOutputPath();
 			String outputType = ConfigurationService.getInstance().getOutputType();
 
-			// Set the jar path
-			
-			if(jarPath != null){
-				String[] split = jarPath.split(";");
-				for(int i = 0; i < split.length; i++){
-					addClasspath(split[i]);
-				}
-			}
-
-			String ruleset = new File("./xml/ruleset.xml").getAbsolutePath();;
+			String ruleset = new File("./xml/ruleset.xml").getAbsolutePath();
+			;
 
 			Log.i(this, "startAnalyse() - Project: " + projectPath);
 			Log.i(this, "startAnalyse() - Jar path: " + jarPath);
