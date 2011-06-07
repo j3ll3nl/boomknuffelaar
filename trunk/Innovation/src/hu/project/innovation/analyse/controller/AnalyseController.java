@@ -84,7 +84,7 @@ public class AnalyseController implements Observer, ActionListener, KeyListener 
 		return preferedpath;
 	}
 	
-	private String browseForJarpath(String preferedpath) {
+	private File[] browseForJarpath(String preferedpath) {
 		if (preferedpath.trim().equals("")) {
 			preferedpath = System.getProperty("user.dir");
 		}
@@ -96,6 +96,7 @@ public class AnalyseController implements Observer, ActionListener, KeyListener 
 
 		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
 		fc.setAcceptAllFileFilterUsed(false);
+		fc.setMultiSelectionEnabled(true);
 
 		// In response to a button click:
 		int returnVal = fc.showOpenDialog(analyseJFrame);
@@ -104,15 +105,15 @@ public class AnalyseController implements Observer, ActionListener, KeyListener 
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			try {
 				// Getting selected file from dialog
-				File file = fc.getSelectedFile();
-				Log.i(this, "openConfiguration() - opening file: " + file.getAbsolutePath());
+				File files[] = fc.getSelectedFiles();
+				Log.i(this, "openConfiguration() - opening files: " + files);
 
-				return file.getAbsolutePath();
+				return files;
 			} catch (Exception e) {
 				Log.e(this, "openConfiguration() - exeption: " + e.getMessage());
 			}
 		}
-		return preferedpath;
+		return null;
 	}
 
 	private void updateAnalyseButton(boolean running) {
@@ -132,10 +133,19 @@ public class AnalyseController implements Observer, ActionListener, KeyListener 
 			ConfigurationService.getInstance().setProjectPath(path);
 			analyseJFrame.jTextFieldProjectPath.setText(path);
 		} else if (action.getSource() == analyseJFrame.jButtonJarpathBrowse) {
-			Log.i(this, "actionPerformed() - project browse");
-			String path = browseForJarpath(analyseJFrame.jTextFieldJarPath.getText());
-			ConfigurationService.getInstance().setJarPath(path);
-			analyseJFrame.jTextFieldJarPath.setText(path);
+			Log.i(this, "actionPerformed() - project browse");			
+			File files[] = browseForJarpath(analyseJFrame.jTextFieldJarPath.getText());
+			if(files != null){
+				String path = "";
+				for(int i = 0; i < files.length; i++){
+					if(i != 0){
+						path += ";";
+					}
+					path += files[i].getAbsolutePath();
+				}
+				ConfigurationService.getInstance().setJarPath(path);
+				analyseJFrame.jTextFieldJarPath.setText(path);
+			}
 		} else if (action.getSource() == analyseJFrame.jButtonOutputBrowse) {
 			Log.i(this, "actionPerformed() - output browse");
 			String path = browseForPath(analyseJFrame.jTextFieldOutputPath.getText());
