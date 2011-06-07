@@ -43,7 +43,10 @@ public class AnalyseService {
 			// Set the jar path
 			
 			if(jarPath != null){
-			addClasspath(jarPath);
+				String[] split = jarPath.split(";");
+				for(int i = 0; i < split.length; i++){
+					addClasspath(split[i]);
+				}
 			}
 
 			String ruleset = new File("./xml/ruleset.xml").getAbsolutePath();;
