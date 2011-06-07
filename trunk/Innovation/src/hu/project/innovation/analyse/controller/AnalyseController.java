@@ -153,8 +153,11 @@ public class AnalyseController implements Observer, ActionListener, KeyListener 
 			analyseJFrame.jTextFieldOutputPath.setText(path);
 		} else if (action.getSource() == analyseJFrame.jComboBoxOutputType) {
 			Log.i(this, "actionPerformed() - output type");
-			String selected = analyseJFrame.jComboBoxOutputType.getSelectedItem().toString();
-			ConfigurationService.getInstance().setOutputType(selected);
+			Object selectedItem = analyseJFrame.jComboBoxOutputType.getSelectedItem();
+			if(selectedItem != null){
+				String selected = analyseJFrame.jComboBoxOutputType.getSelectedItem().toString();
+				ConfigurationService.getInstance().setOutputType(selected);
+			}
 		} else if (action.getSource() == analyseJFrame.jButtonClose) {
 			Log.i(this, "actionPerformed() - close");
 			analyseJFrame.dispose();
