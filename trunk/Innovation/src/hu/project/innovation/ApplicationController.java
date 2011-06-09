@@ -108,7 +108,7 @@ public class ApplicationController implements ActionListener {
 		} else if (action.getSource() == jframe.jMenuItemExit) {
 			System.exit(0);
 		} else {
-			
+
 			Log.i(this, "actionPerformed(" + action + ") - unknown button event");
 		}
 	}

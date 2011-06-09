@@ -19,12 +19,20 @@ public class SoftwareUnitDefinition {
 	public SoftwareUnitDefinition(String name, String type) throws Exception {
 		Log.i(this, "constructor(" + name + ", " + type + ")");
 
-		if(name.isEmpty()){
+		if (name.isEmpty()) {
 			throw new Exception("De naam de van de exception is niet ingevuld.");
 		}
 		setName(name);
 		setType(type);
 		setId();
+	}
+
+	public void setId() {
+		id = UniqueID.get();
+	}
+
+	public long getId() {
+		return id;
 	}
 
 	public void setName(String name) {
@@ -109,13 +117,5 @@ public class SoftwareUnitDefinition {
 			return true;
 		}
 		return false;
-	}
-
-	public void setId() {
-		id = UniqueID.get();
-	}
-
-	public long getId() {
-		return id;
 	}
 }

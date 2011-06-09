@@ -446,8 +446,8 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 				configurationService.setLayerDescription(layer_id, definitionJPanel.jTextAreaLayerDescription.getText());
 				configurationService.setLayerInterfaceAccesOnly(layer_id, definitionJPanel.jCheckBoxAccess.isSelected());
 
-				//To update the layer list: we need to fetch the DataHelper from the list, update it and fire an updateUI to notice that there is an update
-				DefaultListModel dlm = (DefaultListModel) definitionJPanel.jListLayers.getModel();				
+				// To update the layer list: we need to fetch the DataHelper from the list, update it and fire an updateUI to notice that there is an update
+				DefaultListModel dlm = (DefaultListModel) definitionJPanel.jListLayers.getModel();
 				for (int i = 0; i < dlm.getSize(); i++) {
 					DataHelper datahelper = (DataHelper) dlm.getElementAt(i);
 					if (datahelper.getIntId() == layer_id) {

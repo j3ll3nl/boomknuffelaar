@@ -74,8 +74,8 @@ public class ExportController extends Controller {
 					ArrayList<Long> exceptions = service.getAppliedRuleExceptions(layer_id, appliedRule_id);
 					for (long exception : exceptions) {
 						export.append("\t\t\t\t\t\t\t<" + this.exception + ">\n");
-						export.append("\t\t\t\t\t\t\t\t<" + this.exception_name + ">" + service.getAppliedruleExceptionName(layer_id, appliedRule_id, exception) + "</" + this.exception_name + ">\n");
-						export.append("\t\t\t\t\t\t\t\t<" + this.exception_type + ">" + service.getAppliedruleExceptionType(layer_id, appliedRule_id, exception) + "</" + this.exception_type + ">\n");
+						export.append("\t\t\t\t\t\t\t\t<" + this.exception_name + ">" + service.getAppliedRuleExceptionName(layer_id, appliedRule_id, exception) + "</" + this.exception_name + ">\n");
+						export.append("\t\t\t\t\t\t\t\t<" + this.exception_type + ">" + service.getAppliedRuleExceptionType(layer_id, appliedRule_id, exception) + "</" + this.exception_type + ">\n");
 						export.append("\t\t\t\t\t\t\t</" + this.exception + ">\n");
 					}
 

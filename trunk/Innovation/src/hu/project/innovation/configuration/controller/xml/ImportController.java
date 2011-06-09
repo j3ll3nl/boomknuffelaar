@@ -47,7 +47,6 @@ public class ImportController extends Controller {
 				int layer_id = service.newLayer(getValue(layerElement, this.layer_name), getValue(layerElement, this.layer_description));
 				service.setLayerInterfaceAccesOnly(layer_id, (getValue(layerElement, this.layer_interfaceAccesOnly) == "1" ? true : false));
 
-
 				// Read software units
 				NodeList softwareUnitsNode = layerElement.getElementsByTagName(this.softwareunit);
 				for (int c = 0; c < softwareUnitsNode.getLength(); c++) {
@@ -72,9 +71,9 @@ public class ImportController extends Controller {
 					int layer_id_to = Integer.parseInt(getValue(appliedRuleElement, this.appliedrule_tolayer));
 
 					long appliedRule_id = service.newAppliedRule(layer_id, layer_id_to, getValue(appliedRuleElement, this.appliedrule_ruleType));
-					
+
 					unknownAppliedRules.add(new AppliedRuleData(layer_id_to, appliedRule_id));
-					
+
 					// Each applied rule could contain exceptions
 					NodeList exceptionsNode = appliedRuleElement.getElementsByTagName(this.exception);
 					for (int f = 0; f < exceptionsNode.getLength(); f++) {
@@ -84,15 +83,15 @@ public class ImportController extends Controller {
 				}
 			}
 		}
-		
-		for(AppliedRuleData unknownAppliedRule : unknownAppliedRules){
+
+		for (AppliedRuleData unknownAppliedRule : unknownAppliedRules) {
 			long applied_rule_id = unknownAppliedRule.getAppliedRule_id();
 			int layer_id_to = unknownAppliedRule.getLayer_id_to();
-			
+
 			int appliedRuleFromLayer = service.getAppliedRuleFromLayer(applied_rule_id);
-						
+
 			service.setAppliedRuleToLayer(appliedRuleFromLayer, applied_rule_id, layer_id_to);
-			
+
 		}
 	}
 }

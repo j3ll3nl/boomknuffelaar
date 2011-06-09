@@ -36,7 +36,7 @@ public final class ConfigurationService {
 	 * @return True = there is an architecture / False != an architecture
 	 */
 	public boolean hasArchitectureDefinition() {
-//		Log.i(this, "hasArchitectureDefinition()");
+		// Log.i(this, "hasArchitectureDefinition()");
 
 		return architectureDefinition != null;
 	}
@@ -134,7 +134,7 @@ public final class ConfigurationService {
 	}
 
 	public ArrayList<Integer> getLayers() {
-//		Log.i(this, "getLayers()");
+		// Log.i(this, "getLayers()");
 
 		if (hasArchitectureDefinition()) {
 			ArrayList<Integer> layers = architectureDefinition.getLayers();
@@ -176,7 +176,7 @@ public final class ConfigurationService {
 
 		Layer layer = architectureDefinition.getLayer(layer_id);
 		if (layer != null) {
-			return layer.getDescription();
+			return layer.getLayerDescription();
 		}
 		return null;
 	}
@@ -186,7 +186,7 @@ public final class ConfigurationService {
 
 		Layer layer = architectureDefinition.getLayer(layer_id);
 		if (layer != null) {
-			layer.setInterfaceAccesOnly(enabled);
+			layer.setInterfaceAccessOnly(enabled);
 		}
 	}
 
@@ -241,7 +241,7 @@ public final class ConfigurationService {
 	 * @return Returns the id of the new software unit
 	 * @throws Exception
 	 */
-	public synchronized long newSoftwareUnit(int layer_id, String unitName, String unitType) throws Exception {
+	public long newSoftwareUnit(int layer_id, String unitName, String unitType) throws Exception {
 		Log.i(this, "newSoftwareUnit(" + layer_id + "," + unitName + "," + unitType + ")");
 
 		Layer layer = architectureDefinition.getLayer(layer_id);
@@ -263,7 +263,7 @@ public final class ConfigurationService {
 
 		Layer layer = architectureDefinition.getLayer(layer_id);
 		if (layer != null) {
-			layer.removeSoftwareUniteDefinition(softwareunit_id);
+			layer.removeSoftwareUnitDefinition(softwareunit_id);
 			return;
 		}
 		throw new Exception("Layer does not exist");
@@ -426,7 +426,7 @@ public final class ConfigurationService {
 	}
 
 	public void setAppliedRuleToLayer(int layer_id_from, long appliedrule_id, int layer_id_to) throws Exception {
-//		Log.i(this, "setAppliedRuleToLayer(" + layer_id_from + ", " + appliedrule_id + ", " + layer_id_to + ")");
+		// Log.i(this, "setAppliedRuleToLayer(" + layer_id_from + ", " + appliedrule_id + ", " + layer_id_to + ")");
 
 		AppliedRule appliedRule = getAppliedRule(layer_id_from, appliedrule_id);
 		Layer layer = architectureDefinition.getLayer(layer_id_to);
@@ -500,7 +500,7 @@ public final class ConfigurationService {
 		return appliedRule.getExceptions();
 	}
 
-	public String getAppliedruleExceptionName(int layer_id_from, long appliedrule_id, long exception_id) throws Exception {
+	public String getAppliedRuleExceptionName(int layer_id_from, long appliedrule_id, long exception_id) throws Exception {
 		Log.i(this, "getAppliedruleExceptionName(" + layer_id_from + ", " + appliedrule_id + ")");
 
 		AppliedRule appliedRule = getAppliedRule(layer_id_from, appliedrule_id);
@@ -512,7 +512,7 @@ public final class ConfigurationService {
 		return null;
 	}
 
-	public String getAppliedruleExceptionType(int layer_id_from, long appliedrule_id, long exception_id) throws Exception {
+	public String getAppliedRuleExceptionType(int layer_id_from, long appliedrule_id, long exception_id) throws Exception {
 		Log.i(this, "getAppliedruleExceptionType(" + layer_id_from + ", " + appliedrule_id + ")");
 
 		AppliedRule appliedRule = getAppliedRule(layer_id_from, appliedrule_id);
@@ -624,7 +624,7 @@ public final class ConfigurationService {
 	}
 
 	public Layer getLayerBySoftwareUnitName(String name) {
-//		Log.i(this, "getAppliedRules()");
+		// Log.i(this, "getAppliedRules()");
 
 		return this.architectureDefinition.getLayerBySoftwareUnitName(name);
 	}

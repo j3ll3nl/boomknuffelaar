@@ -47,7 +47,7 @@ public class Dependency extends HashMap<String, DepSoftwareComponent> implements
 			}
 			return components;
 		} else {
-			//throw new Exception("No dependencies exist.");
+			// throw new Exception("No dependencies exist.");
 		}
 		return null;
 	}

@@ -17,7 +17,7 @@ public class Configuration {
 	public static final String OUTPUT_FORMAT = "output_format";
 	public static final String OUTPUT_FORMAT_TEXT = "text";
 	public static final String OUTPUT_FORMAT_HTML = "html";
-	public static final String OUTPUT_FORMAT_XML = "xml";	
+	public static final String OUTPUT_FORMAT_XML = "xml";
 
 	private HashMap<String, String> settings;
 	private HashMap<String, AbstractRuleType> rules;

@@ -83,7 +83,7 @@ public class AnalyseController implements Observer, ActionListener, KeyListener 
 		}
 		return preferedpath;
 	}
-	
+
 	private File[] browseForJarpath(String preferedpath) {
 		if (preferedpath.trim().equals("")) {
 			preferedpath = System.getProperty("user.dir");
@@ -133,12 +133,12 @@ public class AnalyseController implements Observer, ActionListener, KeyListener 
 			ConfigurationService.getInstance().setProjectPath(path);
 			analyseJFrame.jTextFieldProjectPath.setText(path);
 		} else if (action.getSource() == analyseJFrame.jButtonJarpathBrowse) {
-			Log.i(this, "actionPerformed() - project browse");			
+			Log.i(this, "actionPerformed() - project browse");
 			File files[] = browseForJarpath(analyseJFrame.jTextFieldJarPath.getText());
-			if(files != null){
+			if (files != null) {
 				String path = "";
-				for(int i = 0; i < files.length; i++){
-					if(i != 0){
+				for (int i = 0; i < files.length; i++) {
+					if (i != 0) {
 						path += ";";
 					}
 					path += files[i].getAbsolutePath();
@@ -154,7 +154,7 @@ public class AnalyseController implements Observer, ActionListener, KeyListener 
 		} else if (action.getSource() == analyseJFrame.jComboBoxOutputType) {
 			Log.i(this, "actionPerformed() - output type");
 			Object selectedItem = analyseJFrame.jComboBoxOutputType.getSelectedItem();
-			if(selectedItem != null){
+			if (selectedItem != null) {
 				String selected = analyseJFrame.jComboBoxOutputType.getSelectedItem().toString();
 				ConfigurationService.getInstance().setOutputType(selected);
 			}

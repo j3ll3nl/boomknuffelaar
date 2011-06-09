@@ -13,11 +13,11 @@ public class DataHelper {
 		this.longid = id;
 	}
 
-	public int getIntId() {		
+	public int getIntId() {
 		return intid;
 	}
-	
-	public long getLongId(){
+
+	public long getLongId() {
 		return longid;
 	}
 

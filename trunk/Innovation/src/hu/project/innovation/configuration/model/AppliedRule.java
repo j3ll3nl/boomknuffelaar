@@ -89,10 +89,6 @@ public class AppliedRule {
 		exceptions.clear();
 	}
 
-	public String toString() {
-		return this.type.getName();
-	}
-
 	public void setId() {
 		id = UniqueID.get();
 	}
@@ -115,6 +111,10 @@ public class AppliedRule {
 			}
 		}
 		return null;
+	}
+
+	public String toString() {
+		return this.type.getName();
 	}
 
 }
