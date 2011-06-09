@@ -84,8 +84,8 @@ public class JFrameAnalyse extends javax.swing.JFrame {
 						GridBagLayout jPanel4Layout = new GridBagLayout();
 						jPanel2.add(jPanel4, BorderLayout.NORTH);
 						jPanel4.setBorder(BorderFactory.createTitledBorder("Project"));
-						jPanel4Layout.rowWeights = new double[] {0.0, 0.1};
-						jPanel4Layout.rowHeights = new int[] {27, 7};
+						jPanel4Layout.rowWeights = new double[] { 0.0, 0.1 };
+						jPanel4Layout.rowHeights = new int[] { 27, 7 };
 						jPanel4Layout.columnWeights = new double[] { 0.0, 0.1 };
 						jPanel4Layout.columnWidths = new int[] { 83, 7 };
 						jPanel4.setLayout(jPanel4Layout);
@@ -128,7 +128,7 @@ public class JFrameAnalyse extends javax.swing.JFrame {
 							jPanel4.add(jPanel8, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
 							{
 								jTextFieldJarPath = new JTextField(50);
-								jPanel8.add(jTextFieldJarPath);								
+								jPanel8.add(jTextFieldJarPath);
 							}
 							{
 								jButtonJarpathBrowse = new JButton();

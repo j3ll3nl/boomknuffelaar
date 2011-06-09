@@ -1,16 +1,16 @@
 package hu.project.innovation.analyse.view.tables;
 
-import javax.swing.table.TableColumn;
-
 import hu.project.innovation.configuration.view.tables.AbstractJTable;
 
+import javax.swing.table.TableColumn;
+
 public class JTableDependencie extends AbstractJTable {
-	
+
 	private static final long serialVersionUID = -7969643318117573036L;
 
 	public JTableDependencie() {
 		super();
-		
+
 		tablemodel.addColumn("Number");
 		tablemodel.addColumn("Dependency");
 		tablemodel.addColumn("Version");

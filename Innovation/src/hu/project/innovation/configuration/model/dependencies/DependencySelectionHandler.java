@@ -34,8 +34,8 @@ public class DependencySelectionHandler implements ListSelectionListener, Action
 	}
 
 	public void actionPerformed(ActionEvent event) {
-		if(event.getSource() instanceof JTextField) {
-			
+		if (event.getSource() instanceof JTextField) {
+
 		}
 	}
 

@@ -11,10 +11,6 @@ public class ArchitectureDefinition {
 	private String architectureDescription;
 	private Layer topLayer;
 
-	public ArchitectureDefinition() {
-		Log.i(this, "constructor()");
-	}
-
 	public ArchitectureDefinition(String architectureName, String architectureDescription) throws Exception {
 		Log.i(this, "constructor(" + architectureName + ", " + architectureDescription + ")");
 		setName(architectureName);
@@ -77,13 +73,6 @@ public class ArchitectureDefinition {
 	public Layer getLayer(int id) {
 		if (getTopLayer() != null) {
 			return getTopLayer().getLayer(id);
-		}
-		return null;
-	}
-
-	public Layer getLayer(String name) {
-		if (getTopLayer() != null) {
-			return getTopLayer().getLayer(name);
 		}
 		return null;
 	}

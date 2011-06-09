@@ -206,7 +206,6 @@ public class JFrameDependencies extends javax.swing.JFrame {
 							{
 								jTableFoundComponents = new JTableDependencie();
 								jScrollPane1.setViewportView(jTableFoundComponents);
-								
 
 							}
 						}
@@ -230,10 +229,10 @@ public class JFrameDependencies extends javax.swing.JFrame {
 							jPanel2.add(jScrollPane3, BorderLayout.CENTER);
 
 							{
-								
+
 								jTableDepsPom = new JTableDependencie();
 								jScrollPane3.setViewportView(getJTableDepsPom());
-								
+
 							}
 						}
 					}
@@ -254,16 +253,16 @@ public class JFrameDependencies extends javax.swing.JFrame {
 							jScrollPane2 = new JScrollPane();
 							jPanel10.add(jScrollPane2, BorderLayout.CENTER);
 							{
-								
-								jTableAllowedDeps  = new JTableDependencie();
-								jScrollPane2.setViewportView(jTableAllowedDeps);								
+
+								jTableAllowedDeps = new JTableDependencie();
+								jScrollPane2.setViewportView(jTableAllowedDeps);
 							}
 						}
 					}
 				}
 
 			}
-			pack();			
+			pack();
 			setSize(601, 520);
 			setResizable(false);
 		} catch (Exception e) {

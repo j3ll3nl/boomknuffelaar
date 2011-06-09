@@ -17,13 +17,15 @@ public interface Dependencies {
 	 */
 	public DepSoftwareComponent getDepSoftwareComponent(String artifactId);
 
-	/** @return all dependencies / software components 
-	 * @throws Exception */
+	/**
+	 * @return all dependencies / software components
+	 * @throws Exception
+	 */
 	public DepSoftwareComponent[] getDepSoftwareComponents();
 
 	/** @return the searched dependency (if found) */
 	public boolean searchDepSoftwareComponent(String keyword);
-	
+
 	/** remove all dependencies **/
 	public void removeDependencies();
 }

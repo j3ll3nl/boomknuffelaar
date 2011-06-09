@@ -6,40 +6,39 @@ import net.sourceforge.pmd.ast.ASTType;
 
 public class BackCallRule extends AbstractRuleType {
 
-	
 	public Object visit(ASTImportDeclaration node, Object data) {
 		try {
-		if(this.hasLayerRule(this.getCanonicalName(node),  node.getImportedName())) {
-			this.addViolation(data, node);
-		}
-		}catch (Exception e) {
-//			e.printStackTrace();
+			if (this.hasLayerRule(this.getCanonicalName(node), node.getImportedName())) {
+				this.addViolation(data, node);
+			}
+		} catch (Exception e) {
+			// e.printStackTrace();
 		}
 		return super.visit(node, data);
 	}
 
 	public Object visit(ASTType node, Object data) {
 		try {
-		if(node.getType() != null) {
-			if(this.hasLayerRule(this.getCanonicalName(node), node.getType().getCanonicalName())) {
-				this.addViolation(data, node);
+			if (node.getType() != null) {
+				if (this.hasLayerRule(this.getCanonicalName(node), node.getType().getCanonicalName())) {
+					this.addViolation(data, node);
+				}
 			}
-		}
-		}catch (Exception e) {
-//			e.printStackTrace();
+		} catch (Exception e) {
+			// e.printStackTrace();
 		}
 		return super.visit(node, data);
 	}
-	
+
 	public Object visit(ASTName node, Object data) {
 		try {
-		if(node.getType() != null) {
-			if(this.hasLayerRule(this.getCanonicalName(node), node.getType().getCanonicalName())) {
-				this.addViolation(data, node);
+			if (node.getType() != null) {
+				if (this.hasLayerRule(this.getCanonicalName(node), node.getType().getCanonicalName())) {
+					this.addViolation(data, node);
+				}
 			}
-		}
-		}catch (Exception e) {
-//			e.printStackTrace();
+		} catch (Exception e) {
+			// e.printStackTrace();
 		}
 		return super.visit(node, data);
 	}

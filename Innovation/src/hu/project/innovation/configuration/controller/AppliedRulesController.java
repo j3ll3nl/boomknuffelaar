@@ -52,9 +52,9 @@ public class AppliedRulesController extends PopUpController implements KeyListen
 				for (long exception_id : exceptions) {
 					DataHelper datahelper = new DataHelper();
 					datahelper.setId(exception_id);
-					datahelper.setValue(configurationService.getAppliedruleExceptionName(getLayerID(), appliedrule_id, exception_id));
+					datahelper.setValue(configurationService.getAppliedRuleExceptionName(getLayerID(), appliedrule_id, exception_id));
 
-					Object[] row = { datahelper, configurationService.getAppliedruleExceptionType(getLayerID(), appliedrule_id, exception_id) };
+					Object[] row = { datahelper, configurationService.getAppliedRuleExceptionType(getLayerID(), appliedrule_id, exception_id) };
 					tablemodel.addRow(row);
 				}
 			}

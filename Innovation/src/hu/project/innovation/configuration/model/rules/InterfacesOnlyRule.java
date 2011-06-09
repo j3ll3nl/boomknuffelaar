@@ -12,7 +12,7 @@ public class InterfacesOnlyRule extends BackCallRule {
 	protected void checkViolation(Class<?> toClass, Object data, SimpleNode node) {
 		this.initArchitecture();
 
-		String callingName = this.getPackageName(node)+"."+this.getClassName(node);
+		String callingName = this.getPackageName(node) + "." + this.getClassName(node);
 		String calledName = toClass.getCanonicalName();
 
 		if (isPackageChecked(calledName)) {

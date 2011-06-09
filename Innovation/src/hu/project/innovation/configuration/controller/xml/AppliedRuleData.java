@@ -5,7 +5,7 @@ package hu.project.innovation.configuration.controller.xml;
  * @author Stefan Kemp
  * 
  * A class to temporarily hold AppliedRule info
- *
+ * 
  */
 public class AppliedRuleData {
 

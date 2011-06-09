@@ -70,7 +70,7 @@ public class DependencyController implements ActionListener {
 			int counter = 0;
 			for (String dependency : extDependencies) {
 				// Kijken of de dependency een - heeft, indien het geval het stuk van de string ervoor pakken (tijdelijke oplossing)
-				
+
 				if (!dependencyService.searchDepSoftwareComponent((dependency.contains("-")) ? dependency.split("-")[0] : dependency)) {
 					// check if the dependency is added in the project object model (pom.xml)
 					boolean tmp = false;

@@ -13,7 +13,7 @@ public final class DependencyService {
 		this.dependencies = new Dependency();
 		this.allowedDependencies = new Dependency();
 	}
-	
+
 	// custom dependencies
 
 	/**
@@ -43,7 +43,7 @@ public final class DependencyService {
 
 	/**
 	 * @return all dependencies
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public DepSoftwareComponent[] getDependencies() {
 		return dependencies.getDepSoftwareComponents();
@@ -53,7 +53,7 @@ public final class DependencyService {
 	public boolean searchDepSoftwareComponent(String keyword) {
 		return dependencies.searchDepSoftwareComponent(keyword);
 	}
-	
+
 	public void removeAllDependencies() {
 		dependencies.removeDependencies();
 	}
@@ -87,7 +87,7 @@ public final class DependencyService {
 
 	/**
 	 * @return all allowed dependencies
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public DepSoftwareComponent[] getAllowedDependencies() throws Exception {
 		return allowedDependencies.getDepSoftwareComponents();
@@ -97,7 +97,7 @@ public final class DependencyService {
 	public boolean searchAllowedDepSoftwareComponent(String keyword) {
 		return allowedDependencies.searchDepSoftwareComponent(keyword);
 	}
-	
+
 	public void removeAllAllowedDependencies() {
 		allowedDependencies.removeDependencies();
 	}
