@@ -46,8 +46,7 @@ public class AnalyseService {
 			String outputPath = ConfigurationService.getInstance().getOutputPath();
 			String outputType = ConfigurationService.getInstance().getOutputType();
 
-			String ruleset = new File("./xml/ruleset.xml").getAbsolutePath();
-			;
+			String ruleset = new File("./xml/ruleset.xml").getAbsolutePath();			
 
 			Log.i(this, "startAnalyse() - Project: " + projectPath);
 			Log.i(this, "startAnalyse() - Jar path: " + jarPath);
