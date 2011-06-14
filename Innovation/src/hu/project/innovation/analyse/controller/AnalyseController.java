@@ -1,5 +1,6 @@
 package hu.project.innovation.analyse.controller;
 
+import hu.project.innovation.ApplicationController;
 import hu.project.innovation.analyse.model.AnalyseService;
 import hu.project.innovation.analyse.view.jframe.JFrameAnalyse;
 import hu.project.innovation.configuration.model.ConfigurationService;
@@ -19,9 +20,11 @@ import javax.swing.JFileChooser;
 public class AnalyseController implements Observer, ActionListener, KeyListener {
 
 	private JFrameAnalyse analyseJFrame = null;
+	private ApplicationController applicationcontroller;
 
-	public AnalyseController() {
+	public AnalyseController(ApplicationController applicationController) {
 		Log.i(this, "constructor()");
+		this.applicationcontroller = applicationController;
 	}
 
 	public void initUi() {
@@ -127,7 +130,9 @@ public class AnalyseController implements Observer, ActionListener, KeyListener 
 
 	public void actionPerformed(ActionEvent action) {
 		Log.i(this, "actionPerformed()");
-		if (action.getSource() == analyseJFrame.jButtonProjectBrowse) {
+		if (action.getSource() == applicationcontroller.jframe.jMenuItemStartAnalyse) {
+			initUi();
+		} else if (action.getSource() == analyseJFrame.jButtonProjectBrowse) {
 			Log.i(this, "actionPerformed() - project browse");
 			String path = browseForPath(analyseJFrame.jTextFieldProjectPath.getText());
 			ConfigurationService.getInstance().setProjectPath(path);

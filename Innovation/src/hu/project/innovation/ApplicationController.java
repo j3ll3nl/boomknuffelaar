@@ -24,8 +24,8 @@ public class ApplicationController implements ActionListener {
 		Log.i(this, "constructor()");
 
 		definitioncontroller = new DefinitionController(this);
-		analysecontroller = new AnalyseController();
-		dependencycontroller = new DependencyController();
+		analysecontroller = new AnalyseController(this);
+		dependencycontroller = new DependencyController(this);
 	}
 
 	/**
@@ -39,11 +39,11 @@ public class ApplicationController implements ActionListener {
 
 		// Set actionlisteners for the menu
 		jframe.jMenuItemExit.addActionListener(this);
-		jframe.jMenuItemNewArchitecture.addActionListener(this);
-		jframe.jMenuItemOpenArchitecture.addActionListener(this);
-		jframe.jMenuItemSaveArchitecture.addActionListener(this);
-		jframe.jMenuItemStartAnalyse.addActionListener(this);
-		jframe.jMenuItemCheckDependencies.addActionListener(this);
+		jframe.jMenuItemNewArchitecture.addActionListener(definitioncontroller);
+		jframe.jMenuItemOpenArchitecture.addActionListener(definitioncontroller);
+		jframe.jMenuItemSaveArchitecture.addActionListener(definitioncontroller);
+		jframe.jMenuItemStartAnalyse.addActionListener(analysecontroller);
+		jframe.jMenuItemCheckDependencies.addActionListener(dependencycontroller);
 		jframe.jMenuItemAbout.addActionListener(this);
 
 		// This method sets the definition jpanel in the jframe.
@@ -87,22 +87,7 @@ public class ApplicationController implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent action) {
-		if (action.getSource() == jframe.jMenuItemNewArchitecture) {
-			Log.i(this, "actionPerformed() - new architecture");
-			definitioncontroller.newConfiguration();
-		} else if (action.getSource() == jframe.jMenuItemOpenArchitecture) {
-			Log.i(this, "actionPerformed() - open architecture");
-			definitioncontroller.openConfiguration();
-		} else if (action.getSource() == jframe.jMenuItemSaveArchitecture) {
-			Log.i(this, "actionPerformed() - save architecture");
-			definitioncontroller.saveConfiguration();
-		} else if (action.getSource() == jframe.jMenuItemStartAnalyse) {
-			Log.i(this, "actionPerformed() - start analyse");
-			analysecontroller.initUi();
-		} else if (action.getSource() == jframe.jMenuItemCheckDependencies) {
-			Log.i(this, "actionPerformed() - check dependensies");
-			dependencycontroller.initUI();
-		} else if (action.getSource() == jframe.jMenuItemAbout) {
+		if (action.getSource() == jframe.jMenuItemAbout) {
 			Log.i(this, "actionPerformed() - about");
 			UiDialogs.messageDialog(jframe, "© 2011 - This application is made by a project team at Hogeschool Utrecht.", "About");
 		} else if (action.getSource() == jframe.jMenuItemExit) {

@@ -667,7 +667,13 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	}
 
 	public void actionPerformed(ActionEvent action) {
-		if (action.getSource() == definitionJPanel.jButtonNewLayer) {
+		if (action.getSource() == mainController.jframe.jMenuItemNewArchitecture) {			
+			newConfiguration();
+		} else if (action.getSource() == mainController.jframe.jMenuItemOpenArchitecture) {		
+			openConfiguration();
+		} else if (action.getSource() == mainController.jframe.jMenuItemSaveArchitecture) {			
+			saveConfiguration();
+		}else if (action.getSource() == definitionJPanel.jButtonNewLayer) {
 			newLayer();
 		} else if (action.getSource() == definitionJPanel.jButtonRemoveLayer) {
 			removeLayer();
