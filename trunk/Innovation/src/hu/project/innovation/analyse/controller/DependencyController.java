@@ -1,5 +1,6 @@
 package hu.project.innovation.analyse.controller;
 
+import hu.project.innovation.ApplicationController;
 import hu.project.innovation.analyse.view.jframe.JFrameDependencies;
 import hu.project.innovation.configuration.model.ConfigurationService;
 import hu.project.innovation.configuration.model.DependencyService;
@@ -26,14 +27,20 @@ import org.xml.sax.SAXException;
 public class DependencyController implements ActionListener {
 	private DependencyService dependencyService;
 	private JFrameDependencies dependenciesJFrame = null;
+	private ApplicationController applicationController;
 
-	/** format for version number */
+	/**
+	 * format for version number
+	 * 
+	 * @param applicationController
+	 */
 	// private static String _VERSION = "[0-9]{1,2}(.[0-9])*?";
 
-	public DependencyController() {
+	public DependencyController(ApplicationController applicationController) {
 		Log.i(this, "constructor()");
 
 		dependencyService = new DependencyService();
+		this.applicationController = applicationController;
 	}
 
 	/**
@@ -260,22 +267,25 @@ public class DependencyController implements ActionListener {
 		parseXML(file, false);
 	}
 
-	public void actionPerformed(ActionEvent event) {
-		if (event.getSource() == dependenciesJFrame.jButtonDependenciesBrowse) {
+	public void actionPerformed(ActionEvent action) {
+		if (action.getSource() == applicationController.jframe.jMenuItemCheckDependencies) {
+			Log.i(this, "actionPerformed() - check dependensies");
+			initUI();
+		} else if (action.getSource() == dependenciesJFrame.jButtonDependenciesBrowse) {
 			Log.i(this, "actionPerformed() - dependencie browse");
 
 			String path = browseForPath(dependenciesJFrame.jTextFieldDependencies.getText());
 			dependenciesJFrame.jTextFieldDependencies.setText(path);
-		} else if (event.getSource() == dependenciesJFrame.jButtonPomBrowse) {
+		} else if (action.getSource() == dependenciesJFrame.jButtonPomBrowse) {
 			Log.i(this, "actionPerformed() - pom browse");
 
 			String path = browseForPath(dependenciesJFrame.jTextFieldPom.getText());
 			dependenciesJFrame.jTextFieldPom.setText(path);
-		} else if (event.getSource() == dependenciesJFrame.jButtonClear) {
+		} else if (action.getSource() == dependenciesJFrame.jButtonClear) {
 			Log.i(this, "actionPerformed() - clear log");
 
 			dependenciesJFrame.jTextPaneDepLog.setText("");
-		} else if (event.getSource() == dependenciesJFrame.jButtonCheckDeps) {
+		} else if (action.getSource() == dependenciesJFrame.jButtonCheckDeps) {
 			Log.i(this, "actionPerformed() - check dependencies");
 
 			dependencyService.removeAllDependencies();
@@ -283,7 +293,7 @@ public class DependencyController implements ActionListener {
 
 			check();
 		} else {
-			Log.e(this, "actionPerformed() - unkown command: " + event);
+			Log.e(this, "actionPerformed() - unkown command: " + action);
 		}
 	}
 }
