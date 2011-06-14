@@ -11,6 +11,8 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
+import javax.swing.JPanel;
+
 public class ApplicationController implements ActionListener {
 	private DefinitionController definitioncontroller = null;
 	private AnalyseController analysecontroller = null;
@@ -22,7 +24,7 @@ public class ApplicationController implements ActionListener {
 	 */
 	public ApplicationController() {
 		Log.i(this, "constructor()");
-
+		
 		definitioncontroller = new DefinitionController(this);
 		analysecontroller = new AnalyseController(this);
 		dependencycontroller = new DependencyController(this);
@@ -34,6 +36,8 @@ public class ApplicationController implements ActionListener {
 	public void initUi() {
 		Log.i(this, "initUi()");
 
+		JPanel definitionpanel = definitioncontroller.initUi();
+		
 		// Create a new instance of the jframe
 		jframe = new ApplicationJFrame();
 
@@ -47,7 +51,7 @@ public class ApplicationController implements ActionListener {
 		jframe.jMenuItemAbout.addActionListener(this);
 
 		// This method sets the definition jpanel in the jframe.
-		jframe.setContentView(definitioncontroller.initUi());
+		jframe.setContentView(definitionpanel);
 
 		// Set the visibility of the jframe to true so the jframe is now visible
 		UiDialogs.showOnScreen(0, jframe);
