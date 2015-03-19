@@ -1,0 +1,1 @@
+Controleert code van andere applicaties om te detecteren of bomen wel op een vriendelijke manier geknuffeld worden.
